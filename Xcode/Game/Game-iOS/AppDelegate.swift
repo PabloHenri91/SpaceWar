@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Game
+//  Game-iOS
 //
-//  Created by Pablo Henrique Bertaco on 5/6/16.
+//  Created by Pablo Henrique Bertaco on 5/14/16.
 //  Copyright © 2016 PabloHenri91. All rights reserved.
 //
 
