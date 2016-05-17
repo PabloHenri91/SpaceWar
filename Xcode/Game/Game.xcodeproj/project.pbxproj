@@ -273,6 +273,7 @@
 				TargetAttributes = {
 					844CF2651CE77B3F0032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = JZ3J7RVLD7;
 					};
 					844CF2841CE789A90032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -505,9 +506,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Game-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "PabloHenri91.Game-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -516,9 +518,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Game-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "PabloHenri91.Game-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
