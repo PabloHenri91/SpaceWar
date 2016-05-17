@@ -4,5 +4,7 @@
     "keywords": ["util", "functional", "server", "client", "browser"],
     "author": "pablohenriquebertaco",
     "contributors": [],
-    "dependencies": {}
+    "dependencies": {
+        "socket.io": ""
+    }
 }
