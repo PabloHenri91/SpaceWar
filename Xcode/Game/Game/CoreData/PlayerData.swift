@@ -22,12 +22,16 @@ class PlayerData: NSManagedObject {
 
 }
 
-extension PlayerData {
+extension MemoryCard {
     
-    static func newPlayerData() -> PlayerData {
+    func newPlayerData() -> PlayerData {
         
-        let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: MemoryCard.sharedInstance.managedObjectContext) as! PlayerData
+        let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
         
         return playerData
     }
+}
+
+extension PlayerData {
+    
 }

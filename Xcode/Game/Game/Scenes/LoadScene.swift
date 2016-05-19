@@ -10,9 +10,14 @@ import SpriteKit
 
 class LoadScene: GameScene {
     
+    var playerData:PlayerData! = nil
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
         self.addChild(Control(textureName: "background", z:-1000, xAlign: .center, yAlign: .center))
+        
+        self.playerData = MemoryCard.sharedInstance.playerData
+        
     }
 }

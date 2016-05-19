@@ -58,6 +58,7 @@
 		844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844CF28F1CE789AA0032F6AA /* MainMenu.xib */; };
 		844CF29A1CE78BFB0032F6AA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2991CE78BFB0032F6AA /* Media.xcassets */; };
 		844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2991CE78BFB0032F6AA /* Media.xcassets */; };
+		8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855D81CECCE1100FB63D2 /* MemoryCard.swift */; };
 		84F855DA1CECCE1100FB63D2 /* MemoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855D81CECCE1100FB63D2 /* MemoryCard.swift */; };
 		84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */; };
@@ -421,6 +422,7 @@
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,
+				8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */,
 				843620711CEB77400082A9D7 /* GameColors.swift in Sources */,
 				8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,

@@ -6,7 +6,8 @@
 //  Copyright © 2016 PabloHenri91. All rights reserved.
 //
 
-import SpriteKit
+import Foundation
+import CoreData
 
 class MemoryCard {
     
@@ -15,6 +16,52 @@ class MemoryCard {
     private var autoSave:Bool = false
     
     var playerData:PlayerData!
+    
+    init() {
+        self.loadGame()
+    }
+    
+    func newGame() {
+        print("Creating new game...")
+        
+        //Player
+        self.playerData = self.newPlayerData()
+        
+        
+        self.autoSave = true
+        self.saveGame()
+    }
+    
+    func saveGame() {
+        if(self.autoSave) {
+            self.autoSave = false
+            print("Saving game...")
+            self.saveContext()
+            self.autoSave = true
+        }
+    }
+    
+    func loadGame() {
+        if let _ = self.playerData {
+            print("Game already loaded.")
+        } else {
+            let fetchRequestData:NSArray = self.fetchRequest()
+            
+            if(fetchRequestData.count > 0) {
+                print("Loading game...")
+                self.playerData = (fetchRequestData.lastObject as! PlayerData)
+                self.autoSave = true
+            } else {
+                self.newGame()
+            }
+        }
+    }
+    
+    func fetchRequest() -> NSArray {
+        let fetchRequest = self.managedObjectModel.fetchRequestTemplateForName("FetchRequest")!
+        let fetchRequestData: NSArray! = try? self.managedObjectContext.executeFetchRequest(fetchRequest)
+        return fetchRequestData
+    }
     
     // MARK: - Core Data stack
     
