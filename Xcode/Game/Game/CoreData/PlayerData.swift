@@ -40,17 +40,23 @@ extension MemoryCard {
         
         var spaceshipData = self.newSpaceshipData(type: 0)
         playerData.addSpaceshipData(spaceshipData)
+        var weaponData = self.newWeaponData(type: 0)
+        spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 1)
         playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 1)
+        spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 2)
         playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 2)
+        spaceshipData.addWeaponData(weaponData)
         
         //weapons
         playerData.weapons = NSSet()
         
-        var weaponData = self.newWeaponData(type: 0)
+        weaponData = self.newWeaponData(type: 0)
         playerData.addWeaponData(weaponData)
         
         weaponData = self.newWeaponData(type: 1)
@@ -70,9 +76,19 @@ extension PlayerData {
         items.addObject(value)
     }
     
+    func removeResearchData(value: ResearchData) {
+        let items = self.mutableSetValueForKey("researches")
+        items.removeObject(value)
+    }
+    
     func addSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("spaceships")
         items.addObject(value)
+    }
+    
+    func removeSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("spaceships")
+        items.removeObject(value)
     }
     
     func addWeaponData(value: WeaponData) {

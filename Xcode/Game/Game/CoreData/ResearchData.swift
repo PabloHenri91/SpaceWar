@@ -13,9 +13,9 @@ import CoreData
 
 class ResearchData: NSManagedObject {
 
-    @NSManaged var done: NSNumber?
-    @NSManaged var startDate: NSDate?
-    @NSManaged var type: NSNumber?
+    @NSManaged var done: NSNumber
+    @NSManaged var startDate: NSDate
+    @NSManaged var type: NSNumber
     @NSManaged var player: PlayerData?
 
 }

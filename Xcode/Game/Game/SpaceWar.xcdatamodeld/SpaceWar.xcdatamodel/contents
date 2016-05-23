@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
     <entity name="MothershipData" representedClassName="MothershipData" syncable="YES">
-        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="xp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="xp" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="motherShip" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
     <entity name="PlayerData" representedClassName="PlayerData" syncable="YES">
@@ -14,9 +14,9 @@
         <relationship name="weapons" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="player" inverseEntity="WeaponData" syncable="YES"/>
     </entity>
     <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
-        <attribute name="done" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="done" attributeType="Boolean" syncable="YES"/>
+        <attribute name="startDate" attributeType="Date" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
     <entity name="SpaceshipData" representedClassName="SpaceshipData" syncable="YES">
@@ -27,17 +27,17 @@
         <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="spaceship" inverseEntity="WeaponData" syncable="YES"/>
     </entity>
     <entity name="WeaponData" representedClassName="WeaponData" syncable="YES">
-        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="weapons" inverseEntity="PlayerData" syncable="YES"/>
         <relationship name="spaceship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="weapons" inverseEntity="SpaceshipData" syncable="YES"/>
     </entity>
     <fetchRequest name="FetchRequest" entity="PlayerData"/>
     <elements>
-        <element name="MothershipData" positionX="-333" positionY="-171" width="128" height="88"/>
+        <element name="MothershipData" positionX="-333" positionY="-171" width="128" height="90"/>
         <element name="PlayerData" positionX="-173" positionY="-121" width="128" height="135"/>
-        <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="103"/>
-        <element name="SpaceshipData" positionX="-11" positionY="32" width="128" height="120"/>
-        <element name="WeaponData" positionX="-351" positionY="-0" width="128" height="103"/>
+        <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="105"/>
+        <element name="SpaceshipData" positionX="-11" positionY="32" width="128" height="105"/>
+        <element name="WeaponData" positionX="-351" positionY="-0" width="128" height="105"/>
     </elements>
 </model>
