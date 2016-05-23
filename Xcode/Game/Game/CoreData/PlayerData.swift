@@ -79,4 +79,9 @@ extension PlayerData {
         let items = self.mutableSetValueForKey("weapons")
         items.addObject(value)
     }
+    
+    func removeWeaponData(value: WeaponData) {
+        let items = self.mutableSetValueForKey("weapons")
+        items.removeObject(value)
+    }
 }

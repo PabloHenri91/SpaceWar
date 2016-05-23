@@ -18,6 +18,8 @@ class Weapon: Control {
     var reloadTime:Double!
     var ammoPerMag:Int!
     
+    var weaponData:WeaponData?
+    
     override var description: String {
         return "\nWeapon\n" +
             "level: " + level.description + "\n" +
@@ -34,6 +36,7 @@ class Weapon: Control {
     
     init(weaponData:WeaponData) {
         super.init()
+        self.weaponData = weaponData
         self.load(weaponData.type.integerValue, level: weaponData.level.integerValue)
     }
     

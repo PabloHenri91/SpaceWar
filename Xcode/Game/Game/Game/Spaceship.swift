@@ -25,6 +25,10 @@ class Spaceship: Control {
     var shieldPower:Int!
     var shieldRecharge:Int!
     
+    var weapons = Set<Weapon>()
+    
+    var spaceshipData:SpaceshipData?
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -51,7 +55,14 @@ class Spaceship: Control {
     
     init(spaceshipData:SpaceshipData) {
         super.init()
+        self.spaceshipData = spaceshipData
         self.load(type: spaceshipData.type.integerValue, level: spaceshipData.level.integerValue)
+        
+        for item in spaceshipData.weapons {
+            if let weaponData = item as? WeaponData {
+                self.weapons.insert(Weapon(weaponData: weaponData))
+            }
+        }
     }
     
     private func load(type type:Int, level:Int) {
@@ -62,7 +73,7 @@ class Spaceship: Control {
         
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
         self.armor = GameMath.spaceshipArmor(level: self.level, type: self.type)
-        self.shieldPower = GameMath.spaceshipShieldPower(level: level, type: self.type)
+        self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, type: self.type)
         
         self.health = GameMath.spaceshipMaxHealth(level: self.level, armor: self.armor)
@@ -75,6 +86,39 @@ class Spaceship: Control {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addWeapon(weapon:Weapon) {
+        self.weapons.insert(weapon)
+        
+        if let spaceshipData = self.spaceshipData {
+            if let weaponData = weapon.weaponData {
+                spaceshipData.addWeaponData(weaponData)
+                if let player = spaceshipData.player {
+                    player.removeWeaponData(weaponData)
+                }
+            }
+        }
+    }
+    
+    func removeWeapon(weapon:Weapon) {
+        self.weapons.remove(weapon)
+        
+        if let spaceshipData = self.spaceshipData {
+            if let weaponData = weapon.weaponData {
+                spaceshipData.removeWeaponData(weaponData)
+                if let player = spaceshipData.player {
+                    player.addWeaponData(weaponData)
+                }
+            }
+        }
+    }
+    
+    
+    func updateSpaceshipData() {
+        if let spaceshipData = self.spaceshipData {
+            spaceshipData.level = self.level
+        }
     }
 }
 

@@ -38,4 +38,14 @@ extension MemoryCard {
 
 extension SpaceshipData {
     
+    func addWeaponData(value: WeaponData) {
+        let items = self.mutableSetValueForKey("weapons")
+        items.addObject(value)
+    }
+    
+    func removeWeaponData(value: WeaponData) {
+        let items = self.mutableSetValueForKey("weapons")
+        items.removeObject(value)
+    }
+    
 }

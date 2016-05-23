@@ -36,17 +36,17 @@ class LoadScene: GameScene {
         
         var spaceships = [Spaceship]()
         for item in self.playerData.spaceships {
-            spaceships.append(Spaceship(spaceshipData: item as! SpaceshipData))
+            if let spaceshipData = item as? SpaceshipData {
+                spaceships.append(Spaceship(spaceshipData: spaceshipData))
+            }
         }
-        
-        //print(spaceships)
         
         var weapons = [Weapon]()
         for item in self.playerData.weapons {
-            weapons.append(Weapon(weaponData: item as! WeaponData))
+            if let weaponData = item as? WeaponData {
+                weapons.append(Weapon(weaponData: weaponData))
+            }
         }
-        
-        print(weapons)
         
     }
     
