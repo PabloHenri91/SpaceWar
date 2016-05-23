@@ -31,8 +31,11 @@ extension MemoryCard {
         playerData.name = "Name"
         playerData.points = 1000000
         playerData.motherShip = self.newMothershipData()
+        
+        //researches
         playerData.researches = NSSet()
         
+        // spaceships
         playerData.spaceships = NSSet()
         
         var spaceshipData = self.newSpaceshipData(type: 0)
@@ -44,7 +47,17 @@ extension MemoryCard {
         spaceshipData = self.newSpaceshipData(type: 2)
         playerData.addSpaceshipData(spaceshipData)
         
+        //weapons
         playerData.weapons = NSSet()
+        
+        var weaponData = self.newWeaponData(type: 0)
+        playerData.addWeaponData(weaponData)
+        
+        weaponData = self.newWeaponData(type: 1)
+        playerData.addWeaponData(weaponData)
+        
+        weaponData = self.newWeaponData(type: 2)
+        playerData.addWeaponData(weaponData)
         
         return playerData
     }

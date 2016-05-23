@@ -13,11 +13,24 @@ import CoreData
 
 class WeaponData: NSManagedObject {
 
-    @NSManaged var level: NSNumber?
-    @NSManaged var type: NSNumber?
+    @NSManaged var level: NSNumber
+    @NSManaged var type: NSNumber
     @NSManaged var player: PlayerData?
     @NSManaged var spaceship: SpaceshipData?
 
+}
+
+extension MemoryCard {
+    
+    func newWeaponData(type type:Int) -> WeaponData {
+        
+        let weaponData = NSEntityDescription.insertNewObjectForEntityForName("WeaponData", inManagedObjectContext: self.managedObjectContext) as! WeaponData
+        
+        weaponData.level = 1
+        weaponData.type = type
+        
+        return weaponData
+    }
 }
 
 extension WeaponData {

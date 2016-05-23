@@ -55,6 +55,7 @@ class Spaceship: Control {
     }
     
     private func load(type type:Int, level:Int) {
+        
         self.type = Spaceship.types[type]
         
         self.level = level

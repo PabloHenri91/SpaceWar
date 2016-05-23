@@ -16,6 +16,9 @@ class GameMath {
     static let shieldPointsPerPower = 3
     static let shieldPointsPerLevel = 1
     
+    
+    //Spaceships
+    
     static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
         return type.speedBonus + ((level - 1) * type.speedBonusPerLevel)
     }
@@ -45,5 +48,23 @@ class GameMath {
     
     static func spaceshipShieldRechargeInterval(shieldRechargeInterval shieldRechargeInterval:Int) -> Int {
         return 100 - shieldRechargeInterval
+    }
+    
+    
+    // Weapons
+    static func weaponDemage(level level:Int, type:WeaponType) -> Int {
+        return type.demage + ((level - 1) * type.demagePerLevel)
+    }
+    
+    static func weaponRange(level level:Int, type:WeaponType) -> Int {
+        return type.range + ((level - 1) * type.rangePerLevel)
+    }
+    
+    static func weaponReloadTime(level level:Int, type:WeaponType) -> Double {
+        return type.reloadTime + ((Double(level) - 1) * type.reloadTimePerLevel)
+    }
+    
+    static func weaponAmmoPerMag(level level:Int, type:WeaponType) -> Int {
+        return type.ammoPerMag + ((level - 1) * type.ammoPerMagPerLevel)
     }
 }

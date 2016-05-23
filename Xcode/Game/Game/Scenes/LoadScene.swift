@@ -10,6 +10,19 @@ import SpriteKit
 
 class LoadScene: GameScene {
     
+    enum states : String {
+        //Estado principal
+        case load
+        
+        //Estados de saida da scene
+        case mothership
+    }
+    
+    //Estados iniciais
+    var state = states.load
+    var nextState = states.load
+
+    
     var playerData:PlayerData! = nil
     
     override func didMoveToView(view: SKView) {
@@ -26,7 +39,39 @@ class LoadScene: GameScene {
             spaceships.append(Spaceship(spaceshipData: item as! SpaceshipData))
         }
         
-        print(spaceships)
+        //print(spaceships)
         
+        var weapons = [Weapon]()
+        for item in self.playerData.weapons {
+            weapons.append(Weapon(weaponData: item as! WeaponData))
+        }
+        
+        print(weapons)
+        
+    }
+    
+    override func update(currentTime: NSTimeInterval) {
+        super.update(currentTime)
+        
+        if(self.state == self.nextState) {
+            //Estado atual
+            switch (self.state) {
+            case .load:
+                self.nextState = .mothership
+                break
+            default:
+                break
+            }
+        } else {
+            //Próximo estado
+            switch (self.nextState) {
+            case .mothership:
+                self.view?.presentScene(MothershipScene(), transition: self.transition)
+                break
+            default:
+                fatalError()
+                break
+            }
+        }
     }
 }

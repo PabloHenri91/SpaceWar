@@ -8,6 +8,12 @@
 
 import SpriteKit
 
-class MothershipScene: SKScene {
+class MothershipScene: GameScene {
+    
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
+        
+        self.addChild(Control(textureName: "background", z:-1000, xAlign: .center, yAlign: .center))
+    }
 
 }
