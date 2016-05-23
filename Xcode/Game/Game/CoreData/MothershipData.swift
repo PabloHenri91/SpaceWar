@@ -13,10 +13,23 @@ import CoreData
 
 class MothershipData: NSManagedObject {
 
-    @NSManaged var level: NSNumber?
-    @NSManaged var xp: NSNumber?
+    @NSManaged var level: NSNumber
+    @NSManaged var xp: NSNumber
     @NSManaged var player: PlayerData?
 
+}
+
+extension MemoryCard {
+    
+    func newMothershipData() -> MothershipData {
+        
+        let mothershipData = NSEntityDescription.insertNewObjectForEntityForName("MothershipData", inManagedObjectContext: self.managedObjectContext) as! MothershipData
+        
+        mothershipData.level = 1
+        mothershipData.xp = 0
+        
+        return mothershipData
+    }
 }
 
 extension MothershipData {

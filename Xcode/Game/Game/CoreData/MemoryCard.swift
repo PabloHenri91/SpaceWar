@@ -24,9 +24,7 @@ class MemoryCard {
     func newGame() {
         print("Creating new game...")
         
-        //Player
         self.playerData = self.newPlayerData()
-        
         
         self.autoSave = true
         self.saveGame()
@@ -55,6 +53,21 @@ class MemoryCard {
                 self.newGame()
             }
         }
+    }
+    
+    func reset() {
+        print("MemoryCard.reset()")
+        
+        let fetchRequestData:NSArray = fetchRequest()
+        
+        for item in fetchRequestData {
+            self.managedObjectContext.deleteObject(item as! NSManagedObject)
+        }
+        
+        self.playerData = nil
+        
+        self.autoSave = false
+        self.newGame()
     }
     
     func fetchRequest() -> NSArray {

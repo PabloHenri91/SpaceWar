@@ -6,12 +6,12 @@
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="motherShip" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
     <entity name="PlayerData" representedClassName="PlayerData" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="points" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="motherShip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="player" inverseEntity="MothershipData" syncable="YES"/>
-        <relationship name="researches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ResearchData" inverseName="player" inverseEntity="ResearchData" syncable="YES"/>
-        <relationship name="spaceships" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="player" inverseEntity="SpaceshipData" syncable="YES"/>
-        <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="player" inverseEntity="WeaponData" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="points" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="motherShip" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="player" inverseEntity="MothershipData" syncable="YES"/>
+        <relationship name="researches" toMany="YES" deletionRule="Nullify" destinationEntity="ResearchData" inverseName="player" inverseEntity="ResearchData" syncable="YES"/>
+        <relationship name="spaceships" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="player" inverseEntity="SpaceshipData" syncable="YES"/>
+        <relationship name="weapons" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="player" inverseEntity="WeaponData" syncable="YES"/>
     </entity>
     <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
         <attribute name="done" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -20,9 +20,9 @@
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
     <entity name="SpaceshipData" representedClassName="SpaceshipData" syncable="YES">
-        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="xp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="xp" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="spaceships" inverseEntity="PlayerData" syncable="YES"/>
         <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="spaceship" inverseEntity="WeaponData" syncable="YES"/>
     </entity>
@@ -35,9 +35,9 @@
     <fetchRequest name="FetchRequest" entity="PlayerData"/>
     <elements>
         <element name="MothershipData" positionX="-333" positionY="-171" width="128" height="88"/>
-        <element name="PlayerData" positionX="-173" positionY="-121" width="128" height="133"/>
+        <element name="PlayerData" positionX="-173" positionY="-121" width="128" height="135"/>
         <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="103"/>
-        <element name="SpaceshipData" positionX="-11" positionY="32" width="128" height="118"/>
+        <element name="SpaceshipData" positionX="-11" positionY="32" width="128" height="120"/>
         <element name="WeaponData" positionX="-351" positionY="-0" width="128" height="103"/>
     </elements>
 </model>

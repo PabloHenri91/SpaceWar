@@ -17,7 +17,16 @@ class LoadScene: GameScene {
         
         self.addChild(Control(textureName: "background", z:-1000, xAlign: .center, yAlign: .center))
         
+        MemoryCard.sharedInstance.reset()
+        
         self.playerData = MemoryCard.sharedInstance.playerData
+        
+        var spaceships = [Spaceship]()
+        for item in self.playerData.spaceships {
+            spaceships.append(Spaceship(spaceshipData: item as! SpaceshipData))
+        }
+        
+        print(spaceships)
         
     }
 }
