@@ -49,5 +49,10 @@ class Mothership: Control {
         
         self.health = GameMath.mothershipMaxHealth(level: self.level)
         self.maxHealth = health
+        
+        //Gráfico
+        let spriteNode = SKSpriteNode(imageNamed: "mothership")
+        spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(spriteNode)
     }
 }

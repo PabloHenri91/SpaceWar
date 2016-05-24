@@ -150,7 +150,7 @@ class Button: Control {
                 labelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                 labelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                 //TODO: deslocamento vindo por parâmetro
-                labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2 - 2)
+                labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
                 self.buttonPressed.addChild(labelNodePressed)
                 labelNodePressed.zPosition = labelNodePressed.zPosition + 1
             }

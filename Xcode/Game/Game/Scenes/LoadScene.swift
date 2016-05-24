@@ -28,6 +28,8 @@ class LoadScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        self.addChild(Label(color: GameColors.white, text: "LoadScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
+        
         self.addChild(Control(textureName: "background", z:-1000, xAlign: .center, yAlign: .center))
         
         MemoryCard.sharedInstance.reset()
@@ -49,7 +51,6 @@ class LoadScene: GameScene {
         }
         
         let mothership = Mothership(mothershipData: self.playerData.motherShip)
-        
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -71,7 +72,9 @@ class LoadScene: GameScene {
                 self.view?.presentScene(MothershipScene(), transition: self.transition)
                 break
             default:
-                fatalError()
+                #if DEBUG
+                    fatalError()
+                #endif
                 break
             }
         }
