@@ -10,14 +10,15 @@ import SpriteKit
 
 class GameMath {
     
-    static let healthPointsPerArmor = 4
-    static let healthPointsPerLevel = 2
     
-    static let shieldPointsPerPower = 3
-    static let shieldPointsPerLevel = 1
     
     
     //Spaceships
+    static let spaceshipHealthPointsPerArmor = 4
+    static let spaceshipHealthPointsPerLevel = 2
+    
+    static let spaceshipShieldPointsPerPower = 3
+    static let spaceshipShieldPointsPerLevel = 1
     
     static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
         return type.speedBonus + ((level - 1) * type.speedBonusPerLevel)
@@ -37,12 +38,12 @@ class GameMath {
     
 
     static func spaceshipMaxHealth(level level:Int, armor:Int) -> Int {
-        let maxHealth = 10 + (((level - 1) * healthPointsPerLevel) + ((armor - 10) * healthPointsPerArmor))
+        let maxHealth = 10 + (((level - 1) * spaceshipHealthPointsPerLevel) + ((armor - 10) * spaceshipHealthPointsPerArmor))
         return maxHealth
     }
     
     static func spaceshipMaxShield(level level:Int, shieldPower:Int) -> Int {
-        let maxShield = 1 + (((level - 1) * shieldPointsPerLevel) + ((shieldPower - 10) * shieldPointsPerPower))
+        let maxShield = 1 + (((level - 1) * spaceshipShieldPointsPerLevel) + ((shieldPower - 10) * spaceshipShieldPointsPerPower))
         return maxShield
     }
     
@@ -67,4 +68,14 @@ class GameMath {
     static func weaponAmmoPerMag(level level:Int, type:WeaponType) -> Int {
         return type.ammoPerMag + ((level - 1) * type.ammoPerMagPerLevel)
     }
+    
+    
+    // Mothership
+    static let mothershipHealthPointsPerLevel = 8
+    
+    static func mothershipMaxHealth(level level:Int) -> Int {
+        let maxHealth = 10 + ((level - 1) * mothershipHealthPointsPerLevel)
+        return maxHealth
+    }
+    
 }

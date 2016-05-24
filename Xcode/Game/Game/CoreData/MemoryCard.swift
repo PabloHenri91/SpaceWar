@@ -110,8 +110,9 @@ class MemoryCard {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             
-            //TODO: remover try? NSFileManager.defaultManager().removeItemAtURL(url)
-            try? NSFileManager.defaultManager().removeItemAtURL(url)
+            #if DEBUG
+                try! NSFileManager.defaultManager().removeItemAtURL(url)
+            #endif
             
             abort()
         }

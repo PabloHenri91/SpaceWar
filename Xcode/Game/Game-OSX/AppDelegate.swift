@@ -29,8 +29,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         self.skView!.ignoresSiblingOrder = true
         
-        self.skView!.showsFPS = true
-        self.skView!.showsNodeCount = true
+        #if DEBUG
+            skView.showsFPS = true
+            skView.showsDrawCount = true
+            skView.showsNodeCount = true
+            skView.showsQuadCount = true
+            skView.showsPhysics = true
+            skView.showsFields = true
+        #endif
     }
     
     func windowDidResize(notification: NSNotification) {

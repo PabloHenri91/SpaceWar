@@ -48,6 +48,8 @@ class LoadScene: GameScene {
             }
         }
         
+        let mothership = Mothership(mothershipData: self.playerData.motherShip)
+        
     }
     
     override func update(currentTime: NSTimeInterval) {
