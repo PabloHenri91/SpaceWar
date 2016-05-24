@@ -26,7 +26,6 @@ class GameViewController: UIViewController {
             skView.showsNodeCount = true
             skView.showsQuadCount = true
             skView.showsPhysics = true
-            skView.showsFields = true
         #endif
         
         skView.presentScene(scene)

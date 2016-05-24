@@ -35,7 +35,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             skView.showsNodeCount = true
             skView.showsQuadCount = true
             skView.showsPhysics = true
-            skView.showsFields = true
         #endif
     }
     
