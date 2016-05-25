@@ -42,7 +42,6 @@ class Button: Control {
             self.screenPosition = CGPoint(x: x, y: y)
             self.yAlign = yAlign
             self.xAlign = xAlign
-            //TODO: self.zPosition = z
             
             self.resetPosition()
             
@@ -103,7 +102,7 @@ class Button: Control {
                 labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                 labelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
                 self.button.addChild(labelNode)
-                labelNode.zPosition = labelNode.zPosition + 1
+                labelNode.zPosition = self.button.zPosition + 1
             }
             
             let texturePressed = SKTexture(imageNamed: "\(textureName)Pressed")
@@ -152,7 +151,7 @@ class Button: Control {
                 //TODO: deslocamento vindo por parâmetro
                 labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
                 self.buttonPressed.addChild(labelNodePressed)
-                labelNodePressed.zPosition = labelNodePressed.zPosition + 1
+                labelNodePressed.zPosition = self.buttonPressed.zPosition + 1
             }
             
             Button.buttonList.insert(self)

@@ -22,10 +22,7 @@ class GameViewController: UIViewController {
         
         #if DEBUG
             skView.showsFPS = true
-            skView.showsDrawCount = true
             skView.showsNodeCount = true
-            skView.showsQuadCount = true
-            skView.showsPhysics = true
         #endif
         
         skView.presentScene(scene)

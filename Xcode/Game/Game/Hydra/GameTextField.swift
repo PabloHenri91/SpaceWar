@@ -30,7 +30,7 @@ class GameTextField: Control, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(x:Int = 0, y:Int = 0, z:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, view:UIView) {
+    init(x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, view:UIView) {
         super.init()
         let spriteNode = SKSpriteNode(imageNamed: "boxWhite128x32")
         spriteNode.texture?.filteringMode = .Nearest
@@ -39,8 +39,6 @@ class GameTextField: Control, UITextFieldDelegate {
         self.screenPosition = CGPoint(x: x, y: y)
         self.yAlign = yAlign
         self.xAlign = xAlign
-        
-        self.zPosition = CGFloat(z)
         
         spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.addChild(spriteNode)

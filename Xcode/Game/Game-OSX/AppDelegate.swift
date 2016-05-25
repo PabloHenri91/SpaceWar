@@ -24,18 +24,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         let scene = LoadScene()
         
-        self.skView!.presentScene(scene)
-        
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        self.skView!.ignoresSiblingOrder = true
-        
         #if DEBUG
             skView.showsFPS = true
-            skView.showsDrawCount = true
             skView.showsNodeCount = true
-            skView.showsQuadCount = true
-            skView.showsPhysics = true
         #endif
+        
+        self.skView.presentScene(scene)
     }
     
     func windowDidResize(notification: NSNotification) {

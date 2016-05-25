@@ -22,8 +22,6 @@ class Display {
     static let defaultSceneSize = CGSize(width: 320/screenScale, height: 568/screenScale)
     static var sceneSize:CGSize = defaultSceneSize
     
-    static var HUDZPosition:CGFloat = 1000
-    
     static var scale:CGFloat!
     
     static func updateSceneSize() -> CGSize {

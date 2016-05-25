@@ -10,7 +10,7 @@ import SpriteKit
 
 class Box: Control {
     
-    init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, z:Int = 0, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
+    init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
         
         let texture = SKTexture(imageNamed: textureName)
         texture.filteringMode = .Nearest
@@ -23,8 +23,6 @@ class Box: Control {
         spriteNode.texture?.filteringMode = .Nearest
         
         super.init(spriteNode: spriteNode, x: Int(position.x), y: Int(position.y), xAlign: xAlign, yAlign: yAlign)
-        
-        self.zPosition = CGFloat(z)
         
         self.size = self.calculateAccumulatedFrame().size
     }

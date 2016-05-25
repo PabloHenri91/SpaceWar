@@ -25,7 +25,6 @@ class Label: Control {
         self.screenPosition = CGPoint(x: x, y: y)
         self.yAlign = yAlign
         self.xAlign = xAlign
-        //TODO: self.zPosition = Config.HUDZPosition/2
         
         self.resetPosition()
         

@@ -21,9 +21,9 @@ class CropBox: Box {
     
     private var cropNode = SKCropNode()
     
-    override init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, z:Int = 0, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
+    override init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
         
-        super.init(name: name, textureName: textureName, x: x, y: y, z: z, xAlign: xAlign, yAlign: yAlign)
+        super.init(name: name, textureName: textureName, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
         
         let mask = SKSpriteNode(imageNamed: textureName)
         mask.texture?.filteringMode = .Nearest

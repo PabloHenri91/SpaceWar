@@ -30,7 +30,7 @@ class ScrollNode: Control {
     var width = 0
     var height = 0
     
-    init(name: String = "", cells: Array<Control>, x:Int = 0, y:Int = 0, z:Int = 0,
+    init(name: String = "", cells: Array<Control>, x:Int = 0, y:Int = 0,
         xAlign:Control.xAlignments = .left,
         yAlign:Control.yAlignments = .up, spacing:Int = 40, scrollDirection:scrollDirections = .horizontal,
         index:Int = 0) {
