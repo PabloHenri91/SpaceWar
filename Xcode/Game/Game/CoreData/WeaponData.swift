@@ -15,8 +15,6 @@ class WeaponData: NSManagedObject {
 
     @NSManaged var level: NSNumber
     @NSManaged var type: NSNumber
-    @NSManaged var player: PlayerData?
-    @NSManaged var spaceship: SpaceshipData?
 
 }
 

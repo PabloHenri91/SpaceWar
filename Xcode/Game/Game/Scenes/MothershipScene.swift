@@ -32,14 +32,14 @@ class MothershipScene: GameScene {
         
         self.addChild(Label(color: GameColors.white, text: "MothershipScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
         
-        self.addChild(Control(textureName: "background", xAlign: .center, yAlign: .center))
+        self.addChild(Control(textureName: "background", x:-53, xAlign: .center, yAlign: .center))
+        
+        self.buttonBattle = Button(textureName: "button", text: "battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonBattle)
         
         let control = Control(spriteNode: SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 1,height: 1)), x:160, y:284, xAlign: .center, yAlign: .center)
         self.addChild(control)
         control.addChild(Mothership(mothershipData: self.playerData.motherShip))
-        
-        self.buttonBattle = Button(textureName: "button", text: "battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonBattle)
     }
     
     override func update(currentTime: NSTimeInterval) {

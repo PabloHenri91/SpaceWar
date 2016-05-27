@@ -39,17 +39,22 @@ extension MemoryCard {
         playerData.spaceships = NSSet()
         
         var spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData)
         var weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 1)
-        playerData.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 1)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 2)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 2)
+        playerData.motherShip.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 2)
         spaceshipData.addWeaponData(weaponData)
         

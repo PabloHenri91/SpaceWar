@@ -82,6 +82,13 @@ class Spaceship: Control {
         self.energyShield = GameMath.spaceshipMaxShield(level: self.level, shieldPower: self.shieldPower)
         self.maxEnergyShield = energyShield
         self.shieldRechargeInterval = GameMath.spaceshipShieldRechargeInterval(shieldRechargeInterval: self.shieldRecharge)
+        
+        //Gráfico
+        let spriteNode = SKSpriteNode(imageNamed: self.type.skins.first!)//TODO: remover gamb
+        spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(spriteNode)
+        
+        //self.loadPhysics(rectangleOfSize: spriteNode.size)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,7 +101,7 @@ class Spaceship: Control {
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {
                 spaceshipData.addWeaponData(weaponData)
-                if let player = spaceshipData.player {
+                if let player = spaceshipData.parentPlayer {
                     player.removeWeaponData(weaponData)
                 }
             }
@@ -107,7 +114,7 @@ class Spaceship: Control {
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {
                 spaceshipData.removeWeaponData(weaponData)
-                if let player = spaceshipData.player {
+                if let player = spaceshipData.parentPlayer {
                     player.addWeaponData(weaponData)
                 }
             }
@@ -129,6 +136,8 @@ public enum TargetType:Int {
 }
 
 class SpaceShipType {
+    
+    var skins = [String]()
     
     var maxLevel:Int
     
@@ -170,17 +179,38 @@ extension Spaceship {
         [TargetType.towers, TargetType.mothership]
     ]
     
-    static var types = [
-        SpaceShipType(maxLevel: 2, targetPriorityType: 0,
-            speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
-            speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1),
+    static var types:[SpaceShipType] = [
+        {
+            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+                speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
+                speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            spaceShipType.skins = [
+                "spaceshipAA",
+                "spaceshipAB"
+            ]
+            return spaceShipType
+        }(),
         
-        SpaceShipType(maxLevel: 2, targetPriorityType: 0,
-            speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
-            speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1),
-        
-        SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+        {
+            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
             speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            spaceShipType.skins = [
+                "spaceshipBA",
+                "spaceshipBB"
+            ]
+            return spaceShipType
+        }(),
+        
+        {
+            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+            speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
+            speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            spaceShipType.skins = [
+                "spaceshipCA",
+                "spaceshipCB"
+            ]
+            return spaceShipType
+        }()
     ]
 }

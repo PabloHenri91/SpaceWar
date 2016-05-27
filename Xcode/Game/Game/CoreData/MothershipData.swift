@@ -15,7 +15,8 @@ class MothershipData: NSManagedObject {
 
     @NSManaged var level: NSNumber
     @NSManaged var xp: NSNumber
-    @NSManaged var player: PlayerData?
+    
+    @NSManaged var spaceships: NSSet
 
 }
 
@@ -28,10 +29,22 @@ extension MemoryCard {
         mothershipData.level = 1
         mothershipData.xp = 0
         
+        mothershipData.spaceships = NSSet()
+        
         return mothershipData
     }
 }
 
 extension MothershipData {
+    
+    func addSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("spaceships")
+        items.addObject(value)
+    }
+    
+    func removeSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("spaceships")
+        items.removeObject(value)
+    }
     
 }

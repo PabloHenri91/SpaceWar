@@ -117,14 +117,40 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         static var none: categoryBitMask { return self.init(0) }
         
         static var spaceship: categoryBitMask { return categoryBitMask(1 << 0) }
+        static var shot: categoryBitMask { return categoryBitMask(1 << 1) }
+        static var mothership: categoryBitMask { return categoryBitMask(1 << 2) }
+        
     }
     
     struct collisionBitMask {
         
-        static var none: UInt32 = 0
+        static var spaceship:UInt32 =
+            categoryBitMask.mothership.rawValue |
+                categoryBitMask.spaceship.rawValue |
+                categoryBitMask.shot.rawValue
+        
+        static var shot:UInt32 =
+            categoryBitMask.mothership.rawValue |
+                categoryBitMask.spaceship.rawValue
+        
+        static var mothership:UInt32 = 0
     }
     
     struct contactTestBitMask {
         
+        static var spaceship:UInt32 = categoryBitMask.shot.rawValue
+        
+        static var shot:UInt32 =
+            categoryBitMask.spaceship.rawValue |
+                categoryBitMask.mothership.rawValue
+        
+        static var mothership:UInt32 = categoryBitMask.shot.rawValue
     }
+    
+    
+    
+    
+    
+    
+    
 }

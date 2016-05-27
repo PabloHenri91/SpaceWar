@@ -16,8 +16,10 @@ class SpaceshipData: NSManagedObject {
     @NSManaged var level: NSNumber
     @NSManaged var type: NSNumber
     @NSManaged var xp: NSNumber
-    @NSManaged var player: PlayerData?
     @NSManaged var weapons: NSSet
+    
+    @NSManaged var parentPlayer: PlayerData?
+    
 
 }
 

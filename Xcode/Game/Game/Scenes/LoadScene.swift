@@ -30,9 +30,7 @@ class LoadScene: GameScene {
         
         self.addChild(Label(color: GameColors.white, text: "LoadScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
         
-        self.addChild(Control(textureName: "background", xAlign: .center, yAlign: .center))
-        
-        MemoryCard.sharedInstance.reset()
+        self.addChild(Control(textureName: "background", x:-53, xAlign: .center, yAlign: .center))
         
         self.playerData = MemoryCard.sharedInstance.playerData
         
