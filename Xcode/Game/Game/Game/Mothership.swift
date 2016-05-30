@@ -18,6 +18,10 @@ class Mothership: Control {
     
     var mothershipData:MothershipData?
     
+    var spaceships = [Spaceship]()
+    
+    var spriteNode:SKSpriteNode!
+    
     override var description: String {
         return "\nMothership\n" +
             "level: " + level.description + "\n" +
@@ -43,7 +47,7 @@ class Mothership: Control {
         self.mothershipData = mothershipData
         self.load(level: mothershipData.level.integerValue)
         
-        var spaceships = [Spaceship]()
+        
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
                 spaceships.append(Spaceship(spaceshipData: spaceshipData))
@@ -59,11 +63,11 @@ class Mothership: Control {
         self.maxHealth = health
         
         //Gráfico
-        let spriteNode = SKSpriteNode(imageNamed: "mothership")
-        spriteNode.texture?.filteringMode = .Nearest
-        self.addChild(spriteNode)
+        self.spriteNode = SKSpriteNode(imageNamed: "mothership")
+        self.spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(self.spriteNode)
         
-        self.loadPhysics(rectangleOfSize: spriteNode.size)
+        self.loadPhysics(rectangleOfSize: self.spriteNode.size)
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
@@ -98,6 +102,7 @@ class Mothership: Control {
             default:
                 break
             }
+            spaceship.startingPosition = spaceship.position
             i += 1
         }
     }

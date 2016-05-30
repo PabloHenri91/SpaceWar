@@ -10,6 +10,8 @@ import SpriteKit
 
 class Spaceship: Control {
     
+    static var selectedSpaceship:Spaceship?
+    
     var type:SpaceShipType!
     var level:Int!
     
@@ -28,6 +30,16 @@ class Spaceship: Control {
     var weapons = Set<Weapon>()
     
     var spaceshipData:SpaceshipData?
+    
+    var spriteNode:SKSpriteNode!
+    
+    //Movement
+    var destination = CGPoint.zero
+    var needToMove = false
+    var auxRotation:CGFloat = 0
+    var maxAngularVelocity:CGFloat = 3
+    var force:CGFloat = 25
+    var startingPosition = CGPoint.zero
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -84,15 +96,106 @@ class Spaceship: Control {
         self.shieldRechargeInterval = GameMath.spaceshipShieldRechargeInterval(shieldRechargeInterval: self.shieldRecharge)
         
         //Gráfico
-        let spriteNode = SKSpriteNode(imageNamed: self.type.skins.first!)//TODO: remover gamb
-        spriteNode.texture?.filteringMode = .Nearest
-        self.addChild(spriteNode)
+        self.spriteNode = SKSpriteNode(imageNamed: self.type.skins.first!)//TODO: remover gamb
+        self.spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(self.spriteNode)
         
-        //self.loadPhysics(rectangleOfSize: spriteNode.size)
+        self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+    }
+    
+    func loadPhysics(rectangleOfSize size:CGSize) {
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody?.dynamic = true
+        
+        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceship.rawValue
+        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceship
+        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.spaceship
+        
+        self.physicsBody?.linearDamping = 2
+        self.physicsBody?.angularDamping = 2
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func touchEnded() {
+        if let spaceship = Spaceship.selectedSpaceship {
+            spaceship.spriteNode.color = SKColor.blackColor()
+            spaceship.spriteNode.colorBlendFactor = 0
+        }
+        
+        Spaceship.selectedSpaceship = self
+        
+        self.physicsBody?.dynamic = true
+        self.spriteNode.color = SKColor.blackColor()
+        self.spriteNode.colorBlendFactor = 0.5
+    }
+    
+    static func touchEnded(touch: UITouch) {
+        if let spaceship = Spaceship.selectedSpaceship {
+            if let parent = spaceship.parent {
+                
+                spaceship.destination = touch.locationInNode(parent)
+                spaceship.needToMove = true
+            }
+        }
+    }
+    
+    static func retreat() {
+        if let spaceship = Spaceship.selectedSpaceship {
+            spaceship.destination = spaceship.startingPosition
+            spaceship.needToMove = true
+            
+            spaceship.spriteNode.color = SKColor.blackColor()
+            spaceship.spriteNode.colorBlendFactor = 0
+        }
+        
+        Spaceship.selectedSpaceship = nil
+    }
+    
+    func update() {
+        self.move()
+    }
+    
+    func move() {
+        if (self.needToMove) {
+            
+//            if let nodePosition = self.targetNode?.position {
+//                self.destination = nodePosition
+//            }
+            
+            if CGPoint.distance(self.position, self.destination) < 64 {
+                self.needToMove = false
+                
+                if self.destination == self.startingPosition {
+                    self.position = self.startingPosition
+                    self.zRotation = 0
+                    self.physicsBody?.velocity = CGVector.zero
+                    self.physicsBody?.angularVelocity = 0
+                    self.physicsBody?.dynamic = false
+                }
+                
+            } else {
+                let dx = Float(self.destination.x - self.position.x)
+                let dy = Float(self.destination.y - self.position.y)
+                self.auxRotation = CGFloat(-atan2f(dx, dy))
+                var totalRotation = self.auxRotation - self.zRotation
+                
+                
+                if(abs(self.physicsBody!.angularVelocity) < self.maxAngularVelocity) {
+                    
+                    while(totalRotation < -CGFloat(M_PI)) { totalRotation += CGFloat(M_PI * 2) }
+                    while(totalRotation >  CGFloat(M_PI)) { totalRotation -= CGFloat(M_PI * 2) }
+                    
+                    self.physicsBody?.applyAngularImpulse(totalRotation * 0.0005)
+                }
+                
+                if(abs(totalRotation) < 1) {
+                    self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                }
+            }
+        }
     }
     
     func addWeapon(weapon:Weapon) {

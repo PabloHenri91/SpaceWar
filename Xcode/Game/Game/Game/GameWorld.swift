@@ -125,7 +125,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     struct collisionBitMask {
         
         static var spaceship:UInt32 =
-            categoryBitMask.mothership.rawValue |
                 categoryBitMask.spaceship.rawValue |
                 categoryBitMask.shot.rawValue
         

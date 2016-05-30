@@ -73,6 +73,8 @@ class GameScene: SKScene {
         self.scaleMode = SKSceneScaleMode.AspectFit
         self.anchorPoint = CGPoint(x: 0, y: 1)
         Control.gameScene = self
+        
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -52,7 +52,11 @@ class BattleScene: GameScene {
         self.gameWorld.addChild(self.otherMothership)
         self.otherMothership.zRotation = CGFloat(M_PI)
         self.otherMothership.position = CGPoint(x: 0, y: 330 * 2)
-        self.otherMothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 3))
+        
+        self.otherMothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 3/10)) { [weak self] in
+            guard let scene = self else { return }
+            scene.nextState = states.battle
+        }
         
         self.mothership = Mothership(mothershipData: self.playerData.motherShip)
         self.gameWorld.addChild(self.mothership)
@@ -60,11 +64,66 @@ class BattleScene: GameScene {
         self.gameCamera.node.position = self.mothership.position
         self.gameCamera.update()
         
-        self.mothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 2))
+        self.mothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 2/10))
     }
     
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
+        
+        for spaceship in self.mothership.spaceships {
+            spaceship.update()
+        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>) {
+        super.touchesEnded(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                switch (self.state) {
+                    
+                case states.battle:
+                    
+                    for spaceship in self.mothership.spaceships {
+                        if let parent = spaceship.parent {
+                            if spaceship.containsPoint(touch.locationInNode(parent)) {
+                                spaceship.touchEnded()
+                                return
+                            }
+                        }
+                    }
+                    
+                    if let parent = self.mothership.spriteNode.parent {
+                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                            Spaceship.retreat()
+                            return
+                        }
+                    }
+                    
+                    Spaceship.touchEnded(touch)
+                    
+                    break
+                    
+                default:
+                    break
+                }
+            }
+        } else {
+            self.state = self.nextState
+            
+            //Próximo estado
+            switch (self.nextState) {
+            case .battle:
+                break
+            default:
+                #if DEBUG
+                    fatalError(self.nextState.rawValue)
+                #endif
+                break
+            }
+        }
         
     }
     
