@@ -18,9 +18,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
-        let spriteNode = SKSpriteNode(imageNamed: "background")
-        spriteNode.texture?.filteringMode = .Nearest
-        self.addChild(spriteNode)
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
@@ -28,6 +25,12 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setScreenBox(size:CGSize) {
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRect(origin: CGPoint(x: -size.width/2, y: -size.height/2), size: size))
+        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.world.rawValue
+        self.physicsBody?.dynamic = false
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -116,15 +119,17 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var none: categoryBitMask { return self.init(0) }
         
-        static var spaceship: categoryBitMask { return categoryBitMask(1 << 0) }
-        static var shot: categoryBitMask { return categoryBitMask(1 << 1) }
-        static var mothership: categoryBitMask { return categoryBitMask(1 << 2) }
+        static var world: categoryBitMask { return categoryBitMask(1 << 0) }
+        static var spaceship: categoryBitMask { return categoryBitMask(1 << 1) }
+        static var shot: categoryBitMask { return categoryBitMask(1 << 2) }
+        static var mothership: categoryBitMask { return categoryBitMask(1 << 3) }
         
     }
     
     struct collisionBitMask {
         
         static var spaceship:UInt32 =
+            categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
                 categoryBitMask.shot.rawValue
         

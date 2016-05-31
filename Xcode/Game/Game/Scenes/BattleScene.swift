@@ -31,8 +31,6 @@ class BattleScene: GameScene {
     var gameCamera:GameCamera!
     var mothership:Mothership!
     
-    var otherMothership:Mothership!
-    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -41,6 +39,9 @@ class BattleScene: GameScene {
         //self.addChild(Control(textureName: "background", xAlign: .center, yAlign: .center))
         
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
+        if let scene = self.scene {
+            self.gameWorld.setScreenBox(scene.size)
+        }
         self.addChild(self.gameWorld)
         self.physicsWorld.contactDelegate = self.gameWorld
         
@@ -48,23 +49,16 @@ class BattleScene: GameScene {
         self.gameWorld.addChild(self.gameCamera)
         self.gameWorld.addChild(self.gameCamera.node)
         
-        self.otherMothership = Mothership(level: 2)
-        self.gameWorld.addChild(self.otherMothership)
-        self.otherMothership.zRotation = CGFloat(M_PI)
-        self.otherMothership.position = CGPoint(x: 0, y: 330 * 2)
-        
-        self.otherMothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 3/10)) { [weak self] in
-            guard let scene = self else { return }
-            scene.nextState = states.battle
-        }
-        
         self.mothership = Mothership(mothershipData: self.playerData.motherShip)
         self.gameWorld.addChild(self.mothership)
         
         self.gameCamera.node.position = self.mothership.position
         self.gameCamera.update()
         
-        self.mothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 2/10))
+        self.mothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 2/10)) { [weak self] in
+            guard let scene = self else { return }
+            scene.nextState = states.battle
+        }
     }
     
     override func update(currentTime: NSTimeInterval) {

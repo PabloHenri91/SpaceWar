@@ -105,7 +105,7 @@ class Spaceship: Control {
     
     func loadPhysics(rectangleOfSize size:CGSize) {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
-        self.physicsBody?.dynamic = true
+        self.physicsBody?.dynamic = false
         
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceship.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceship
@@ -161,10 +161,6 @@ class Spaceship: Control {
     func move() {
         if (self.needToMove) {
             
-//            if let nodePosition = self.targetNode?.position {
-//                self.destination = nodePosition
-//            }
-            
             if CGPoint.distance(self.position, self.destination) < 64 {
                 self.needToMove = false
                 
@@ -182,7 +178,6 @@ class Spaceship: Control {
                 self.auxRotation = CGFloat(-atan2f(dx, dy))
                 var totalRotation = self.auxRotation - self.zRotation
                 
-                
                 if(abs(self.physicsBody!.angularVelocity) < self.maxAngularVelocity) {
                     
                     while(totalRotation < -CGFloat(M_PI)) { totalRotation += CGFloat(M_PI * 2) }
@@ -192,7 +187,13 @@ class Spaceship: Control {
                 }
                 
                 if(abs(totalRotation) < 1) {
-                    self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                    var zRotation = self.zRotation
+                    
+                    if let parent = self.parent {
+                        zRotation += parent.zRotation
+                    }
+                    
+                    self.physicsBody?.applyForce(CGVector(dx: -sin(zRotation) * self.force, dy: cos(zRotation) * self.force))
                 }
             }
         }
