@@ -31,6 +31,8 @@ class BattleScene: GameScene {
     var gameCamera:GameCamera!
     var mothership:Mothership!
     
+    var botMothership:Mothership!
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -38,35 +40,63 @@ class BattleScene: GameScene {
         
         //self.addChild(Control(textureName: "background", xAlign: .center, yAlign: .center))
         
+        // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
-        if let scene = self.scene {
-            self.gameWorld.setScreenBox(scene.size)
-        }
+        self.gameWorld.setScreenBox(Display.defaultSceneSize)
         self.addChild(self.gameWorld)
         self.physicsWorld.contactDelegate = self.gameWorld
         
+        
+        // GameCamera
         self.gameCamera = GameCamera()
         self.gameWorld.addChild(self.gameCamera)
         self.gameWorld.addChild(self.gameCamera.node)
-        
-        self.mothership = Mothership(mothershipData: self.playerData.motherShip)
-        self.gameWorld.addChild(self.mothership)
-        
-        self.gameCamera.node.position = self.mothership.position
+        self.gameCamera.node.position = CGPoint.zero
         self.gameCamera.update()
         
-        self.mothership.runAction(SKAction.moveBy(CGVector(dx: 0, dy: -330), duration: 2/10)) { [weak self] in
-            guard let scene = self else { return }
-            scene.nextState = states.battle
+        // Mothership
+        self.mothership = Mothership(mothershipData: self.playerData.motherShip)
+        self.gameWorld.addChild(self.mothership)
+        self.mothership.position = CGPoint(x: 0, y: -330)
+        
+        // BotMothership
+        self.botMothership = Mothership(level: 1)
+        self.botMothership.zRotation = CGFloat(M_PI)
+        self.botMothership.position = CGPoint(x: 0, y: 330)
+        self.gameWorld.addChild(self.botMothership)
+        
+        // BotSpaceships
+        for _ in 0 ..< 4 {
+            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1))
         }
+        
+        //TODO: remover gamb
+        for botSpaceship in self.botMothership.spaceships {
+            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(1 + Int.random(30)); return a }(), completion:
+                { [weak botSpaceship] in
+                    
+                    guard let someBotSpaceship = botSpaceship else { return }
+                    
+                    someBotSpaceship.destination = CGPoint.zero
+                    someBotSpaceship.needToMove = true
+                    someBotSpaceship.physicsBody?.dynamic = true
+                })
+        }
+        //
+        
+        //Spaceships
+        self.mothership.loadSpaceships(self.gameWorld)
+        self.botMothership.loadSpaceships(self.gameWorld)
+        
+        self.nextState = states.battle
     }
     
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
-        for spaceship in self.mothership.spaceships {
-            spaceship.update()
-        }
+        self.mothership.update(enemySpaceships: self.botMothership.spaceships)
+        
+        self.botMothership.update(enemySpaceships: self.mothership.spaceships)
         
     }
     

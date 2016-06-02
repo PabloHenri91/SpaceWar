@@ -19,6 +19,10 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
         
+        let spriteNode = SKSpriteNode(imageNamed: "background")
+        spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(spriteNode)
+        
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
     }
@@ -150,11 +154,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var mothership:UInt32 = categoryBitMask.shot.rawValue
     }
-    
-    
-    
-    
-    
     
     
 }

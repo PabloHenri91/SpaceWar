@@ -33,10 +33,12 @@ class Spaceship: Control {
     
     var spriteNode:SKSpriteNode!
     
+    var targetNode:SKNode?
+    
     //Movement
     var destination = CGPoint.zero
     var needToMove = false
-    var auxRotation:CGFloat = 0
+    var rotationToDestination:CGFloat = 0
     var maxAngularVelocity:CGFloat = 3
     var force:CGFloat = 25
     var startingPosition = CGPoint.zero
@@ -136,6 +138,9 @@ class Spaceship: Control {
         if let spaceship = Spaceship.selectedSpaceship {
             if let parent = spaceship.parent {
                 
+                //Precisa mover, esqueca o que está fazendo
+                spaceship.targetNode = nil
+                
                 spaceship.destination = touch.locationInNode(parent)
                 spaceship.needToMove = true
             }
@@ -144,6 +149,9 @@ class Spaceship: Control {
     
     static func retreat() {
         if let spaceship = Spaceship.selectedSpaceship {
+            //Precisa mover, esqueca o que está fazendo
+            spaceship.targetNode = nil
+            
             spaceship.destination = spaceship.startingPosition
             spaceship.needToMove = true
             
@@ -154,47 +162,94 @@ class Spaceship: Control {
         Spaceship.selectedSpaceship = nil
     }
     
-    func update() {
-        self.move()
+    func update(enemySpaceships enemySpaceships:[Spaceship]) {
+        self.move(enemySpaceships: enemySpaceships)
     }
     
-    func move() {
+    func resetToStartingPosition() {
+        self.position = self.startingPosition
+        self.zRotation = 0
+        self.physicsBody?.velocity = CGVector.zero
+        self.physicsBody?.angularVelocity = 0
+        self.physicsBody?.dynamic = false
+    }
+    
+    func nearestTarget(enemySpaceships enemySpaceships:[Spaceship]) -> Spaceship? {
+        
+        var currentTarget:Spaceship? = nil
+        
+        if enemySpaceships.count > 0 {
+            
+            for spaceship in enemySpaceships {
+                
+                if let someTarget = currentTarget {
+                    
+                } else {
+                    if let physicsBody = spaceship.physicsBody {
+                        if physicsBody.dynamic {
+                            currentTarget = spaceship
+                        }
+                    }
+                }
+            }
+        }
+        
+        return currentTarget
+    }
+    
+    func rotateToPoint(point:CGPoint) {
+        
+        let dx = Float(self.destination.x - self.position.x)
+        let dy = Float(self.destination.y - self.position.y)
+        
+        self.rotationToDestination = CGFloat(-atan2f(dx, dy))
+        
+        if(abs(self.physicsBody!.angularVelocity) < self.maxAngularVelocity) {
+            
+            var totalRotation = self.rotationToDestination - self.zRotation
+            
+            while(totalRotation < -CGFloat(M_PI)) { totalRotation += CGFloat(M_PI * 2) }
+            while(totalRotation >  CGFloat(M_PI)) { totalRotation -= CGFloat(M_PI * 2) }
+            
+            self.physicsBody?.applyAngularImpulse(totalRotation * 0.0005)
+        }
+    }
+    
+    func move(enemySpaceships enemySpaceships:[Spaceship]) {
+        
+        if let targetNode = self.targetNode {
+            self.destination = targetNode.position
+        }
+        
         if (self.needToMove) {
             
             if CGPoint.distance(self.position, self.destination) < 64 {
                 self.needToMove = false
                 
                 if self.destination == self.startingPosition {
-                    self.position = self.startingPosition
-                    self.zRotation = 0
-                    self.physicsBody?.velocity = CGVector.zero
-                    self.physicsBody?.angularVelocity = 0
-                    self.physicsBody?.dynamic = false
+                    self.resetToStartingPosition()
+                } else {
+                    self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
                 }
                 
             } else {
-                let dx = Float(self.destination.x - self.position.x)
-                let dy = Float(self.destination.y - self.position.y)
-                self.auxRotation = CGFloat(-atan2f(dx, dy))
-                var totalRotation = self.auxRotation - self.zRotation
                 
-                if(abs(self.physicsBody!.angularVelocity) < self.maxAngularVelocity) {
-                    
-                    while(totalRotation < -CGFloat(M_PI)) { totalRotation += CGFloat(M_PI * 2) }
-                    while(totalRotation >  CGFloat(M_PI)) { totalRotation -= CGFloat(M_PI * 2) }
-                    
-                    self.physicsBody?.applyAngularImpulse(totalRotation * 0.0005)
-                }
+                self.rotateToPoint(self.destination)
                 
-                if(abs(totalRotation) < 1) {
-                    var zRotation = self.zRotation
-                    
-                    if let parent = self.parent {
-                        zRotation += parent.zRotation
-                    }
-                    
-                    self.physicsBody?.applyForce(CGVector(dx: -sin(zRotation) * self.force, dy: cos(zRotation) * self.force))
+                if(abs(self.rotationToDestination - self.zRotation) < 1) {
+                    self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                 }
+            }
+        } else {
+            
+            if let targetNode = self.targetNode {
+                self.rotateToPoint(targetNode.position)
+                
+                if CGPoint.distance(self.position, targetNode.position) > 11164 {
+                    self.needToMove = true
+                }
+            } else {
+                self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
             }
         }
     }
@@ -280,6 +335,7 @@ extension Spaceship {
     
     static var targetPriorityTypes = [
         [TargetType.spaceships, TargetType.towers, TargetType.mothership],
+        
         [TargetType.towers, TargetType.mothership]
     ]
     

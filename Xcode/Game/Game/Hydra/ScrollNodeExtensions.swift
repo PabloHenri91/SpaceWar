@@ -32,9 +32,9 @@ extension ScrollNode {
         }
         
         control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
-        control.physicsBody!.affectedByGravity = false
-        control.physicsBody!.categoryBitMask = 0
-        control.physicsBody!.linearDamping = 4
+        control.physicsBody?.affectedByGravity = false
+        control.physicsBody?.categoryBitMask = 0
+        control.physicsBody?.linearDamping = 4
         
         //a primeira celula é adicionada na origem do nodo mas as outras acompanha as existentes
         if self.cells.count > 0 {
