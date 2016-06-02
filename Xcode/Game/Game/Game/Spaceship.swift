@@ -182,7 +182,7 @@ class Spaceship: Control {
             
             for spaceship in enemySpaceships {
                 
-                if let someTarget = currentTarget {
+                if currentTarget != nil {
                     
                 } else {
                     if let physicsBody = spaceship.physicsBody {

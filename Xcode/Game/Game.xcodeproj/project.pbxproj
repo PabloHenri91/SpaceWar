@@ -312,7 +312,6 @@
 				8436204D1CEB77400082A9D7 /* CharacterGenerator.swift */,
 				8436204E1CEB77400082A9D7 /* Control.swift */,
 				8436204F1CEB77400082A9D7 /* CropBox.swift */,
-				8436205D1CEB77400082A9D7 /* DefaultNameList */,
 				843620501CEB77400082A9D7 /* Display.swift */,
 				843620511CEB77400082A9D7 /* Event.swift */,
 				3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */,
@@ -347,7 +346,6 @@
 		844CF2981CE78BDF0032F6AA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				84029D821CF49D68001853FF /* BattleScene.swift */,
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
 				84029D821CF49D68001853FF /* BattleScene.swift */,
