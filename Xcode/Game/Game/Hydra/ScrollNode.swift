@@ -71,11 +71,11 @@ class ScrollNode: Control {
                 control.resetPosition()
                 
                 control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
-                control.physicsBody!.affectedByGravity = false
-                control.physicsBody!.categoryBitMask = 0
-                control.physicsBody!.collisionBitMask = 0
-                control.physicsBody!.contactTestBitMask = 0
-                control.physicsBody!.linearDamping = 4
+                control.physicsBody?.affectedByGravity = false
+                control.physicsBody?.categoryBitMask = 0
+                control.physicsBody?.collisionBitMask = 0
+                control.physicsBody?.contactTestBitMask = 0
+                control.physicsBody?.linearDamping = 4
                 
                 self.addChild(control)
                 
@@ -126,7 +126,7 @@ class ScrollNode: Control {
                             outOfBounds = true
                             let auxMove:Int = Int(scrollNode.cells[scrollNode.cells.count - 1].position.x - scrollNode.firstCellPositionX)
                             for cell in scrollNode.cells {
-                                cell.physicsBody!.applyForce(CGVector(dx: -auxMove * scrollNode.force/10, dy: 0))
+                                cell.physicsBody?.applyForce(CGVector(dx: -auxMove * scrollNode.force/10, dy: 0))
                             }
                         }
                         
@@ -134,13 +134,13 @@ class ScrollNode: Control {
                             outOfBounds = true
                             let auxMove:Int = Int(scrollNode.cells[0].position.x - scrollNode.firstCellPositionX)
                             for cell in scrollNode.cells {
-                                cell.physicsBody!.applyForce(CGVector(dx: -auxMove * scrollNode.force/10, dy: 0))
+                                cell.physicsBody?.applyForce(CGVector(dx: -auxMove * scrollNode.force/10, dy: 0))
                             }
                         }
                         
                         if(!outOfBounds && !containsPoins) {
                             
-                            if(abs(scrollNode.cells[0].physicsBody!.velocity.dx) < 20) {
+                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dx)!) < 20) {
                                 
                                 let i = round((scrollNode.firstCellPositionX - scrollNode.cells[0].position.x) / CGFloat(scrollNode.width + scrollNode.spacing/Int(Display.screenScale)))
                                 
@@ -149,7 +149,7 @@ class ScrollNode: Control {
                                 auxMove = scrollNode.firstCellPositionX - scrollNode.cells[Int(i)].position.x
                                 
                                 for cell in scrollNode.cells {
-                                    cell.physicsBody!.applyForce(CGVector(dx: auxMove, dy: 0))
+                                    cell.physicsBody?.applyForce(CGVector(dx: auxMove, dy: 0))
                                 }
                             }
                         }
@@ -164,27 +164,27 @@ class ScrollNode: Control {
                             outOfBounds = true
                             let auxMove:Int = Int(scrollNode.cells[0].position.y - scrollNode.firstCellPositionY)
                             for cell in scrollNode.cells {
-                                cell.physicsBody!.applyForce(CGVector(dx: 0, dy: -auxMove * scrollNode.force/10))
+                                cell.physicsBody?.applyForce(CGVector(dx: 0, dy: -auxMove * scrollNode.force/10))
                             }
                         }
                         if !(scrollNode.cells[scrollNode.cells.count - 1].position.y <= scrollNode.firstCellPositionY) {
                             outOfBounds = true
                             let auxMove:Int = Int(scrollNode.cells[scrollNode.cells.count - 1].position.y - scrollNode.firstCellPositionY)
                             for cell in scrollNode.cells {
-                                cell.physicsBody!.applyForce(CGVector(dx: 0, dy: -auxMove * scrollNode.force/10))
+                                cell.physicsBody?.applyForce(CGVector(dx: 0, dy: -auxMove * scrollNode.force/10))
                             }
                         }
                         
                         if(!outOfBounds && !containsPoins) {
                             
-                            if(abs(scrollNode.cells[0].physicsBody!.velocity.dy) < 20) {
+                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dy)!) < 20) {
                                 
                                 let i = round((scrollNode.cells[0].position.y - scrollNode.firstCellPositionY) / CGFloat(scrollNode.height + scrollNode.spacing/Int(Display.screenScale)))
                                 
                                 let auxMove = scrollNode.firstCellPositionY - scrollNode.cells[Int(i)].position.y
                                 
                                 for cell in scrollNode.cells {
-                                    cell.physicsBody!.applyForce(CGVector(dx: 0, dy: auxMove))
+                                    cell.physicsBody?.applyForce(CGVector(dx: 0, dy: auxMove))
                                 }
                             }
                         }
@@ -224,9 +224,9 @@ class ScrollNode: Control {
                             if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
                                 for cell in scrollNode.cells {
                                     let position = cell.position
-                                    cell.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+                                    cell.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                                     cell.position = CGPoint(x: position.x + Control.dx, y: position.y)
-                                    cell.physicsBody!.applyForce(CGVector(dx: Control.dx * CGFloat(scrollNode.force * 5), dy: 0))
+                                    cell.physicsBody?.applyForce(CGVector(dx: Control.dx * CGFloat(scrollNode.force * 5), dy: 0))
                                 }
                             }
                         }
@@ -255,9 +255,9 @@ class ScrollNode: Control {
                                 
                                 for cell in scrollNode.cells {
                                     let position = cell.position
-                                    cell.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+                                    cell.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                                     cell.position = CGPoint(x: position.x, y: position.y + Control.dy)
-                                    cell.physicsBody!.applyForce(CGVector(dx: 0, dy: Control.dy * CGFloat(scrollNode.force * 5)))
+                                    cell.physicsBody?.applyForce(CGVector(dx: 0, dy: Control.dy * CGFloat(scrollNode.force * 5)))
                                 }
                             }
                         }
@@ -285,7 +285,7 @@ class ScrollNode: Control {
                             for cell in scrollNode.cells {
                                 let position = cell.position
                                 cell.position = CGPoint(x: position.x + Control.dx, y: position.y)
-                                cell.physicsBody!.applyForce(CGVector(dx: Control.dx * CGFloat(scrollNode.force * 10), dy: 0))
+                                cell.physicsBody?.applyForce(CGVector(dx: Control.dx * CGFloat(scrollNode.force * 10), dy: 0))
                             }
                         }
                     }
@@ -299,7 +299,7 @@ class ScrollNode: Control {
                             for cell in scrollNode.cells {
                                 let position = cell.position
                                 cell.position = CGPoint(x: position.x, y: position.y + Control.dy)
-                                cell.physicsBody!.applyForce(CGVector(dx: 0, dy: Control.dy * CGFloat(scrollNode.force * 10)))
+                                cell.physicsBody?.applyForce(CGVector(dx: 0, dy: Control.dy * CGFloat(scrollNode.force * 10)))
                             }
                         }
                     }

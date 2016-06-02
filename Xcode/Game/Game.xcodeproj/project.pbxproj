@@ -305,6 +305,7 @@
 		844CF2961CE78BB20032F6AA /* Hydra */ = {
 			isa = PBXGroup;
 			children = (
+				8436205D1CEB77400082A9D7 /* DefaultNameList */,
 				8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */,
 				8436204B1CEB77400082A9D7 /* Box.swift */,
 				8436204C1CEB77400082A9D7 /* Button.swift */,
@@ -346,6 +347,7 @@
 		844CF2981CE78BDF0032F6AA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				84029D821CF49D68001853FF /* BattleScene.swift */,
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
 				84029D821CF49D68001853FF /* BattleScene.swift */,

@@ -47,13 +47,11 @@ class Mothership: Control {
         self.mothershipData = mothershipData
         self.load(level: mothershipData.level.integerValue)
         
-        
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
-                spaceships.append(Spaceship(spaceshipData: spaceshipData))
+                self.spaceships.append(Spaceship(spaceshipData: spaceshipData))
             }
         }
-        self.loadSpaceships(spaceships)
     }
     
     private func load(level level:Int) {
@@ -79,31 +77,37 @@ class Mothership: Control {
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
     
-    func loadSpaceships(spaceships:[Spaceship]) {
+    func loadSpaceships(gameWorld:GameWorld) {
         
         var i = 0
-        for spaceship in spaceships {
+        for spaceship in self.spaceships {
             
-            self.addChild(spaceship)
+            gameWorld.addChild(spaceship)
             
             switch i {
             case 0:
-                spaceship.position = CGPoint(x: -103, y: 78)
+                spaceship.position = self.convertPoint(CGPoint(x: -103, y: 78), toNode: gameWorld)
                 break
             case 1:
-                spaceship.position = CGPoint(x: -34, y: 78)
+                spaceship.position = self.convertPoint(CGPoint(x: -34, y: 78), toNode: gameWorld)
                 break
             case 2:
-                spaceship.position = CGPoint(x: 34, y: 78)
+                spaceship.position = self.convertPoint(CGPoint(x: 34, y: 78), toNode: gameWorld)
                 break
             case 3:
-                spaceship.position = CGPoint(x: 103, y: 78)
+                spaceship.position = self.convertPoint(CGPoint(x: 103, y: 78), toNode: gameWorld)
                 break
             default:
                 break
             }
             spaceship.startingPosition = spaceship.position
             i += 1
+        }
+    }
+    
+    func update(enemySpaceships enemySpaceships:[Spaceship]) {
+        for spaceship in self.spaceships {
+            spaceship.update(enemySpaceships: enemySpaceships)
         }
     }
 }
