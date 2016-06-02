@@ -18,7 +18,7 @@ class GameViewController: UIViewController {
         
         Display.viewBoundsSize = skView.bounds.size
         
-        let scene = SocialScene()
+        let scene = LoadScene()
         
         #if DEBUG
             skView.showsFPS = true
