@@ -86,7 +86,6 @@ class GameScene: SKScene {
         ScrollNode.update()
     }
     
-    
     override func didFinishUpdate() {
         //print("dX: " + Control.dx.description + " dY: " + Control.dy.description)
         Control.dx = 0

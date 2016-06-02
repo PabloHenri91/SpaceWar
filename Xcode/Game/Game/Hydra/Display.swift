@@ -10,7 +10,6 @@ import SpriteKit
 
 class Display {
     
-    
     static var viewBoundsSize:CGSize!
     
     static var translate:CGPoint!

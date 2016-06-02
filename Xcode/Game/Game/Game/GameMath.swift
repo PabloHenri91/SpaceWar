@@ -10,9 +10,6 @@ import SpriteKit
 
 class GameMath {
     
-    
-    
-    
     //Spaceships
     static let spaceshipHealthPointsPerArmor = 4
     static let spaceshipHealthPointsPerLevel = 2
@@ -51,7 +48,6 @@ class GameMath {
         return 100 - shieldRechargeInterval
     }
     
-    
     // Weapons
     static func weaponDemage(level level:Int, type:WeaponType) -> Int {
         return type.demage + ((level - 1) * type.demagePerLevel)
@@ -68,7 +64,6 @@ class GameMath {
     static func weaponAmmoPerMag(level level:Int, type:WeaponType) -> Int {
         return type.ammoPerMag + ((level - 1) * type.ammoPerMagPerLevel)
     }
-    
     
     // Mothership
     static let mothershipHealthPointsPerLevel = 8

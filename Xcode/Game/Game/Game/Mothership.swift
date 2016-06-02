@@ -76,13 +76,21 @@ class Mothership: Control {
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mothership
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
-    
-    func loadSpaceships(gameWorld:GameWorld) {
+
+    func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
         
         var i = 0
         for spaceship in self.spaceships {
             
+            spaceship.zRotation = self.zRotation
+            
             gameWorld.addChild(spaceship)
+            
+            if isAlly {
+                spaceship.loadAllyDetails()
+            } else {
+                spaceship.loadEnemyDetails()
+            }
             
             switch i {
             case 0:

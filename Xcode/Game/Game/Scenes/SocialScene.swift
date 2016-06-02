@@ -13,11 +13,9 @@ import FBSDKShareKit
 
 class SocialScene: GameScene {
     
-    
     var playerData = MemoryCard.sharedInstance.playerData
     
      var buttonInvite:Button!
-    
     
     //facebook Request
     var after:String = ""
@@ -49,7 +47,6 @@ class SocialScene: GameScene {
     //Estados iniciais
     var state = states.normal
     var nextState = states.normal
-    
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -117,7 +114,6 @@ class SocialScene: GameScene {
         }
     }
     
-    
     override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
@@ -140,8 +136,6 @@ class SocialScene: GameScene {
         
     }
     
-    
-    
-    
-    
+       
+       
 }

@@ -155,5 +155,4 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         static var mothership:UInt32 = categoryBitMask.shot.rawValue
     }
     
-    
 }

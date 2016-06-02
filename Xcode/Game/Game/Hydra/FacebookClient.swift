@@ -109,7 +109,6 @@ class FacebookClient {
         }
     }
     
-    
     func listInvitablesFriends(returnFunction: (Array<NSDictionary>, NSError?) -> Void) {
         
         let params: NSMutableDictionary = ["fields": "name" ]

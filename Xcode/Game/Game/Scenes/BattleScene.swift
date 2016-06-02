@@ -86,7 +86,7 @@ class BattleScene: GameScene {
         
         //Spaceships
         self.mothership.loadSpaceships(self.gameWorld)
-        self.botMothership.loadSpaceships(self.gameWorld)
+        self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
         
         self.nextState = states.battle
     }

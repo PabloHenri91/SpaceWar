@@ -79,6 +79,18 @@ class Spaceship: Control {
         }
     }
     
+    func loadAllyDetails() {
+        let spriteNode = SKSpriteNode(imageNamed: "spaceshipAlly")
+        spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(spriteNode)
+    }
+    
+    func loadEnemyDetails() {
+        let spriteNode = SKSpriteNode(imageNamed: "spaceshipEnemy")
+        spriteNode.texture?.filteringMode = .Nearest
+        self.addChild(spriteNode)
+    }
+    
     private func load(type type:Int, level:Int) {
         
         self.type = Spaceship.types[type]
@@ -183,7 +195,13 @@ class Spaceship: Control {
             for spaceship in enemySpaceships {
                 
                 if currentTarget != nil {
-                    
+                    if let physicsBody = spaceship.physicsBody {
+                        if physicsBody.dynamic {
+                            if CGPoint.distance(self.position, spaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
+                                currentTarget = spaceship
+                            }
+                        }
+                    }
                 } else {
                     if let physicsBody = spaceship.physicsBody {
                         if physicsBody.dynamic {
@@ -244,10 +262,6 @@ class Spaceship: Control {
             
             if let targetNode = self.targetNode {
                 self.rotateToPoint(targetNode.position)
-                
-                if CGPoint.distance(self.position, targetNode.position) > 11164 {
-                    self.needToMove = true
-                }
             } else {
                 self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
             }
@@ -279,7 +293,6 @@ class Spaceship: Control {
             }
         }
     }
-    
     
     func updateSpaceshipData() {
         if let spaceshipData = self.spaceshipData {

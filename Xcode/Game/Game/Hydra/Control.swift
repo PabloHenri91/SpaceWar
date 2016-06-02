@@ -117,8 +117,7 @@ class Control: SKNode {
         super.removeFromParent()
     }
     
-    
-    
+       
     //Input
     
     static func resetInput() {

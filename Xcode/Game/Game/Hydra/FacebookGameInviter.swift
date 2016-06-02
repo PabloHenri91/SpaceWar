@@ -12,7 +12,6 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     
     static let sharedInstance = FacebookGameInviter()
     
-    
     func gameRequestDialogDidCancel(gameRequestDialog: FBSDKGameRequestDialog!) {
         print("cancel")
     }
