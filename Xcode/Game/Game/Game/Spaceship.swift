@@ -194,17 +194,14 @@ class Spaceship: Control {
             
             for spaceship in enemySpaceships {
                 
-                if currentTarget != nil {
-                    if let physicsBody = spaceship.physicsBody {
-                        if physicsBody.dynamic {
-                            if CGPoint.distance(self.position, spaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
+                if let physicsBody = spaceship.physicsBody {
+                    
+                    if physicsBody.dynamic {
+                        if currentTarget != nil {
+                            if CGPoint.distance(self.destination, spaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
                                 currentTarget = spaceship
                             }
-                        }
-                    }
-                } else {
-                    if let physicsBody = spaceship.physicsBody {
-                        if physicsBody.dynamic {
+                        } else {
                             currentTarget = spaceship
                         }
                     }
@@ -217,8 +214,8 @@ class Spaceship: Control {
     
     func rotateToPoint(point:CGPoint) {
         
-        let dx = Float(self.destination.x - self.position.x)
-        let dy = Float(self.destination.y - self.position.y)
+        let dx = Float(point.x - self.position.x)
+        let dy = Float(point.y - self.position.y)
         
         self.rotationToDestination = CGFloat(-atan2f(dx, dy))
         
@@ -235,13 +232,9 @@ class Spaceship: Control {
     
     func move(enemySpaceships enemySpaceships:[Spaceship]) {
         
-        if let targetNode = self.targetNode {
-            self.destination = targetNode.position
-        }
-        
         if (self.needToMove) {
             
-            if CGPoint.distance(self.position, self.destination) < 64 {
+            if CGPoint.distance(self.position, self.destination) < 32 {
                 self.needToMove = false
                 
                 if self.destination == self.startingPosition {
@@ -258,9 +251,15 @@ class Spaceship: Control {
                     self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                 }
             }
+            
         } else {
             
             if let targetNode = self.targetNode {
+                if let physicsBody = targetNode.physicsBody {
+                    if !physicsBody.dynamic {
+                        self.targetNode = nil
+                    }
+                }
                 self.rotateToPoint(targetNode.position)
             } else {
                 self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)

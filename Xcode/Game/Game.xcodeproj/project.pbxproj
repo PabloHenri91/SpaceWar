@@ -346,9 +346,9 @@
 		844CF2981CE78BDF0032F6AA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				84029D821CF49D68001853FF /* BattleScene.swift */,
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
-				84029D821CF49D68001853FF /* BattleScene.swift */,
 				3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */,
 			);
 			path = Scenes;
