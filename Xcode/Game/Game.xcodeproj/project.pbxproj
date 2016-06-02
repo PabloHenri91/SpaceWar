@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B7B4C1CFF4DA500C85D91 /* FacebookGameInviter.swift */; };
 		3AA0C97A1CFDB3B5008EE628 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */; };
 		3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */; };
 		3AA0C97C1CFDB3B5008EE628 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */; };
@@ -22,7 +23,7 @@
 		3AA0C9861CFDB3B5008EE628 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */; };
 		3AA0C9871CFDB3B5008EE628 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
 		3AA0CA281CFDBCB5008EE628 /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */; };
-		3AA0CA2A1CFE13BA008EE628 /* FacebookLoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA291CFE13BA008EE628 /* FacebookLoginClient.swift */; };
+		3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */; };
 		84029D831CF49D68001853FF /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84029D821CF49D68001853FF /* BattleScene.swift */; };
 		84029D841CF49D68001853FF /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84029D821CF49D68001853FF /* BattleScene.swift */; };
 		842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
@@ -106,6 +107,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A3B7B4C1CFF4DA500C85D91 /* FacebookGameInviter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookGameInviter.swift; sourceTree = "<group>"; };
 		3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
 		3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -121,7 +123,7 @@
 		3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
-		3AA0CA291CFE13BA008EE628 /* FacebookLoginClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookLoginClient.swift; sourceTree = "<group>"; };
+		3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookClient.swift; sourceTree = "<group>"; };
 		84029D821CF49D68001853FF /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
 		8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackSpriteNode.swift; sourceTree = "<group>"; };
@@ -309,8 +311,11 @@
 				8436204D1CEB77400082A9D7 /* CharacterGenerator.swift */,
 				8436204E1CEB77400082A9D7 /* Control.swift */,
 				8436204F1CEB77400082A9D7 /* CropBox.swift */,
+				8436205D1CEB77400082A9D7 /* DefaultNameList */,
 				843620501CEB77400082A9D7 /* Display.swift */,
 				843620511CEB77400082A9D7 /* Event.swift */,
+				3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */,
+				3A3B7B4C1CFF4DA500C85D91 /* FacebookGameInviter.swift */,
 				843620521CEB77400082A9D7 /* GameCamera.swift */,
 				843620531CEB77400082A9D7 /* GameColors.swift */,
 				843620541CEB77400082A9D7 /* GameFonts.swift */,
@@ -322,8 +327,6 @@
 				8436205A1CEB77400082A9D7 /* ScrollNode.swift */,
 				8436205B1CEB77400082A9D7 /* ScrollNodeExtensions.swift */,
 				8436205C1CEB77400082A9D7 /* StringExtension.swift */,
-				8436205D1CEB77400082A9D7 /* DefaultNameList */,
-				3AA0CA291CFE13BA008EE628 /* FacebookLoginClient.swift */,
 			);
 			path = Hydra;
 			sourceTree = "<group>";
@@ -484,7 +487,7 @@
 				843620621CEB77400082A9D7 /* Button.swift in Sources */,
 				844CF26F1CE77B400032F6AA /* GameViewController.swift in Sources */,
 				843620741CEB77400082A9D7 /* GameScene.swift in Sources */,
-				3AA0CA2A1CFE13BA008EE628 /* FacebookLoginClient.swift in Sources */,
+				3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				843620781CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
@@ -508,6 +511,7 @@
 				843620661CEB77400082A9D7 /* Control.swift in Sources */,
 				843620701CEB77400082A9D7 /* GameColors.swift in Sources */,
 				8436206E1CEB77400082A9D7 /* GameCamera.swift in Sources */,
+				3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */,
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */,
 				3AA0CA281CFDBCB5008EE628 /* SocialScene.swift in Sources */,
