@@ -82,13 +82,13 @@ class Spaceship: Control {
     func loadAllyDetails() {
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipAlly")
         spriteNode.texture?.filteringMode = .Nearest
-        self.addChild(spriteNode)
+        self.spriteNode.addChild(spriteNode)
     }
     
     func loadEnemyDetails() {
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipEnemy")
         spriteNode.texture?.filteringMode = .Nearest
-        self.addChild(spriteNode)
+        self.spriteNode.addChild(spriteNode)
     }
     
     private func load(type type:Int, level:Int) {

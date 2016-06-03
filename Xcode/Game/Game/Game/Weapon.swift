@@ -16,7 +16,7 @@ class Weapon: Control {
     var demage:Int!
     var range:Int!
     var reloadTime:Double!
-    var ammoPerMag:Int!
+    var magazineSize:Int!
     
     var weaponData:WeaponData?
     
@@ -26,7 +26,7 @@ class Weapon: Control {
             "demage: " + demage.description  + "\n" +
             "range: " + range.description  + "\n" +
             "reloadTime: " + reloadTime.description  + "\n" +
-            "ammoPerMag: " + ammoPerMag.description  + "\n"
+            "magazineSize: " + magazineSize.description  + "\n"
     }
     
     init(type:Int, level:Int) {
@@ -53,7 +53,7 @@ class Weapon: Control {
         self.demage = GameMath.weaponDemage(level: self.level, type: self.type)
         self.range = GameMath.weaponRange(level: self.level, type: self.type)
         self.reloadTime = GameMath.weaponReloadTime(level: self.level, type: self.type)
-        self.ammoPerMag = GameMath.weaponAmmoPerMag(level: self.level, type: self.type)
+        self.magazineSize = GameMath.weaponMagazineSize(level: self.level, type: self.type)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,44 +67,42 @@ class WeaponType {
     
     var demage:Int
     var range:Int
+    var fireRate:Int
     var reloadTime:Double
-    var ammoPerMag:Int
+    var magazineSize:Int
     
     var demagePerLevel:Int
     var rangePerLevel:Int
     var reloadTimePerLevel:Double
-    var ammoPerMagPerLevel:Int
+    var magazineSizePerLevel:Int
     
-    init(maxLevel:Int, demage:Int, range:Int, reloadTime:Double, ammoPerMag:Int, demagePerLevel:Int, rangePerLevel:Int, reloadTimePerLevel:Double, ammoPerMagPerLevel:Int) {
+    init(maxLevel:Int, demage:Int, range:Int, fireRate:Int, reloadTime:Double, magazineSize:Int, demagePerLevel:Int, rangePerLevel:Int, reloadTimePerLevel:Double, magazineSizePerLevel:Int) {
         
         self.maxLevel = maxLevel
         
         self.demage = demage
         self.range = range
+        self.fireRate = fireRate
         self.reloadTime = reloadTime
-        self.ammoPerMag = ammoPerMag
+        self.magazineSize = magazineSize
         
         self.demagePerLevel = demagePerLevel
         self.rangePerLevel = rangePerLevel
         self.reloadTimePerLevel = reloadTimePerLevel
-        self.ammoPerMagPerLevel = ammoPerMagPerLevel
+        self.magazineSizePerLevel = magazineSizePerLevel
     }
 }
 
 extension Weapon {
     
     static var types = [
-        WeaponType(maxLevel: 1,
-            demage: 1, range: 1, reloadTime: 1, ammoPerMag: 1,
-            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, ammoPerMagPerLevel: 1),
+        WeaponType(maxLevel: 1, demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
+            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1),
         
-        WeaponType(maxLevel: 1,
-            demage: 1, range: 1, reloadTime: 1, ammoPerMag: 1,
-            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, ammoPerMagPerLevel: 1),
+        WeaponType(maxLevel: 1, demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
+            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1),
         
-        WeaponType(maxLevel: 1,
-            demage: 1, range: 1, reloadTime: 1, ammoPerMag: 1,
-            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, ammoPerMagPerLevel: 1)
-        
+        WeaponType(maxLevel: 1, demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
+            demagePerLevel: 1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1)
     ]
 }

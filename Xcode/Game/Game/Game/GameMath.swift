@@ -61,8 +61,8 @@ class GameMath {
         return type.reloadTime + ((Double(level) - 1) * type.reloadTimePerLevel)
     }
     
-    static func weaponAmmoPerMag(level level:Int, type:WeaponType) -> Int {
-        return type.ammoPerMag + ((level - 1) * type.ammoPerMagPerLevel)
+    static func weaponMagazineSize(level level:Int, type:WeaponType) -> Int {
+        return type.magazineSize + ((level - 1) * type.magazineSizePerLevel)
     }
     
     // Mothership
