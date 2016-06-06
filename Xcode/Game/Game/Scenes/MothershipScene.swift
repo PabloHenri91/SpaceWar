@@ -16,6 +16,9 @@ class MothershipScene: GameScene {
         
         //Estados de saida da scene
         case battle
+        
+        //Estados de saida da scene
+        case social
     }
     
     //Estados iniciais
@@ -25,6 +28,7 @@ class MothershipScene: GameScene {
     let playerData = MemoryCard.sharedInstance.playerData
     
     var buttonBattle:Button!
+    var buttonSocial:Button!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -38,6 +42,9 @@ class MothershipScene: GameScene {
         
         self.buttonBattle = Button(textureName: "button", text: "battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBattle)
+        
+        self.buttonSocial = Button(textureName: "button", text: "Social", x: 93, y: 299, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonSocial)
         
         let control = Control(spriteNode: SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 1,height: 1)), x:160, y:284, xAlign: .center, yAlign: .center)
         control.zPosition = -1
@@ -59,6 +66,9 @@ class MothershipScene: GameScene {
             switch (self.nextState) {
             case .battle:
                 self.view?.presentScene(BattleScene())
+                break
+            case .social:
+                self.view?.presentScene(SocialScene())
                 break
             default:
                 #if DEBUG
@@ -82,6 +92,12 @@ class MothershipScene: GameScene {
                         self.nextState = states.battle
                         return
                     }
+                    
+                    if(self.buttonSocial.containsPoint(touch.locationInNode(self))) {
+                        self.nextState = states.social
+                        return
+                    }
+                    
                     break
                     
                 default:

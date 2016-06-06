@@ -9,19 +9,10 @@
 import SpriteKit
 
 
-class SocialScene: GameScene {
+class SocialScene: GameScene, FacebookGameInviterDelegate {
     
     var playerData = MemoryCard.sharedInstance.playerData
-    
-     var buttonInvite:Button!
-    
-    //facebook Request
-    var after:String = ""
-    var idFriendArray = NSMutableArray()
-    var idFriendPushArray = NSMutableArray()
-    var blockedArray = NSMutableArray()
-    var nameFriendArray = NSMutableArray()
-    var picsArray = NSMutableArray()
+    var buttonInvite:Button!
     var loadingImage:SKSpriteNode!
     lazy var deathEffect:SKAction = {
         return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
@@ -134,6 +125,45 @@ class SocialScene: GameScene {
         
     }
     
-       
-       
+    
+    func inviteFriends(){
+        FacebookClient.sharedInstance.listInvitablesFriends { (invitableFriends, error) in
+            if error == nil {
+                
+                var idFriendArray = [AnyObject]()
+                
+                for item in invitableFriends
+                {
+                        if let idFriend = item.objectForKey("id"){
+                            idFriendArray.append(idFriend)
+                        }
+                }
+                
+                FacebookGameInviter.sharedInstance.inviteAllFriends(self,idFriendArray: idFriendArray)
+                
+            } else {
+                print(error)
+                self.nextState = .normal
+            }
+        }
+    }
+    
+    
+    func alertError(error: String) {
+        print(error)
+        self.nextState = .normal
+    }
+    
+    
+    func inviteSucess(invitedsCount: Int) {
+        print("sucess")
+        print(invitedsCount)
+    }
+    
+    func inviteFinished() {
+        print("finished")
+        self.nextState = .normal
+    }
+    
+
 }
