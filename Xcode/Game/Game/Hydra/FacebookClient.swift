@@ -111,7 +111,7 @@ class FacebookClient {
     
     func listInvitablesFriends(returnFunction: (Array<NSDictionary>, NSError?) -> Void) {
         
-        let params: NSMutableDictionary = ["fields": "name" ]
+        let params: NSMutableDictionary = ["fields": "picture,name" ]
         var friendArray = Array<NSDictionary>()
         
         loginToFacebookWithSuccess({
@@ -120,6 +120,7 @@ class FacebookClient {
             request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
                 if (result != nil && error == nil){
                     
+                    print(result)
                     friendArray = result.objectForKey("data") as! Array<NSDictionary>
                     returnFunction(friendArray, nil)
                     

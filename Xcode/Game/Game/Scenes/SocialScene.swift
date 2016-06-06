@@ -7,8 +7,6 @@
 //
 
 import SpriteKit
-import FBSDKLoginKit
-import FBSDKShareKit
 
 
 class SocialScene: GameScene {
@@ -25,10 +23,6 @@ class SocialScene: GameScene {
     var nameFriendArray = NSMutableArray()
     var picsArray = NSMutableArray()
     var loadingImage:SKSpriteNode!
-    var fbID: String!
-    var picNodes = Array<Control>()
-
-    
     lazy var deathEffect:SKAction = {
         return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
     }()
@@ -73,13 +67,17 @@ class SocialScene: GameScene {
                 break
             }
         } else {
+            
+            self.state = self.nextState
+            
             //Próximo estado
             switch (self.nextState) {
                 
             case states.invite:
                 
+                
                 self.loadingImage = SKSpriteNode(imageNamed: "circleLoading")
-                self.loadingImage.position = CGPoint(x: 1334/4, y: -750/4)
+                self.loadingImage.position = CGPoint(x: Display.currentSceneSize.width/2 , y: -(Display.currentSceneSize.height/2))
                 self.addChild(self.loadingImage)
                 
                 self.loadingImage.runAction(self.deathEffect)
@@ -88,7 +86,7 @@ class SocialScene: GameScene {
                 self.blackSpriteNode.zPosition = 1000
                 self.loadingImage.zPosition = self.blackSpriteNode.zPosition + 1
                 
-                //self.inviteFriends(nil, limit: 50)
+                self.inviteFriends()
                 
                 break
                 
@@ -123,7 +121,7 @@ class SocialScene: GameScene {
                 switch (self.state) {
                 case states.normal:
                     if(self.buttonInvite.containsPoint(touch.locationInNode(self))) {
-                       FacebookGameInviter.sharedInstance.invite()
+                        self.nextState = .invite
                         return
                     }
                     break
