@@ -54,19 +54,76 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         var bodyBcategoryBitMask = ""
         
         switch (self.bodyA.categoryBitMask) {
+            
+        case categoryBitMask.world.rawValue:
+            bodyAcategoryBitMask = "world"
+            break
+        case categoryBitMask.spaceship.rawValue:
+            bodyAcategoryBitMask = "spaceship"
+            break
+        case categoryBitMask.mySpaceship.rawValue:
+            bodyAcategoryBitMask = "mySpaceship"
+            break
+        case categoryBitMask.shot.rawValue:
+            bodyAcategoryBitMask = "shot"
+            break
+        case categoryBitMask.myShot.rawValue:
+            bodyAcategoryBitMask = "myShot"
+            break
+        case categoryBitMask.mothership.rawValue:
+            bodyAcategoryBitMask = "mothership"
+            break
         default:
             bodyAcategoryBitMask = "unknown"
             break
         }
         
         switch (self.bodyB.categoryBitMask) {
+            
+        case categoryBitMask.world.rawValue:
+            bodyBcategoryBitMask = "world"
+            break
+        case categoryBitMask.spaceship.rawValue:
+            bodyBcategoryBitMask = "spaceship"
+            break
+        case categoryBitMask.mySpaceship.rawValue:
+            bodyBcategoryBitMask = "mySpaceship"
+            break
+        case categoryBitMask.shot.rawValue:
+            bodyBcategoryBitMask = "shot"
+            break
+        case categoryBitMask.myShot.rawValue:
+            bodyBcategoryBitMask = "myShot"
+            break
+        case categoryBitMask.mothership.rawValue:
+            bodyBcategoryBitMask = "mothership"
+            break
         default:
             bodyBcategoryBitMask = "unknown"
             break
         }
         //
         
+        //didBeginContact
         switch (self.bodyA.categoryBitMask + self.bodyB.categoryBitMask) {
+            
+        case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
+            if let spaceship = self.bodyA.node as? Spaceship {
+                spaceship.didBeginContact(self.bodyB, contact: contact)
+            }
+            self.bodyB.node?.removeFromParent()//TODO: dano em spaceship
+            break
+            
+        case categoryBitMask.spaceship.rawValue + categoryBitMask.myShot.rawValue:
+            //TODO: spaceship atirou ???
+            break
+            
+        case categoryBitMask.mySpaceship.rawValue + categoryBitMask.mothership.rawValue:
+            break
+            
+        case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
+            self.bodyA.node?.removeFromParent()//TODO: dano em mothership
+            break
             
         default:
             print("didBeginContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
@@ -90,12 +147,50 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         var bodyBcategoryBitMask = ""
         
         switch (self.bodyA.categoryBitMask) {
+            
+        case categoryBitMask.world.rawValue:
+            bodyAcategoryBitMask = "world"
+            break
+        case categoryBitMask.spaceship.rawValue:
+            bodyAcategoryBitMask = "spaceship"
+            break
+        case categoryBitMask.mySpaceship.rawValue:
+            bodyAcategoryBitMask = "mySpaceship"
+            break
+        case categoryBitMask.shot.rawValue:
+            bodyAcategoryBitMask = "shot"
+            break
+        case categoryBitMask.myShot.rawValue:
+            bodyAcategoryBitMask = "myShot"
+            break
+        case categoryBitMask.mothership.rawValue:
+            bodyAcategoryBitMask = "mothership"
+            break
         default:
             bodyAcategoryBitMask = "unknown"
             break
         }
         
         switch (self.bodyB.categoryBitMask) {
+            
+        case categoryBitMask.world.rawValue:
+            bodyBcategoryBitMask = "world"
+            break
+        case categoryBitMask.spaceship.rawValue:
+            bodyBcategoryBitMask = "spaceship"
+            break
+        case categoryBitMask.mySpaceship.rawValue:
+            bodyBcategoryBitMask = "mySpaceship"
+            break
+        case categoryBitMask.shot.rawValue:
+            bodyBcategoryBitMask = "shot"
+            break
+        case categoryBitMask.myShot.rawValue:
+            bodyBcategoryBitMask = "myShot"
+            break
+        case categoryBitMask.mothership.rawValue:
+            bodyBcategoryBitMask = "mothership"
+            break
         default:
             bodyBcategoryBitMask = "unknown"
             break
@@ -104,6 +199,18 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         //lower category is always stored in bodyA
         switch (self.bodyA.categoryBitMask + self.bodyB.categoryBitMask) {
+            
+        case categoryBitMask.spaceship.rawValue + categoryBitMask.myShot.rawValue:
+            if let shot = self.bodyB.node as? Shot {
+                shot.resetBitMasks()
+            }
+            break
+            
+        case categoryBitMask.mySpaceship.rawValue + categoryBitMask.mothership.rawValue:
+            if let spaceship = self.bodyA.node as? Spaceship {
+                spaceship.didEndContact(self.bodyB, contact: contact)
+            }
+            break
             
         default:
             print("didEndContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
@@ -125,8 +232,10 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var world: categoryBitMask { return categoryBitMask(1 << 0) }
         static var spaceship: categoryBitMask { return categoryBitMask(1 << 1) }
-        static var shot: categoryBitMask { return categoryBitMask(1 << 2) }
-        static var mothership: categoryBitMask { return categoryBitMask(1 << 3) }
+        static var mySpaceship: categoryBitMask { return categoryBitMask(1 << 2) }
+        static var shot: categoryBitMask { return categoryBitMask(1 << 3) }
+        static var myShot: categoryBitMask { return categoryBitMask(1 << 4) }
+        static var mothership: categoryBitMask { return categoryBitMask(1 << 5) }
         
     }
     
@@ -135,11 +244,24 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         static var spaceship:UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
+                categoryBitMask.mySpaceship.rawValue |
+                categoryBitMask.shot.rawValue |
+                categoryBitMask.mothership.rawValue
+        
+        
+        static var mySpaceship:UInt32 =
+            categoryBitMask.world.rawValue |
+                categoryBitMask.spaceship.rawValue |
+                categoryBitMask.mySpaceship.rawValue |
                 categoryBitMask.shot.rawValue
         
         static var shot:UInt32 =
             categoryBitMask.mothership.rawValue |
-                categoryBitMask.spaceship.rawValue
+                categoryBitMask.spaceship.rawValue |
+                categoryBitMask.mySpaceship.rawValue
+        
+        
+        static var myShot:UInt32 = 0
         
         static var mothership:UInt32 = 0
     }
@@ -148,7 +270,13 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var spaceship:UInt32 = categoryBitMask.shot.rawValue
         
+        static var mySpaceship:UInt32 = categoryBitMask.mothership.rawValue
+        
         static var shot:UInt32 =
+            categoryBitMask.spaceship.rawValue |
+                categoryBitMask.mothership.rawValue
+        
+        static var myShot:UInt32 =
             categoryBitMask.spaceship.rawValue |
                 categoryBitMask.mothership.rawValue
         
