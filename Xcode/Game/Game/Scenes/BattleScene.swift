@@ -72,6 +72,12 @@ class BattleScene: GameScene {
         
         //TODO: remover gamb
         for botSpaceship in self.botMothership.spaceships {
+            
+            let weaponTypeIndex = Int.random(Weapon.types.count)
+            let weaponLevel = Int.random(Weapon.types[weaponTypeIndex].maxLevel)
+            botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
+            botSpaceship.addChild(botSpaceship.weapon!)
+            
             botSpaceship.runAction( { let a = SKAction(); a.duration = Double(1 + Int.random(30)); return a }(), completion:
                 { [weak botSpaceship] in
                     

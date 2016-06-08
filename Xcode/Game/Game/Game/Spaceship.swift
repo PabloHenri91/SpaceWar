@@ -27,7 +27,7 @@ class Spaceship: Control {
     var shieldPower:Int!
     var shieldRecharge:Int!
     
-    var weapons = Set<Weapon>()
+    var weapon:Weapon?
     
     var spaceshipData:SpaceshipData?
     
@@ -39,6 +39,7 @@ class Spaceship: Control {
     var destination = CGPoint.zero
     var needToMove = false
     var rotationToDestination:CGFloat = 0
+    var totalRotationToDestination:CGFloat = 0
     var maxAngularVelocity:CGFloat = 3
     var force:CGFloat = 25
     var startingPosition = CGPoint.zero
@@ -72,10 +73,12 @@ class Spaceship: Control {
         self.spaceshipData = spaceshipData
         self.load(type: spaceshipData.type.integerValue, level: spaceshipData.level.integerValue)
         
-        for item in spaceshipData.weapons {
-            if let weaponData = item as? WeaponData {
-                self.weapons.insert(Weapon(weaponData: weaponData))
-            }
+        if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
+            self.weapon = (Weapon(weaponData: weaponData))
+        }
+        
+        if let weapon = self.weapon {
+            self.addChild(weapon)
         }
     }
     
@@ -121,12 +124,13 @@ class Spaceship: Control {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.dynamic = false
         
-        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceship.rawValue
-        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceship
-        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.spaceship
+        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.mySpaceship.rawValue
+        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mySpaceship
+        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mySpaceship
         
-        self.physicsBody?.linearDamping = 2
-        self.physicsBody?.angularDamping = 2
+        self.physicsBody?.linearDamping = 10
+        self.physicsBody?.angularDamping = 10
+        self.physicsBody?.friction = 0
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -169,6 +173,10 @@ class Spaceship: Control {
             
             spaceship.spriteNode.color = SKColor.blackColor()
             spaceship.spriteNode.colorBlendFactor = 0
+            
+            spaceship.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.mySpaceship.rawValue
+            spaceship.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mySpaceship
+            spaceship.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mySpaceship
         }
         
         Spaceship.selectedSpaceship = nil
@@ -192,17 +200,21 @@ class Spaceship: Control {
         
         if enemySpaceships.count > 0 {
             
-            for spaceship in enemySpaceships {
+            for enemySpaceship in enemySpaceships {
                 
-                if let physicsBody = spaceship.physicsBody {
+                if let enemySpaceshipPhysicsBody = enemySpaceship.physicsBody {
                     
-                    if physicsBody.dynamic {
-                        if currentTarget != nil {
-                            if CGPoint.distance(self.destination, spaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
-                                currentTarget = spaceship
+                    if enemySpaceshipPhysicsBody.dynamic {
+                        
+                        if enemySpaceshipPhysicsBody.categoryBitMask != GameWorld.categoryBitMask.mySpaceship.rawValue {
+                            
+                            if currentTarget != nil {
+                                if CGPoint.distance(self.destination, enemySpaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
+                                    currentTarget = enemySpaceship
+                                }
+                            } else {
+                                currentTarget = enemySpaceship
                             }
-                        } else {
-                            currentTarget = spaceship
                         }
                     }
                 }
@@ -212,21 +224,9 @@ class Spaceship: Control {
         return currentTarget
     }
     
-    func rotateToPoint(point:CGPoint) {
-        
-        let dx = Float(point.x - self.position.x)
-        let dy = Float(point.y - self.position.y)
-        
-        self.rotationToDestination = CGFloat(-atan2f(dx, dy))
-        
-        if(abs(self.physicsBody!.angularVelocity) < self.maxAngularVelocity) {
-            
-            var totalRotation = self.rotationToDestination - self.zRotation
-            
-            while(totalRotation < -CGFloat(M_PI)) { totalRotation += CGFloat(M_PI * 2) }
-            while(totalRotation >  CGFloat(M_PI)) { totalRotation -= CGFloat(M_PI * 2) }
-            
-            self.physicsBody?.applyAngularImpulse(totalRotation * 0.0005)
+    func fire() {
+        if abs(self.totalRotationToDestination) < 0.2 {
+            self.weapon?.fire()
         }
     }
     
@@ -261,14 +261,74 @@ class Spaceship: Control {
                     }
                 }
                 self.rotateToPoint(targetNode.position)
+                self.fire()
             } else {
                 self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
             }
         }
     }
     
+    func rotateToPoint(point:CGPoint) {
+        
+        if let physicsBody = self.physicsBody {
+            
+            let dx = Float(point.x - self.position.x)
+            let dy = Float(point.y - self.position.y)
+            
+            self.rotationToDestination = CGFloat(-atan2f(dx, dy))
+            
+            if(abs(physicsBody.angularVelocity) < self.maxAngularVelocity) {
+                
+                self.totalRotationToDestination = self.rotationToDestination - self.zRotation
+                
+                while(self.totalRotationToDestination < -CGFloat(M_PI)) { self.totalRotationToDestination += CGFloat(M_PI * 2) }
+                while(self.totalRotationToDestination >  CGFloat(M_PI)) { self.totalRotationToDestination -= CGFloat(M_PI * 2) }
+                
+                physicsBody.applyAngularImpulse(self.totalRotationToDestination * 0.0005)
+            }
+        }
+    }
+    
+    func didBeginContact(otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
+        
+    }
+    
+    func didEndContact(otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
+        
+        if let myPhysicsBody = self.physicsBody {
+            
+            switch myPhysicsBody.categoryBitMask {
+                
+            //mySpaceship
+            case GameWorld.categoryBitMask.mySpaceship.rawValue:
+                
+                switch otherPhysicsBody.categoryBitMask {
+                    
+                case GameWorld.categoryBitMask.mothership.rawValue:
+                    if self.destination != self.startingPosition {
+                        myPhysicsBody.categoryBitMask = GameWorld.categoryBitMask.spaceship.rawValue
+                        myPhysicsBody.collisionBitMask = GameWorld.collisionBitMask.spaceship
+                        myPhysicsBody.contactTestBitMask = GameWorld.contactTestBitMask.spaceship
+                    }
+                    break
+                    
+                default:
+                    print("treta")
+                    break
+                }
+                
+                break
+                //mySpaceship
+                
+            default:
+                print("treta")
+                break
+            }
+        }
+    }
+    
     func addWeapon(weapon:Weapon) {
-        self.weapons.insert(weapon)
+        self.weapon = weapon
         
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {
@@ -281,7 +341,7 @@ class Spaceship: Control {
     }
     
     func removeWeapon(weapon:Weapon) {
-        self.weapons.remove(weapon)
+        self.weapon = nil
         
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {
