@@ -68,7 +68,9 @@ class MothershipScene: GameScene {
                 self.view?.presentScene(BattleScene())
                 break
             case .social:
-                self.view?.presentScene(SocialScene())
+                #if os(iOS)
+                    self.view?.presentScene(SocialScene())
+                #endif
                 break
             default:
                 #if DEBUG
@@ -94,7 +96,9 @@ class MothershipScene: GameScene {
                     }
                     
                     if(self.buttonSocial.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = states.social
+                        #if os(iOS)
+                            self.nextState = states.social
+                        #endif
                         return
                     }
                     
