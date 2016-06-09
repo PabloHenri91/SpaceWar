@@ -19,9 +19,9 @@ class Shot: Control {
         self.addChild(spriteNode)
         
         self.physicsBody = SKPhysicsBody(rectangleOfSize: spriteNode.size)
-        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.myShot.rawValue
-        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.myShot
-        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.myShot
+        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceshipShot.rawValue
+        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceshipShot
+        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.spaceshipShot
         
         self.physicsBody?.linearDamping = 0
         self.physicsBody?.angularDamping = 0

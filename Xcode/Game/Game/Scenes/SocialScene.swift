@@ -58,7 +58,6 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
                 break
             }
         } else {
-            
             self.state = self.nextState
             
             //Próximo estado

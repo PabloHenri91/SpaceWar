@@ -62,6 +62,8 @@ class MothershipScene: GameScene {
                 break
             }
         } else {
+            self.state = self.nextState
+            
             //Próximo estado
             switch (self.nextState) {
             case .battle:
