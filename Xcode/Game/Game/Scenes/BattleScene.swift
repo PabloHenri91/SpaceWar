@@ -74,7 +74,8 @@ class BattleScene: GameScene {
         for botSpaceship in self.botMothership.spaceships {
             
             let weaponTypeIndex = Int.random(Weapon.types.count)
-            let weaponLevel = Int.random(Weapon.types[weaponTypeIndex].maxLevel)
+            var weaponLevel = Int.random(Weapon.types[weaponTypeIndex].maxLevel)
+            if weaponLevel <= 0 { weaponLevel = 1 }
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
             

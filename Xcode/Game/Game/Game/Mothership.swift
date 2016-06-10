@@ -62,7 +62,7 @@ class Mothership: Control {
         
         //Gráfico
         self.spriteNode = SKSpriteNode(imageNamed: "mothership")
-        self.spriteNode.texture?.filteringMode = .Nearest
+        self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(self.spriteNode)
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
@@ -88,8 +88,10 @@ class Mothership: Control {
             
             if isAlly {
                 spaceship.loadAllyDetails()
+                spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
             } else {
                 spaceship.loadEnemyDetails()
+                spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
             }
             
             switch i {
@@ -110,6 +112,14 @@ class Mothership: Control {
             }
             spaceship.startingPosition = spaceship.position
             i += 1
+        }
+    }
+    
+    func getShot(shot:Shot?) {
+        if let someShot = shot {
+            self.health = self.health - someShot.demage
+            someShot.demage = 0
+            someShot.removeFromParent()
         }
     }
     

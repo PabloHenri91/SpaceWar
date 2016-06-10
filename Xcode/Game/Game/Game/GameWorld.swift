@@ -20,7 +20,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         super.init()
         
         let spriteNode = SKSpriteNode(imageNamed: "background")
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(spriteNode)
         
         self.physicsWorld = physicsWorld
@@ -112,19 +112,15 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             break
             
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
-            if let spaceship = self.bodyA.node as? Spaceship {
-                spaceship.didBeginContact(self.bodyB, contact: contact)
-            }
+            (self.bodyA.node as? Spaceship)?.getShot(self.bodyB.node as? Shot)
             break
             
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
-            if let spaceship = self.bodyA.node as? Spaceship {
-                spaceship.didBeginContact(self.bodyB, contact: contact)
-            }
+            (self.bodyA.node as? Spaceship)?.getShot(self.bodyB.node as? Shot)
             break
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
-            (self.bodyA.node as? Shot)?.removeFromParent()//TODO: sistema de dano
+            (self.bodyB.node as? Mothership)?.getShot(self.bodyA.node as? Shot)
             break
             
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.mothership.rawValue:
@@ -212,7 +208,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         switch (self.bodyA.categoryBitMask + self.bodyB.categoryBitMask) {
             
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
-            (self.bodyB.node as? Shot)?.removeFromParent()//TODO: sistema de dano
+            (self.bodyA.node as? Spaceship)?.getShot(self.bodyB.node as? Shot)
             break
             
         case categoryBitMask.spaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
@@ -222,7 +218,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             break
             
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
-            (self.bodyB.node as? Shot)?.removeFromParent()//TODO: sistema de dano
+            (self.bodyA.node as? Spaceship)?.getShot(self.bodyB.node as? Shot)
             break
             
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.mothership.rawValue:
@@ -232,7 +228,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             break
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
-            (self.bodyA.node as? Shot)?.removeFromParent()//TODO: sistema de dano
+            (self.bodyB.node as? Mothership)?.getShot(self.bodyA.node as? Shot)
             break
             
         default:

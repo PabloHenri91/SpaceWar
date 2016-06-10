@@ -26,7 +26,7 @@ class CropBox: Box {
         super.init(name: name, textureName: textureName, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
         
         let mask = SKSpriteNode(imageNamed: textureName)
-        mask.texture?.filteringMode = .Nearest
+        mask.texture?.filteringMode = Display.filteringMode
         mask.anchorPoint = CGPoint.init(x: 0, y: 1)
         self.cropNode.maskNode = mask
     }

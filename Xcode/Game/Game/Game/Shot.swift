@@ -10,11 +10,19 @@ import SpriteKit
 
 class Shot: Control {
     
-    init(texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
+    var demage:Int! = 0
+    
+    init(demage:Int, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
+        self.demage = demage
+        
+        if demage <= 0 {
+            fatalError()
+        }
+        
         let spriteNode = SKSpriteNode(texture: texture)
-        spriteNode.texture?.filteringMode = .Linear
+        spriteNode.texture?.filteringMode = Display.filteringMode
         
         self.addChild(spriteNode)
         
@@ -31,8 +39,8 @@ class Shot: Control {
         self.physicsBody?.velocity = CGVector(dx: (-sin(zRotation) * 1000) + shooterPhysicsBody.velocity.dx, dy: (cos(zRotation) * 1000) + shooterPhysicsBody.velocity.dy)
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
-            guard let laser = self else { return }
-            laser.removeFromParent()
+            guard let shot = self else { return }
+            shot.removeFromParent()
         }
     }
     

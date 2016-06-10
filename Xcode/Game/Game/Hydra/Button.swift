@@ -46,13 +46,13 @@ class Button: Control {
             self.resetPosition()
             
             let texture = SKTexture(imageNamed: textureName)
-            texture.filteringMode = .Nearest
+            texture.filteringMode = Display.filteringMode
             
             if (top != 0 || bottom != 0 || left != 0 || right != 0) {
                 let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clearColor(), size: CGSize(
                     width: Int(texture.size().width) + left + right,
                     height: Int(texture.size().height) + top + bottom))
-                spriteNode.texture?.filteringMode = .Nearest
+                spriteNode.texture?.filteringMode = Display.filteringMode
                 
                 spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
                 self.addChild(spriteNode)
@@ -60,7 +60,7 @@ class Button: Control {
             }
             
             self.button = SKSpriteNode(texture: texture, size: texture.size())
-            self.button.texture?.filteringMode = .Nearest
+            self.button.texture?.filteringMode = Display.filteringMode
             self.button.color = SKColor(red: 1, green: 1, blue: 1, alpha: alpha)
             self.button.colorBlendFactor = 1
             self.button.anchorPoint = CGPoint(x: 0, y: 1)
@@ -68,14 +68,14 @@ class Button: Control {
             
             if (icon != "") {
                 let iconTexture = SKTexture(imageNamed: icon)
-                iconTexture.filteringMode = .Nearest
+                iconTexture.filteringMode = Display.filteringMode
                 
                 let xScale = (self.button.size.width - 10) / iconTexture.size().width
                 let yScale = (self.button.size.height - 10) / iconTexture.size().height
                 let scale = min(xScale, yScale)
                 
                 let icon = SKSpriteNode(texture: iconTexture, size: CGSize(width: iconTexture.size().width * scale, height: iconTexture.size().height * scale))
-                icon.texture?.filteringMode = .Nearest
+                icon.texture?.filteringMode = Display.filteringMode
                 
                 icon.color = SKColor(red: 0, green: 0, blue: 0, alpha: 0.75 * alpha)
                 icon.colorBlendFactor = 1
@@ -106,9 +106,9 @@ class Button: Control {
             }
             
             let texturePressed = SKTexture(imageNamed: "\(textureName)Pressed")
-            texturePressed.filteringMode = .Nearest
+            texturePressed.filteringMode = Display.filteringMode
             self.buttonPressed = SKSpriteNode(texture: texturePressed, size: texturePressed.size())
-            self.buttonPressed.texture?.filteringMode = .Nearest
+            self.buttonPressed.texture?.filteringMode = Display.filteringMode
             self.buttonPressed.color = SKColor(red: 1, green: 1, blue: 1, alpha: alpha)
             self.buttonPressed.colorBlendFactor = 1
             self.buttonPressed.anchorPoint = CGPoint(x: 0, y: 1)
@@ -117,13 +117,13 @@ class Button: Control {
             
             if (icon != "") {
                 let iconTexturePressed = SKTexture(imageNamed: icon)
-                iconTexturePressed.filteringMode = .Nearest
+                iconTexturePressed.filteringMode = Display.filteringMode
                 let xScale = (self.buttonPressed.size.width - 10) / iconTexturePressed.size().width
                 let yScale = (self.buttonPressed.size.height - 10) / iconTexturePressed.size().height
                 let scale = min(xScale, yScale)
                 
                 let iconPressed = SKSpriteNode(texture: iconTexturePressed, size: CGSize(width: iconTexturePressed.size().width * scale, height: iconTexturePressed.size().height * scale))
-                iconPressed.texture?.filteringMode = .Nearest
+                iconPressed.texture?.filteringMode = Display.filteringMode
                 
                 iconPressed.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.75 * alpha)
                 iconPressed.colorBlendFactor = 1

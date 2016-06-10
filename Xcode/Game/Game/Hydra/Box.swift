@@ -13,14 +13,14 @@ class Box: Control {
     init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
         
         let texture = SKTexture(imageNamed: textureName)
-        texture.filteringMode = .Nearest
+        texture.filteringMode = Display.filteringMode
         
         let position = CGPoint(
             x: x == -1 ? Display.sceneSize.width/2 - texture.size().width/2 : CGFloat(x),
             y: y == -1 ? Display.sceneSize.height/2  - texture.size().height/2 : CGFloat(y))
         
         let spriteNode = SKSpriteNode(texture: texture)
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
         
         super.init(spriteNode: spriteNode, x: Int(position.x), y: Int(position.y), xAlign: xAlign, yAlign: yAlign)
         

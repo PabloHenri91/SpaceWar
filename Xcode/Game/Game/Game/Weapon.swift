@@ -77,11 +77,13 @@ class Weapon: Control {
         
         if GameScene.currentTime - self.lastFire > self.fireInterval {
             
+            
+            
             if let parentSpaceship = self.parent {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {
                     if parentSpaceshipPhysicsBody.dynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
-                            let shot = Shot(texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
+                            let shot = Shot(demage: self.demage, texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
                             parentSpaceshipParent.addChild(shot)
                         }
                     }

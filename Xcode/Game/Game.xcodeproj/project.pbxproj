@@ -83,6 +83,8 @@
 		8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
 		846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
+		848021061D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
+		848021071D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
 		848F8B791D0602BE00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
 		848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
 		84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
@@ -164,6 +166,7 @@
 		844CF2921CE789AA0032F6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		844CF2991CE78BFB0032F6AA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		846F65CF1CF4777B00A2E69F /* Mothership.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mothership.swift; sourceTree = "<group>"; };
+		848021051D0ADB220078320A /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
 		848F8B771D06022500434FFB /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
 		84C8D5561CF4C233007C1ED6 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
@@ -339,6 +342,7 @@
 			children = (
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
+				848021051D0ADB220078320A /* HealthBar.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
@@ -512,6 +516,7 @@
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
 				843620681CEB77400082A9D7 /* CropBox.swift in Sources */,
 				8436207E1CEB77400082A9D7 /* ScrollNode.swift in Sources */,
+				848021061D0ADB220078320A /* HealthBar.swift in Sources */,
 				842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */,
 				843620661CEB77400082A9D7 /* Control.swift in Sources */,
 				843620701CEB77400082A9D7 /* GameColors.swift in Sources */,
@@ -558,6 +563,7 @@
 				843620711CEB77400082A9D7 /* GameColors.swift in Sources */,
 				8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,
+				848021071D0ADB220078320A /* HealthBar.swift in Sources */,
 				843620811CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
 				84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				843620611CEB77400082A9D7 /* Box.swift in Sources */,

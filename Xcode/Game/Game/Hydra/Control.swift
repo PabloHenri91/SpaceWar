@@ -58,7 +58,7 @@ class Control: SKNode {
     init(name:String = "", textureName:String, size:CGSize = CGSize.zero, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up) {
         super.init()
         let spriteNode = SKSpriteNode(imageNamed: textureName)
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
         self.load(name, spriteNode: spriteNode, size:size, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
     }
     

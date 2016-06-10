@@ -46,6 +46,8 @@ class Spaceship: Control {
     
     var isInsideAMothership = true
     
+    var healthBar:HealthBar!
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -84,15 +86,20 @@ class Spaceship: Control {
         }
     }
     
+    func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
+        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
+        gameWorld.addChild(self.healthBar)
+    }
+    
     func loadAllyDetails() {
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipAlly")
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.addChild(spriteNode)
     }
     
     func loadEnemyDetails() {
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipEnemy")
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.addChild(spriteNode)
     }
     
@@ -116,7 +123,7 @@ class Spaceship: Control {
         
         //Gráfico
         self.spriteNode = SKSpriteNode(imageNamed: self.type.skins.first!)//TODO: remover gamb
-        self.spriteNode.texture?.filteringMode = .Nearest
+        self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(self.spriteNode)
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
@@ -182,6 +189,8 @@ class Spaceship: Control {
     
     func update(enemySpaceships enemySpaceships:[Spaceship]) {
         self.move(enemySpaceships: enemySpaceships)
+        
+        self.healthBar.update(position: self.position)
     }
     
     func setBitMasksToMothershipSpaceship() {
@@ -204,13 +213,25 @@ class Spaceship: Control {
         self.physicsBody?.dynamic = false
     }
     
+    func canBeTarget() -> Bool {
+        if self.isInsideAMothership {
+            return false
+        }
+        
+        if self.health <= 0 {
+            return false
+        }
+        
+        return true
+    }
+    
     func nearestTarget(enemySpaceships enemySpaceships:[Spaceship]) -> Spaceship? {
         
         var currentTarget:Spaceship? = nil
             
         for enemySpaceship in enemySpaceships {
             
-            if !enemySpaceship.isInsideAMothership {
+            if enemySpaceship.canBeTarget() {
                 
                 if currentTarget != nil {
                     if CGPoint.distance(self.destination, enemySpaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
@@ -230,44 +251,56 @@ class Spaceship: Control {
         self.weapon?.fire()
     }
     
+    func getShot(shot:Shot?) {
+        if let someShot = shot {
+            self.health = self.health - someShot.demage
+            someShot.demage = 0
+            someShot.removeFromParent()
+            
+            self.healthBar.update(self.health, maxHealth: self.maxHealth)
+        }
+    }
+    
     func move(enemySpaceships enemySpaceships:[Spaceship]) {
         
-        if (self.needToMove) {
-            
-            if CGPoint.distance(self.position, self.destination) < 32 {
-                self.needToMove = false
+        if self.health > 0 {
+            if (self.needToMove) {
                 
-                if self.destination == self.startingPosition {
-                    self.resetToStartingPosition()
+                if CGPoint.distance(self.position, self.destination) < 32 {
+                    self.needToMove = false
+                    
+                    if self.destination == self.startingPosition {
+                        self.resetToStartingPosition()
+                    } else {
+                        if !self.isInsideAMothership {
+                            self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
+                        }
+                    }
+                    
+                } else {
+                    
+                    self.rotateToPoint(self.destination)
+                    
+                    if(abs(self.rotationToDestination - self.zRotation) < 1) {
+                        self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                    }
+                }
+                
+            } else {
+                
+                if let targetNode = self.targetNode {
+                    if !targetNode.canBeTarget() {
+                        self.targetNode = nil
+                    } else {
+                        self.rotateToPoint(targetNode.position)
+                        if abs(self.totalRotationToDestination) < 0.2 {
+                            self.fire()
+                        }
+                    }
                 } else {
                     if !self.isInsideAMothership {
                         self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
                     }
-                }
-                
-            } else {
-                
-                self.rotateToPoint(self.destination)
-                
-                if(abs(self.rotationToDestination - self.zRotation) < 1) {
-                    self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
-                }
-            }
-            
-        } else {
-            
-            if let targetNode = self.targetNode {
-                if targetNode.isInsideAMothership {
-                    self.targetNode = nil
-                } else {
-                    self.rotateToPoint(targetNode.position)
-                    if abs(self.totalRotationToDestination) < 0.2 {
-                        self.fire()
-                    }
-                }
-            } else {
-                if !self.isInsideAMothership {
-                    self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
                 }
             }
         }
@@ -303,15 +336,8 @@ class Spaceship: Control {
                 {
                     switch otherPhysicsBody.categoryBitMask {
                         
-                    case GameWorld.categoryBitMask.shot.rawValue:
-                        self.spriteNode.runAction(SKAction.colorizeWithColor(SKColor.redColor(), colorBlendFactor: 1, duration: 0.25), completion: { [weak self] in
-                            guard let spaceship = self else { return }
-                            spaceship.spriteNode.runAction(SKAction.colorizeWithColor(SKColor.redColor(), colorBlendFactor: -1, duration: 0.25))
-                        })
-                        (otherPhysicsBody.node as? Shot)?.removeFromParent()//TODO: sistema de dano
-                        break
-                        
                     default:
+                        fatalError()
                         break
                     }
                 }()
@@ -321,26 +347,19 @@ class Spaceship: Control {
                 {
                     switch otherPhysicsBody.categoryBitMask {
                         
-                    case GameWorld.categoryBitMask.shot.rawValue:
-                        self.spriteNode.runAction(SKAction.colorizeWithColor(SKColor.redColor(), colorBlendFactor: 1, duration: 0.25), completion: { [weak self] in
-                            guard let spaceship = self else { return }
-                            spaceship.spriteNode.runAction(SKAction.colorizeWithColor(SKColor.redColor(), colorBlendFactor: -1, duration: 0.25))
-                            })
-                        (otherPhysicsBody.node as? Shot)?.removeFromParent()//TODO: sistema de dano
-                        break
-                        
                     case GameWorld.categoryBitMask.mothership.rawValue:
                         self.isInsideAMothership = true
                         break
                         
                     default:
+                        fatalError()
                         break
                     }
                 }()
                 break
                 
             default:
-                
+                fatalError()
                 break
             }
         }
@@ -360,6 +379,7 @@ class Spaceship: Control {
                         break
                         
                     default:
+                        fatalError()
                         break
                     }
                 }()
@@ -377,12 +397,14 @@ class Spaceship: Control {
                         break
                         
                     default:
+                        fatalError()
                         break
                     }
                 }()
                 break
                 
             default:
+                fatalError()
                 break
             }
         }

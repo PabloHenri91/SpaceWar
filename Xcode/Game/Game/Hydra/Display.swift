@@ -10,6 +10,8 @@ import SpriteKit
 
 class Display {
     
+    static var filteringMode = SKTextureFilteringMode.Nearest
+    
     static var viewBoundsSize:CGSize!
     
     static var translate:CGPoint!

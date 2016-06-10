@@ -33,7 +33,7 @@ class GameTextField: Control, UITextFieldDelegate {
     init(x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, view:UIView) {
         super.init()
         let spriteNode = SKSpriteNode(imageNamed: "boxWhite128x32")
-        spriteNode.texture?.filteringMode = .Nearest
+        spriteNode.texture?.filteringMode = Display.filteringMode
 
         
         self.screenPosition = CGPoint(x: x, y: y)
