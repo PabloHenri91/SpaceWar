@@ -152,7 +152,7 @@
 		8436205D1CEB77400082A9D7 /* DefaultNameList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DefaultNameList; sourceTree = "<group>"; };
 		843803D01CEF3A54007152BC /* Weapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		843803D31CEF45D1007152BC /* GameMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMath.swift; sourceTree = "<group>"; };
-		844CF2661CE77B3F0032F6AA /* SpaceWar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceWar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		844CF2661CE77B3F0032F6AA /* Game-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844CF2681CE77B400032F6AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844CF26E1CE77B400032F6AA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		844CF2711CE77B400032F6AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 		843CB4961CDD131A00674F48 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				844CF2661CE77B3F0032F6AA /* SpaceWar.app */,
+				844CF2661CE77B3F0032F6AA /* Game-iOS.app */,
 				844CF2851CE789A90032F6AA /* Game-OSX.app */,
 			);
 			name = Products;
@@ -378,9 +378,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		844CF2651CE77B3F0032F6AA /* SpaceWar */ = {
+		844CF2651CE77B3F0032F6AA /* Game-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 844CF2791CE77B400032F6AA /* Build configuration list for PBXNativeTarget "SpaceWar" */;
+			buildConfigurationList = 844CF2791CE77B400032F6AA /* Build configuration list for PBXNativeTarget "Game-iOS" */;
 			buildPhases = (
 				844CF2621CE77B3F0032F6AA /* Sources */,
 				844CF2631CE77B3F0032F6AA /* Frameworks */,
@@ -390,9 +390,9 @@
 			);
 			dependencies = (
 			);
-			name = SpaceWar;
+			name = "Game-iOS";
 			productName = "Game-iOS";
-			productReference = 844CF2661CE77B3F0032F6AA /* SpaceWar.app */;
+			productReference = 844CF2661CE77B3F0032F6AA /* Game-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		844CF2841CE789A90032F6AA /* Game-OSX */ = {
@@ -444,7 +444,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				844CF2651CE77B3F0032F6AA /* SpaceWar */,
+				844CF2651CE77B3F0032F6AA /* Game-iOS */,
 				844CF2841CE789A90032F6AA /* Game-OSX */,
 			);
 		};
@@ -768,7 +768,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		844CF2791CE77B400032F6AA /* Build configuration list for PBXNativeTarget "SpaceWar" */ = {
+		844CF2791CE77B400032F6AA /* Build configuration list for PBXNativeTarget "Game-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				844CF27A1CE77B400032F6AA /* Debug */,
