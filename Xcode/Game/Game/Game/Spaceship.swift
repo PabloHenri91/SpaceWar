@@ -135,8 +135,8 @@ class Spaceship: Control {
         
         self.setBitMasksToMothershipSpaceship()
         
-        self.physicsBody?.linearDamping = 10
-        self.physicsBody?.angularDamping = 10
+        self.physicsBody?.linearDamping = 2
+        self.physicsBody?.angularDamping = 2
         self.physicsBody?.friction = 0
     }
     
@@ -188,9 +188,10 @@ class Spaceship: Control {
     }
     
     func update(enemySpaceships enemySpaceships:[Spaceship]) {
+        
         self.move(enemySpaceships: enemySpaceships)
         
-        self.healthBar.update(position: self.position)
+        self.healthBar.updateUp(position: self.position)
     }
     
     func setBitMasksToMothershipSpaceship() {

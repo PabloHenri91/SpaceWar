@@ -92,6 +92,13 @@ class BattleScene: GameScene {
         //
         
         //Spaceships
+        
+        self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
+        self.mothership.healthBar.updateUp(position: self.mothership.position)
+        
+        self.botMothership.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
+        self.botMothership.healthBar.updateDown(position: self.botMothership.position)
+        
         self.mothership.loadSpaceships(self.gameWorld)
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
         

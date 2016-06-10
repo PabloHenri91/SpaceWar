@@ -42,9 +42,15 @@ class HealthBar: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(position position:CGPoint) {
+    func updateUp(position position:CGPoint) {
         let x = position.x
         let y = position.y + (self.biggerSide/2 + 4)
+        self.position = CGPoint(x: x, y: y)
+    }
+    
+    func updateDown(position position:CGPoint) {
+        let x = position.x
+        let y = position.y - (self.biggerSide/2 + 4)
         self.position = CGPoint(x: x, y: y)
     }
     

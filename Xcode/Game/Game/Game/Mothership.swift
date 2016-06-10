@@ -22,6 +22,8 @@ class Mothership: Control {
     
     var spriteNode:SKSpriteNode!
     
+    var healthBar:HealthBar!
+    
     override var description: String {
         return "\nMothership\n" +
             "level: " + level.description + "\n" +
@@ -76,6 +78,11 @@ class Mothership: Control {
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mothership
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
+    
+    func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
+        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
+        gameWorld.addChild(self.healthBar)
+    }
 
     func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
         
@@ -120,6 +127,8 @@ class Mothership: Control {
             self.health = self.health - someShot.demage
             someShot.demage = 0
             someShot.removeFromParent()
+            
+            self.healthBar.update(self.health, maxHealth: self.maxHealth)
         }
     }
     
