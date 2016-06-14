@@ -18,6 +18,7 @@ class Weapon: Control {
     var range:Int!
     var reloadTime:Double!
     var fireInterval:Double!
+    
     var lastFire:Double = 0
     var magazineSize:Int!
     

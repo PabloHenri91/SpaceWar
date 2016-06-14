@@ -11,9 +11,9 @@ import SpriteKit
 class GameFonts {
 
     internal enum fontSize:CGFloat {
-        case small = 4
-        case medium = 8
-        case large = 16
+        case small = 8
+        case medium = 16
+        case large = 32
     }
     
     /*
@@ -26,5 +26,5 @@ class GameFonts {
     Finally check the font name. When you use it in your code, you have to use the font name, not the file name. To know the font name, double click on the font file in Finder and a window will open showing the font. Check that window title, that's the name of the font that you have to use.
     */
     
-    static var fontName = "KenPixel" //kenpixel.ttf
+    static var fontName = "Museo Sans Rounded" //kenpixel.ttf
 }

@@ -40,7 +40,7 @@ class MothershipScene: GameScene {
         background.zPosition = -2
         self.addChild(background)
         
-        self.buttonBattle = Button(textureName: "button", text: "battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
+        self.buttonBattle = Button(textureName: "button", text: "Battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBattle)
         
         self.buttonSocial = Button(textureName: "button", text: "Social", x: 93, y: 299, xAlign: .center, yAlign: .center)

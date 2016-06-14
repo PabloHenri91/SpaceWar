@@ -70,6 +70,8 @@
 		843803D21CEF3A54007152BC /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
 		843803D41CEF45D1007152BC /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D31CEF45D1007152BC /* GameMath.swift */; };
 		843803D51CEF45D1007152BC /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D31CEF45D1007152BC /* GameMath.swift */; };
+		84399E2D1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
+		84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
 		844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF2681CE77B400032F6AA /* AppDelegate.swift */; };
 		844CF26F1CE77B400032F6AA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF26E1CE77B400032F6AA /* GameViewController.swift */; };
 		844CF2721CE77B400032F6AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2701CE77B400032F6AA /* Main.storyboard */; };
@@ -152,6 +154,7 @@
 		8436205D1CEB77400082A9D7 /* DefaultNameList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DefaultNameList; sourceTree = "<group>"; };
 		843803D01CEF3A54007152BC /* Weapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		843803D31CEF45D1007152BC /* GameMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMath.swift; sourceTree = "<group>"; };
+		84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-1000-webfont.ttf"; sourceTree = "<group>"; };
 		844CF2661CE77B3F0032F6AA /* Game-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844CF2681CE77B400032F6AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844CF26E1CE77B400032F6AA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +246,14 @@
 			path = DocSets;
 			sourceTree = "<group>";
 		};
+		84399E281D10303400C05670 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		843CB48C1CDD131A00674F48 = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +276,7 @@
 			children = (
 				844CF2991CE78BFB0032F6AA /* Media.xcassets */,
 				84F855D41CECCD4B00FB63D2 /* CoreData */,
+				84399E281D10303400C05670 /* Fonts */,
 				844CF2971CE78BBC0032F6AA /* Game */,
 				844CF2961CE78BB20032F6AA /* Hydra */,
 				844CF2981CE78BDF0032F6AA /* Scenes */,
@@ -455,6 +467,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84399E2D1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				3AA0C97F1CFDB3B5008EE628 /* FacebookSDK-4_12-for-iOS.docset in Resources */,
 				844CF29A1CE78BFB0032F6AA /* Media.xcassets in Resources */,
 				844CF2771CE77B400032F6AA /* LaunchScreen.storyboard in Resources */,
@@ -474,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844CF28E1CE789AA0032F6AA /* Assets.xcassets in Resources */,
+				84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				843620851CEB77400082A9D7 /* DefaultNameList in Resources */,
 				844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */,
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
