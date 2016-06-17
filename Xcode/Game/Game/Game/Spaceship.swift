@@ -103,6 +103,12 @@ class Spaceship: Control {
         self.spriteNode.addChild(spriteNode)
     }
     
+    func increaseTouchArea() {
+        let spriteNodeTest = SKSpriteNode(color: SKColor.clearColor(), size: CGSize(width: 64, height: 64))
+        spriteNodeTest.texture?.filteringMode = Display.filteringMode
+        self.spriteNode.addChild(spriteNodeTest)
+    }
+    
     private func load(type type:Int, level:Int) {
         
         self.type = Spaceship.types[type]
@@ -127,6 +133,8 @@ class Spaceship: Control {
         self.addChild(self.spriteNode)
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+        
+        self.increaseTouchArea()
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
