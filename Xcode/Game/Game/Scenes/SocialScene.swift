@@ -40,8 +40,8 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        self.buttonInvite = Button(textureName: "button", text: "Invite", x: 93, y: 247, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonInvite)
+        self.buttonInviteAll = Button(textureName: "button", text: "Invite All", x: 20, y: 466, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonInviteAll)
         
         self.buttonInviteSome = Button(textureName: "button", text: "Invite Some", x: 167, y: 466, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonInviteSome)
