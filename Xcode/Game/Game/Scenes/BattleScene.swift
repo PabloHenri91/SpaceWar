@@ -108,14 +108,38 @@ class BattleScene: GameScene {
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
-        self.mothership.update(enemySpaceships: self.botMothership.spaceships)
-        
-        self.botMothership.update(enemySpaceships: self.mothership.spaceships)
-        
+        //Estado atual
+        if(self.state == self.nextState) {
+            switch (self.state) {
+                
+            case states.battle:
+                
+                self.mothership.update(enemySpaceships: self.botMothership.spaceships)
+                self.botMothership.update(enemySpaceships: self.mothership.spaceships)
+                
+                break
+                
+            default:
+                break
+            }
+        } else {
+            self.state = self.nextState
+            
+            //Próximo estado
+            switch (self.nextState) {
+            case .battle:
+                break
+            default:
+                #if DEBUG
+                    fatalError()
+                #endif
+                break
+            }
+        }
     }
     
-    override func touchesEnded(touches: Set<UITouch>) {
-        super.touchesEnded(touches)
+    override func touchesBegan(touches: Set<UITouch>) {
+        super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
@@ -148,21 +172,45 @@ class BattleScene: GameScene {
                     break
                 }
             }
-        } else {
-            self.state = self.nextState
-            
-            //Próximo estado
-            switch (self.nextState) {
-            case .battle:
-                break
-            default:
-                #if DEBUG
-                    fatalError(self.nextState.rawValue)
-                #endif
-                break
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>) {
+        super.touchesMoved(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                switch (self.state) {
+                    
+                case states.battle:
+                    Spaceship.touchEnded(touch)
+                    break
+                    
+                default:
+                    break
+                }
             }
         }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>) {
+        super.touchesEnded(touches)
         
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                switch (self.state) {
+                    
+                case states.battle:
+                    Spaceship.touchEnded(touch)
+                    break
+                    
+                default:
+                    break
+                }
+            }
+        }
     }
     
     override func didFinishUpdate() {
