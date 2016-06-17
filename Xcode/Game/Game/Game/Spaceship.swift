@@ -40,9 +40,12 @@ class Spaceship: Control {
     var needToMove = false
     var rotationToDestination:CGFloat = 0
     var totalRotationToDestination:CGFloat = 0
+    var startingPosition = CGPoint.zero
+    
     var maxAngularVelocity:CGFloat = 3
     var force:CGFloat = 25
-    var startingPosition = CGPoint.zero
+    var angularImpulse:CGFloat = 0.0005
+    var maxVelocitySquared:CGFloat = 0
     
     var isInsideAMothership = true
     
@@ -146,6 +149,8 @@ class Spaceship: Control {
         self.physicsBody?.linearDamping = 2
         self.physicsBody?.angularDamping = 2
         self.physicsBody?.friction = 0
+        
+        self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -309,8 +314,13 @@ class Spaceship: Control {
                     
                     self.rotateToPoint(self.destination)
                     
-                    if(abs(self.rotationToDestination - self.zRotation) < 1) {
-                        self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                    if let physicsBody = self.physicsBody {
+                        if abs(self.totalRotationToDestination) <= 1 {
+                            let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                            if velocitySquared < self.maxVelocitySquared {
+                                self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                            }
+                        }
                     }
                 }
                 
@@ -323,7 +333,7 @@ class Spaceship: Control {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
-                            if abs(self.totalRotationToDestination) < 0.2 {
+                            if abs(self.totalRotationToDestination) <= 0.1 {
                                 self.fire()
                             }
                         }
@@ -335,7 +345,7 @@ class Spaceship: Control {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
-                            if abs(self.totalRotationToDestination) < 0.2 {
+                            if abs(self.totalRotationToDestination) <= 0.1 {
                                 self.fire()
                             }
                         }
@@ -366,7 +376,7 @@ class Spaceship: Control {
                 while(self.totalRotationToDestination < -CGFloat(M_PI)) { self.totalRotationToDestination += CGFloat(M_PI * 2) }
                 while(self.totalRotationToDestination >  CGFloat(M_PI)) { self.totalRotationToDestination -= CGFloat(M_PI * 2) }
                 
-                physicsBody.applyAngularImpulse(self.totalRotationToDestination * 0.0005)
+                physicsBody.applyAngularImpulse(self.totalRotationToDestination * self.angularImpulse)
             }
         }
     }
