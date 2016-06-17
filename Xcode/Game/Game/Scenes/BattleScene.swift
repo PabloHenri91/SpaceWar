@@ -114,8 +114,8 @@ class BattleScene: GameScene {
                 
             case states.battle:
                 
-                self.mothership.update(enemySpaceships: self.botMothership.spaceships)
-                self.botMothership.update(enemySpaceships: self.mothership.spaceships)
+                self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
+                self.botMothership.update(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
                 
                 break
                 

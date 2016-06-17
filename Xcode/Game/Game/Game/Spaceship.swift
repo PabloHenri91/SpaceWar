@@ -33,7 +33,7 @@ class Spaceship: Control {
     
     var spriteNode:SKSpriteNode!
     
-    var targetNode:Spaceship?
+    var targetNode:SKNode?
     
     //Movement
     var destination = CGPoint.zero
@@ -195,9 +195,9 @@ class Spaceship: Control {
         Spaceship.selectedSpaceship = nil
     }
     
-    func update(enemySpaceships enemySpaceships:[Spaceship]) {
+    func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
         
-        self.move(enemySpaceships: enemySpaceships)
+        self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
         
         self.healthBar.updateUp(position: self.position)
     }
@@ -234,22 +234,41 @@ class Spaceship: Control {
         return true
     }
     
-    func nearestTarget(enemySpaceships enemySpaceships:[Spaceship]) -> Spaceship? {
+    func nearestTarget(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) -> SKNode? {
         
-        var currentTarget:Spaceship? = nil
-            
-        for enemySpaceship in enemySpaceships {
-            
-            if enemySpaceship.canBeTarget() {
-                
-                if currentTarget != nil {
-                    if CGPoint.distance(self.destination, enemySpaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
-                        currentTarget = enemySpaceship
+        var currentTarget:SKNode? = nil
+        
+        for targetPriorityType in self.type.targetPriority {
+            switch targetPriorityType {
+            case TargetType.spaceships:
+                for enemySpaceship in enemySpaceships {
+                    
+                    if enemySpaceship.canBeTarget() {
+                        
+                        if currentTarget != nil {
+                            if CGPoint.distance(self.destination, enemySpaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
+                                currentTarget = enemySpaceship
+                            }
+                        } else {
+                            currentTarget = enemySpaceship
+                        }
+                        
                     }
-                } else {
-                    currentTarget = enemySpaceship
                 }
+                break
                 
+            case TargetType.mothership:
+                if enemyMothership.health > 0 {
+                    currentTarget = enemyMothership
+                }
+                break
+                
+            default:
+                break
+            }
+            
+            if currentTarget != nil {
+                break
             }
         }
         
@@ -270,7 +289,7 @@ class Spaceship: Control {
         }
     }
     
-    func move(enemySpaceships enemySpaceships:[Spaceship]) {
+    func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
         
         if self.health > 0 {
             if (self.needToMove) {
@@ -282,7 +301,7 @@ class Spaceship: Control {
                         self.resetToStartingPosition()
                     } else {
                         if !self.isInsideAMothership {
-                            self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
+                            self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
                         }
                     }
                     
@@ -298,17 +317,33 @@ class Spaceship: Control {
             } else {
                 
                 if let targetNode = self.targetNode {
-                    if !targetNode.canBeTarget() {
-                        self.targetNode = nil
-                    } else {
-                        self.rotateToPoint(targetNode.position)
-                        if abs(self.totalRotationToDestination) < 0.2 {
-                            self.fire()
+                    
+                    if let mothership = targetNode as? Mothership {
+                        if mothership.health <= 0 {
+                            self.targetNode = nil
+                        } else {
+                            self.rotateToPoint(targetNode.position)
+                            if abs(self.totalRotationToDestination) < 0.2 {
+                                self.fire()
+                            }
                         }
                     }
+                    
+                    if let spaceship = targetNode as? Spaceship {
+                        
+                        if !spaceship.canBeTarget() {
+                            self.targetNode = nil
+                        } else {
+                            self.rotateToPoint(targetNode.position)
+                            if abs(self.totalRotationToDestination) < 0.2 {
+                                self.fire()
+                            }
+                        }
+                    }
+                    
                 } else {
                     if !self.isInsideAMothership {
-                        self.targetNode = self.nearestTarget(enemySpaceships: enemySpaceships)
+                        self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
                     }
                 }
             }
@@ -505,7 +540,7 @@ extension Spaceship {
     
     static var types:[SpaceShipType] = [
         {
-            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 1,
                 speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
                 speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
