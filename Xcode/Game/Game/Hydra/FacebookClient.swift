@@ -17,6 +17,8 @@ import FBSDKLoginKit
 class FacebookClient {
     
     static let sharedInstance = FacebookClient()
+    let playerData = MemoryCard.sharedInstance.playerData
+    let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
     
     let facebookReadPermissions = ["public_profile", "email", "user_friends"]
     //Some other options: "user_about_me", "user_birthday", "user_hometown", "user_likes", "user_interests", "user_photos", "friends_photos", "friends_hometown", "friends_location", "friends_education_history"
@@ -86,7 +88,7 @@ class FacebookClient {
     
     func listGameFriends(returnFunction: (Array<NSDictionary>, NSError?) -> Void) {
         
-        let params: NSMutableDictionary = ["fields": "name" ]
+        let params: NSMutableDictionary = ["fields": "picture,name" ]
         var friendArray = Array<NSDictionary>()
         
         loginToFacebookWithSuccess({
@@ -94,7 +96,7 @@ class FacebookClient {
             
             request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
                 if (result != nil && error == nil){
-                    
+                    //print(result)
                     friendArray = result.objectForKey("data") as! Array<NSDictionary>
                     returnFunction(friendArray, nil)
                     
@@ -120,7 +122,7 @@ class FacebookClient {
             request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
                 if (result != nil && error == nil){
                     
-                    print(result)
+                    //print(result)
                     friendArray = result.objectForKey("data") as! Array<NSDictionary>
                     returnFunction(friendArray, nil)
                     

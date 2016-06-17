@@ -25,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         //Optionally add to ensure your credentials are valid:
         FBSDKLoginManager.renewSystemCredentials { (result:ACAccountCredentialRenewResult, error:NSError!) -> Void in
-            //
+            //print(result.hashValue)
+            FacebookGameInviter.sharedInstance.updateInvitedFriends()
         }
         
         return true

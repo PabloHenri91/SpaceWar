@@ -20,6 +20,8 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     var idFriendArray = [AnyObject]()
     var inviteNow = [AnyObject]()
     var gameInviterDelegate:FacebookGameInviterDelegate!
+    let playerData = MemoryCard.sharedInstance.playerData
+    let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
     
     func gameRequestDialogDidCancel(gameRequestDialog: FBSDKGameRequestDialog!) {
         //print("cancel")
@@ -38,10 +40,30 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     }
     
     func gameRequestDialog(gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        print("complete")
+        //print("complete")
         //print(results)
         //print((results["to"] as! NSArray).count)
-        self.gameInviterDelegate.inviteSucess((results["to"] as! NSArray).count)
+        
+        
+     if let inviteds = results["to"] as? [String] {
+        var needAdd = true
+        
+        for friend in inviteds {
+            for item in self.friends {
+                if (item.id == friend) {
+                    needAdd = false
+                    break
+                }
+            }
+            
+            if needAdd {
+                playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
+            }
+            
+        }
+          self.gameInviterDelegate.inviteSucess(inviteds.count)
+      }
+        
         
         self.inviteNow.removeAll()
         self.sliceFriendList()
@@ -61,7 +83,10 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             gameRequestContent.title = "SpaceWar"
             if friendList != nil {
                 gameRequestContent.recipients = friendList
+            } else {
+            gameRequestContent.filters = FBSDKGameRequestFilter.AppNonUsers
             }
+            
             gameRequestContent.actionType = FBSDKGameRequestActionType.Turn
             
             let dialog : FBSDKGameRequestDialog = FBSDKGameRequestDialog()
@@ -86,6 +111,11 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         self.invite(self.inviteNow)
     }
     
+    func inviteSomeFriends(delegate:FacebookGameInviterDelegate) {
+        self.gameInviterDelegate = delegate
+        self.invite(nil)
+    }
+    
     func sliceFriendList() {
         if self.idFriendArray.count > 0 {
             if self.idFriendArray.count >= 50 {
@@ -98,4 +128,42 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             }
         }
     }
+    
+    func updateInvitedFriends() {
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            FacebookClient.sharedInstance.listGameFriends({ (meFriends, error) in
+                if ((meFriends.count > 0)) {
+                    for item in meFriends {
+                        let id = item.objectForKey("id") as! String
+                        for friend in self.friends {
+                            if (id == friend.id) {
+                                print(item)
+                                let name = item.objectForKey("name") as! String
+                                let picture = item.objectForKey("picture")
+                                let data = picture?.objectForKey("data")
+                                let photoURL = data?.objectForKey("url") as! String
+                                self.playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
+                                print("I invited you and update")
+                                print(MemoryCard.sharedInstance.playerData.invitedFriends)
+                                return
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    
+    func countInvitesAccept() -> Int {
+        var count = 0
+        for friend in self.friends {
+            if (friend.acceptedInvite == true) {
+                count = count + 1
+            }
+        }
+        return count
+
+    }
+    
 }

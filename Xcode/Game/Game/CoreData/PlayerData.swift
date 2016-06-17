@@ -19,6 +19,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var researches: NSSet
     @NSManaged var spaceships: NSSet
     @NSManaged var weapons: NSSet
+    @NSManaged var invitedFriends: NSSet
 
 }
 
@@ -70,6 +71,12 @@ extension MemoryCard {
         weaponData = self.newWeaponData(type: 2)
         playerData.addWeaponData(weaponData)
         
+        //list of facebook friends sent game invite
+        playerData.invitedFriends = NSSet()
+        playerData.addFriendData(self.newFriendData(id: "1118222074867862"))
+        playerData.addFriendData(self.newFriendData(id: "1312123213231"))
+        
+        print(playerData.invitedFriends)
         return playerData
     }
 }
@@ -104,5 +111,29 @@ extension PlayerData {
     func removeWeaponData(value: WeaponData) {
         let items = self.mutableSetValueForKey("weapons")
         items.removeObject(value)
+    }
+    
+    func addFriendData(value: FriendData) {
+        let items = self.mutableSetValueForKey("invitedFriends")
+        items.addObject(value)
+    }
+    
+    func removeFriendData(value: FriendData) {
+        let items = self.mutableSetValueForKey("invitedFriends")
+        items.removeObject(value)
+    }
+    
+    func updateInvitedFriend(id id:String, name: String, photoURL: String, accepted: Bool) {
+        for item in self.invitedFriends {
+            if let friend = item as? FriendData {
+                if friend.id == id {
+                    friend.name = name
+                    friend.photoURL = photoURL
+                    friend.acceptedInvite = NSNumber(bool: accepted)
+                    return
+                }
+            }
+        }
+        
     }
 }
