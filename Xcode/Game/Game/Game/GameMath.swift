@@ -38,6 +38,7 @@ class GameMath {
     }
     
 
+    // Spaceship
     static func spaceshipMaxHealth(level level:Int, armor:Int) -> Int {
         let maxHealth = 10 + (((level - 1) * spaceshipHealthPointsPerLevel) + ((armor - 10) * spaceshipHealthPointsPerArmor))
         return maxHealth
@@ -50,6 +51,11 @@ class GameMath {
     
     static func spaceshipShieldRechargeInterval(shieldRechargeInterval shieldRechargeInterval:Int) -> Int {
         return 100 - shieldRechargeInterval
+    }
+    
+    static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
+        let maxVelocity = (Float(speed)/100.0) * 300.0
+        return CGFloat(maxVelocity * maxVelocity)
     }
     
     // Weapons
