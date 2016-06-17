@@ -18,6 +18,9 @@ class MothershipScene: GameScene {
         case battle
         
         //Estados de saida da scene
+        case hangar
+        
+        //Estados de saida da scene
         case social
     }
     
@@ -29,6 +32,7 @@ class MothershipScene: GameScene {
     
     var buttonBattle:Button!
     var buttonSocial:Button!
+    var buttonHangar:Button!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -45,6 +49,9 @@ class MothershipScene: GameScene {
         
         self.buttonSocial = Button(textureName: "button", text: "Social", x: 93, y: 299, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonSocial)
+        
+        self.buttonHangar = Button(textureName: "button", text: "Hangar", x: 20, y: 351, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonHangar)
         
         let control = Control(spriteNode: SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 1,height: 1)), x:160, y:284, xAlign: .center, yAlign: .center)
         control.zPosition = -1
@@ -74,6 +81,9 @@ class MothershipScene: GameScene {
                     self.view?.presentScene(SocialScene())
                 #endif
                 break
+            case .hangar:
+                self.view?.presentScene(HangarScene())
+                break
             default:
                 #if DEBUG
                     fatalError()
@@ -101,6 +111,11 @@ class MothershipScene: GameScene {
                         #if os(iOS)
                             self.nextState = states.social
                         #endif
+                        return
+                    }
+                    
+                    if(self.buttonHangar.containsPoint(touch.locationInNode(self))) {
+                        self.nextState = states.hangar
                         return
                     }
                     
