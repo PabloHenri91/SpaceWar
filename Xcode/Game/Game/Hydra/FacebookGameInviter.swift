@@ -137,14 +137,14 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
                         let id = item.objectForKey("id") as! String
                         for friend in self.friends {
                             if (id == friend.id) {
-                                print(item)
+                                //print(item)
                                 let name = item.objectForKey("name") as! String
                                 let picture = item.objectForKey("picture")
                                 let data = picture?.objectForKey("data")
                                 let photoURL = data?.objectForKey("url") as! String
                                 self.playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
-                                print("I invited you and update")
-                                print(MemoryCard.sharedInstance.playerData.invitedFriends)
+                                //print("I invited you and update")
+                                //print(MemoryCard.sharedInstance.playerData.invitedFriends)
                                 return
                             }
                         }

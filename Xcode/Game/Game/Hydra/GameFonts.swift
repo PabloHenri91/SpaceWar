@@ -13,6 +13,7 @@ class GameFonts {
     internal enum fontSize:CGFloat {
         case small = 8
         case medium = 16
+        
         case large = 32
     }
     

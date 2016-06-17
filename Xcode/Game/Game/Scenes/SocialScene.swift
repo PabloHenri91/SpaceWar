@@ -11,7 +11,6 @@ import SpriteKit
 
 class SocialScene: GameScene, FacebookGameInviterDelegate {
     
-    var playerData = MemoryCard.sharedInstance.playerData
     var buttonInviteAll:Button!
     var buttonInviteSome:Button!
     var loadingImage:SKSpriteNode!
@@ -46,7 +45,7 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
         self.buttonInviteSome = Button(textureName: "button", text: "Invite Some", x: 167, y: 466, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonInviteSome)
         
-        print(FacebookGameInviter.sharedInstance.countInvitesAccept())
+        //print(FacebookGameInviter.sharedInstance.countInvitesAccept())
   
 
     }
@@ -195,7 +194,7 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
     
     func inviteSucess(invitedsCount: Int) {
         //print("sucess")
-        print(invitedsCount)
+        //print(invitedsCount)
     }
     
     func inviteFinished() {
