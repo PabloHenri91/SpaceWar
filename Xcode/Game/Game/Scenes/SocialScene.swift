@@ -12,7 +12,8 @@ import SpriteKit
 class SocialScene: GameScene, FacebookGameInviterDelegate {
     
     var playerData = MemoryCard.sharedInstance.playerData
-    var buttonInvite:Button!
+    var buttonInviteAll:Button!
+    var buttonInviteSome:Button!
     var loadingImage:SKSpriteNode!
     lazy var deathEffect:SKAction = {
         return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
@@ -25,8 +26,11 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
         //Estados de saida da scene
         case mothership
         
-        //Estado de convidar amigos
-        case invite
+        //Estado de convidar todos amigos
+        case inviteAll
+        
+        //Estado de convidar alguns amigos
+        case inviteSomeFriends
     }
     
     //Estados iniciais
@@ -39,9 +43,11 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
         self.buttonInvite = Button(textureName: "button", text: "Invite", x: 93, y: 247, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonInvite)
         
-        print((self.view?.window?.rootViewController))
+        self.buttonInviteSome = Button(textureName: "button", text: "Invite Some", x: 167, y: 466, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonInviteSome)
         
-       
+        print(FacebookGameInviter.sharedInstance.countInvitesAccept())
+  
 
     }
     
@@ -63,7 +69,7 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
             //Próximo estado
             switch (self.nextState) {
                 
-            case states.invite:
+            case states.inviteAll:
                 
                 
                 self.loadingImage = SKSpriteNode(imageNamed: "circleLoading")
@@ -76,7 +82,24 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
                 self.blackSpriteNode.zPosition = 1000
                 self.loadingImage.zPosition = self.blackSpriteNode.zPosition + 1
                 
-                self.inviteFriends()
+                self.inviteFriends(true)
+                
+                break
+                
+            case states.inviteSomeFriends:
+                
+                
+                self.loadingImage = SKSpriteNode(imageNamed: "circleLoading")
+                self.loadingImage.position = CGPoint(x: Display.currentSceneSize.width/2 , y: -(Display.currentSceneSize.height/2))
+                self.addChild(self.loadingImage)
+                
+                self.loadingImage.runAction(self.deathEffect)
+                
+                self.blackSpriteNode.hidden = false
+                self.blackSpriteNode.zPosition = 1000
+                self.loadingImage.zPosition = self.blackSpriteNode.zPosition + 1
+                
+                self.inviteFriends(false)
                 
                 break
                 
@@ -93,6 +116,7 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
             case .mothership:
                 self.view?.presentScene(MothershipScene(), transition: self.transition)
                 break
+                
             default:
                 #if DEBUG
                     fatalError()
@@ -110,8 +134,13 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
             for touch in touches {
                 switch (self.state) {
                 case states.normal:
-                    if(self.buttonInvite.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = .invite
+                    if(self.buttonInviteAll.containsPoint(touch.locationInNode(self))) {
+                        self.nextState = .inviteAll
+                        return
+                    }
+                    
+                    if(self.buttonInviteSome.containsPoint(touch.locationInNode(self))) {
+                        self.nextState = .inviteSomeFriends
                         return
                     }
                     break
@@ -125,26 +154,36 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
     }
     
     
-    func inviteFriends(){
-        FacebookClient.sharedInstance.listInvitablesFriends { (invitableFriends, error) in
-            if error == nil {
-                
-                var idFriendArray = [AnyObject]()
-                
-                for item in invitableFriends
-                {
+    
+    func inviteFriends(all: Bool){
+        
+        if all {
+            
+            FacebookClient.sharedInstance.listInvitablesFriends { (invitableFriends, error) in
+                if error == nil {
+                    
+                    var idFriendArray = [AnyObject]()
+                    
+                    for item in invitableFriends
+                    {
                         if let idFriend = item.objectForKey("id"){
                             idFriendArray.append(idFriend)
                         }
+                    }
+                    
+                    FacebookGameInviter.sharedInstance.inviteAllFriends(self,idFriendArray: idFriendArray)
+                    
+                } else {
+                    print(error)
+                    self.nextState = .normal
                 }
-                
-                FacebookGameInviter.sharedInstance.inviteAllFriends(self,idFriendArray: idFriendArray)
-                
-            } else {
-                print(error)
-                self.nextState = .normal
             }
+            
+        } else {
+            FacebookGameInviter.sharedInstance.inviteSomeFriends(self)
         }
+        
+        
     }
     
     
@@ -155,14 +194,13 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
     
     
     func inviteSucess(invitedsCount: Int) {
-        print("sucess")
+        //print("sucess")
         print(invitedsCount)
     }
     
     func inviteFinished() {
-        print("finished")
+        //print("finished")
         self.nextState = .normal
     }
     
-
 }
