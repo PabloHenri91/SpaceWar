@@ -29,7 +29,7 @@ class HangarSpaceShipCard: Control {
         
         
         self.spaceShip = spaceShip
-        self.spaceShipImage = Control(textureName: self.spaceShip.type.skins.first!)
+        self.spaceShipImage = Control(textureName: GameMath.spaceshipSkinImageName(level: self.spaceShip.level, type: self.spaceShip.type))
         self.addChild(self.spaceShipImage)
         self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
         self.spaceShipImage.resetPosition()

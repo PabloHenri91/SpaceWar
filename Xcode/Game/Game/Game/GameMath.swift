@@ -58,6 +58,15 @@ class GameMath {
         return CGFloat(maxVelocity * maxVelocity)
     }
     
+    static func spaceshipSkinImageName(level level:Int, type:SpaceShipType) -> String {
+        let level = Float(level)
+        let maxLevel = Float(type.maxLevel)
+        
+        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
+        
+        return type.skins[Int(skinIndex)]
+    }
+    
     // Weapons
     static func weaponDemage(level level:Int, type:WeaponType) -> Int {
         return type.demage + ((level - 1) * type.demagePerLevel)

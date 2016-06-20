@@ -366,13 +366,13 @@
 			children = (
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
+				3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
-				3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";

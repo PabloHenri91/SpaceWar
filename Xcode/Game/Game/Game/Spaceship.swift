@@ -131,7 +131,7 @@ class Spaceship: Control {
         self.shieldRechargeInterval = GameMath.spaceshipShieldRechargeInterval(shieldRechargeInterval: self.shieldRecharge)
         
         //Gráfico
-        self.spriteNode = SKSpriteNode(imageNamed: self.type.skins.first!)//TODO: remover gamb
+        self.spriteNode = SKSpriteNode(imageNamed: GameMath.spaceshipSkinImageName(level: self.level, type: self.type))
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(self.spriteNode)
         
