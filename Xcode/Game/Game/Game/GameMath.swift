@@ -20,6 +20,9 @@ class GameMath {
     //Weapons
     static let weaponMinFireInterval:Double = 0.1 // seconds
     static let weaponMaxFireInterval:Double = 1.0 // seconds
+    static let weaponMaxRangeInPoints:CGFloat = 300
+    static let weaponMinRangeInPoints:CGFloat = 100
+    
     
     static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
         return type.speedBonus + ((level - 1) * type.speedBonusPerLevel)
@@ -74,6 +77,10 @@ class GameMath {
     
     static func weaponRange(level level:Int, type:WeaponType) -> Int {
         return type.range + ((level - 1) * type.rangePerLevel)
+    }
+    
+    static func weaponRangeInPoints(range range:Int) -> CGFloat {
+        return weaponMinRangeInPoints + ((CGFloat(range)/100) * (weaponMaxRangeInPoints - weaponMinRangeInPoints))
     }
     
     static func weaponFireInterval(level level:Int, type:WeaponType) -> Double {

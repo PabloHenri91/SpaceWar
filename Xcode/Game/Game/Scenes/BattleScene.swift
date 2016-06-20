@@ -136,6 +136,8 @@ class BattleScene: GameScene {
                 break
             }
         }
+        
+        Shot.update()
     }
     
     override func touchesBegan(touches: Set<UITouch>) {

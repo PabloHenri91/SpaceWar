@@ -10,15 +10,26 @@ import SpriteKit
 
 class Shot: Control {
     
+    static var shotSet = Set<Shot>()
+    
     var demage:Int! = 0
     
-    init(demage:Int, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
+    var rangeSquared:CGFloat = 0
+    
+    var startingPosition:CGPoint = CGPoint.zero
+    
+    init(demage:Int, range:CGFloat, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
         self.demage = demage
+        self.rangeSquared = range * range
+        
+        self.startingPosition = position
         
         if demage <= 0 {
-            fatalError()
+            #if DEBUG
+                fatalError()
+            #endif
         }
         
         let spriteNode = SKSpriteNode(texture: texture)
@@ -42,6 +53,8 @@ class Shot: Control {
             guard let shot = self else { return }
             shot.removeFromParent()
         }
+        
+         Shot.shotSet.insert(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,5 +65,24 @@ class Shot: Control {
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.shot.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.shot
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.shot
+    }
+    
+    static func update() {
+        for shot in Shot.shotSet {
+            shot.update()
+        }
+    }
+    
+    func update() {
+        let distanceSquared = CGPoint.distanceSquared(self.startingPosition, self.position)
+        if distanceSquared >= self.rangeSquared {
+            self.removeFromParent()
+            //print(sqrt(self.rangeSquared).description + " " + sqrt(distanceSquared).description)
+        }
+    }
+    
+    override func removeFromParent() {
+        Shot.shotSet.remove(self)
+        super.removeFromParent()
     }
 }
