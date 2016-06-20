@@ -200,9 +200,9 @@ class Spaceship: Control {
         Spaceship.selectedSpaceship = nil
     }
     
-    func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
+    func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
-        self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+        self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
         self.healthBar.updateUp(position: self.position)
     }
@@ -280,8 +280,36 @@ class Spaceship: Control {
         return currentTarget
     }
     
-    func fire() {
-        self.weapon?.fire()
+    func fire(allySpaceships allySpaceships:[Spaceship]) {
+        var canfire = true
+        
+        for allySpaceship in allySpaceships {
+            
+            if allySpaceship != self {
+                if CGPoint.distance(self.position, allySpaceship.position) < CGPoint.distance(self.position, self.targetNode!.position) {
+                    let point = allySpaceship.position
+                    let dx = Float(point.x - self.position.x)
+                    let dy = Float(point.y - self.position.y)
+                    
+                    let rotationToDestination = CGFloat(-atan2f(dx, dy))
+                    
+                    var totalRotationToDestination = rotationToDestination - self.zRotation
+                    
+                    while(totalRotationToDestination < -CGFloat(M_PI)) { totalRotationToDestination += CGFloat(M_PI * 2) }
+                    while(totalRotationToDestination >  CGFloat(M_PI)) { totalRotationToDestination -= CGFloat(M_PI * 2) }
+                    
+                    if abs(totalRotationToDestination) <= 0.2 {
+                        canfire = false
+                        break
+                    }
+                }
+            }
+        }
+        
+        if canfire {
+            self.weapon?.fire()
+        }
+        
     }
     
     func getShot(shot:Shot?) {
@@ -294,7 +322,7 @@ class Spaceship: Control {
         }
     }
     
-    func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
+    func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
         if self.health > 0 {
             if (self.needToMove) {
@@ -334,7 +362,7 @@ class Spaceship: Control {
                         } else {
                             self.rotateToPoint(targetNode.position)
                             if abs(self.totalRotationToDestination) <= 0.1 {
-                                self.fire()
+                                self.fire(allySpaceships: allySpaceships)
                             }
                         }
                     }
@@ -346,7 +374,7 @@ class Spaceship: Control {
                         } else {
                             self.rotateToPoint(targetNode.position)
                             if abs(self.totalRotationToDestination) <= 0.1 {
-                                self.fire()
+                                self.fire(allySpaceships: allySpaceships)
                             }
                         }
                     }
