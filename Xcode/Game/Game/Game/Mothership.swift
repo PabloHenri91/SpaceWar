@@ -134,7 +134,7 @@ class Mothership: Control {
     
     func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
         for spaceship in self.spaceships {
-            spaceship.update(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+            spaceship.update(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: self.spaceships)
         }
     }
 }
