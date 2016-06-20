@@ -33,13 +33,23 @@ class SpaceShipSlot: Control {
     }
     
     func remove() {
-        if let item = spaceShip {
+        if let item = self.spaceShip {
             item.removeFromParent()
             self.addChild(self.sprite)
             if let spaceShipDataItem = item.spaceshipData {
                motherShip.removeSpaceshipData(spaceShipDataItem)
             }
             self.spaceShip = nil
+        }
+    }
+    
+    func update(spaceShip: Spaceship) {
+        self.sprite.removeFromParent()
+        self.addChild(spaceShip)
+        self.spaceShip = spaceShip
+        
+        if let spaceShipDataItem = spaceShip.spaceshipData {
+            motherShip.addSpaceshipData(spaceShipDataItem)
         }
     }
     

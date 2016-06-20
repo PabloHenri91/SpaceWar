@@ -18,16 +18,18 @@ class HangarSpaceShipCard: Control {
     var labelLevel: Label!
     var labelName: Label!
     var labelDescription: Label!
+    var selected: Bool
     
     
-    init(spaceShip: Spaceship) {
+    
+    init(spaceShip: Spaceship, selected: Bool) {
+        
+        self.selected = selected
         super.init()
         
+        
         self.addChild(Control(textureName: "hangarShipCardSelected"))
-        
-        
-        
-        
+       
         self.spaceShip = spaceShip
         self.spaceShipImage = Control(textureName: self.spaceShip.type.skins.first!)
         self.addChild(self.spaceShipImage)
@@ -37,8 +39,15 @@ class HangarSpaceShipCard: Control {
         self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
         self.addChild(self.buttonDetalis)
         
-        self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
-        self.addChild(self.buttonSelect)
+        if self.selected {
+            self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
+            self.addChild(self.buttonSelect)
+        } else {
+            self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
+            self.addChild(self.buttonSelect)
+        }
+        
+    
         
         self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
         self.addChild(self.buttonUpgrade)
@@ -57,6 +66,22 @@ class HangarSpaceShipCard: Control {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    
+    func removeSpaceship() {
+        self.buttonSelect.removeFromParent()
+        self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
+        self.addChild(self.buttonSelect)
+        self.selected = !selected
+    }
+    
+    func addSpaceship(){
+        self.buttonSelect.removeFromParent()
+        self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
+        self.addChild(self.buttonSelect)
+        self.selected = !selected
+        
     }
     
 }

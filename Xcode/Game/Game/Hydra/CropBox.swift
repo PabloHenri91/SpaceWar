@@ -19,7 +19,7 @@ class CropBox: Box {
         }
     }
     
-    private var cropNode = SKCropNode()
+    var cropNode = SKCropNode()
     
     override init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
         

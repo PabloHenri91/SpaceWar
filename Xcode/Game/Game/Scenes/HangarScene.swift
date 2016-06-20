@@ -20,7 +20,9 @@ class HangarScene: GameScene {
     var buttonBack:Button!
     
     var scrollNode:ScrollNode!
-    var controlArray:Array<Control>!
+    var controlArray:Array<HangarSpaceShipCard>!
+    
+    var spaceShipListShape: CropBox!
     
     enum states : String {
         //Estado principal
@@ -70,19 +72,28 @@ class HangarScene: GameScene {
         line.screenPosition = CGPoint(x: 0, y: 194)
         line.resetPosition()
         
-        let spaceShipListShape = CropBox(textureName: "spaceShipListShape")
+        self.spaceShipListShape = CropBox(textureName: "spaceShipListShape")
         self.addChild(spaceShipListShape)
-        spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
-        spaceShipListShape.resetPosition()
+        self.spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
+        self.spaceShipListShape.resetPosition()
         
         
         self.labelShips = Label(color: SKColor.whiteColor(), text: "Naves no hangar 09/10",fontSize: .medium , x: 57, y: 213, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
-        self.controlArray = Array<Control>()
+        self.controlArray = Array<HangarSpaceShipCard>()
         
+      
+       
         for item in playerShips {
-            self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item)))
+            var selected = false
+            for slot in self.slots {
+                if (slot.spaceShip?.spaceshipData == item) {
+                    selected = true
+                    break
+                }
+            }
+            self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
         }
         
      
@@ -90,7 +101,7 @@ class HangarScene: GameScene {
         self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 0, spacing: 0 , scrollDirection: .vertical)
        
     
-        spaceShipListShape.addChild(self.scrollNode)
+        self.spaceShipListShape.addChild(self.scrollNode)
         
     }
     
@@ -139,16 +150,67 @@ class HangarScene: GameScene {
                         self.nextState = .mothership
                         return
                     }
-                    var i = 0
                     for slot in self.slots {
                         if(slot.containsPoint(touch.locationInNode(self))) {
-                            print(i)
+                            
+                            for item in self.scrollNode.cells {
+                                if let card = item as? HangarSpaceShipCard {
+                                    if (card.spaceShip.spaceshipData == slot.spaceShip?.spaceshipData) {
+                                        card.removeSpaceship()
+                                    }
+                                }
+                            }
                             slot.remove()
                             return
                         }
-                        i = i+1
                     }
                     
+                    
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceShipListShape.cropNode))) {
+                        for item in self.scrollNode.cells {
+                            if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
+                                if let card = item as? HangarSpaceShipCard {
+                                    if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
+                                        if (card.position.y < 10) {
+                                            
+                                            if card.selected {
+                                                
+                                                card.removeSpaceship()
+                                                
+                                                for slot in self.slots {
+                                                    if(slot.spaceShip?.spaceshipData == card.spaceShip.spaceshipData) {
+                                                        slot.remove()
+                                                        break
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                
+                                                var slotEmptyFound = false
+                                                for slot in self.slots {
+                                                    if(slot.spaceShip == nil) {
+                                                        slot.update(card.spaceShip)
+                                                        card.addSpaceship()
+                                                        slotEmptyFound = true
+                                                        break
+                                                    }
+                                                }
+                                                
+                                                if !slotEmptyFound {
+                                                    print("ta cheio")
+                                                }
+                                                
+                                                
+                                            }
+                                    
+                                        }
+                                    }
+                                    return
+                                }
+                            }
+                        }
+                 
+                    }
                     
                     break
                     
