@@ -251,7 +251,7 @@ class Spaceship: Control {
                     if enemySpaceship.canBeTarget() {
                         
                         if currentTarget != nil {
-                            if CGPoint.distance(self.destination, enemySpaceship.position) < CGPoint.distance(self.position, currentTarget!.position) {
+                            if CGPoint.distanceSquared(self.destination, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
                                 currentTarget = enemySpaceship
                             }
                         } else {
@@ -286,7 +286,7 @@ class Spaceship: Control {
         for allySpaceship in allySpaceships {
             
             if allySpaceship != self {
-                if CGPoint.distance(self.position, allySpaceship.position) < CGPoint.distance(self.position, self.targetNode!.position) {
+                if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, self.targetNode!.position) {
                     let point = allySpaceship.position
                     let dx = Float(point.x - self.position.x)
                     let dy = Float(point.y - self.position.y)
@@ -307,7 +307,7 @@ class Spaceship: Control {
         }
         
         if canfire {
-            self.weapon?.fire()
+            self.weapon?.fire(self.spriteNode.size.height/2)//TODO: remover cálculo
         }
         
     }
@@ -327,7 +327,7 @@ class Spaceship: Control {
         if self.health > 0 {
             if (self.needToMove) {
                 
-                if CGPoint.distance(self.position, self.destination) < 32 {
+                if CGPoint.distanceSquared(self.position, self.destination) < 1024 {
                     self.needToMove = false
                     
                     if self.destination == self.startingPosition {
@@ -419,7 +419,9 @@ class Spaceship: Control {
                     switch otherPhysicsBody.categoryBitMask {
                         
                     default:
-                        fatalError()
+                        #if DEBUG
+                            fatalError()
+                        #endif
                         break
                     }
                 }()
@@ -434,14 +436,18 @@ class Spaceship: Control {
                         break
                         
                     default:
-                        fatalError()
+                        #if DEBUG
+                            fatalError()
+                        #endif
                         break
                     }
                 }()
                 break
                 
             default:
-                fatalError()
+                #if DEBUG
+                    fatalError()
+                #endif
                 break
             }
         }
@@ -461,7 +467,9 @@ class Spaceship: Control {
                         break
                         
                     default:
-                        fatalError()
+                        #if DEBUG
+                            fatalError()
+                        #endif
                         break
                     }
                 }()
@@ -479,14 +487,18 @@ class Spaceship: Control {
                         break
                         
                     default:
-                        fatalError()
+                        #if DEBUG
+                            fatalError()
+                        #endif
                         break
                     }
                 }()
                 break
                 
             default:
-                fatalError()
+                #if DEBUG
+                    fatalError()
+                #endif
                 break
             }
         }

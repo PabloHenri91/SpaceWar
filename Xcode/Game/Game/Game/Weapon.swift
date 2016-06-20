@@ -21,6 +21,7 @@ class Weapon: Control {
     
     var lastFire:Double = 0
     var magazineSize:Int!
+    var rangeInPoints:CGFloat!
     
     var weaponData:WeaponData?
     
@@ -61,6 +62,8 @@ class Weapon: Control {
         self.reloadTime = GameMath.weaponReloadTime(level: self.level, type: self.type)
         self.magazineSize = GameMath.weaponMagazineSize(level: self.level, type: self.type)
         
+        self.rangeInPoints = GameMath.weaponRangeInPoints(range: self.range)
+        
         if let imageName = self.type.shotSkins.first {
             self.weaponShotTexture = SKTexture(imageNamed: imageName)
         } else {
@@ -74,17 +77,15 @@ class Weapon: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fire() {
+    func fire(bonusRange:CGFloat) {
         
         if GameScene.currentTime - self.lastFire > self.fireInterval {
-            
-            
             
             if let parentSpaceship = self.parent {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {
                     if parentSpaceshipPhysicsBody.dynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
-                            let shot = Shot(demage: self.demage, texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
+                            let shot = Shot(demage: self.demage, range: self.rangeInPoints + bonusRange, texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
                             parentSpaceshipParent.addChild(shot)
                         }
                     }
