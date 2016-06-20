@@ -39,16 +39,55 @@ extension MemoryCard {
         // spaceships
         playerData.spaceships = NSSet()
         
+        //adicionei a nave 0 a nave mae
         var spaceshipData = self.newSpaceshipData(type: 0)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         var weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
+        spaceshipData = self.newSpaceshipData(type: 0)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 0)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 0)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 0)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 0)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 0)
+        spaceshipData.addWeaponData(weaponData)
+        
+        //adicionei a nave 1 a nave mae
         spaceshipData = self.newSpaceshipData(type: 1)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 1)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 1)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 1)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 1)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 1)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 1)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 1)
+        spaceshipData.addWeaponData(weaponData)
+        
+        //adicionei a nave 2 na nave mae 2 vezes
+        spaceshipData = self.newSpaceshipData(type: 2)
+        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 2)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 2)
@@ -58,7 +97,11 @@ extension MemoryCard {
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.addSpaceshipData(spaceshipData)
+        weaponData = self.newWeaponData(type: 2)
+        spaceshipData.addWeaponData(weaponData)
+        
+        spaceshipData = self.newSpaceshipData(type: 2)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 2)
         spaceshipData.addWeaponData(weaponData)

@@ -14,8 +14,13 @@ class HangarScene: GameScene {
     var slots = [SpaceShipSlot]()
     var playerData = MemoryCard.sharedInstance.playerData
     let ships = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
+    let playerShips = MemoryCard.sharedInstance.playerData.spaceships as! Set<SpaceshipData>
     
+    var labelShips:Label!
     var buttonBack:Button!
+    
+    var scrollNode:ScrollNode!
+    var controlArray:Array<Control>!
     
     enum states : String {
         //Estado principal
@@ -60,7 +65,32 @@ class HangarScene: GameScene {
             self.addChild(self.slots[i])
         }
         
-
+        let line = Control(textureName: "lineHangar")
+        self.addChild(line)
+        line.screenPosition = CGPoint(x: 0, y: 194)
+        line.resetPosition()
+        
+        let spaceShipListShape = CropBox(textureName: "spaceShipListShape")
+        self.addChild(spaceShipListShape)
+        spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
+        spaceShipListShape.resetPosition()
+        
+        
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Naves no hangar 09/10",fontSize: .medium , x: 57, y: 213, horizontalAlignmentMode: .Left)
+        self.addChild(self.labelShips)
+        
+        self.controlArray = Array<Control>()
+        
+        for item in playerShips {
+            self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item)))
+        }
+        
+     
+        
+        self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 0, spacing: 0 , scrollDirection: .vertical)
+       
+    
+        spaceShipListShape.addChild(self.scrollNode)
         
     }
     
