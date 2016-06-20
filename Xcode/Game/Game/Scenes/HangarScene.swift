@@ -24,9 +24,14 @@ class HangarScene: GameScene {
     
     var spaceShipListShape: CropBox!
     
+    
     enum states : String {
         //Estado principal
         case normal
+        
+        //Estado principal
+        case alert
+        
         
         //Estados de saida da scene
         case mothership
@@ -98,7 +103,7 @@ class HangarScene: GameScene {
         
      
         
-        self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 0, spacing: 0 , scrollDirection: .vertical)
+        self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
        
     
         self.spaceShipListShape.addChild(self.scrollNode)
@@ -122,11 +127,15 @@ class HangarScene: GameScene {
             switch (self.nextState) {
             
             case states.normal:
+                self.blackSpriteNode.hidden = true
                 break
                 
                 
             case .mothership:
                 self.view?.presentScene(MothershipScene(), transition: self.transition)
+                break
+                
+            case .alert:
                 break
                 
             default:
@@ -171,7 +180,8 @@ class HangarScene: GameScene {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
                                 if let card = item as? HangarSpaceShipCard {
                                     if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
-                                        if (card.position.y < 10) {
+                                        print(card.position.y)
+                                        if ((card.position.y < 140) && (card.position.y > -130)) {
                                             
                                             if card.selected {
                                                 
@@ -197,12 +207,23 @@ class HangarScene: GameScene {
                                                 }
                                                 
                                                 if !slotEmptyFound {
-                                                    print("ta cheio")
+                                                 
+                                                    
+                                                    self.blackSpriteNode.hidden = false
+                                                    self.blackSpriteNode.zPosition = 100000
+                                                    
+                                                    
+                                                    let teste = AlertBox(title: "Alerta!!!", text: "Nave mae lotada, remova uma nave!", type: .OK)
+                                                    teste.zPosition = self.blackSpriteNode.zPosition + 1
+                                                    self.addChild(teste)
+                                                    teste.buttonOK.addHandler {
+                                                        print("ok")
+                                                        self.nextState = .normal
+                                                    }
+                                                    self.nextState = .alert
+                                                    
                                                 }
-                                                
-                                                
                                             }
-                                    
                                         }
                                     }
                                     return

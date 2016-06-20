@@ -15,6 +15,8 @@
 		3A7E60D01D14331600D00590 /* SpaceShipSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */; };
 		3A7E60D21D14878F00D00590 /* HangarSpaceShipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */; };
 		3A7E60D31D14878F00D00590 /* HangarSpaceShipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */; };
+		3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D41D1869FA00D00590 /* AlertBox.swift */; };
+		3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D41D1869FA00D00590 /* AlertBox.swift */; };
 		3AA0C97A1CFDB3B5008EE628 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */; };
 		3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */; };
 		3AA0C97C1CFDB3B5008EE628 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */; };
@@ -126,6 +128,7 @@
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
 		3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceShipSlot.swift; sourceTree = "<group>"; };
 		3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarSpaceShipCard.swift; sourceTree = "<group>"; };
+		3A7E60D41D1869FA00D00590 /* AlertBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBox.swift; sourceTree = "<group>"; };
 		3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
 		3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -364,6 +367,7 @@
 		844CF2971CE78BBC0032F6AA /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */,
@@ -547,6 +551,7 @@
 				848F8B791D0602BE00434FFB /* Shot.swift in Sources */,
 				84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */,
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
+				3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620681CEB77400082A9D7 /* CropBox.swift in Sources */,
 				8436207E1CEB77400082A9D7 /* ScrollNode.swift in Sources */,
 				848021061D0ADB220078320A /* HealthBar.swift in Sources */,
@@ -595,6 +600,7 @@
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
+				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */,
 				843620711CEB77400082A9D7 /* GameColors.swift in Sources */,
