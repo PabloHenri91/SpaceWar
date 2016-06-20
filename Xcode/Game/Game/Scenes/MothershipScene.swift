@@ -22,6 +22,9 @@ class MothershipScene: GameScene {
         
         //Estados de saida da scene
         case social
+        
+        //Estado de mensagem de alerta
+        case alert
     }
     
     //Estados iniciais
@@ -29,6 +32,7 @@ class MothershipScene: GameScene {
     var nextState = states.mothership
     
     let playerData = MemoryCard.sharedInstance.playerData
+    let selectedShips = MemoryCard.sharedInstance.playerData.motherShip.spaceships
     
     var buttonBattle:Button!
     var buttonSocial:Button!
@@ -84,6 +88,12 @@ class MothershipScene: GameScene {
             case .hangar:
                 self.view?.presentScene(HangarScene())
                 break
+            case .alert:
+                break
+            case .mothership:
+                self.blackSpriteNode.hidden = true
+                break
+                
             default:
                 #if DEBUG
                     fatalError()
@@ -103,7 +113,24 @@ class MothershipScene: GameScene {
                 switch (self.state) {
                 case states.mothership:
                     if(self.buttonBattle.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = states.battle
+                        print(selectedShips.count)
+                        if (selectedShips.count == 4) {
+                            self.nextState = states.battle
+                        } else {
+                            self.blackSpriteNode.hidden = false
+                            self.blackSpriteNode.zPosition = 100000
+                            
+                            
+                            let teste = AlertBox(title: "Alerta!!!", text: "Estão faltando naves, vá ao hangar", type: .OK)
+                            teste.zPosition = self.blackSpriteNode.zPosition + 1
+                            self.addChild(teste)
+                            teste.buttonOK.addHandler {
+                                print("ok")
+                                self.nextState = .mothership
+                            }
+                            self.nextState = .alert
+                        }
+                        
                         return
                     }
                     
