@@ -511,6 +511,9 @@ class SpaceShipType {
     
     var targetPriority:[TargetType]
     
+    var name:String = ""
+    var spaceshipDescription:String = ""
+    
     var speedBonus:Int
     var armorBonus:Int
     var shieldPowerBonus:Int
@@ -557,6 +560,8 @@ extension Spaceship {
                 "spaceshipAA",
                 "spaceshipAB"
             ]
+            spaceShipType.name = "Space Striker"
+            spaceShipType.spaceshipDescription = "Nave de batalha fodona"
             return spaceShipType
         }(),
         
@@ -568,6 +573,8 @@ extension Spaceship {
                 "spaceshipBA",
                 "spaceshipBB"
             ]
+            spaceShipType.name = "Space tanker"
+            spaceShipType.spaceshipDescription = "Apanha a fu"
             return spaceShipType
         }(),
         
@@ -579,6 +586,10 @@ extension Spaceship {
                 "spaceshipCA",
                 "spaceshipCB"
             ]
+            
+            spaceShipType.name = "Space speeder"
+            spaceShipType.spaceshipDescription = "Corre como se nao houvesse amanha"
+            
             return spaceShipType
         }()
     ]
