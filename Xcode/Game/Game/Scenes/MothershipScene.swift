@@ -126,7 +126,7 @@ class MothershipScene: GameScene {
                             self.addChild(teste)
                             teste.buttonOK.addHandler {
                                 print("ok")
-                                self.nextState = .mothership
+                                self.nextState = .hangar
                             }
                             self.nextState = .alert
                         }
