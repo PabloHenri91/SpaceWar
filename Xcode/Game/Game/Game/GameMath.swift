@@ -24,6 +24,33 @@ class GameMath {
     static let weaponMinRangeInPoints:CGFloat = 100
     
     
+    static func xpForNextLevel(level level:Int) -> Int {
+        
+        var resultado = 0
+        var batalhas = 0
+        var missoes = 0
+        var pesquisa = 0
+        
+        for i in 1..<(level+2) {
+            batalhas = batalhas + (i - 1)
+            if (i>2) {
+                missoes = missoes + (i - 2)
+                
+                if (i>3) {
+                    pesquisa = pesquisa + (i - 3)
+                    
+                    
+                }
+            }
+            
+            resultado = ((batalhas * 100) * (i - 1)) + (missoes * 50) + (pesquisa * 200)
+        }
+        
+        return resultado
+        
+    }
+    
+    
     static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
         return type.speedBonus + ((level - 1) * type.speedBonusPerLevel)
     }
