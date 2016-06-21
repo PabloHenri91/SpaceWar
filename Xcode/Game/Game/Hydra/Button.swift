@@ -383,11 +383,4 @@ class Button: Control {
         print("button.scene == nil! Algo saiu errado")
         return CGPoint.zero
     }
-    
-    class func touchesEnded(touches: Set<UITouch>) {
-        //ScrollNode.updateOnTouchesEnded()
-
-        Button.update(touches)
-
-    }
 }

@@ -16,9 +16,12 @@ class BattleScene: GameScene {
         
         case loading
         case countdown
+        case battleEnd
+        case battleEndInterval
+        case showBattleResult
         
         //Estados de saida da scene
-        case battleEnd
+        case mothership
     }
     
     //Estados iniciais
@@ -32,6 +35,8 @@ class BattleScene: GameScene {
     var mothership:Mothership!
     
     var botMothership:Mothership!
+    
+    var battleEndTime: Double = 0
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -117,9 +122,27 @@ class BattleScene: GameScene {
                 self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
                 self.botMothership.update(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
                 
+                if self.mothership.health <= 0 ||
+                    self.botMothership.health <= 0
+                {
+                    self.nextState = states.battleEnd
+                }
+                
+                break
+                
+            case .battleEndInterval:
+                if currentTime - battleEndTime >= 3 {
+                    self.nextState = states.showBattleResult
+                }
+                break
+                
+            case .showBattleResult:
                 break
                 
             default:
+                #if DEBUG
+                    fatalError()
+                #endif
                 break
             }
         } else {
@@ -128,6 +151,46 @@ class BattleScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .battle:
+                break
+            case .battleEnd:
+                self.battleEndTime = currentTime
+                self.nextState = .battleEndInterval
+                break
+            case .battleEndInterval:
+                break
+            case .showBattleResult:
+                
+                let battleXP:Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
+                
+                self.playerData.points = NSNumber(integer: self.playerData.points.integerValue + battleXP)
+                
+                if self.botMothership.health <= 0 && self.mothership.health <= 0 {
+                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                    alertBox.buttonOK.addHandler({
+                        self.nextState = states.mothership
+                    })
+                    self.addChild(alertBox)
+                } else {
+                    if self.botMothership.health <= 0 {
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! 😃 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        alertBox.buttonOK.addHandler({
+                            self.nextState = states.mothership
+                        })
+                        self.addChild(alertBox)
+                    } else {
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. 😱 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        alertBox.buttonOK.addHandler({
+                            self.nextState = states.mothership
+                        })
+                        self.addChild(alertBox)
+                    }
+                }
+                
+                
+                
+                break
+            case .mothership:
+                self.view?.presentScene(MothershipScene())
                 break
             default:
                 #if DEBUG

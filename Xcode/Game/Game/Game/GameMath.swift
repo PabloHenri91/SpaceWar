@@ -104,4 +104,12 @@ class GameMath {
         return maxHealth
     }
     
+    //Battle
+    static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+        if mothership.health > 0 {
+            return 1000
+        }
+        return 0
+    }
+    
 }
