@@ -17,11 +17,16 @@ class GameMath {
     static let spaceshipShieldPointsPerPower = 3
     static let spaceshipShieldPointsPerLevel = 1
     
+    static let spaceshipMaxVelocity:CGFloat = 1000 * 1000
+    static let spaceshipMinVelocity:CGFloat = 800 * 800
+    
     //Weapons
     static let weaponMinFireInterval:Double = 0.1 // seconds
     static let weaponMaxFireInterval:Double = 1.0 // seconds
     static let weaponMaxRangeInPoints:CGFloat = 300
     static let weaponMinRangeInPoints:CGFloat = 100
+    
+    
     
     
     static func xpForNextLevel(level level:Int) -> Int {
@@ -84,7 +89,7 @@ class GameMath {
     }
     
     static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
-        let maxVelocity = (Float(speed)/100.0) * 300.0
+        let maxVelocity = spaceshipMinVelocity + ((CGFloat(speed)/100) * (spaceshipMaxVelocity - spaceshipMinVelocity))
         return CGFloat(maxVelocity * maxVelocity)
     }
     
@@ -134,7 +139,8 @@ class GameMath {
     //Battle
     static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
         if mothership.health > 0 {
-            return 1000
+            let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
+            return xp
         }
         return 0
     }
