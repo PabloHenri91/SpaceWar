@@ -12,9 +12,9 @@ class Label: Control {
     
     var labelNode:SKLabelNode!
     
-    init(color:SKColor = GameColors.black, text:String, fontSize:GameFonts.fontSize = .medium, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .Center ) {
+    init(color:SKColor = GameColors.black, text:String, fontSize:CGFloat = GameFonts.fontSize.medium.rawValue, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .Center ) {
         super.init()
-        self.load(color, text:text, fontSize:fontSize.rawValue, x:x, y:y, xAlign:xAlign, yAlign:yAlign, verticalAlignmentMode:verticalAlignmentMode, horizontalAlignmentMode:horizontalAlignmentMode)
+        self.load(color, text:text, fontSize:fontSize, x:x, y:y, xAlign:xAlign, yAlign:yAlign, verticalAlignmentMode:verticalAlignmentMode, horizontalAlignmentMode:horizontalAlignmentMode)
     }
     
     required init?(coder aDecoder: NSCoder) {

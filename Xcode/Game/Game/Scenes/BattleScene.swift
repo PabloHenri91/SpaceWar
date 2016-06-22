@@ -43,8 +43,6 @@ class BattleScene: GameScene {
         
         self.addChild(Label(color: GameColors.white, text: "BattleScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
         
-        //self.addChild(Control(textureName: "background", xAlign: .center, yAlign: .center))
-        
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
         self.gameWorld.setScreenBox(Display.defaultSceneSize)
@@ -190,7 +188,7 @@ class BattleScene: GameScene {
                 
                 break
             case .mothership:
-                self.view?.presentScene(MothershipScene())
+                self.view?.presentScene(MothershipScene(), transition: self.transition)
                 break
             default:
                 #if DEBUG

@@ -19,10 +19,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
         
-        let spriteNode = SKSpriteNode(imageNamed: "background")
-        spriteNode.texture?.filteringMode = Display.filteringMode
-        self.addChild(spriteNode)
-        
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
     }

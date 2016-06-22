@@ -37,30 +37,68 @@ class MothershipScene: GameScene {
     var buttonBattle:Button!
     var buttonSocial:Button!
     var buttonHangar:Button!
+    var buttonLab:Button!
+    var buttonBuy:Button!
+    
+    var labelLevel:Label!
+    var labelLevelShadow:Label!
+    
+    var labelPoints:Label!
+    //var labelPointsBorder = [Label]()
+    var labelPointsShadow:Label!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        self.addChild(Control(textureName: "background", x: 0, y: 0, xAlign: .center, yAlign: .center))
         
-        self.addChild(Label(color: GameColors.white, text: "MothershipScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
+        //Header
+        self.addChild(Control(textureName: "control1", x: 0, y: 0, xAlign: .center, yAlign: .up))
+        self.addChild(Control(textureName: "control2", x: 0, y: 22, xAlign: .center, yAlign: .up))
+        self.addChild(Control(textureName: "control0", x: 109, y: 12, xAlign: .center, yAlign: .up))
         
-        let background = Control(textureName: "background", x:-53, xAlign: .center, yAlign: .center)
-        background.zPosition = -2
-        self.addChild(background)
+        //Label Level
+        let labelLevelColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)// Preto
+        let labelLevelShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 12/100)
+        let labelLevelText = self.playerData.motherShip.level.description
         
-        self.buttonBattle = Button(textureName: "button", text: "Battle", x: 93, y: 247, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonBattle)
+        self.labelLevelShadow = Label(color: labelLevelShadowColor, text: labelLevelText, fontSize: 15, x: 160, y: 34, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
+        self.labelLevel = Label(color: labelLevelColor, text: labelLevelText, fontSize: 15, x: 160, y: 33, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
         
-        self.buttonSocial = Button(textureName: "button", text: "Social", x: 93, y: 299, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonSocial)
+        self.addChild(self.labelLevelShadow)
+        self.addChild(self.labelLevel)
+        //
         
-        self.buttonHangar = Button(textureName: "button", text: "Hangar", x: 20, y: 351, xAlign: .center, yAlign: .center)
+        //Label points
+        let labelPointsShadowColor = SKColor(red: 94/255, green: 127/255, blue: 27/255, alpha: 1)// Verde
+        let labelPointsColor = SKColor.whiteColor()
+        let labelPointsText = self.playerData.points.description + " Frag"
+        
+        //FontSize -2 13 +2
+        self.labelPoints = Label(color: labelPointsColor, text: labelPointsText, fontSize: 13, x: 265, y: 33+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
+        self.labelPointsShadow = Label(color: labelPointsShadowColor, text: labelPointsText, fontSize: 13, x: 265, y: 34+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
+        
+        self.addChild(self.labelPointsShadow)
+        self.addChild(self.labelPoints)
+        //
+        
+        //Footer
+        self.addChild(Control(textureName: "footerBackground", x: 0, y: 521, xAlign: .center, yAlign: .down))
+        
+        self.buttonHangar = Button(textureName: "buttonHangar", x: 262, y: 521, xAlign: .center, yAlign: .down)
         self.addChild(self.buttonHangar)
         
-        let control = Control(spriteNode: SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 1,height: 1)), x:160, y:284, xAlign: .center, yAlign: .center)
-        control.zPosition = -1
-        self.addChild(control)
-        control.addChild(Mothership(mothershipData: self.playerData.motherShip))
+        self.buttonSocial = Button(textureName: "buttonSocial", x: 58, y: 521, xAlign: .center, yAlign: .down)
+        self.addChild(self.buttonSocial)
+        
+        self.buttonBattle = Button(textureName: "buttonBattle", x: 115, y: 514, xAlign: .center, yAlign: .down)
+        self.addChild(self.buttonBattle)
+        
+        self.buttonLab = Button(textureName: "buttonLab", x: 0, y: 521, xAlign: .center, yAlign: .down)
+        self.addChild(self.buttonLab)
+        
+        self.buttonBuy = Button(textureName: "buttonBuy", x: 204, y: 521, xAlign: .center, yAlign: .down)
+        self.addChild(self.buttonBuy)
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -78,15 +116,15 @@ class MothershipScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .battle:
-                self.view?.presentScene(BattleScene())
+                self.view?.presentScene(BattleScene(), transition: self.transition)
                 break
             case .social:
                 #if os(iOS)
-                    self.view?.presentScene(SocialScene())
+                    self.view?.presentScene(SocialScene(), transition: self.transition)
                 #endif
                 break
             case .hangar:
-                self.view?.presentScene(HangarScene())
+                self.view?.presentScene(HangarScene(), transition: self.transition)
                 break
             case .alert:
                 break
@@ -138,11 +176,22 @@ class MothershipScene: GameScene {
                         #if os(iOS)
                             self.nextState = states.social
                         #endif
+                        print("buttonSocial Pressed")
                         return
                     }
                     
                     if(self.buttonHangar.containsPoint(touch.locationInNode(self))) {
                         self.nextState = states.hangar
+                        return
+                    }
+                    
+                    if(self.buttonLab.containsPoint(touch.locationInNode(self))) {
+                        print("buttonLab Pressed")
+                        return
+                    }
+                    
+                    if(self.buttonBuy.containsPoint(touch.locationInNode(self))) {
+                        print("buttonBuy Pressed")
                         return
                     }
                     

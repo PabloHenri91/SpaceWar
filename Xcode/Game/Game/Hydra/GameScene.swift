@@ -38,6 +38,7 @@ class GameScene: SKScene {
         Display.updateSceneSize()
         
         super.init(size: Display.currentSceneSize)
+        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
         
         Control.controlList = Set<Control>()
         Button.buttonList = Set<Button>()
