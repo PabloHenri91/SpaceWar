@@ -58,7 +58,7 @@ class HangarSpaceShipCard: Control {
         self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name , x: 137, y: 23)
         self.addChild(self.labelName)
         
-        self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription , x: 62, y: 58, horizontalAlignmentMode: .Left)
+        self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: .small , x: 62, y: 58, horizontalAlignmentMode: .Left)
       
         self.addChild(self.labelDescription)
         

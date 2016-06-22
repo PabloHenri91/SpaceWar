@@ -543,7 +543,16 @@ public enum TargetType:Int {
     case towers
 }
 
+public enum RarityType:Int {
+    case comum
+    case rare
+    case epic
+    case legendary
+}
+
 class SpaceShipType {
+    
+    var rarity: RarityType!
     
     var skins = [String]()
     
@@ -593,43 +602,60 @@ extension Spaceship {
     
     static var types:[SpaceShipType] = [
         {
-            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 1,
-                speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
+            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 1,
+                speed: 100, armor: 5, shieldPower: 5, shieldRecharge: 5,
                 speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipAA",
                 "spaceshipAB"
             ]
-            spaceShipType.name = "Space Striker"
-            spaceShipType.spaceshipDescription = "Nave de batalha fodona"
+            spaceShipType.name = "Space Speeder"
+            spaceShipType.spaceshipDescription = "A very fast Spaceship"
+            spaceShipType.rarity = .comum
             return spaceShipType
         }(),
         
         {
-            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
-            speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
+            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+            speed: 15, armor: 10, shieldPower: 5, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipBA",
                 "spaceshipBB"
             ]
             spaceShipType.name = "Space tanker"
-            spaceShipType.spaceshipDescription = "Apanha a fu"
+            spaceShipType.spaceshipDescription = "Can hold a great amount of damage"
+            spaceShipType.rarity = .comum
             return spaceShipType
         }(),
         
         {
-            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
-            speed: 10, armor: 10, shieldPower: 10, shieldRecharge: 10,
+            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+            speed: 15, armor: 5, shieldPower: 10, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipCA",
                 "spaceshipCB"
             ]
             
-            spaceShipType.name = "Space speeder"
-            spaceShipType.spaceshipDescription = "Corre como se nao houvesse amanha"
+            spaceShipType.name = "Space Shielder"
+            spaceShipType.spaceshipDescription = "Have the best defense"
+            spaceShipType.rarity = .comum
+            return spaceShipType
+        }(),
+        
+        {
+            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+                speed: 15, armor: 5, shieldPower: 5, shieldRecharge: 10,
+                speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            spaceShipType.skins = [
+                "spaceshipFA",
+                "spaceshipFB"
+            ]
             
+            spaceShipType.name = "Space Techno"
+            spaceShipType.spaceshipDescription = "Recharge your defanse in the light speed"
+            spaceShipType.rarity = .comum
             return spaceShipType
         }()
     ]
