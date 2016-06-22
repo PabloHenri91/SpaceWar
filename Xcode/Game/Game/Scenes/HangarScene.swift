@@ -45,15 +45,10 @@ class HangarScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        
-        let background = Control(textureName: "background", x:-53, xAlign: .center, yAlign: .center)
-        background.zPosition = -2
-        self.addChild(background)
-        
         self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: "Naves selecionadas",fontSize: .medium , x: 92, y: 72, horizontalAlignmentMode: .Left))
+        self.addChild(Label(color: SKColor.whiteColor(), text: "Naves selecionadas",fontSize: GameFonts.fontSize.medium.rawValue, x: 92, y: 72, horizontalAlignmentMode: .Left))
         
         for ship in ships {
             self.selectedShips.append(Spaceship(spaceshipData: ship))
@@ -83,7 +78,7 @@ class HangarScene: GameScene {
         self.spaceShipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Naves no hangar 09/10",fontSize: .medium , x: 57, y: 213, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Naves no hangar 09/10",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<HangarSpaceShipCard>()

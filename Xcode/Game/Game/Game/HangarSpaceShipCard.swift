@@ -52,7 +52,7 @@ class HangarSpaceShipCard: Control {
         self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
         self.addChild(self.buttonUpgrade)
         
-        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: .small , x: 262, y: 14)
+        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
         self.addChild(self.labelLevel)
         
         self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name , x: 137, y: 23)
