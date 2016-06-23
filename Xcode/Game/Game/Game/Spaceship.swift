@@ -43,7 +43,7 @@ class Spaceship: Control {
     var startingPosition = CGPoint.zero
     
     var maxAngularVelocity:CGFloat = 3
-    var force:CGFloat = 25
+    var force:CGFloat = 40
     var angularImpulse:CGFloat = 0.0005
     var maxVelocitySquared:CGFloat = 0
     
@@ -342,9 +342,13 @@ class Spaceship: Control {
                     
                     self.rotateToPoint(self.destination)
                     
+                    
                     if let physicsBody = self.physicsBody {
+                        print((physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy))
+                        
                         if abs(self.totalRotationToDestination) <= 1 {
                             let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                           
                             if velocitySquared < self.maxVelocitySquared {
                                 self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                             }
@@ -544,7 +548,7 @@ public enum TargetType:Int {
 }
 
 public enum RarityType:Int {
-    case comum
+    case commom
     case rare
     case epic
     case legendary
@@ -611,13 +615,13 @@ extension Spaceship {
             ]
             spaceShipType.name = "Space Speeder"
             spaceShipType.spaceshipDescription = "A very fast Spaceship"
-            spaceShipType.rarity = .comum
+            spaceShipType.rarity = .commom
             return spaceShipType
         }(),
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 15, armor: 10, shieldPower: 5, shieldRecharge: 5,
+            speed: 50, armor: 10, shieldPower: 5, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipBA",
@@ -625,13 +629,13 @@ extension Spaceship {
             ]
             spaceShipType.name = "Space tanker"
             spaceShipType.spaceshipDescription = "Can hold a great amount of damage"
-            spaceShipType.rarity = .comum
+            spaceShipType.rarity = .commom
             return spaceShipType
         }(),
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 15, armor: 5, shieldPower: 10, shieldRecharge: 5,
+            speed: 50, armor: 5, shieldPower: 10, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipCA",
@@ -640,13 +644,13 @@ extension Spaceship {
             
             spaceShipType.name = "Space Shielder"
             spaceShipType.spaceshipDescription = "Have the best defense"
-            spaceShipType.rarity = .comum
+            spaceShipType.rarity = .commom
             return spaceShipType
         }(),
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 15, armor: 5, shieldPower: 5, shieldRecharge: 10,
+                speed: 50, armor: 5, shieldPower: 5, shieldRecharge: 10,
                 speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipFA",
@@ -655,7 +659,7 @@ extension Spaceship {
             
             spaceShipType.name = "Space Techno"
             spaceShipType.spaceshipDescription = "Recharge your defanse in the light speed"
-            spaceShipType.rarity = .comum
+            spaceShipType.rarity = .commom
             return spaceShipType
         }()
     ]

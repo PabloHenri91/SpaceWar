@@ -17,8 +17,8 @@ class GameMath {
     static let spaceshipShieldPointsPerPower = 3
     static let spaceshipShieldPointsPerLevel = 1
     
-    static let spaceshipMaxVelocity:CGFloat = 1000 * 1000
-    static let spaceshipMinVelocity:CGFloat = 800 * 800
+    static let spaceshipMaxVelocity:CGFloat = 100 * 100
+    static let spaceshipMinVelocity:CGFloat = 50 * 50
     
     //Weapons
     static let weaponMinFireInterval:Double = 0.1 // seconds
@@ -56,37 +56,47 @@ class GameMath {
     }
     
     
+    // de 5 a 30, fixo pela nave
     static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
-        return type.speedBonus + ((level - 1) * type.speedBonusPerLevel)
+        return type.speedBonus
     }
     
+    // Pontos de HP, aumenta 10 por cento por level
     static func spaceshipArmor(level level:Int, type:SpaceShipType) -> Int {
-        return type.armorBonus + ((level - 1) * type.armorBonusPerLevel)
+        return Int(Double(type.armorBonus) * pow(1.1, Double(level - 1)))
     }
     
+    // Pontos de escudo, aumenta 10 por cento por level
     static func spaceshipShieldPower(level level:Int, type:SpaceShipType) -> Int {
-        return type.shieldPowerBonus + ((level - 1) * type.shieldPowerBonusPerLevel)
+        return Int(Double(type.shieldPowerBonus) * pow(1.1, Double(level - 1)))
     }
     
+    // Quantidade de pontos de escudo recarregado por segundo
     static func spaceshipShieldRecharge(level level:Int, type:SpaceShipType) -> Int {
-        return type.shieldRechargeBonus + ((level - 1) * type.shieldRechargeBonusPerLevel)
+        return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
     
 
-    // Spaceship
+    // SPACESHIP
+    
+    // calculo desnecessario, ja ha uma variacao de hp por level baseado no armor, se necessario apenas normalizar o numero aqui
     static func spaceshipMaxHealth(level level:Int, armor:Int) -> Int {
         let maxHealth = 10 + (((level - 1) * spaceshipHealthPointsPerLevel) + ((armor - 10) * spaceshipHealthPointsPerArmor))
         return maxHealth
     }
     
+    // calculo desnecessario, ja ha uma variacao de escudo por level baseado no shield, se necessario apenas normalizar o numero aqui
     static func spaceshipMaxShield(level level:Int, shieldPower:Int) -> Int {
         let maxShield = 1 + (((level - 1) * spaceshipShieldPointsPerLevel) + ((shieldPower - 10) * spaceshipShieldPointsPerPower))
         return maxShield
     }
     
+    // calculo desnecessario, ja ha uma variacao de pontos recarregados por segundo baseado no shield recharge , se necessario apenas normalizar o numero aqui
     static func spaceshipShieldRechargeInterval(shieldRechargeInterval shieldRechargeInterval:Int) -> Int {
         return 100 - shieldRechargeInterval
     }
+    
+    
     
     static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
         let maxVelocity = spaceshipMinVelocity + ((CGFloat(speed)/100) * (spaceshipMaxVelocity - spaceshipMinVelocity))
@@ -100,6 +110,37 @@ class GameMath {
         let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
         
         return type.skins[Int(skinIndex)]
+    }
+    
+    // Spaceship upgrade
+    static func spaceshipUpgradeCost(level level:Int, type:SpaceShipType) -> Int {
+        switch type.rarity! {
+        case .commom:
+            return Int(100 * pow(1.1, Double(level)))
+        case .rare:
+            return Int(200 * pow(1.1, Double(level)))
+        case .epic:
+            return Int(500 * pow(1.1, Double(level)))
+        case .legendary:
+            return Int(1000 * pow(1.1, Double(level)))
+        default:
+            break
+        }
+    }
+    
+    static func spaceshipUpgradeXP(level level:Int, type:SpaceShipType) -> Int {
+        switch type.rarity! {
+        case .commom:
+            return Int(50 * pow(1.1, Double(level)))
+        case .rare:
+            return Int(100 * pow(1.1, Double(level)))
+        case .epic:
+            return Int(200 * pow(1.1, Double(level)))
+        case .legendary:
+            return Int(400 * pow(1.1, Double(level)))
+        default:
+            break
+        }
     }
     
     // Weapons
@@ -141,6 +182,15 @@ class GameMath {
         if mothership.health > 0 {
             let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
             return xp
+        }
+        let xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
+        return xp
+    }
+    
+    static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+        if mothership.health > 0 {
+            let points = mothership.level * 200 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
+            return points
         }
         return 0
     }
