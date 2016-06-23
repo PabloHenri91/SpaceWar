@@ -43,7 +43,7 @@ class Spaceship: Control {
     var startingPosition = CGPoint.zero
     
     var maxAngularVelocity:CGFloat = 3
-    var force:CGFloat = 40
+    var force:CGFloat = 20
     var angularImpulse:CGFloat = 0.0005
     var maxVelocitySquared:CGFloat = 0
     
@@ -151,6 +151,8 @@ class Spaceship: Control {
         self.physicsBody?.friction = 0
         
         self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
+        self.force = self.maxVelocitySquared / 60
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -323,11 +325,12 @@ class Spaceship: Control {
     }
     
     func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
-        
+       
         if self.health > 0 {
             if (self.needToMove) {
-                
+
                 if CGPoint.distanceSquared(self.position, self.destination) < 1024 {
+               
                     self.needToMove = false
                     
                     if self.destination == self.startingPosition {
@@ -339,12 +342,11 @@ class Spaceship: Control {
                     }
                     
                 } else {
-                    
+    
                     self.rotateToPoint(self.destination)
                     
                     
                     if let physicsBody = self.physicsBody {
-                        print((physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy))
                         
                         if abs(self.totalRotationToDestination) <= 1 {
                             let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
@@ -606,12 +608,12 @@ extension Spaceship {
     
     static var types:[SpaceShipType] = [
         {
-            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 1,
-                speed: 100, armor: 5, shieldPower: 5, shieldRecharge: 5,
+            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+                speed: 10, armor: 5, shieldPower: 5, shieldRecharge: 5,
                 speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
-                "spaceshipAA",
-                "spaceshipAB"
+                "spaceshipBA",
+                "spaceshipBB"
             ]
             spaceShipType.name = "Space Speeder"
             spaceShipType.spaceshipDescription = "A very fast Spaceship"
@@ -621,11 +623,11 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 50, armor: 10, shieldPower: 5, shieldRecharge: 5,
+            speed: 5, armor: 10, shieldPower: 5, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
-                "spaceshipBA",
-                "spaceshipBB"
+                "spaceshipAA",
+                "spaceshipAB"
             ]
             spaceShipType.name = "Space tanker"
             spaceShipType.spaceshipDescription = "Can hold a great amount of damage"
@@ -635,7 +637,7 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 50, armor: 5, shieldPower: 10, shieldRecharge: 5,
+            speed: 5, armor: 5, shieldPower: 10, shieldRecharge: 5,
             speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipCA",
@@ -650,7 +652,7 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 50, armor: 5, shieldPower: 5, shieldRecharge: 10,
+                speed: 5, armor: 5, shieldPower: 5, shieldRecharge: 10,
                 speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
             spaceShipType.skins = [
                 "spaceshipFA",

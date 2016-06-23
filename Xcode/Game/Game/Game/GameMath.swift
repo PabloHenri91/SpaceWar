@@ -17,9 +17,6 @@ class GameMath {
     static let spaceshipShieldPointsPerPower = 3
     static let spaceshipShieldPointsPerLevel = 1
     
-    static let spaceshipMaxVelocity:CGFloat = 100 * 100
-    static let spaceshipMinVelocity:CGFloat = 50 * 50
-    
     //Weapons
     static let weaponMinFireInterval:Double = 0.1 // seconds
     static let weaponMaxFireInterval:Double = 1.0 // seconds
@@ -81,25 +78,25 @@ class GameMath {
     
     // calculo desnecessario, ja ha uma variacao de hp por level baseado no armor, se necessario apenas normalizar o numero aqui
     static func spaceshipMaxHealth(level level:Int, armor:Int) -> Int {
-        let maxHealth = 10 + (((level - 1) * spaceshipHealthPointsPerLevel) + ((armor - 10) * spaceshipHealthPointsPerArmor))
-        return maxHealth
+        //let maxHealth = 10 + (((level - 1) * spaceshipHealthPointsPerLevel) + ((armor - 10) * spaceshipHealthPointsPerArmor))
+        return armor
     }
     
     // calculo desnecessario, ja ha uma variacao de escudo por level baseado no shield, se necessario apenas normalizar o numero aqui
     static func spaceshipMaxShield(level level:Int, shieldPower:Int) -> Int {
-        let maxShield = 1 + (((level - 1) * spaceshipShieldPointsPerLevel) + ((shieldPower - 10) * spaceshipShieldPointsPerPower))
-        return maxShield
+        //let maxShield = 1 + (((level - 1) * spaceshipShieldPointsPerLevel) + ((shieldPower - 10) * spaceshipShieldPointsPerPower))
+        return shieldPower
     }
     
     // calculo desnecessario, ja ha uma variacao de pontos recarregados por segundo baseado no shield recharge , se necessario apenas normalizar o numero aqui
     static func spaceshipShieldRechargeInterval(shieldRechargeInterval shieldRechargeInterval:Int) -> Int {
-        return 100 - shieldRechargeInterval
+        return shieldRechargeInterval
     }
     
     
     
     static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
-        let maxVelocity = spaceshipMinVelocity + ((CGFloat(speed)/100) * (spaceshipMaxVelocity - spaceshipMinVelocity))
+        let maxVelocity =  CGFloat(speed) * 4
         return CGFloat(maxVelocity * maxVelocity)
     }
     
