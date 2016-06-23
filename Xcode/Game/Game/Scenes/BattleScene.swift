@@ -159,8 +159,10 @@ class BattleScene: GameScene {
             case .showBattleResult:
                 
                 let battleXP:Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
+                let battlePoints:Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
                 
-                self.playerData.points = NSNumber(integer: self.playerData.points.integerValue + battleXP)
+                self.playerData.points = NSNumber(integer: self.playerData.points.integerValue + battlePoints)
+                self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
                     let alertBox = AlertBox(title: "The Battle Ended", text: "Draw 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
