@@ -20,10 +20,9 @@ class Spaceship: Control {
     var maxHealth:Int!
     var energyShield:Int!
     var maxEnergyShield:Int!
-    var shieldRechargeInterval:Int!
+
     
     var speedAtribute:Int!
-    var armor:Int!
     var shieldPower:Int!
     var shieldRecharge:Int!
     
@@ -58,9 +57,7 @@ class Spaceship: Control {
             "maxHealth: " + maxHealth.description  + "\n" +
             "energyShield: " + energyShield.description  + "\n" +
             "maxEnergyShield: " + maxEnergyShield.description  + "\n" +
-            "shieldRechargeInterval: " + shieldRechargeInterval.description  + "\n" +
             "speedAtribute: " + speedAtribute.description  + "\n" +
-            "armor: " + armor.description  + "\n" +
             "shieldPower: " + shieldPower.description  + "\n" +
             "shieldRecharge: " + shieldRecharge.description  + "\n"
     }
@@ -119,16 +116,17 @@ class Spaceship: Control {
         self.level = level
         
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
-        self.armor = GameMath.spaceshipArmor(level: self.level, type: self.type)
+        self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
+        self.maxHealth = health
         self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, type: self.type)
         
-        self.health = GameMath.spaceshipMaxHealth(level: self.level, armor: self.armor)
-        self.maxHealth = health
+      
         
-        self.energyShield = GameMath.spaceshipMaxShield(level: self.level, shieldPower: self.shieldPower)
+        
+        self.energyShield = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.maxEnergyShield = energyShield
-        self.shieldRechargeInterval = GameMath.spaceshipShieldRechargeInterval(shieldRechargeInterval: self.shieldRecharge)
+
         
         //Gráfico
         self.spriteNode = SKSpriteNode(imageNamed: GameMath.spaceshipSkinImageName(level: self.level, type: self.type))
@@ -570,31 +568,23 @@ class SpaceShipType {
     var spaceshipDescription:String = ""
     
     var speedBonus:Int
-    var armorBonus:Int
+    var healthBonus:Int
     var shieldPowerBonus:Int
     var shieldRechargeBonus:Int
     
-    var speedBonusPerLevel:Int
-    var armorBonusPerLevel:Int
-    var shieldPowerBonusPerLevel:Int
-    var shieldRechargeBonusPerLevel:Int
+
     
-    init(maxLevel:Int, targetPriorityType:Int, speed:Int, armor:Int, shieldPower:Int, shieldRecharge:Int,
-         speedPerLevel:Int, armorPerLevel:Int, shieldPowerPerLevel:Int, shieldRechargePerLevel:Int) {
+    init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
         
         self.maxLevel = maxLevel
         
         self.targetPriority = Spaceship.targetPriorityTypes[targetPriorityType]
         
         self.speedBonus = speed
-        self.armorBonus = armor
+        self.healthBonus = health
         self.shieldPowerBonus = shieldPower
         self.shieldRechargeBonus = shieldRecharge
-        
-        self.speedBonusPerLevel = speedPerLevel
-        self.armorBonusPerLevel = armorPerLevel
-        self.shieldPowerBonusPerLevel = shieldPowerPerLevel
-        self.shieldRechargeBonusPerLevel = shieldRechargePerLevel
+
     }
 }
 
@@ -609,8 +599,7 @@ extension Spaceship {
     static var types:[SpaceShipType] = [
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 10, armor: 5, shieldPower: 5, shieldRecharge: 5,
-                speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+                speed: 10, health: 5, shieldPower: 5, shieldRecharge: 5)
             spaceShipType.skins = [
                 "spaceshipBA",
                 "spaceshipBB"
@@ -623,8 +612,7 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 5, armor: 10, shieldPower: 5, shieldRecharge: 5,
-            speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
             spaceShipType.skins = [
                 "spaceshipAA",
                 "spaceshipAB"
@@ -637,8 +625,7 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 5, armor: 5, shieldPower: 10, shieldRecharge: 5,
-            speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+            speed: 5, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceShipType.skins = [
                 "spaceshipCA",
                 "spaceshipCB"
@@ -652,8 +639,7 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 5, armor: 5, shieldPower: 5, shieldRecharge: 10,
-                speedPerLevel: 1, armorPerLevel: 1, shieldPowerPerLevel: 1, shieldRechargePerLevel: 1)
+                speed: 5, health: 5, shieldPower: 5, shieldRecharge: 10)
             spaceShipType.skins = [
                 "spaceshipFA",
                 "spaceshipFB"

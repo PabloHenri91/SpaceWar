@@ -53,6 +53,15 @@ class MothershipScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        let xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
+        let xp = self.playerData.motherShip.xp.integerValue
+        if (xpForNextLevel <= xp) {
+            self.playerData.motherShip.level = NSNumber(int: self.playerData.motherShip.level.integerValue + 1)
+            self.playerData.motherShip.xp = NSNumber(integer: xp - xpForNextLevel)
+            let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
+            self.addChild(alertBox)
+        }
+        
         self.addChild(Control(textureName: "background", x: 0, y: 0, xAlign: .center, yAlign: .center))
         
         //Header
