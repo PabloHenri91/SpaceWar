@@ -89,8 +89,8 @@ class GameMath {
     }
     
     // calculo desnecessario, ja ha uma variacao de pontos recarregados por segundo baseado no shield recharge , se necessario apenas normalizar o numero aqui
-    static func spaceshipShieldRechargeInterval(shieldRechargeInterval shieldRechargeInterval:Int) -> Int {
-        return shieldRechargeInterval
+    static func spaceshipShieldRechargePerSecond(shieldRechargeInterval shieldRecharge:Int) -> Int {
+        return shieldRecharge
     }
     
     
