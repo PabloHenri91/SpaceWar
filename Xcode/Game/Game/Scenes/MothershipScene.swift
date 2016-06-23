@@ -47,6 +47,9 @@ class MothershipScene: GameScene {
     //var labelPointsBorder = [Label]()
     var labelPointsShadow:Label!
     
+    var labelXP:Label!
+    var labelXPShadow:Label!
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -73,13 +76,26 @@ class MothershipScene: GameScene {
         let labelPointsShadowColor = SKColor(red: 94/255, green: 127/255, blue: 27/255, alpha: 1)// Verde
         let labelPointsColor = SKColor.whiteColor()
         let labelPointsText = self.playerData.points.description + " Frag"
-        
         //FontSize -2 13 +2
+        
         self.labelPoints = Label(color: labelPointsColor, text: labelPointsText, fontSize: 13, x: 265, y: 33+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
         self.labelPointsShadow = Label(color: labelPointsShadowColor, text: labelPointsText, fontSize: 13, x: 265, y: 34+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
         
         self.addChild(self.labelPointsShadow)
         self.addChild(self.labelPoints)
+        //
+        
+        //Label XP
+        let labelXPShadowColor = SKColor(red: 67/255, green: 89/255, blue: 19/255, alpha: 1)// Verde
+        let labelXPColor = SKColor.whiteColor()
+        let labelXPText = self.playerData.motherShip.xp.description + " XP"
+        //FontSize -2 13 +2
+        
+        self.labelXP = Label(color: labelXPColor, text: labelXPText, fontSize: 13, x: 54, y: 33+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
+        self.labelXPShadow = Label(color: labelXPShadowColor, text: labelXPText, fontSize: 13, x: 54, y: 34+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)
+        
+        self.addChild(self.labelXPShadow)
+        self.addChild(self.labelXP)
         //
         
         //Footer
