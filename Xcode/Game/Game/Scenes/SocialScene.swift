@@ -18,6 +18,8 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
         return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
     }()
     
+    var buttonBack:Button!
+    
     enum states : String {
         //Estado principal
         case normal
@@ -44,6 +46,9 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
         
         self.buttonInviteSome = Button(textureName: "button", text: "Invite Some", x: 167, y: 466, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonInviteSome)
+        
+        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonBack)
         
         //print(FacebookGameInviter.sharedInstance.countInvitesAccept())
   
@@ -142,6 +147,12 @@ class SocialScene: GameScene, FacebookGameInviterDelegate {
                         self.nextState = .inviteSomeFriends
                         return
                     }
+                    
+                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
+                        self.nextState = .mothership
+                        return
+                    }
+                    
                     break
                     
                 default:

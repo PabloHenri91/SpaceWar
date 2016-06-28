@@ -61,8 +61,8 @@ class FacebookClient {
                 }
                 if allPermsGranted {
                     // Do work
-                    let fbToken = result.token.tokenString
-                    let fbUserID = result.token.userID
+                    //let fbToken = result.token.tokenString
+                    //let fbUserID = result.token.userID
                     
                     //Send fbToken and fbUserID to your web API for processing, or just hang on to that locally if needed
                     //self.post("myserver/myendpoint", parameters: ["token": fbToken, "userID": fbUserId]) {(error: NSError?) ->() in

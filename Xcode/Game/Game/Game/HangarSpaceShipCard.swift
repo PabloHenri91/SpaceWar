@@ -20,7 +20,7 @@ class HangarSpaceShipCard: Control {
     var labelDescription: Label!
     var selected: Bool
     
-    
+    var playerData = MemoryCard.sharedInstance.playerData
     
     init(spaceShip: Spaceship, selected: Bool) {
         
@@ -82,6 +82,22 @@ class HangarSpaceShipCard: Control {
         self.addChild(self.buttonSelect)
         self.selected = !selected
         
+    }
+    
+    func upgradeSpaceship(cost: Int){
+        
+        let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceShip.level, type: self.spaceShip.type)
+        self.spaceShip.upgrade()
+        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - cost)
+        self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xp)
+        self.reloadCard()
+        
+    }
+    
+    func reloadCard() {
+        self.labelLevel.removeFromParent()
+        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
+        self.addChild(self.labelLevel)
     }
     
 }

@@ -23,8 +23,19 @@ class MothershipScene: GameScene {
         //Estados de saida da scene
         case social
         
+        //Estados de saida da scene
+        case research
+        
+        //Estados de saida da scene
+        case mission
+        
+        //Estados de saida da scene
+        case factory
+        
         //Estado de mensagem de alerta
         case alert
+        
+        
     }
     
     //Estados iniciais
@@ -35,7 +46,7 @@ class MothershipScene: GameScene {
     let selectedShips = MemoryCard.sharedInstance.playerData.motherShip.spaceships
     
     var buttonBattle:Button!
-    var buttonSocial:Button!
+    var buttonMission:Button!
     var buttonHangar:Button!
     var buttonLab:Button!
     var buttonBuy:Button!
@@ -113,8 +124,8 @@ class MothershipScene: GameScene {
         self.buttonHangar = Button(textureName: "buttonHangar", x: 262, y: 521, xAlign: .center, yAlign: .down)
         self.addChild(self.buttonHangar)
         
-        self.buttonSocial = Button(textureName: "buttonSocial", x: 58, y: 521, xAlign: .center, yAlign: .down)
-        self.addChild(self.buttonSocial)
+        self.buttonMission = Button(textureName: "buttonSocial", x: 58, y: 521, xAlign: .center, yAlign: .down)
+        self.addChild(self.buttonMission)
         
         self.buttonBattle = Button(textureName: "buttonBattle", x: 115, y: 514, xAlign: .center, yAlign: .down)
         self.addChild(self.buttonBattle)
@@ -150,6 +161,15 @@ class MothershipScene: GameScene {
                 break
             case .hangar:
                 self.view?.presentScene(HangarScene(), transition: self.transition)
+                break
+            case .research:
+                self.view?.presentScene(ResearchScene(), transition: self.transition)
+                break
+            case .mission:
+                self.view?.presentScene(MissionScene(), transition: self.transition)
+                break
+            case .factory:
+                self.view?.presentScene(FactoryScene(), transition: self.transition)
                 break
             case .alert:
                 break
@@ -197,11 +217,8 @@ class MothershipScene: GameScene {
                         return
                     }
                     
-                    if(self.buttonSocial.containsPoint(touch.locationInNode(self))) {
-                        #if os(iOS)
-                            self.nextState = states.social
-                        #endif
-                        print("buttonSocial Pressed")
+                    if(self.buttonMission.containsPoint(touch.locationInNode(self))) {
+                            self.nextState = states.mission
                         return
                     }
                     
@@ -211,12 +228,12 @@ class MothershipScene: GameScene {
                     }
                     
                     if(self.buttonLab.containsPoint(touch.locationInNode(self))) {
-                        print("buttonLab Pressed")
+                        self.nextState = states.research
                         return
                     }
                     
                     if(self.buttonBuy.containsPoint(touch.locationInNode(self))) {
-                        print("buttonBuy Pressed")
+                        self.nextState = states.factory
                         return
                     }
                     

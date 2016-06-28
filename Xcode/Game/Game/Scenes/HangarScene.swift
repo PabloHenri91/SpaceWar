@@ -29,7 +29,7 @@ class HangarScene: GameScene {
         //Estado principal
         case normal
         
-        //Estado principal
+        //Estado de alertBox
         case alert
         
         
@@ -175,7 +175,6 @@ class HangarScene: GameScene {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
                                 if let card = item as? HangarSpaceShipCard {
                                     if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
-                                        print(card.position.y)
                                         if ((card.position.y < 140) && (card.position.y > -130)) {
                                             
                                             if card.selected {
@@ -208,7 +207,7 @@ class HangarScene: GameScene {
                                                     self.blackSpriteNode.zPosition = 100000
                                                     
                                                     
-                                                    let teste = AlertBox(title: "Alerta!!!", text: "Nave mae lotada, remova uma nave!", type: .OK)
+                                                    let teste = AlertBox(title: "Alert!!!", text: "Mothership is full, remove a spaceship!", type: .OK)
                                                     teste.zPosition = self.blackSpriteNode.zPosition + 1
                                                     self.addChild(teste)
                                                     teste.buttonOK.addHandler {
@@ -221,6 +220,25 @@ class HangarScene: GameScene {
                                             }
                                         }
                                     }
+                                    
+                                    if(card.buttonUpgrade.containsPoint(touch.locationInNode(card))) {
+                                        if ((card.position.y < 140) && (card.position.y > -130)) {
+                                            let cost = GameMath.spaceshipUpgradeCost(level: card.spaceShip.level, type: card.spaceShip.type)
+                                            if (cost < self.playerData.points.integerValue) {
+                                                card.upgradeSpaceship(cost)
+                                            } else {
+                                                let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
+                                                teste.zPosition = self.blackSpriteNode.zPosition + 1
+                                                self.addChild(teste)
+                                                teste.buttonOK.addHandler {
+                                                    self.nextState = .normal
+                                                }
+                                                self.nextState = .alert
+                                            }
+                                        }
+                                        
+                                    }
+                                    
                                     return
                                 }
                             }

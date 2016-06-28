@@ -539,6 +539,15 @@ class Spaceship: Control {
             spaceshipData.level = self.level
         }
     }
+    
+    func upgrade() {
+        if let spaceshipData = self.spaceshipData {
+            
+            spaceshipData.level = NSNumber(integer: spaceshipData.level.integerValue + 1)
+            self.level = spaceshipData.level.integerValue
+            
+        }
+    }
 }
 
 public enum TargetType:Int {
