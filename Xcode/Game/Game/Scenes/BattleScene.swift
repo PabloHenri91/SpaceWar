@@ -190,7 +190,7 @@ class BattleScene: GameScene {
                 
                 break
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: self.transition)
+                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
                 break
             default:
                 #if DEBUG

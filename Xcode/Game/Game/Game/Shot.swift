@@ -47,7 +47,7 @@ class Shot: Control {
         
         self.position = position
         self.zRotation = zRotation
-        self.physicsBody?.velocity = CGVector(dx: (-sin(zRotation) * 1000) + shooterPhysicsBody.velocity.dx, dy: (cos(zRotation) * 1000) + shooterPhysicsBody.velocity.dy)
+        self.physicsBody?.velocity = CGVector(dx: (-sin(zRotation) * 500) + shooterPhysicsBody.velocity.dx, dy: (cos(zRotation) * 500) + shooterPhysicsBody.velocity.dy)
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
             guard let shot = self else { return }

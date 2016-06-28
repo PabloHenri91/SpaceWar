@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
             skView.showsNodeCount = true
         #endif
         
-        skView.presentScene(scene)
+        skView.presentScene(scene, transition: GameScene.transition)
     }
     
     override func viewWillLayoutSubviews() {
