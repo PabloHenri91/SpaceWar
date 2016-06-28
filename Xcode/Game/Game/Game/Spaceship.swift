@@ -156,17 +156,37 @@ class Spaceship: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setMoveArrowToDestination() {
+        let spriteNode = SKSpriteNode(imageNamed: "moveArrows")
+        spriteNode.position = self.destination
+        self.parent?.addChild(spriteNode)
+        
+        spriteNode.runAction(SKAction.resizeToWidth(0, height: 1, duration: 0.5))
+        spriteNode.runAction(SKAction.fadeOutWithDuration(0.5), completion: { [weak spriteNode] in
+            spriteNode?.removeFromParent()
+        })
+    }
+    
     func touchEnded() {
-        if let spaceship = Spaceship.selectedSpaceship {
-            spaceship.spriteNode.color = SKColor.blackColor()
-            spaceship.spriteNode.colorBlendFactor = 0
+        
+        if self == Spaceship.selectedSpaceship {
+            //esqueca o que está fazendo
+            self.targetNode = nil
+            self.needToMove = false
+        } else {
+            if let spaceship = Spaceship.selectedSpaceship {
+                spaceship.spriteNode.color = SKColor.blackColor()
+                spaceship.spriteNode.colorBlendFactor = 0
+            }
+            
+            if self.health > 0 {
+                Spaceship.selectedSpaceship = self
+                
+                self.physicsBody?.dynamic = true
+                self.spriteNode.color = SKColor.blackColor()
+                self.spriteNode.colorBlendFactor = 0.5
+            }
         }
-        
-        Spaceship.selectedSpaceship = self
-        
-        self.physicsBody?.dynamic = true
-        self.spriteNode.color = SKColor.blackColor()
-        self.spriteNode.colorBlendFactor = 0.5
     }
     
     static func touchEnded(touch: UITouch) {
@@ -178,6 +198,7 @@ class Spaceship: Control {
                 
                 spaceship.destination = touch.locationInNode(parent)
                 spaceship.needToMove = true
+                spaceship.setMoveArrowToDestination()
             }
         }
     }
