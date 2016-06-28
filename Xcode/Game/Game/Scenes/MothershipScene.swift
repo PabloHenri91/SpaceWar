@@ -164,13 +164,13 @@ class MothershipScene: GameScene {
                 self.view?.presentScene(HangarScene(), transition: GameScene.transition)
                 break
             case .research:
-                self.view?.presentScene(ResearchScene(), transition: self.transition)
+                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
                 break
             case .mission:
-                self.view?.presentScene(MissionScene(), transition: self.transition)
+                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
                 break
             case .factory:
-                self.view?.presentScene(FactoryScene(), transition: self.transition)
+                self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
                 break
             case .alert:
                 break

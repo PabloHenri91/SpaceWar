@@ -58,7 +58,7 @@ class MissionScene: GameScene {
             switch (self.nextState) {
                 
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: self.transition)
+                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
                 break
                 
             default:
