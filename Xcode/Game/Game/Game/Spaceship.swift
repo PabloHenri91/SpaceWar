@@ -27,6 +27,7 @@ class Spaceship: Control {
     var shieldRecharge:Int!
     
     var weapon:Weapon?
+    var weaponRangeBonus:CGFloat = 0
     
     var spaceshipData:SpaceshipData?
     
@@ -121,17 +122,15 @@ class Spaceship: Control {
         self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, type: self.type)
         
-      
-        
-        
         self.energyShield = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.maxEnergyShield = energyShield
-
         
         //Gráfico
         self.spriteNode = SKSpriteNode(imageNamed: GameMath.spaceshipSkinImageName(level: self.level, type: self.type))
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(self.spriteNode)
+        
+        self.weaponRangeBonus = self.spriteNode.size.height/2
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
         
@@ -227,7 +226,17 @@ class Spaceship: Control {
         self.physicsBody?.dynamic = false
     }
     
-    func canBeTarget() -> Bool {
+    func canBeTarget(spaceship:Spaceship) -> Bool {
+        
+        if let spaceshipWeapon = spaceship.weapon {
+            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus
+            if CGPoint.distance(self.position, spaceship.position) > range {
+                return false
+            }
+        } else {
+            return false
+        }
+        
         if self.isInsideAMothership {
             return false
         }
@@ -248,7 +257,7 @@ class Spaceship: Control {
             case TargetType.spaceships:
                 for enemySpaceship in enemySpaceships {
                     
-                    if enemySpaceship.canBeTarget() {
+                    if enemySpaceship.canBeTarget(self) {
                         
                         if currentTarget != nil {
                             if CGPoint.distanceSquared(self.destination, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
@@ -263,7 +272,7 @@ class Spaceship: Control {
                 break
                 
             case TargetType.mothership:
-                if enemyMothership.health > 0 {
+                if enemyMothership.canBeTarget(self) {
                     currentTarget = enemyMothership
                 }
                 break
@@ -307,7 +316,7 @@ class Spaceship: Control {
         }
         
         if canfire {
-            self.weapon?.fire(self.spriteNode.size.height/2)//TODO: remover cálculo
+            self.weapon?.fire(self.weaponRangeBonus)
         }
         
     }
@@ -373,7 +382,7 @@ class Spaceship: Control {
                     
                     if let spaceship = targetNode as? Spaceship {
                         
-                        if !spaceship.canBeTarget() {
+                        if !spaceship.canBeTarget(self) {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)

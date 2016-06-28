@@ -122,6 +122,24 @@ class Mothership: Control {
         }
     }
     
+    func canBeTarget(spaceship:Spaceship) -> Bool {
+        
+        if let spaceshipWeapon = spaceship.weapon {
+            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.spriteNode.size.height/2
+            if CGPoint.distance(self.position, spaceship.position) > range {
+                return false
+            }
+        } else {
+            return false
+        }
+        
+        if self.health <= 0 {
+            return false
+        }
+        
+        return true
+    }
+    
     func getShot(shot:Shot?) {
         if let someShot = shot {
             self.health = self.health - someShot.demage

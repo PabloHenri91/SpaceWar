@@ -31,8 +31,7 @@ class MothershipScene: GameScene {
     var state = states.mothership
     var nextState = states.mothership
     
-    let playerData = MemoryCard.sharedInstance.playerData
-    let selectedShips = MemoryCard.sharedInstance.playerData.motherShip.spaceships
+    var playerData:PlayerData!
     
     var buttonBattle:Button!
     var buttonSocial:Button!
@@ -52,6 +51,8 @@ class MothershipScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        
+        self.playerData = MemoryCard.sharedInstance.playerData
         
         let xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         let xp = self.playerData.motherShip.xp.integerValue
@@ -141,15 +142,15 @@ class MothershipScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .battle:
-                self.view?.presentScene(BattleScene(), transition: self.transition)
+                self.view?.presentScene(BattleScene(), transition: GameScene.transition)
                 break
             case .social:
                 #if os(iOS)
-                    self.view?.presentScene(SocialScene(), transition: self.transition)
+                    self.view?.presentScene(SocialScene(), transition: GameScene.transition)
                 #endif
                 break
             case .hangar:
-                self.view?.presentScene(HangarScene(), transition: self.transition)
+                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
                 break
             case .alert:
                 break
@@ -176,8 +177,7 @@ class MothershipScene: GameScene {
                 switch (self.state) {
                 case states.mothership:
                     if(self.buttonBattle.containsPoint(touch.locationInNode(self))) {
-                        print(selectedShips.count)
-                        if (selectedShips.count == 4) {
+                        if (self.playerData.motherShip.spaceships.count == 4) {
                             self.nextState = states.battle
                         } else {
                             self.blackSpriteNode.hidden = false
