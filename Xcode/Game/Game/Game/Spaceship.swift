@@ -50,6 +50,7 @@ class Spaceship: Control {
     var isInsideAMothership = true
     
     var healthBar:HealthBar!
+    var weaponRangeSprite:SKShapeNode!
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -90,6 +91,21 @@ class Spaceship: Control {
     func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
         self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
         gameWorld.addChild(self.healthBar)
+    }
+    
+    func loadWeaponRangeSprite(gameWorld:GameWorld) {
+        if let weapon = self.weapon {
+            self.weaponRangeSprite = SKShapeNode(circleOfRadius: weapon.rangeInPoints)
+            self.weaponRangeSprite.strokeColor = SKColor.whiteColor()
+            self.weaponRangeSprite.fillColor = SKColor.clearColor()
+            self.weaponRangeSprite.position = self.position
+            self.weaponRangeSprite.alpha = 0
+            gameWorld.addChild(self.weaponRangeSprite)
+        }
+    }
+    
+    func showWeaponRangeSprite() {
+        self.weaponRangeSprite.alpha = 1
     }
     
     func loadAllyDetails() {
@@ -165,6 +181,7 @@ class Spaceship: Control {
         spriteNode.runAction(SKAction.fadeOutWithDuration(0.5), completion: { [weak spriteNode] in
             spriteNode?.removeFromParent()
         })
+        self.showWeaponRangeSprite()
     }
     
     func touchEnded() {
@@ -173,6 +190,8 @@ class Spaceship: Control {
             //esqueca o que está fazendo
             self.targetNode = nil
             self.needToMove = false
+            self.showWeaponRangeSprite()
+            
         } else {
             if let spaceship = Spaceship.selectedSpaceship {
                 spaceship.spriteNode.color = SKColor.blackColor()
@@ -181,6 +200,7 @@ class Spaceship: Control {
             
             if self.health > 0 {
                 Spaceship.selectedSpaceship = self
+                self.showWeaponRangeSprite()
                 
                 self.physicsBody?.dynamic = true
                 self.spriteNode.color = SKColor.blackColor()
@@ -225,6 +245,13 @@ class Spaceship: Control {
         self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
         self.healthBar.updateUp(position: self.position)
+        
+        //TODO: exportar para função
+        self.weaponRangeSprite.position = self.position
+        if self.weaponRangeSprite.alpha > 0 {
+            self.weaponRangeSprite.alpha -= 0.01666666667
+        }
+        //
     }
     
     func setBitMasksToMothershipSpaceship() {
