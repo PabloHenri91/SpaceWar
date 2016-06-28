@@ -222,6 +222,12 @@ class BattleScene: GameScene {
                         }
                     }
                     
+                    if let parent = self.botMothership.spriteNode.parent {
+                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                            return
+                        }
+                    }
+                    
                     if let parent = self.mothership.spriteNode.parent {
                         if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
                             Spaceship.retreat()
@@ -250,6 +256,12 @@ class BattleScene: GameScene {
                     
                 case states.battle:
                     
+                    if let parent = self.botMothership.spriteNode.parent {
+                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                            return
+                        }
+                    }
+                    
                     if let parent = self.mothership.spriteNode.parent {
                         if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
                             return
@@ -276,12 +288,19 @@ class BattleScene: GameScene {
                 switch (self.state) {
                     
                 case states.battle:
+                    
                     for spaceship in self.mothership.spaceships {
                         if let parent = spaceship.parent {
                             if spaceship.containsPoint(touch.locationInNode(parent)) {
                                 spaceship.touchEnded()
                                 return
                             }
+                        }
+                    }
+                    
+                    if let parent = self.botMothership.spriteNode.parent {
+                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                            return
                         }
                     }
                     
