@@ -30,6 +30,7 @@
         <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
     <entity name="SpaceshipData" representedClassName="SpaceshipData" syncable="YES">
+        <attribute name="crashDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="xp" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -46,11 +47,11 @@
     </entity>
     <fetchRequest name="FetchRequest" entity="PlayerData"/>
     <elements>
+        <element name="FriendData" positionX="-279" positionY="-45" width="128" height="120"/>
         <element name="MothershipData" positionX="-488" positionY="-198" width="128" height="28"/>
         <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="150"/>
         <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="103"/>
-        <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="28"/>
+        <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="150"/>
         <element name="WeaponData" positionX="-459" positionY="45" width="128" height="28"/>
-        <element name="FriendData" positionX="-279" positionY="-45" width="128" height="120"/>
     </elements>
 </model>

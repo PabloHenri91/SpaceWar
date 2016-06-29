@@ -21,8 +21,11 @@ class HangarScene: GameScene {
     
     var scrollNode:ScrollNode!
     var controlArray:Array<HangarSpaceShipCard>!
+    var crashedSpaceships:Array<HangarSpaceShipCard>!
     
     var spaceShipListShape: CropBox!
+    
+    var lastUpdate: NSTimeInterval = 0
     
     
     enum states : String {
@@ -82,10 +85,12 @@ class HangarScene: GameScene {
         self.addChild(self.labelShips)
         
         self.controlArray = Array<HangarSpaceShipCard>()
+        self.crashedSpaceships = Array<HangarSpaceShipCard>()
         
       
-       
-        for item in playerShips {
+        let orderedplayerShips = playerShips.sort({ $0.level.integerValue > $1.level.integerValue })
+        
+        for item in orderedplayerShips {
             var selected = false
             for slot in self.slots {
                 if (slot.spaceShip?.spaceshipData == item) {
@@ -93,15 +98,23 @@ class HangarScene: GameScene {
                     break
                 }
             }
-            self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
+            
+            if GameMath.spaceshipFixTime(item.crashDate) < 0 {
+                self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
+            } else {
+                self.crashedSpaceships.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
+            }
+            
         }
         
-     
+        
         
         self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
-       
-    
         self.spaceShipListShape.addChild(self.scrollNode)
+        
+        for item in self.crashedSpaceships {
+            self.scrollNode.append(item)
+        }
         
     }
     
@@ -111,6 +124,20 @@ class HangarScene: GameScene {
         if(self.state == self.nextState) {
             //Estado atual
             switch (self.state) {
+                
+            case states.normal:
+                
+                if ((currentTime - self.lastUpdate) > 1) {
+                    self.lastUpdate = currentTime
+                    for item in self.scrollNode.cells {
+                        if let card = item as? HangarSpaceShipCard {
+                            card.update()
+                        }
+                    }
+                    
+                }
+                
+                break
 
             default:
                 break
@@ -174,70 +201,77 @@ class HangarScene: GameScene {
                         for item in self.scrollNode.cells {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
                                 if let card = item as? HangarSpaceShipCard {
-                                    if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
-                                        if ((card.position.y < 140) && (card.position.y > -130)) {
-                                            
-                                            if card.selected {
+                                    if let buttonSelect = card.buttonSelect{
+                                        if (buttonSelect.containsPoint(touch.locationInNode(card))) {
+                                            if ((card.position.y < 140) && (card.position.y > -130)) {
                                                 
-                                                card.removeSpaceship()
-                                                
-                                                for slot in self.slots {
-                                                    if(slot.spaceShip?.spaceshipData == card.spaceShip.spaceshipData) {
-                                                        slot.remove()
-                                                        break
+                                                if card.selected {
+                                                    
+                                                    card.removeSpaceship()
+                                                    
+                                                    for slot in self.slots {
+                                                        if(slot.spaceShip?.spaceshipData == card.spaceShip.spaceshipData) {
+                                                            slot.remove()
+                                                            break
+                                                        }
                                                     }
-                                                }
-                                                
-                                            } else {
-                                                
-                                                var slotEmptyFound = false
-                                                for slot in self.slots {
-                                                    if(slot.spaceShip == nil) {
-                                                        slot.update(card.spaceShip)
-                                                        card.addSpaceship()
-                                                        slotEmptyFound = true
-                                                        break
+                                                    
+                                                } else {
+                                                    
+                                                    var slotEmptyFound = false
+                                                    for slot in self.slots {
+                                                        if(slot.spaceShip == nil) {
+                                                            slot.update(card.spaceShip)
+                                                            card.addSpaceship()
+                                                            slotEmptyFound = true
+                                                            break
+                                                        }
                                                     }
-                                                }
-                                                
-                                                if !slotEmptyFound {
-                                                 
                                                     
-                                                    self.blackSpriteNode.hidden = false
-                                                    self.blackSpriteNode.zPosition = 100000
-                                                    
-                                                    
-                                                    let teste = AlertBox(title: "Alert!!!", text: "Mothership is full, remove a spaceship!", type: .OK)
-                                                    teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                                    self.addChild(teste)
-                                                    teste.buttonOK.addHandler {
-                                                        print("ok")
-                                                        self.nextState = .normal
+                                                    if !slotEmptyFound {
+                                                        
+                                                        
+                                                        self.blackSpriteNode.hidden = false
+                                                        self.blackSpriteNode.zPosition = 100000
+                                                        
+                                                        
+                                                        let teste = AlertBox(title: "Alert!!!", text: "Mothership full, remove a spaceship!", type: .OK)
+                                                        teste.zPosition = self.blackSpriteNode.zPosition + 1
+                                                        self.addChild(teste)
+                                                        teste.buttonOK.addHandler {
+                                                            print("ok")
+                                                            self.nextState = .normal
+                                                        }
+                                                        self.nextState = .alert
+                                                        
                                                     }
-                                                    self.nextState = .alert
-                                                    
                                                 }
                                             }
                                         }
                                     }
                                     
-                                    if(card.buttonUpgrade.containsPoint(touch.locationInNode(card))) {
-                                        if ((card.position.y < 140) && (card.position.y > -130)) {
-                                            let cost = GameMath.spaceshipUpgradeCost(level: card.spaceShip.level, type: card.spaceShip.type)
-                                            if (cost < self.playerData.points.integerValue) {
-                                                card.upgradeSpaceship(cost)
-                                            } else {
-                                                let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
-                                                teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                                self.addChild(teste)
-                                                teste.buttonOK.addHandler {
-                                                    self.nextState = .normal
+                                    if let buttonUpgrade = card.buttonUpgrade {
+                                        
+                                        if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
+                                            if ((card.position.y < 140) && (card.position.y > -130)) {
+                                                let cost = GameMath.spaceshipUpgradeCost(level: card.spaceShip.level, type: card.spaceShip.type)
+                                                if (cost < self.playerData.points.integerValue) {
+                                                    card.upgradeSpaceship(cost)
+                                                } else {
+                                                    let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
+                                                    teste.zPosition = self.blackSpriteNode.zPosition + 1
+                                                    self.addChild(teste)
+                                                    teste.buttonOK.addHandler {
+                                                        self.nextState = .normal
+                                                    }
+                                                    self.nextState = .alert
                                                 }
-                                                self.nextState = .alert
                                             }
+                                            
                                         }
                                         
                                     }
+                                    
                                     
                                     return
                                 }

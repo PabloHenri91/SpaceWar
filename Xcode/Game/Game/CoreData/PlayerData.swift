@@ -47,6 +47,7 @@ extension MemoryCard {
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 0)
+        spaceshipData.crashDate = NSDate()
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
@@ -144,7 +145,7 @@ extension MemoryCard {
         playerData.addFriendData(self.newFriendData(id: "1118222074867862"))
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
-        print(playerData.invitedFriends)
+        //print(playerData.invitedFriends)
         return playerData
     }
 }
