@@ -144,8 +144,8 @@ class Mothership: Control {
     
     func getShot(shot:Shot?) {
         if let someShot = shot {
-            self.health = self.health - someShot.demage
-            someShot.demage = 0
+            self.health = self.health - someShot.damage
+            someShot.damage = 0
             someShot.removeFromParent()
             
             self.healthBar.update(self.health, maxHealth: self.maxHealth)

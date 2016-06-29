@@ -110,22 +110,22 @@ extension MemoryCard {
         spaceshipData = self.newSpaceshipData(type: 3)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
+        weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 3)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
+        weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 3)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
+        weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
         
         spaceshipData = self.newSpaceshipData(type: 3)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
+        weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
         
         //weapons

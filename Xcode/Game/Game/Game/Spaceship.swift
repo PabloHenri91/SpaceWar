@@ -194,6 +194,7 @@ class Spaceship: Control {
             
         } else {
             if let spaceship = Spaceship.selectedSpaceship {
+                //TODO: Quebrou aqui
                 spaceship.spriteNode.color = SKColor.blackColor()
                 spaceship.spriteNode.colorBlendFactor = 0
             }
@@ -371,8 +372,8 @@ class Spaceship: Control {
     
     func getShot(shot:Shot?) {
         if let someShot = shot {
-            self.health = self.health - someShot.demage
-            someShot.demage = 0
+            self.health = self.health - someShot.damage
+            someShot.damage = 0
             someShot.removeFromParent()
             
             self.healthBar.update(self.health, maxHealth: self.maxHealth)

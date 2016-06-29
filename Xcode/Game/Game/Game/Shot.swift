@@ -12,21 +12,21 @@ class Shot: Control {
     
     static var shotSet = Set<Shot>()
     
-    var demage:Int! = 0
+    var damage:Int! = 0
     
     var rangeSquared:CGFloat = 0
     
     var startingPosition:CGPoint = CGPoint.zero
     
-    init(demage:Int, range:CGFloat, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
+    init(damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
-        self.demage = demage
+        self.damage = damage
         self.rangeSquared = range * range
         
         self.startingPosition = position
         
-        if demage <= 0 {
+        if damage <= 0 {
             #if DEBUG
                 fatalError()
             #endif
@@ -45,9 +45,18 @@ class Shot: Control {
         self.physicsBody?.linearDamping = 0
         self.physicsBody?.angularDamping = 0
         
+        
+        
         self.position = position
         self.zRotation = zRotation
-        self.physicsBody?.velocity = CGVector(dx: (-sin(zRotation) * 500) + shooterPhysicsBody.velocity.dx, dy: (cos(zRotation) * 500) + shooterPhysicsBody.velocity.dy)
+        
+        
+        if fireRate < 1 {
+          self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 500 * CGFloat(fireRate) + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 500 * CGFloat(fireRate) + shooterPhysicsBody.velocity.dy)
+        } else {
+            self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 500 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 500  + shooterPhysicsBody.velocity.dy)
+        }
+        
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
             guard let shot = self else { return }
