@@ -110,8 +110,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.demage > 0 {
-                        self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                    if shot.damage > 0 {
+                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                     }
                     spaceship.getShot(shot)
                 }
@@ -121,8 +121,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.demage > 0 {
-                        self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                    if shot.damage > 0 {
+                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                     }
                     spaceship.getShot(shot)
                 }
@@ -131,8 +131,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
-                if shot.demage > 0 {
-                    self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                if shot.damage > 0 {
+                    self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                 }
                 (self.bodyB.node as? Mothership)?.getShot(shot)
             }
@@ -225,8 +225,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.demage > 0 {
-                        self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                    if shot.damage > 0 {
+                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                     }
                     spaceship.getShot(shot)
                 }
@@ -242,8 +242,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.demage > 0 {
-                        self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                    if shot.damage > 0 {
+                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                     }
                     spaceship.getShot(shot)
                 }
@@ -258,8 +258,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
-                if shot.demage > 0 {
-                    self.shotDamageEffect(shot.demage, contactPoint: shot.position, contact: contact)
+                if shot.damage > 0 {
+                    self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
                 }
                 (self.bodyB.node as? Mothership)?.getShot(shot)
             }
