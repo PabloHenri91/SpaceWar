@@ -17,6 +17,7 @@ class SpaceshipData: NSManagedObject {
     @NSManaged var type: NSNumber
     @NSManaged var xp: NSNumber
     @NSManaged var weapons: NSSet
+    @NSManaged var crashDate: NSDate
     
     @NSManaged var parentPlayer: PlayerData?
     
@@ -33,6 +34,7 @@ extension MemoryCard {
         spaceshipData.type = type
         spaceshipData.xp = 0
         spaceshipData.weapons = NSSet()
+        spaceshipData.crashDate = NSDate(timeInterval: -7200, sinceDate: NSDate())
         
         return spaceshipData
     }

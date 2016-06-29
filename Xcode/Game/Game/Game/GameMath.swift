@@ -103,6 +103,34 @@ class GameMath {
         }
     }
     
+    static func spaceshipFixTime(fromDate: NSDate) -> Int {
+        
+        let date = NSDate(timeInterval: NSTimeInterval(1800), sinceDate: fromDate)
+        return Int(date.timeIntervalSinceNow)
+        
+    }
+    
+    static func timeFormated(time: Int) -> String {
+        if time > 0 {
+            if time < 60 {
+                return (time.description + "seconds")
+            } else if time < 3600 {
+                let minutes = Int(time / 60)
+                let seconds = time % 60
+                return (minutes.description + "min " + seconds.description + "sec" )
+            } else {
+                let hours = Int(time/3600)
+                let minutes = Int((time % 3600) / 60)
+                return (hours.description + "h " + minutes.description + "min" )
+                
+            }
+        } else {
+            return "0seconds"
+        }
+        
+        
+    }
+    
     static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
         case .commom:
