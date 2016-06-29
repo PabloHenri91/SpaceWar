@@ -54,7 +54,7 @@ class GameMath {
     
     // Pontos de HP, aumenta 10 por cento por level
     static func spaceshipMaxHealth(level level:Int, type:SpaceShipType) -> Int {
-        return Int(Double(type.healthBonus) * pow(1.1, Double(level - 1)))
+        return Int(Double(type.healthBonus * 10) * pow(1.1, Double(level - 1)))
     }
     
     // Pontos de escudo, aumenta 10 por cento por level
@@ -150,36 +150,16 @@ class GameMath {
     }
     
     // Weapons
-    static func weaponDemage(level level:Int, type:WeaponType) -> Int {
-        return type.demage + ((level - 1) * type.demagePerLevel)
+    static func weaponDamage(level level:Int, type:WeaponType) -> Int {
+        return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     
-    static func weaponRange(level level:Int, type:WeaponType) -> Int {
-        return type.range + ((level - 1) * type.rangePerLevel)
-    }
-    
-    static func weaponRangeInPoints(range range:Int) -> CGFloat {
-        return weaponMinRangeInPoints + ((CGFloat(range)/100) * (weaponMaxRangeInPoints - weaponMinRangeInPoints))
-    }
-    
-    static func weaponFireInterval(level level:Int, type:WeaponType) -> Double {
-        let fireRate = Double(type.fireRate + ((level - 1) * type.fireRatePerLevel))
-        return weaponMaxFireInterval - (fireRate/100 * (weaponMaxFireInterval - weaponMinFireInterval))
-    }
-    
-    static func weaponReloadTime(level level:Int, type:WeaponType) -> Double {
-        return type.reloadTime + ((Double(level) - 1) * type.reloadTimePerLevel)
-    }
-    
-    static func weaponMagazineSize(level level:Int, type:WeaponType) -> Int {
-        return type.magazineSize + ((level - 1) * type.magazineSizePerLevel)
-    }
     
     // Mothership
     static let mothershipHealthPointsPerLevel = 8
     
     static func mothershipMaxHealth(level level:Int) -> Int {
-        let maxHealth = Int(50 * pow(1.1, Double(level - 1)))
+        let maxHealth = Int(500 * pow(1.1, Double(level - 1)))
         return maxHealth
     }
     

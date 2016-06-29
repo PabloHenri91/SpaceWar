@@ -14,13 +14,10 @@ class Weapon: Control {
     var weaponShotTexture:SKTexture!
     var level:Int!
     
-    var demage:Int!
+    var damage:Int!
     var range:Int!
-    var reloadTime:Double!
     var fireInterval:Double!
-    
     var lastFire:Double = 0
-    var magazineSize:Int!
     var rangeInPoints:CGFloat!
     
     var weaponData:WeaponData?
@@ -28,11 +25,9 @@ class Weapon: Control {
     override var description: String {
         return "\nWeapon\n" +
             "level: " + level.description + "\n" +
-            "demage: " + demage.description  + "\n" +
+            "demage: " + damage.description  + "\n" +
             "fireInterval: " + fireInterval.description  + "\n" +
-            "range: " + range.description  + "\n" +
-            "reloadTime: " + reloadTime.description  + "\n" +
-            "magazineSize: " + magazineSize.description  + "\n"
+            "range: " + range.description  + "\n"
     }
     
     init(type:Int, level:Int) {
@@ -56,13 +51,11 @@ class Weapon: Control {
         
         self.level = level
         
-        self.demage = GameMath.weaponDemage(level: self.level, type: self.type)
-        self.range = GameMath.weaponRange(level: self.level, type: self.type)
-        self.fireInterval = GameMath.weaponFireInterval(level: self.level, type: self.type)
-        self.reloadTime = GameMath.weaponReloadTime(level: self.level, type: self.type)
-        self.magazineSize = GameMath.weaponMagazineSize(level: self.level, type: self.type)
+        self.damage = GameMath.weaponDamage(level: self.level, type: self.type)
+        self.range = self.type.range
+        self.fireInterval = self.type.fireRate
         
-        self.rangeInPoints = GameMath.weaponRangeInPoints(range: self.range)
+        self.rangeInPoints = CGFloat(self.type.range)
         
         if let imageName = self.type.shotSkins.first {
             self.weaponShotTexture = SKTexture(imageNamed: imageName)
@@ -85,7 +78,7 @@ class Weapon: Control {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {
                     if parentSpaceshipPhysicsBody.dynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
-                            let shot = Shot(demage: self.demage, range: self.rangeInPoints + bonusRange, texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
+                            let shot = Shot(damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
                             parentSpaceshipParent.addChild(shot)
                         }
                     }
@@ -105,35 +98,24 @@ class WeaponType {
     
     var maxLevel:Int
     
-    var demage:Int
+    var damage:Int
     var range:Int
-    var fireRate:Int
-    var reloadTime:Double
-    var magazineSize:Int
+    var fireRate:Double
+    var name:String!
+    var weaponDescription:String!
+
     
-    var demagePerLevel:Int
-    var rangePerLevel:Int
-    var fireRatePerLevel:Int
-    var reloadTimePerLevel:Double
-    var magazineSizePerLevel:Int
+
     
     init(maxLevel:Int,
-         demage:Int, range:Int, fireRate:Int, reloadTime:Double, magazineSize:Int,
-         demagePerLevel:Int, fireRatePerLevel:Int, rangePerLevel:Int, reloadTimePerLevel:Double, magazineSizePerLevel:Int) {
+         damage:Int, range:Int, fireRate:Double) {
         
         self.maxLevel = maxLevel
         
-        self.demage = demage
+        self.damage = damage
         self.range = range
         self.fireRate = fireRate
-        self.reloadTime = reloadTime
-        self.magazineSize = magazineSize
-        
-        self.demagePerLevel = demagePerLevel
-        self.fireRatePerLevel = fireRatePerLevel
-        self.rangePerLevel = rangePerLevel
-        self.reloadTimePerLevel = reloadTimePerLevel
-        self.magazineSizePerLevel = magazineSizePerLevel
+
     }
 }
 
@@ -142,18 +124,18 @@ extension Weapon {
     static var types:[WeaponType] = [
         {
             let weaponType = WeaponType(maxLevel: 1,
-                demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
-                demagePerLevel: 1, fireRatePerLevel:1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1)
+                damage: 3, range: 200, fireRate: 0.25)
             weaponType.shotSkins = [
                 "weaponAAShot"
             ]
+            weaponType.name = "Mata pombo"
+            weaponType.weaponDescription = "Atira de longe, mas eh fraca"
             return weaponType
         }(),
     
         {
             let weaponType = WeaponType(maxLevel: 1,
-                demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
-                demagePerLevel: 1, fireRatePerLevel:1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1)
+                damage: 10, range: 100, fireRate: 1)
             weaponType.shotSkins = [
                 "weaponBAShot"
             ]
@@ -162,8 +144,16 @@ extension Weapon {
         
         {
             let weaponType = WeaponType(maxLevel: 1,
-                demage: 1, range: 1, fireRate: 1, reloadTime: 1, magazineSize: 1,
-                demagePerLevel: 1, fireRatePerLevel:1, rangePerLevel: 1, reloadTimePerLevel: 1, magazineSizePerLevel: 1)
+                damage: 50, range: 50, fireRate: 2)
+            weaponType.shotSkins = [
+                "weaponCAShot"
+            ]
+            return weaponType
+        }(),
+        
+        {
+            let weaponType = WeaponType(maxLevel: 1,
+                damage: 8, range: 400, fireRate: 4)
             weaponType.shotSkins = [
                 "weaponCAShot"
             ]

@@ -264,7 +264,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
                 categoryBitMask.mothershipSpaceship.rawValue |
-                categoryBitMask.shot.rawValue |
                 categoryBitMask.mothership.rawValue
         
         
