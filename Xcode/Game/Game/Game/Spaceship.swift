@@ -194,8 +194,6 @@ class Spaceship: Control {
             
         } else {
             if let spaceship = Spaceship.selectedSpaceship {
-                //TODO: Quebrou aqui
-                spaceship.spriteNode.color = SKColor.blackColor()
                 spaceship.spriteNode.colorBlendFactor = 0
             }
             
@@ -373,12 +371,41 @@ class Spaceship: Control {
     
     func getShot(shot:Shot?) {
         if let someShot = shot {
+            
+            if self.health > 0 && self.health - someShot.damage <= 0 {
+                self.die()
+            }
+            
             self.health = self.health - someShot.damage
             someShot.damage = 0
             someShot.removeFromParent()
             
             self.healthBar.update(self.health, maxHealth: self.maxHealth)
         }
+    }
+    
+    func die() {
+        let particles = SKEmitterNode(fileNamed: "explosion.sks")!
+        
+        particles.position.x = self.position.x
+        particles.position.y = self.position.y
+        particles.zPosition = self.zPosition
+        
+        particles.particlePositionRange = CGVector(dx: self.weaponRangeBonus, dy: self.weaponRangeBonus)
+        
+        if let parent = self.parent {
+            parent.addChild(particles)
+            
+            let action = SKAction()
+            action.duration = 1
+            particles.runAction(action, completion: { [weak particles] in
+                particles?.removeFromParent()
+            })
+        }
+        
+        self.hidden = true
+        self.physicsBody = nil
+        self.healthBar.hidden = true
     }
     
     func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
