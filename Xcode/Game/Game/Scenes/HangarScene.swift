@@ -239,7 +239,6 @@ class HangarScene: GameScene {
                                                         teste.zPosition = self.blackSpriteNode.zPosition + 1
                                                         self.addChild(teste)
                                                         teste.buttonOK.addHandler {
-                                                            print("ok")
                                                             self.nextState = .normal
                                                         }
                                                         self.nextState = .alert

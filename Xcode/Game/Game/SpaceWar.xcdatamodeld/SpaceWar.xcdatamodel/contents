@@ -21,6 +21,7 @@
         <relationship name="motherShip" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="parentPlayer" inverseEntity="MothershipData" syncable="YES"/>
         <relationship name="researches" toMany="YES" deletionRule="Nullify" destinationEntity="ResearchData" inverseName="parentPlayer" inverseEntity="ResearchData" syncable="YES"/>
         <relationship name="spaceships" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="parentPlayer" inverseEntity="SpaceshipData" syncable="YES"/>
+        <relationship name="unlockedSpaceships" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" syncable="YES"/>
         <relationship name="weapons" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="parentPlayer" inverseEntity="WeaponData" syncable="YES"/>
     </entity>
     <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
@@ -49,7 +50,7 @@
     <elements>
         <element name="FriendData" positionX="-279" positionY="-45" width="128" height="120"/>
         <element name="MothershipData" positionX="-488" positionY="-198" width="128" height="28"/>
-        <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="150"/>
+        <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="165"/>
         <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="103"/>
         <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="150"/>
         <element name="WeaponData" positionX="-459" positionY="45" width="128" height="28"/>

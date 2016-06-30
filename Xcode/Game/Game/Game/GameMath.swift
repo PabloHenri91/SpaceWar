@@ -103,6 +103,25 @@ class GameMath {
         }
     }
     
+    
+    static func spaceshipPrice(type:SpaceShipType) -> Int {
+        switch type.rarity! {
+        case .commom:
+            return 1000
+        case .rare:
+            return 2000
+        case .epic:
+            return 5000
+        case .legendary:
+            return 10000 
+        default:
+            #if DEBUG
+                fatalError()
+            #endif
+            break
+        }
+    }
+    
     static func spaceshipFixTime(fromDate: NSDate) -> Int {
         
         let date = NSDate(timeInterval: NSTimeInterval(1800), sinceDate: fromDate)

@@ -308,8 +308,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         static var mothershipSpaceship:UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue |
-                categoryBitMask.shot.rawValue
+                categoryBitMask.mothershipSpaceship.rawValue 
         
         static var shot:UInt32 =
             categoryBitMask.spaceship.rawValue |

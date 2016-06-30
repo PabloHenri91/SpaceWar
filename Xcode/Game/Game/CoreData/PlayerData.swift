@@ -20,6 +20,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var spaceships: NSSet
     @NSManaged var weapons: NSSet
     @NSManaged var invitedFriends: NSSet
+    @NSManaged var unlockedSpaceships: NSSet
 
 }
 
@@ -39,94 +40,48 @@ extension MemoryCard {
         // spaceships
         playerData.spaceships = NSSet()
         
+        // spaceships
+        playerData.unlockedSpaceships = NSSet()
+        
+        
         //adicionei a nave 0 a nave mae
         var spaceshipData = self.newSpaceshipData(type: 0)
+        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         var weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
-        spaceshipData = self.newSpaceshipData(type: 0)
-        spaceshipData.crashDate = NSDate()
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
+ 
         
         //adicionei a nave 1 a nave mae
         spaceshipData = self.newSpaceshipData(type: 1)
+        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 1)
         spaceshipData.addWeaponData(weaponData)
         
-        spaceshipData = self.newSpaceshipData(type: 1)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 1)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 1)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 1)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 1)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 1)
-        spaceshipData.addWeaponData(weaponData)
+
         
         //adicionei a nave 2 na nave mae 2 vezes
         spaceshipData = self.newSpaceshipData(type: 2)
+        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 2)
         spaceshipData.addWeaponData(weaponData)
         
-        spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
-        spaceshipData.addWeaponData(weaponData)
+     
         
         //adicionei a nave 3 na nave mae
         spaceshipData = self.newSpaceshipData(type: 3)
+        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 3)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 3)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 3)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 3)
-        spaceshipData.addWeaponData(weaponData)
-        
-        spaceshipData = self.newSpaceshipData(type: 3)
-        playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 3)
-        spaceshipData.addWeaponData(weaponData)
+
         
         //weapons
         playerData.weapons = NSSet()
@@ -140,12 +95,15 @@ extension MemoryCard {
         weaponData = self.newWeaponData(type: 2)
         playerData.addWeaponData(weaponData)
         
+        weaponData = self.newWeaponData(type: 3)
+        playerData.addWeaponData(weaponData)
+        
         //list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
         playerData.addFriendData(self.newFriendData(id: "1118222074867862"))
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
-        //print(playerData.invitedFriends)
+        print(playerData.unlockedSpaceships)
         return playerData
     }
 }
@@ -164,6 +122,11 @@ extension PlayerData {
     
     func addSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("spaceships")
+        items.addObject(value)
+    }
+    
+    func unlockSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("unlockedSpaceships")
         items.addObject(value)
     }
     

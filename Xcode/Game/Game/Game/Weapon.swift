@@ -124,7 +124,7 @@ extension Weapon {
     static var types:[WeaponType] = [
         {
             let weaponType = WeaponType(maxLevel: 1,
-                damage: 1, range: 200, fireRate: 0.25)
+                damage: 2, range: 200, fireRate: 0.25)
             weaponType.shotSkins = [
                 "weaponAAShot"
             ]

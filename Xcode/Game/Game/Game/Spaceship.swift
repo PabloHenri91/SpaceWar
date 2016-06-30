@@ -248,6 +248,7 @@ class Spaceship: Control {
         self.healthBar.updateUp(position: self.position)
         
         //TODO: exportar para função
+        //TODO: Quebrou aqui se nave nao tiver arma equipada
         self.weaponRangeSprite.position = self.position
         if self.weaponRangeSprite.alpha > 0 {
             self.weaponRangeSprite.alpha -= 0.01666666667
@@ -639,6 +640,10 @@ class SpaceShipType {
     var shieldPowerBonus:Int
     var shieldRechargeBonus:Int
     
+    var index:Int!
+    
+    
+    
 
     
     init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
@@ -674,6 +679,7 @@ extension Spaceship {
             spaceShipType.name = "Space Speeder"
             spaceShipType.spaceshipDescription = "A very fast Spaceship"
             spaceShipType.rarity = .commom
+            spaceShipType.index = 0
             return spaceShipType
         }(),
         
@@ -687,6 +693,7 @@ extension Spaceship {
             spaceShipType.name = "Space tanker"
             spaceShipType.spaceshipDescription = "Can hold a great amount of damage"
             spaceShipType.rarity = .commom
+            spaceShipType.index = 1
             return spaceShipType
         }(),
         
@@ -701,6 +708,7 @@ extension Spaceship {
             spaceShipType.name = "Space Shielder"
             spaceShipType.spaceshipDescription = "Have the best defense"
             spaceShipType.rarity = .commom
+            spaceShipType.index = 2
             return spaceShipType
         }(),
         
@@ -715,6 +723,7 @@ extension Spaceship {
             spaceShipType.name = "Space Techno"
             spaceShipType.spaceshipDescription = "Recharge your defanse in the light speed"
             spaceShipType.rarity = .commom
+            spaceShipType.index = 3
             return spaceShipType
         }()
     ]
