@@ -96,12 +96,13 @@ class Mothership: Control {
             if isAlly {
                 spaceship.loadAllyDetails()
                 spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
-                spaceship.loadWeaponRangeSprite(gameWorld)
+                
             } else {
                 spaceship.loadEnemyDetails()
                 spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
-                spaceship.loadWeaponRangeSprite(gameWorld)
             }
+            spaceship.loadWeaponRangeSprite(gameWorld)
+            spaceship.loadWeaponDetail()
             
             switch i {
             case 0:

@@ -41,8 +41,6 @@ class BattleScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        self.addChild(Label(color: GameColors.white, text: "BattleScene", x: 10, y: 10, xAlign: .center, yAlign: .center, verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left))
-        
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
         self.gameWorld.setScreenBox(Display.defaultSceneSize)

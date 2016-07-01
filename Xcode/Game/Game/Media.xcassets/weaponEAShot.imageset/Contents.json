@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "weaponBAShot.png",
+      "filename" : "weaponEAShot.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "weaponBAShot@2x.png",
+      "filename" : "weaponEAShot@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "weaponBAShot@3x.png",
+      "filename" : "weaponEAShot@3x.png",
       "scale" : "3x"
     }
   ],

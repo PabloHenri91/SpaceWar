@@ -32,6 +32,8 @@ class Spaceship: Control {
     var spaceshipData:SpaceshipData?
     
     var spriteNode:SKSpriteNode!
+    var weaponSpriteNode:SKSpriteNode?
+    var selectedSpriteNode:SKSpriteNode!
     
     var targetNode:SKNode?
     
@@ -85,6 +87,7 @@ class Spaceship: Control {
         
         if let weapon = self.weapon {
             self.addChild(weapon)
+            self.loadWeaponDetail()
         }
     }
     
@@ -106,6 +109,18 @@ class Spaceship: Control {
     
     func showWeaponRangeSprite() {
         self.weaponRangeSprite.alpha = 1
+    }
+    
+    func loadWeaponDetail() {
+        if let weaponSpriteNode = self.weaponSpriteNode {
+            weaponSpriteNode.removeFromParent()
+        }
+        
+        if let weapon = self.weapon {
+            self.weaponSpriteNode = SKSpriteNode(imageNamed: GameMath.weaponSkinImageName(level: weapon.level, type: weapon.type))
+            self.weaponSpriteNode?.texture?.filteringMode = Display.filteringMode
+            self.addChild(self.weaponSpriteNode!)
+        }
     }
     
     func loadAllyDetails() {
@@ -146,6 +161,11 @@ class Spaceship: Control {
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.addChild(self.spriteNode)
         
+        self.selectedSpriteNode = SKSpriteNode(color: SKColor(red: 1, green: 1, blue: 1, alpha: 0.5), size: self.spriteNode.size)
+        self.selectedSpriteNode.zPosition = 1
+        self.selectedSpriteNode.hidden = true
+        self.addChild(self.selectedSpriteNode)
+        
         self.weaponRangeBonus = self.spriteNode.size.height/2
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
@@ -160,7 +180,7 @@ class Spaceship: Control {
         self.setBitMasksToMothershipSpaceship()
         
         self.physicsBody?.linearDamping = 2
-        self.physicsBody?.angularDamping = 2
+        self.physicsBody?.angularDamping = 4
         self.physicsBody?.friction = 0
         
         self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
@@ -194,16 +214,14 @@ class Spaceship: Control {
             
         } else {
             if let spaceship = Spaceship.selectedSpaceship {
-                spaceship.spriteNode.colorBlendFactor = 0
+                spaceship.selectedSpriteNode.hidden = true
             }
-            
             if self.health > 0 {
                 Spaceship.selectedSpaceship = self
                 self.showWeaponRangeSprite()
                 
                 self.physicsBody?.dynamic = true
-                self.spriteNode.color = SKColor.blackColor()
-                self.spriteNode.colorBlendFactor = 0.5
+                self.selectedSpriteNode.hidden = false
             }
         }
     }
@@ -230,9 +248,7 @@ class Spaceship: Control {
             spaceship.destination = spaceship.startingPosition
             spaceship.needToMove = true
             
-            spaceship.spriteNode.color = SKColor.blackColor()
-            spaceship.spriteNode.colorBlendFactor = 0
-            
+            spaceship.selectedSpriteNode.hidden = true
             spaceship.setBitMasksToMothershipSpaceship()
         }
         
@@ -276,20 +292,20 @@ class Spaceship: Control {
     
     func canBeTarget(spaceship:Spaceship) -> Bool {
         
+        if self.isInsideAMothership {
+            return false
+        }
+        
+        if self.health <= 0 {
+            return false
+        }
+        
         if let spaceshipWeapon = spaceship.weapon {
             let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus
             if CGPoint.distance(self.position, spaceship.position) > range {
                 return false
             }
         } else {
-            return false
-        }
-        
-        if self.isInsideAMothership {
-            return false
-        }
-        
-        if self.health <= 0 {
             return false
         }
         
@@ -342,7 +358,7 @@ class Spaceship: Control {
         
         for allySpaceship in allySpaceships {
             
-            if allySpaceship != self {
+            if allySpaceship != self && allySpaceship.canBeTarget(self) {
                 if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, self.targetNode!.position) {
                     let point = allySpaceship.position
                     let dx = Float(point.x - self.position.x)
@@ -406,6 +422,8 @@ class Spaceship: Control {
         self.hidden = true
         self.physicsBody = nil
         self.healthBar.hidden = true
+        self.removeFromParent()
+        self.healthBar.removeFromParent()
     }
     
     func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
@@ -596,6 +614,7 @@ class Spaceship: Control {
     
     func addWeapon(weapon:Weapon) {
         self.weapon = weapon
+        self.loadWeaponDetail()
         
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {

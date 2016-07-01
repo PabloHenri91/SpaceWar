@@ -95,6 +95,7 @@ class Weapon: Control {
 class WeaponType {
     
     var shotSkins = [String]()
+    var skins = [String]()
     
     var maxLevel:Int
     
@@ -123,8 +124,11 @@ extension Weapon {
     
     static var types:[WeaponType] = [
         {
-            let weaponType = WeaponType(maxLevel: 1,
+            let weaponType = WeaponType(maxLevel: 2,
                 damage: 2, range: 200, fireRate: 0.25)
+            weaponType.skins = [
+                "weaponAA"
+            ]
             weaponType.shotSkins = [
                 "weaponAAShot"
             ]
@@ -134,8 +138,11 @@ extension Weapon {
         }(),
     
         {
-            let weaponType = WeaponType(maxLevel: 1,
+            let weaponType = WeaponType(maxLevel: 2,
                 damage: 10, range: 100, fireRate: 1)
+            weaponType.skins = [
+                "weaponBA"
+            ]
             weaponType.shotSkins = [
                 "weaponBAShot"
             ]
@@ -143,8 +150,11 @@ extension Weapon {
         }(),
         
         {
-            let weaponType = WeaponType(maxLevel: 1,
+            let weaponType = WeaponType(maxLevel: 2,
                 damage: 50, range: 50, fireRate: 2)
+            weaponType.skins = [
+                "weaponCA"
+            ]
             weaponType.shotSkins = [
                 "weaponCAShot"
             ]
@@ -152,10 +162,13 @@ extension Weapon {
         }(),
         
         {
-            let weaponType = WeaponType(maxLevel: 1,
+            let weaponType = WeaponType(maxLevel: 2,
                 damage: 8, range: 400, fireRate: 4)
+            weaponType.skins = [
+                "weaponDA"
+            ]
             weaponType.shotSkins = [
-                "weaponCAShot"
+                "weaponDAShot"
             ]
             return weaponType
         }()
