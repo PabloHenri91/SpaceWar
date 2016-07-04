@@ -13,7 +13,17 @@ class MissionScene: GameScene {
     
     
     
+    var playerData = MemoryCard.sharedInstance.playerData
+    let missionShips = MemoryCard.sharedInstance.playerData.missionSpaceships 
+    
+    
+    var selectedSpaceship: MissionSpaceship?
+    var cropBox: CropBox!
+    
     var buttonBack:Button!
+    
+    var scrollNode:ScrollNode!
+    var controlArray:Array<MissionSpaceshipCard>!
     
     enum states : String {
         //Estado principal
@@ -21,6 +31,8 @@ class MissionScene: GameScene {
         
         //Estados de saida da scene
         case mothership
+        
+        case chooseMission
         
         
     }
@@ -35,6 +47,21 @@ class MissionScene: GameScene {
         print("mission control")
         self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
+        
+        
+        self.controlArray = Array<MissionSpaceshipCard>()
+        
+        for item in missionShips {
+            
+            self.controlArray.append(MissionSpaceshipCard(missionSpaceship: MissionSpaceship(missionSpaceshipData: item as! MissionSpaceshipData)))
+            
+        }
+        
+        self.cropBox = CropBox(name: "crop", textureName: "missionSpaceshipsCropBox", x: 20, y: 86)
+        self.addChild(self.cropBox)
+        
+        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
+        self.cropBox.addChild(self.scrollNode)
         
         
     }
@@ -57,8 +84,21 @@ class MissionScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
+            case .normal:
+                break
+                
             case .mothership:
                 self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                break
+                
+            case .chooseMission:
+                if let spaceship = self.selectedSpaceship {
+                    self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship), transition: GameScene.transition)
+                } else {
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                }
                 break
                 
             default:
@@ -83,6 +123,36 @@ class MissionScene: GameScene {
                     if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .mothership
                         return
+                    }
+                    
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self.cropBox.cropNode))) {
+                        for item in self.scrollNode.cells {
+                            if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
+                                if let card = item as? MissionSpaceshipCard {
+                                    print(card.position.y)
+                                    if ((card.position.y < 250) && (card.position.y > -250)){
+                                        if let buttonBegin = card.buttonBegin{
+                                            if (buttonBegin.containsPoint(touch.locationInNode(card))) {
+                                                self.nextState = .chooseMission
+                                                self.selectedSpaceship = card.missionSpaceship
+                                            }
+                                        }
+                                        
+                                        
+                                        if let buttonUpgrade = card.buttonUpgrade {
+                                            if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
+                                                
+                                            }
+                                        }
+                                    
+                                    }
+                                    
+                                    
+                                    return
+                                }
+                            }
+                        }
+                        
                     }
                     
                     break

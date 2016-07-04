@@ -132,15 +132,25 @@ class GameMath {
     static func timeFormated(time: Int) -> String {
         if time > 0 {
             if time < 60 {
-                return (time.description + "seconds")
+                return (time.description + "s")
             } else if time < 3600 {
                 let minutes = Int(time / 60)
                 let seconds = time % 60
-                return (minutes.description + "min " + seconds.description + "sec" )
+                if (seconds > 0) {
+                    return (minutes.description + "m " + seconds.description + "s" )
+                } else {
+                    return (minutes.description + "m ")
+                }
+                
             } else {
                 let hours = Int(time/3600)
                 let minutes = Int((time % 3600) / 60)
-                return (hours.description + "h " + minutes.description + "min" )
+                if (minutes > 0) {
+                    return (hours.description + "h " + minutes.description + "m" )
+                } else {
+                    return (hours.description + "h ")
+                }
+                
                 
             }
         } else {

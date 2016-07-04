@@ -67,14 +67,13 @@ class FactorySpaceShipCard: Control {
     
     
     func buySpaceship(){
-        print("buy")
         
-            let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceShip.type.index)
-            let weaponData = MemoryCard.sharedInstance.newWeaponData(type: 0)
-            spaceshipData.addWeaponData(weaponData)
-            self.playerData.addSpaceshipData(spaceshipData)
-            self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceShip.type))
-        
+        let weaponTypeIndex = Int.random(Weapon.types.count)
+        let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceShip.type.index)
+        let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
+        spaceshipData.addWeaponData(weaponData)
+        self.playerData.addSpaceshipData(spaceshipData)
+        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceShip.type))
         
     }
 
