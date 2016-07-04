@@ -41,6 +41,16 @@
 		3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA93411D22BF1900DD4757 /* FactoryScene.swift */; };
 		3AD261981D2562A000189671 /* FactorySpaceShipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261971D2562A000189671 /* FactorySpaceShipCard.swift */; };
 		3AD261991D2562A000189671 /* FactorySpaceShipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261971D2562A000189671 /* FactorySpaceShipCard.swift */; };
+		3AD2619E1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */; };
+		3AD2619F1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */; };
+		3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261A01D26B61D00189671 /* MissionSpaceship.swift */; };
+		3AD261A21D26B61D00189671 /* MissionSpaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261A01D26B61D00189671 /* MissionSpaceship.swift */; };
+		3AFD26791D2A839400A83323 /* MissionSpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */; };
+		3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
+		3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
+		3AFD267D1D2A9B1E00A83323 /* MissionSpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */; };
+		3AFD267F1D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */; };
+		3AFD26801D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */; };
 		84029D831CF49D68001853FF /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84029D821CF49D68001853FF /* BattleScene.swift */; };
 		84029D841CF49D68001853FF /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84029D821CF49D68001853FF /* BattleScene.swift */; };
 		842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
@@ -161,6 +171,11 @@
 		3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionScene.swift; sourceTree = "<group>"; };
 		3AAA93411D22BF1900DD4757 /* FactoryScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
 		3AD261971D2562A000189671 /* FactorySpaceShipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactorySpaceShipCard.swift; sourceTree = "<group>"; };
+		3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipData.swift; sourceTree = "<group>"; };
+		3AD261A01D26B61D00189671 /* MissionSpaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceship.swift; sourceTree = "<group>"; };
+		3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipCard.swift; sourceTree = "<group>"; };
+		3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseMissionScene.swift; sourceTree = "<group>"; };
+		3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionTypeCard.swift; sourceTree = "<group>"; };
 		84029D821CF49D68001853FF /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
 		8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackSpriteNode.swift; sourceTree = "<group>"; };
@@ -392,11 +407,14 @@
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
+				3AD261A01D26B61D00189671 /* MissionSpaceship.swift */,
+				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
+				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -405,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				84029D821CF49D68001853FF /* BattleScene.swift */,
+				3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */,
 				3AAA93411D22BF1900DD4757 /* FactoryScene.swift */,
 				3A7E60CB1D14239F00D00590 /* HangarScene.swift */,
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
@@ -438,6 +457,7 @@
 			children = (
 				3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */,
 				84F855D81CECCE1100FB63D2 /* MemoryCard.swift */,
+				3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */,
 				84F855E31CECCE5C00FB63D2 /* MothershipData.swift */,
 				84F855E71CECCE5C00FB63D2 /* PlayerData.swift */,
 				84F855E91CECCE5C00FB63D2 /* ResearchData.swift */,
@@ -566,6 +586,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F855F71CECCE5C00FB63D2 /* PlayerData.swift in Sources */,
+				3AD2619E1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
+				3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				84F855EB1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
@@ -579,6 +601,7 @@
 				3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
+				3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */,
 				3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				843620781CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				843620801CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
@@ -603,6 +626,7 @@
 				848021061D0ADB220078320A /* HealthBar.swift in Sources */,
 				842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */,
 				843620661CEB77400082A9D7 /* Control.swift in Sources */,
+				3AFD267F1D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */,
 				843620701CEB77400082A9D7 /* GameColors.swift in Sources */,
 				8436206E1CEB77400082A9D7 /* GameCamera.swift in Sources */,
 				3A7E60D21D14878F00D00590 /* HangarSpaceShipCard.swift in Sources */,
@@ -614,6 +638,7 @@
 				843620641CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
 				3AAA933E1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843620821CEB77400082A9D7 /* StringExtension.swift in Sources */,
+				3AFD26791D2A839400A83323 /* MissionSpaceshipCard.swift in Sources */,
 				843620761CEB77400082A9D7 /* GameTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */,
+				3AD2619F1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
 				84F855DA1CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				843620751CEB77400082A9D7 /* GameScene.swift in Sources */,
 				3A7E60CD1D14239F00D00590 /* HangarScene.swift in Sources */,
@@ -642,6 +668,7 @@
 				84F855F01CECCE5C00FB63D2 /* MothershipData.swift in Sources */,
 				843620631CEB77400082A9D7 /* Button.swift in Sources */,
 				8436207D1CEB77400082A9D7 /* Music.swift in Sources */,
+				3AFD267D1D2A9B1E00A83323 /* MissionSpaceshipCard.swift in Sources */,
 				848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */,
 				3AAA933F1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843803D51CEF45D1007152BC /* GameMath.swift in Sources */,
@@ -649,13 +676,16 @@
 				843620691CEB77400082A9D7 /* CropBox.swift in Sources */,
 				844CF2881CE789AA0032F6AA /* AppDelegate.swift in Sources */,
 				3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */,
+				3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,
+				3AFD26801D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */,
 				8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */,
 				843620711CEB77400082A9D7 /* GameColors.swift in Sources */,
+				3AD261A21D26B61D00189671 /* MissionSpaceship.swift in Sources */,
 				8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,
 				3A7E60D31D14878F00D00590 /* HangarSpaceShipCard.swift in Sources */,

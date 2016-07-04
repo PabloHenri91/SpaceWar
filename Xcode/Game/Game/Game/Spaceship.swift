@@ -687,9 +687,7 @@ class SpaceShipType {
     var shieldRechargeBonus:Int
     
     var index:Int!
-    
-    
-    
+
 
     
     init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {

@@ -18,6 +18,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var motherShip: MothershipData
     @NSManaged var researches: NSSet
     @NSManaged var spaceships: NSSet
+    @NSManaged var missionSpaceships: NSOrderedSet
     @NSManaged var weapons: NSSet
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
@@ -40,7 +41,7 @@ extension MemoryCard {
         // spaceships
         playerData.spaceships = NSSet()
         
-        // spaceships
+        // unlocked spaceships
         playerData.unlockedSpaceships = NSSet()
         
         
@@ -98,12 +99,33 @@ extension MemoryCard {
         weaponData = self.newWeaponData(type: 3)
         playerData.addWeaponData(weaponData)
         
+        
+        // mission spaceships
+        playerData.missionSpaceships = NSOrderedSet()
+        
+        var missionSpaceshipData = self.newMissionSpaceshipData()
+        playerData.addMissionSpaceshipData(missionSpaceshipData)
+        
+        missionSpaceshipData = self.newMissionSpaceshipData()
+        missionSpaceshipData.level = 2
+        playerData.addMissionSpaceshipData(missionSpaceshipData)
+        
+        missionSpaceshipData = self.newMissionSpaceshipData()
+        missionSpaceshipData.level = 3
+        playerData.addMissionSpaceshipData(missionSpaceshipData)
+        
+        missionSpaceshipData = self.newMissionSpaceshipData()
+        missionSpaceshipData.level = 4
+        playerData.addMissionSpaceshipData(missionSpaceshipData)
+        
+        
+        
         //list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
         playerData.addFriendData(self.newFriendData(id: "1118222074867862"))
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
-        print(playerData.unlockedSpaceships)
+        
         return playerData
     }
 }
@@ -127,6 +149,11 @@ extension PlayerData {
     
     func unlockSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("unlockedSpaceships")
+        items.addObject(value)
+    }
+    
+    func addMissionSpaceshipData(value: MissionSpaceshipData) {
+        let items = self.mutableOrderedSetValueForKey("missionSpaceships")
         items.addObject(value)
     }
     

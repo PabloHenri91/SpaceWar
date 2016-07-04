@@ -67,14 +67,11 @@ class FactoryScene: GameScene {
         self.controlArray = Array<FactorySpaceShipCard>()
         
         for item in playerShips {
-            
-                self.controlArray.append(FactorySpaceShipCard(spaceShip: Spaceship(spaceshipData: item)))
-            
+            self.controlArray.append(FactorySpaceShipCard(spaceShip: Spaceship(spaceshipData: item)))
         }
         
-        
-        
-        self.scrollNode = ScrollNode(name: "scrollDeFalos", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
+    
+        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
         self.spaceShipListShape.addChild(self.scrollNode)
         
         
