@@ -409,12 +409,12 @@
 				848021051D0ADB220078320A /* HealthBar.swift */,
 				3AD261A01D26B61D00189671 /* MissionSpaceship.swift */,
 				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
+				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
-				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";

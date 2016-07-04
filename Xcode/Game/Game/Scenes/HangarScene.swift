@@ -278,7 +278,6 @@ class HangarScene: GameScene {
                         }
                  
                     }
-                    
                     break
                     
                 default:

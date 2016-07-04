@@ -44,7 +44,6 @@ class MissionScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        print("mission control")
         self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
@@ -73,7 +72,15 @@ class MissionScene: GameScene {
         if(self.state == self.nextState) {
             //Estado atual
             switch (self.state) {
+            case .normal:
                 
+                for item in self.scrollNode.cells {
+                    if let card = item as? MissionSpaceshipCard {
+                        card.update(currentTime)
+                    }
+                }
+                
+                break
                 
             default:
                 break
@@ -110,6 +117,8 @@ class MissionScene: GameScene {
         }
     }
     
+   
+    
     override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
@@ -129,7 +138,6 @@ class MissionScene: GameScene {
                         for item in self.scrollNode.cells {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
                                 if let card = item as? MissionSpaceshipCard {
-                                    print(card.position.y)
                                     if ((card.position.y < 250) && (card.position.y > -250)){
                                         if let buttonBegin = card.buttonBegin{
                                             if (buttonBegin.containsPoint(touch.locationInNode(card))) {
@@ -138,10 +146,22 @@ class MissionScene: GameScene {
                                             }
                                         }
                                         
+                                        if let buttonColect = card.buttonColect {
+                                            if(buttonColect.containsPoint(touch.locationInNode(card))) {
+                                                card.colect()
+                                            }
+                                        }
                                         
+                                        if let buttonSpeedUp = card.buttonSpeedUp {
+                                            if(buttonSpeedUp.containsPoint(touch.locationInNode(card))) {
+                                                print("SpeedUP")
+                                            }
+                                        }
+                                        
+   
                                         if let buttonUpgrade = card.buttonUpgrade {
                                             if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
-                                                
+                                                print("Upgrade")
                                             }
                                         }
                                     

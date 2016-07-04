@@ -23,7 +23,7 @@ class ChooseMissionScene: GameScene {
         case normal
         
         //Estados de saida da scene
-        case missionCancel
+        case missionScene
         
         
     }
@@ -86,7 +86,7 @@ class ChooseMissionScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
-            case .missionCancel:
+            case .missionScene:
                 self.view?.presentScene(MissionScene(), transition: GameScene.transition)
                 break
                 
@@ -110,8 +110,25 @@ class ChooseMissionScene: GameScene {
                     
                     
                     if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = .missionCancel
+                        self.nextState = .missionScene
                         return
+                    }
+                    
+                    
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self))) {
+                        for item in self.scrollNode.cells {
+                            if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
+                                if let card = item as? MissionTypeCard {
+                                    
+                                    if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
+                                        card.selectMission()
+                                        self.nextState = .missionScene
+                                    }
+                                    return
+                                }
+                            }
+                        }
+                        
                     }
                     
                     break

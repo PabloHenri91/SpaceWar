@@ -16,7 +16,7 @@ class MissionSpaceshipData: NSManagedObject {
     
     @NSManaged var level: NSNumber
     @NSManaged var startMissionDate: NSDate?
-    @NSManaged var missionType: NSNumber?
+    @NSManaged var missionType: NSNumber
     
     @NSManaged var parentPlayer: PlayerData?
 
@@ -30,6 +30,7 @@ extension MemoryCard {
         
         let missionSpaceshipData = NSEntityDescription.insertNewObjectForEntityForName("MissionSpaceshipData", inManagedObjectContext: self.managedObjectContext) as! MissionSpaceshipData
         missionSpaceshipData.level = 1
+        missionSpaceshipData.missionType = NSNumber(integer: -1)
 
         return missionSpaceshipData
     }

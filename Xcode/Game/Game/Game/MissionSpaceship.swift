@@ -10,7 +10,7 @@ import SpriteKit
 
 class MissionSpaceship: Control {
     
-    var missionType:MissionType?
+    var missionType:Int = -1
     var level:Int!
     var missionspaceshipData:MissionSpaceshipData?
     var missionStartDate:NSDate?
@@ -22,7 +22,10 @@ class MissionSpaceship: Control {
         self.missionspaceshipData = missionSpaceshipData
         self.level = missionSpaceshipData.level.integerValue
         
-        
+        if missionSpaceshipData.missionType.integerValue >= 0 {
+            self.missionType = missionSpaceshipData.missionType.integerValue
+            self.missionStartDate = missionSpaceshipData.startMissionDate
+        }
         
     }
     

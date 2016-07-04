@@ -215,4 +215,13 @@ class GameMath {
         return 0
     }
     
+    //Mission Spaceship
+    
+    static func MissionFinishTime(fromDate: NSDate, missionTime: Int) -> Int {
+        
+        let date = NSDate(timeInterval: NSTimeInterval(missionTime), sinceDate: fromDate)
+        return Int(date.timeIntervalSinceNow)
+        
+    }
+    
 }
