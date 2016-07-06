@@ -31,8 +31,7 @@ class AlertBox: Box {
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:93, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
-                guard let alertBox = self else { return }
-                alertBox.removeFromParent()
+                self?.removeFromParent()
             })
             break
         case messageType.OKCancel:
@@ -40,15 +39,13 @@ class AlertBox: Box {
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:262, y:162)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
-                guard let alertBox = self else { return }
-                alertBox.removeFromParent()
+                self?.removeFromParent()
                 })
             
             self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:14, y:162)
             self.addChild(self.buttonCancel)
             self.buttonCancel.addHandler({ [weak self] in
-                guard let alertBox = self else { return }
-                alertBox.removeFromParent()
+                self?.removeFromParent()
                 })
             break
         }

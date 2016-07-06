@@ -14,6 +14,8 @@ class HealthBar: Control {
     var greenBarMaxWidth:CGFloat = 1
     
     var biggerSide:CGFloat = 0
+    
+    var barPosition:yAlignments = .up
 
     init(size:CGSize, borderColor:SKColor) {
         super.init()
@@ -42,16 +44,23 @@ class HealthBar: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateUp(position position:CGPoint) {
-        let x = position.x
-        let y = position.y + (self.biggerSide/2 + 4)
-        self.position = CGPoint(x: x, y: y)
-    }
-    
-    func updateDown(position position:CGPoint) {
-        let x = position.x
-        let y = position.y - (self.biggerSide/2 + 4)
-        self.position = CGPoint(x: x, y: y)
+    func update(position position:CGPoint) {
+        
+        switch self.barPosition {
+        case .up:
+            let x = position.x
+            let y = position.y + (self.biggerSide/2 + 4)
+            self.position = CGPoint(x: x, y: y)
+            break
+        case .down:
+            let x = position.x
+            let y = position.y - (self.biggerSide/2 + 4)
+            self.position = CGPoint(x: x, y: y)
+            break
+        default:
+            fatalError()
+            break
+        }
     }
     
     func update(health:Int, maxHealth:Int) {
