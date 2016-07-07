@@ -66,6 +66,8 @@ class GameScene: SKScene {
         self.blackSpriteNode = BlackSpriteNode()
         self.addChild(self.blackSpriteNode)
         
+        Spaceship.selectedSpaceship = nil
+        
         //TODO: Class.classSet = Set<Class>()
     }
     

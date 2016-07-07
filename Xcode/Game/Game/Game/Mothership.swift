@@ -83,44 +83,50 @@ class Mothership: Control {
         self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
         gameWorld.addChild(self.healthBar)
     }
+    
+    func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
+        switch i {
+        case 0:
+            spaceship.position = self.convertPoint(CGPoint(x: -103, y: 78), toNode: gameWorld)
+            break
+        case 1:
+            spaceship.position = self.convertPoint(CGPoint(x: -34, y: 78), toNode: gameWorld)
+            break
+        case 2:
+            spaceship.position = self.convertPoint(CGPoint(x: 34, y: 78), toNode: gameWorld)
+            break
+        case 3:
+            spaceship.position = self.convertPoint(CGPoint(x: 103, y: 78), toNode: gameWorld)
+            break
+        default:
+            break
+        }
+        spaceship.startingPosition = spaceship.position
+        
+        spaceship.zRotation = self.zRotation
+        
+        if isAlly {
+            spaceship.loadAllyDetails()
+            spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
+            spaceship.healthBar.update(position: spaceship.position)
+            
+        } else {
+            spaceship.loadEnemyDetails()
+            spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
+            spaceship.healthBar.barPosition = .down
+            spaceship.healthBar.update(position: spaceship.position)
+        }
+        spaceship.loadWeaponRangeSprite(gameWorld)
+        spaceship.loadWeaponDetail()
+        
+        gameWorld.addChild(spaceship)
+    }
 
     func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
         
         var i = 0
         for spaceship in self.spaceships {
-            
-            spaceship.zRotation = self.zRotation
-            
-            gameWorld.addChild(spaceship)
-            
-            if isAlly {
-                spaceship.loadAllyDetails()
-                spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
-                
-            } else {
-                spaceship.loadEnemyDetails()
-                spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
-            }
-            spaceship.loadWeaponRangeSprite(gameWorld)
-            spaceship.loadWeaponDetail()
-            
-            switch i {
-            case 0:
-                spaceship.position = self.convertPoint(CGPoint(x: -103, y: 78), toNode: gameWorld)
-                break
-            case 1:
-                spaceship.position = self.convertPoint(CGPoint(x: -34, y: 78), toNode: gameWorld)
-                break
-            case 2:
-                spaceship.position = self.convertPoint(CGPoint(x: 34, y: 78), toNode: gameWorld)
-                break
-            case 3:
-                spaceship.position = self.convertPoint(CGPoint(x: 103, y: 78), toNode: gameWorld)
-                break
-            default:
-                break
-            }
-            spaceship.startingPosition = spaceship.position
+            self.loadSpaceship(spaceship, gameWorld: gameWorld, isAlly: isAlly, i: i)
             i += 1
         }
     }
@@ -148,13 +154,19 @@ class Mothership: Control {
             
             if self.health > 0 && self.health - someShot.damage <= 0 {
                 self.die()
+                
+                for spaceship in self.spaceships {
+                    if spaceship.isInsideAMothership {
+                        spaceship.die()
+                    }
+                }
             }
             
             self.health = self.health - someShot.damage
             someShot.damage = 0
             someShot.removeFromParent()
             
-            self.healthBar.update(self.health, maxHealth: self.maxHealth)
+            self.healthBar?.update(self.health, maxHealth: self.maxHealth)
         }
     }
     
@@ -165,7 +177,7 @@ class Mothership: Control {
         particles.position.y = self.position.y
         particles.zPosition = self.zPosition
         
-        particles.numParticlesToEmit = 333
+        particles.numParticlesToEmit = 1000
         particles.particleSpeedRange = 1000
         
         particles.particlePositionRange = CGVector(dx: self.spriteNode.size.width, dy: self.spriteNode.size.height)
@@ -185,7 +197,7 @@ class Mothership: Control {
         self.healthBar.hidden = true
     }
     
-    func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) {
+    func update(enemyMothership enemyMothership:Mothership? = nil, enemySpaceships:[Spaceship] = [Spaceship]()) {
         for spaceship in self.spaceships {
             spaceship.update(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: self.spaceships)
         }

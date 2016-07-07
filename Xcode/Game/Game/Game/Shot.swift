@@ -18,9 +18,12 @@ class Shot: Control {
     
     var startingPosition:CGPoint = CGPoint.zero
     
-    init(damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
+    var shooter:SKNode!
+    
+    init(shooter:SKNode, damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
+        self.shooter = shooter
         self.damage = damage
         self.rangeSquared = range * range
         
@@ -28,7 +31,7 @@ class Shot: Control {
         
         if damage <= 0 {
             #if DEBUG
-                fatalError()
+                //fatalError()
             #endif
         }
         
@@ -45,19 +48,14 @@ class Shot: Control {
         self.physicsBody?.linearDamping = 0
         self.physicsBody?.angularDamping = 0
         
-        
-        
         self.position = position
         self.zRotation = zRotation
-        
-        
        
         self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 500 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 500  + shooterPhysicsBody.velocity.dy)
         
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
-            guard let shot = self else { return }
-            shot.removeFromParent()
+            self?.removeFromParent()
         }
         
          Shot.shotSet.insert(self)

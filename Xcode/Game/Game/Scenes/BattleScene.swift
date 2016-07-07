@@ -95,10 +95,11 @@ class BattleScene: GameScene {
         //Spaceships
         
         self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
-        self.mothership.healthBar.updateUp(position: self.mothership.position)
+        self.mothership.healthBar.update(position: self.mothership.position)
         
         self.botMothership.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
-        self.botMothership.healthBar.updateDown(position: self.botMothership.position)
+        self.botMothership.healthBar.barPosition = .down
+        self.botMothership.healthBar.update(position: self.botMothership.position)
         
         self.mothership.loadSpaceships(self.gameWorld)
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
@@ -228,7 +229,7 @@ class BattleScene: GameScene {
                     
                     if let parent = self.mothership.spriteNode.parent {
                         if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
-                            Spaceship.retreat()
+                            Spaceship.retreatSelectedSpaceship()
                             return
                         }
                     }
@@ -304,7 +305,7 @@ class BattleScene: GameScene {
                     
                     if let parent = self.mothership.spriteNode.parent {
                         if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
-                            Spaceship.retreat()
+                            Spaceship.retreatSelectedSpaceship()
                             return
                         }
                     }

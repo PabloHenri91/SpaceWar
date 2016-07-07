@@ -107,6 +107,10 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             //spaceship criou um shot
             break
             
+        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
+            //spaceship criou um shot
+            break
+            
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
@@ -239,6 +243,13 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             }
             break
             
+        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
+            //não deve cair aqui
+            if let spaceship = self.bodyA.node as? Spaceship {
+                spaceship.didEndContact(self.bodyB, contact: contact)
+            }
+            break
+            
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
@@ -304,17 +315,12 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
                 categoryBitMask.mothershipSpaceship.rawValue |
                 categoryBitMask.mothership.rawValue
         
-        
         static var mothershipSpaceship:UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
                 categoryBitMask.mothershipSpaceship.rawValue 
         
-        static var shot:UInt32 =
-            categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue |
-                categoryBitMask.mothership.rawValue
-        
+        static var shot:UInt32 = 0
         
         static var spaceshipShot:UInt32 = 0
         
@@ -363,8 +369,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         self.addChild(label)
         label.runAction(SKAction.moveBy(vector, duration: duration))
         label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label] in
-            guard let label = label else { return }
-            label.removeFromParent()
+            label?.removeFromParent()
         }
     }
     

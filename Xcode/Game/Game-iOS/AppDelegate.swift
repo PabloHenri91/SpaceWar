@@ -43,7 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
         
     }
-
+    
+    func applicationSignificantTimeChange(application: UIApplication) {
+        //TODO: applicationSignificantTimeChange
+        //http://stackoverflow.com/questions/13741585/notify-app-when-ipad-date-time-settings-changed
+        //http://stackoverflow.com/questions/12221528/nsdate-get-precise-time-independent-of-device-clock
+        print("treta na hora")
+    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -76,6 +76,11 @@ class Spaceship: Control {
         self.load(type: type, level: level)
     }
     
+    init(extraType:Int, level:Int) {
+        super.init()
+        self.load(extraType: extraType, level: level)
+    }
+    
     init(spaceshipData:SpaceshipData) {
         super.init()
         self.spaceshipData = spaceshipData
@@ -108,7 +113,9 @@ class Spaceship: Control {
     }
     
     func showWeaponRangeSprite() {
-        self.weaponRangeSprite.alpha = 1
+        if let _ = self.weapon {
+            self.weaponRangeSprite.alpha = 1
+        }
     }
     
     func loadWeaponDetail() {
@@ -142,11 +149,18 @@ class Spaceship: Control {
     }
     
     private func load(type type:Int, level:Int) {
-        
         self.type = Spaceship.types[type]
-        
         self.level = level
-        
+        self.load()
+    }
+    
+    private func load(extraType type:Int, level:Int) {
+        self.type = Spaceship.extraTypes[type]
+        self.level = level
+        self.load()
+    }
+    
+    private func load() {
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
         self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
         self.maxHealth = health
@@ -182,6 +196,7 @@ class Spaceship: Control {
         self.physicsBody?.linearDamping = 2
         self.physicsBody?.angularDamping = 4
         self.physicsBody?.friction = 0
+        self.physicsBody?.restitution = 2
         
         self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
         self.force = self.maxVelocitySquared / 60
@@ -240,32 +255,37 @@ class Spaceship: Control {
         }
     }
     
-    static func retreat() {
+    static func retreatSelectedSpaceship() {
         if let spaceship = Spaceship.selectedSpaceship {
-            //Precisa mover, esqueca o que está fazendo
-            spaceship.targetNode = nil
-            
-            spaceship.destination = spaceship.startingPosition
-            spaceship.needToMove = true
-            
-            spaceship.selectedSpriteNode.hidden = true
-            spaceship.setBitMasksToMothershipSpaceship()
+            spaceship.retreat()
         }
         
         Spaceship.selectedSpaceship = nil
     }
     
-    func update(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
+    func retreat() {
+        //Precisa mover, esqueca o que está fazendo
+        self.targetNode = nil
+        
+        self.destination = self.startingPosition
+        self.needToMove = true
+        
+        self.selectedSpriteNode.hidden = true
+        self.setBitMasksToMothershipSpaceship()
+    }
+    
+    func update(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
         self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
-        self.healthBar.updateUp(position: self.position)
+        self.healthBar.update(position: self.position)
         
         //TODO: exportar para função
-        //TODO: Quebrou aqui se nave nao tiver arma equipada
-        self.weaponRangeSprite.position = self.position
-        if self.weaponRangeSprite.alpha > 0 {
-            self.weaponRangeSprite.alpha -= 0.01666666667
+        if let _ = self.weaponRangeSprite {
+            self.weaponRangeSprite.position = self.position
+            if self.weaponRangeSprite.alpha > 0 {
+                self.weaponRangeSprite.alpha -= 0.01666666667
+            }
         }
         //
     }
@@ -301,7 +321,7 @@ class Spaceship: Control {
         }
         
         if let spaceshipWeapon = spaceship.weapon {
-            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus
+            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.weaponRangeBonus
             if CGPoint.distance(self.position, spaceship.position) > range {
                 return false
             }
@@ -312,7 +332,7 @@ class Spaceship: Control {
         return true
     }
     
-    func nearestTarget(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship]) -> SKNode? {
+    func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship]) -> SKNode? {
         
         var currentTarget:SKNode? = nil
         
@@ -336,8 +356,10 @@ class Spaceship: Control {
                 break
                 
             case TargetType.mothership:
-                if enemyMothership.canBeTarget(self) {
-                    currentTarget = enemyMothership
+                if let enemyMothership = enemyMothership {
+                    if enemyMothership.canBeTarget(self) {
+                        currentTarget = enemyMothership
+                    }
                 }
                 break
                 
@@ -379,6 +401,7 @@ class Spaceship: Control {
             }
         }
         
+        
         if canfire {
             self.weapon?.fire(self.weaponRangeBonus)
         }
@@ -386,7 +409,12 @@ class Spaceship: Control {
     }
     
     func getShot(shot:Shot?) {
+        
         if let someShot = shot {
+            
+            if someShot.shooter == self {
+                return
+            }
             
             if self.health > 0 && self.health - someShot.damage <= 0 {
                 self.die()
@@ -426,7 +454,7 @@ class Spaceship: Control {
         self.healthBar.removeFromParent()
     }
     
-    func move(enemyMothership enemyMothership:Mothership, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
+    func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
        
         if self.health > 0 {
             if (self.needToMove) {
@@ -587,6 +615,10 @@ class Spaceship: Control {
                 {
                     switch otherPhysicsBody.categoryBitMask {
                         
+                    case GameWorld.categoryBitMask.spaceshipShot.rawValue:
+                        (otherPhysicsBody.node as? Shot)?.resetBitMasks()
+                        break
+                        
                     case GameWorld.categoryBitMask.mothership.rawValue:
                         self.isInsideAMothership = false
                         if self.destination != self.startingPosition {
@@ -615,6 +647,7 @@ class Spaceship: Control {
     func addWeapon(weapon:Weapon) {
         self.weapon = weapon
         self.loadWeaponDetail()
+        self.addChild(weapon)
         
         if let spaceshipData = self.spaceshipData {
             if let weaponData = weapon.weaponData {
@@ -652,6 +685,12 @@ class Spaceship: Control {
             self.level = spaceshipData.level.integerValue
             
         }
+    }
+    
+    override func removeFromParent() {
+        self.healthBar?.removeFromParent()
+        self.weaponSpriteNode?.removeFromParent()
+        super.removeFromParent()
     }
 }
 
@@ -705,6 +744,18 @@ class SpaceShipType {
 }
 
 extension Spaceship {
+    
+    static var extraTypes:[SpaceShipType] = [
+        {
+            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+                speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
+            spaceShipType.skins = [
+                "tutorialMeteor"
+            ]
+            spaceShipType.index = 0
+            return spaceShipType
+        }()
+    ]
     
     static var targetPriorityTypes = [
         [TargetType.spaceships, TargetType.towers, TargetType.mothership],
