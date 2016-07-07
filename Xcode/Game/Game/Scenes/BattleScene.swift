@@ -81,7 +81,7 @@ class BattleScene: GameScene {
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
             
-            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*3); return a }(), completion:
+            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*5); return a }(), completion:
                 { [weak botSpaceship] in
                     
                     guard let botSpaceship = botSpaceship else { return }
@@ -118,6 +118,25 @@ class BattleScene: GameScene {
             switch (self.state) {
                 
             case states.battle:
+                
+                var enemyHealth = 0
+                for botSpaceship in self.botMothership.spaceships {
+                    enemyHealth += botSpaceship.health
+                }
+                if enemyHealth <= 0 {
+                    self.botMothership.health = self.botMothership.health - Int(1 + Int(self.botMothership.level / 10))
+                    self.botMothership.healthBar.update(self.botMothership.health, maxHealth: self.botMothership.maxHealth)
+                }
+                
+                
+                var myHealth = 0
+                for spaceship in self.mothership.spaceships {
+                    myHealth += spaceship.health
+                }
+                if myHealth <= 0 {
+                    self.mothership.health = self.mothership.health - Int(1 + Int(self.mothership.level / 10))
+                    self.mothership.healthBar.update(self.mothership.health, maxHealth: self.mothership.maxHealth)
+                }
                 
                 self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
                 self.botMothership.update(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)

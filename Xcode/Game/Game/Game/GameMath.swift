@@ -197,18 +197,32 @@ class GameMath {
     static let mothershipHealthPointsPerLevel = 8
     
     static func mothershipMaxHealth(level level:Int) -> Int {
-        let maxHealth = Int(500 * pow(1.1, Double(level - 1)))
+        let maxHealth = Int(200 * pow(1.1, Double(level - 1)))
         return maxHealth
     }
     
     //Battle
     static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+        // win
         if mothership.health > 0 {
-            let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
-            return xp
+            if ((enemyMothership.level - mothership.level) > 0) {
+                let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
+                return xp
+            } else {
+                let xp = mothership.level * 100
+                return xp
+            }
+            
+        } else {
+            //loose
+            if ((enemyMothership.level - mothership.level) > 0) {
+                let xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
+                return xp
+            } else {
+                let xp = mothership.level * 10
+                return xp
+            }
         }
-        let xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
-        return xp
     }
     
     static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
