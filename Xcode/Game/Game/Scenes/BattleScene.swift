@@ -68,10 +68,11 @@ class BattleScene: GameScene {
         
         // BotSpaceships
         for _ in 0 ..< 4 {
-            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1))
+            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: GameMath.spaceshipBotSpaceshipLevel()))
         }
         
         //TODO: remover gamb
+        var i = 1
         for botSpaceship in self.botMothership.spaceships {
             
             let weaponTypeIndex = Int.random(Weapon.types.count)
@@ -80,15 +81,17 @@ class BattleScene: GameScene {
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
             
-            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(1 + Int.random(30)); return a }(), completion:
+            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*3); return a }(), completion:
                 { [weak botSpaceship] in
                     
-                    guard let someBotSpaceship = botSpaceship else { return }
+                    guard let botSpaceship = botSpaceship else { return }
                     
-                    someBotSpaceship.destination = CGPoint.zero
-                    someBotSpaceship.needToMove = true
-                    someBotSpaceship.physicsBody?.dynamic = true
+                    botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
+                        y: botSpaceship.startingPosition.y - 150)
+                    botSpaceship.needToMove = true
+                    botSpaceship.physicsBody?.dynamic = true
                 })
+            i += 1
         }
         //
         
@@ -125,10 +128,27 @@ class BattleScene: GameScene {
                     self.nextState = states.battleEnd
                 }
                 
+                for botSpaceship in self.botMothership.spaceships {
+                    
+                    if !botSpaceship.isInsideAMothership && botSpaceship.health > 0 {
+                        
+                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                        
+                        
+                        if let targetNode = botSpaceship.targetNode {
+                            botSpaceship.needToMove = false
+                        } else {
+                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                               y: botSpaceship.position.y - 150)
+                            botSpaceship.needToMove = true
+                        }
+                    }
+                }
+                
                 break
                 
             case .battleEndInterval:
-                if currentTime - battleEndTime >= 3 {
+                if currentTime - battleEndTime >= 2 {
                     self.nextState = states.showBattleResult
                 }
                 break

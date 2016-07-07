@@ -81,6 +81,10 @@ class GameMath {
         return type.skins[Int(skinIndex)]
     }
     
+    static func spaceshipBotSpaceshipLevel() -> Int {
+        return MemoryCard.sharedInstance.playerData.motherShip.level.integerValue * 3
+    }
+    
     // Spaceship upgrade
     static func spaceshipUpgradeCost(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
