@@ -426,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				84029D821CF49D68001853FF /* BattleScene.swift */,
+				84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */,
 				3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */,
 				3AAA93411D22BF1900DD4757 /* FactoryScene.swift */,
 				3A7E60CB1D14239F00D00590 /* HangarScene.swift */,
