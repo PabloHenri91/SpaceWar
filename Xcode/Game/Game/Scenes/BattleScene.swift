@@ -35,6 +35,8 @@ class BattleScene: GameScene {
     var mothership:Mothership!
     
     var botMothership:Mothership!
+    var lastBotUpdate:Double = 0
+    var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
     
     var battleEndTime: Double = 0
     
@@ -81,7 +83,7 @@ class BattleScene: GameScene {
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
             
-            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*5); return a }(), completion:
+            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*Int(self.botUpdateInterval)); return a }(), completion:
                 { [weak botSpaceship] in
                     
                     guard let botSpaceship = botSpaceship else { return }
@@ -126,8 +128,11 @@ class BattleScene: GameScene {
                 if enemyHealth <= 0 {
                     self.botMothership.health = self.botMothership.health - Int(1 + Int(self.botMothership.level / 10))
                     self.botMothership.healthBar.update(self.botMothership.health, maxHealth: self.botMothership.maxHealth)
+                    if self.botMothership.health <= 0 {
+                        self.botMothership.die()
+                        self.nextState = .battleEnd
+                    }
                 }
-                
                 
                 var myHealth = 0
                 for spaceship in self.mothership.spaceships {
@@ -136,6 +141,10 @@ class BattleScene: GameScene {
                 if myHealth <= 0 {
                     self.mothership.health = self.mothership.health - Int(1 + Int(self.mothership.level / 10))
                     self.mothership.healthBar.update(self.mothership.health, maxHealth: self.mothership.maxHealth)
+                    if self.mothership.health <= 0 {
+                        self.mothership.die()
+                        self.nextState = .battleEnd
+                    }
                 }
                 
                 self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
@@ -147,19 +156,24 @@ class BattleScene: GameScene {
                     self.nextState = states.battleEnd
                 }
                 
-                for botSpaceship in self.botMothership.spaceships {
+                
+                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
+                    self.lastBotUpdate = currentTime
                     
-                    if !botSpaceship.isInsideAMothership && botSpaceship.health > 0 {
+                    for botSpaceship in self.botMothership.spaceships {
                         
-                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                        
-                        
-                        if let targetNode = botSpaceship.targetNode {
-                            botSpaceship.needToMove = false
-                        } else {
-                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                               y: botSpaceship.position.y - 150)
-                            botSpaceship.needToMove = true
+                        if !botSpaceship.isInsideAMothership && botSpaceship.health > 0 {
+                            
+                            botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                            
+                            
+                            if let _ = botSpaceship.targetNode {
+                                botSpaceship.needToMove = false
+                            } else {
+                                botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                   y: botSpaceship.position.y - 150)
+                                botSpaceship.needToMove = true
+                            }
                         }
                     }
                 }
