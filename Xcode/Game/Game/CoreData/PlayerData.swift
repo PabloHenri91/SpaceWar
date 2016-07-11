@@ -35,29 +35,22 @@ extension MemoryCard {
         playerData.points = 1000000
         playerData.motherShip = self.newMothershipData()
         
-        //researches
-        playerData.researches = NSSet()
         
         // spaceships
         playerData.spaceships = NSSet()
         
-        // unlocked spaceships
-        playerData.unlockedSpaceships = NSSet()
-        
         
         //adicionei a nave 0 a nave mae
         var spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         var weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
+
         
- 
         
         //adicionei a nave 1 a nave mae
         spaceshipData = self.newSpaceshipData(type: 1)
-        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 1)
@@ -67,7 +60,6 @@ extension MemoryCard {
         
         //adicionei a nave 2 na nave mae 2 vezes
         spaceshipData = self.newSpaceshipData(type: 2)
-        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 2)
@@ -77,11 +69,27 @@ extension MemoryCard {
         
         //adicionei a nave 3 na nave mae
         spaceshipData = self.newSpaceshipData(type: 3)
-        playerData.unlockSpaceshipData(spaceshipData)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 3)
         spaceshipData.addWeaponData(weaponData)
+        
+        
+        // unlocked spaceships
+        playerData.unlockedSpaceships = NSSet()
+        
+        spaceshipData = self.newSpaceshipData(type: 0)
+        playerData.unlockSpaceshipData(spaceshipData)
+        
+        spaceshipData = self.newSpaceshipData(type: 1)
+        playerData.unlockSpaceshipData(spaceshipData)
+        
+        spaceshipData = self.newSpaceshipData(type: 2)
+        playerData.unlockSpaceshipData(spaceshipData)
+        
+        spaceshipData = self.newSpaceshipData(type: 3)
+        playerData.unlockSpaceshipData(spaceshipData)
+        
 
         
         //weapons
@@ -118,6 +126,15 @@ extension MemoryCard {
         missionSpaceshipData.level = 4
         playerData.addMissionSpaceshipData(missionSpaceshipData)
         
+        
+        //researches
+        playerData.researches = NSSet()
+        
+        for research in Research.types {
+            var newResearch = self.newResearchData()
+            newResearch.type = research.index
+            playerData.addResearchData(newResearch)
+        }
         
         
         //list of facebook friends sent game invite
@@ -156,6 +173,7 @@ extension PlayerData {
         let items = self.mutableOrderedSetValueForKey("missionSpaceships")
         items.addObject(value)
     }
+    
     
     func removeSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("spaceships")

@@ -85,7 +85,7 @@ class Button: Control {
             }
             
             if (text != "") {
-                let labelNode = SKLabelNode(fontNamed: GameFonts.fontName)
+                let labelNode = SKLabelNode(fontNamed: GameFonts.fontName.museo500)
                 labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
                 labelNode.fontSize = fontSize.rawValue
                 
@@ -133,7 +133,7 @@ class Button: Control {
             }
             
             if (text != "") {
-                let labelNodePressed = SKLabelNode(fontNamed: GameFonts.fontName)
+                let labelNodePressed = SKLabelNode(fontNamed: GameFonts.fontName.museo500)
                 labelNodePressed.text = NSLocalizedString(text, tableName: nil, comment:"")
                 labelNodePressed.fontSize = fontSize.rawValue
                 

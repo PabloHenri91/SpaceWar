@@ -8,7 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B7B4C1CFF4DA500C85D91 /* FacebookGameInviter.swift */; };
+		3A4065F11D2C54E600B886DB /* Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F01D2C54E600B886DB /* Research.swift */; };
+		3A4065F21D2C54E600B886DB /* Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F01D2C54E600B886DB /* Research.swift */; };
+		3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F31D2C616500B886DB /* ResearchCard.swift */; };
+		3A4065F51D2C616500B886DB /* ResearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F31D2C616500B886DB /* ResearchCard.swift */; };
+		3A4065F71D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */; };
+		3A4065F81D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */; };
+		3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
+		3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
 		3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
+		3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
+		3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
 		3A7E60CC1D14239F00D00590 /* HangarScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60CB1D14239F00D00590 /* HangarScene.swift */; };
 		3A7E60CD1D14239F00D00590 /* HangarScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60CB1D14239F00D00590 /* HangarScene.swift */; };
 		3A7E60CF1D14331600D00590 /* SpaceShipSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */; };
@@ -146,7 +156,12 @@
 
 /* Begin PBXFileReference section */
 		3A3B7B4C1CFF4DA500C85D91 /* FacebookGameInviter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookGameInviter.swift; sourceTree = "<group>"; };
+		3A4065F01D2C54E600B886DB /* Research.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Research.swift; sourceTree = "<group>"; };
+		3A4065F31D2C616500B886DB /* ResearchCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchCard.swift; sourceTree = "<group>"; };
+		3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchDetailsScene.swift; sourceTree = "<group>"; };
+		3A4065F91D2D902200B886DB /* MultiLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineLabel.swift; sourceTree = "<group>"; };
 		3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
+		3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-500-webfont.ttf"; sourceTree = "<group>"; };
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
 		3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceShipSlot.swift; sourceTree = "<group>"; };
 		3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarSpaceShipCard.swift; sourceTree = "<group>"; };
@@ -297,6 +312,7 @@
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */,
 				84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */,
 			);
 			path = Fonts;
@@ -372,13 +388,13 @@
 		844CF2961CE78BB20032F6AA /* Hydra */ = {
 			isa = PBXGroup;
 			children = (
-				8436205D1CEB77400082A9D7 /* DefaultNameList */,
 				8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */,
 				8436204B1CEB77400082A9D7 /* Box.swift */,
 				8436204C1CEB77400082A9D7 /* Button.swift */,
 				8436204D1CEB77400082A9D7 /* CharacterGenerator.swift */,
 				8436204E1CEB77400082A9D7 /* Control.swift */,
 				8436204F1CEB77400082A9D7 /* CropBox.swift */,
+				8436205D1CEB77400082A9D7 /* DefaultNameList */,
 				843620501CEB77400082A9D7 /* Display.swift */,
 				843620511CEB77400082A9D7 /* Event.swift */,
 				3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */,
@@ -390,6 +406,7 @@
 				843620561CEB77400082A9D7 /* GameTextField.swift */,
 				843620571CEB77400082A9D7 /* GeometryExtensions.swift */,
 				843620581CEB77400082A9D7 /* Label.swift */,
+				3A4065F91D2D902200B886DB /* MultiLineLabel.swift */,
 				843620591CEB77400082A9D7 /* Music.swift */,
 				8436205A1CEB77400082A9D7 /* ScrollNode.swift */,
 				8436205B1CEB77400082A9D7 /* ScrollNodeExtensions.swift */,
@@ -411,6 +428,8 @@
 				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
 				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
+				3A4065F01D2C54E600B886DB /* Research.swift */,
+				3A4065F31D2C616500B886DB /* ResearchCard.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
@@ -429,6 +448,7 @@
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
 				3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */,
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
+				3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */,
 				3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */,
 				3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */,
 			);
@@ -516,7 +536,7 @@
 				TargetAttributes = {
 					844CF2651CE77B3F0032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = JZ3J7RVLD7;
+						DevelopmentTeam = ER489438ZX;
 					};
 					844CF2841CE789A90032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -558,6 +578,7 @@
 				3AA0C9801CFDB3B5008EE628 /* install_docsets.sh in Resources */,
 				84D6212B1D259021005D550C /* explosion.png in Resources */,
 				3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */,
+				3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
 				844CF2721CE77B400032F6AA /* Main.storyboard in Resources */,
 				843620841CEB77400082A9D7 /* DefaultNameList in Resources */,
 				3AA0C9811CFDB3B5008EE628 /* FacebookSDKStrings.bundle in Resources */,
@@ -574,6 +595,7 @@
 				84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				843620851CEB77400082A9D7 /* DefaultNameList in Resources */,
 				844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */,
+				3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,15 +633,18 @@
 				84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */,
 				84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */,
+				3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */,
 				8436206C1CEB77400082A9D7 /* Event.swift in Sources */,
 				84029D831CF49D68001853FF /* BattleScene.swift in Sources */,
 				84F855F31CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
 				846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */,
+				3A4065F11D2C54E600B886DB /* Research.swift in Sources */,
 				843620601CEB77400082A9D7 /* Box.swift in Sources */,
 				8436207A1CEB77400082A9D7 /* Label.swift in Sources */,
 				848F8B791D0602BE00434FFB /* Shot.swift in Sources */,
 				84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */,
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
+				3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
 				3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620681CEB77400082A9D7 /* CropBox.swift in Sources */,
 				8436207E1CEB77400082A9D7 /* ScrollNode.swift in Sources */,
@@ -631,6 +656,7 @@
 				8436206E1CEB77400082A9D7 /* GameCamera.swift in Sources */,
 				3A7E60D21D14878F00D00590 /* HangarSpaceShipCard.swift in Sources */,
 				3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */,
+				3A4065F71D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */,
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
 				844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */,
@@ -651,6 +677,7 @@
 				3AD2619F1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
 				84F855DA1CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				843620751CEB77400082A9D7 /* GameScene.swift in Sources */,
+				3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
 				3A7E60CD1D14239F00D00590 /* HangarScene.swift in Sources */,
 				84F855FC1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				3AD261991D2562A000189671 /* FactorySpaceShipCard.swift in Sources */,
@@ -673,6 +700,8 @@
 				3AAA933F1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843803D51CEF45D1007152BC /* GameMath.swift in Sources */,
 				84F855F81CECCE5C00FB63D2 /* PlayerData.swift in Sources */,
+				3A4065F81D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */,
+				3A4065F21D2C54E600B886DB /* Research.swift in Sources */,
 				843620691CEB77400082A9D7 /* CropBox.swift in Sources */,
 				844CF2881CE789AA0032F6AA /* AppDelegate.swift in Sources */,
 				3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */,
@@ -694,6 +723,7 @@
 				84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				843620611CEB77400082A9D7 /* Box.swift in Sources */,
 				843620831CEB77400082A9D7 /* StringExtension.swift in Sources */,
+				3A4065F51D2C616500B886DB /* ResearchCard.swift in Sources */,
 				84F855DE1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				84F855F41CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
 				843620651CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
@@ -823,6 +853,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FacebookSDKs-iOS-4",
@@ -832,6 +863,7 @@
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -840,6 +872,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FacebookSDKs-iOS-4",
@@ -848,6 +881,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

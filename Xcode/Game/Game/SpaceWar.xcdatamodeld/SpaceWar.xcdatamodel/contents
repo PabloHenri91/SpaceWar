@@ -33,7 +33,7 @@
     </entity>
     <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
         <attribute name="done" attributeType="Boolean" syncable="YES"/>
-        <attribute name="startDate" attributeType="Date" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>
     </entity>
@@ -59,7 +59,7 @@
         <element name="MissionSpaceshipData" positionX="-279" positionY="-45" width="128" height="105"/>
         <element name="MothershipData" positionX="-488" positionY="-198" width="128" height="28"/>
         <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="180"/>
-        <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="103"/>
+        <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="105"/>
         <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="150"/>
         <element name="WeaponData" positionX="-459" positionY="45" width="128" height="28"/>
     </elements>

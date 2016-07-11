@@ -224,4 +224,12 @@ class GameMath {
         
     }
     
+    
+    static func ResearchFinishTime(beginDate: NSDate, researchTime: Int) -> Int {
+        
+        let date = NSDate(timeInterval: NSTimeInterval(researchTime), sinceDate: beginDate)
+        return Int(date.timeIntervalSinceNow)
+        
+    }
+    
 }

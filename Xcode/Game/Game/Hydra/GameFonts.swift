@@ -27,5 +27,11 @@ class GameFonts {
     Finally check the font name. When you use it in your code, you have to use the font name, not the file name. To know the font name, double click on the font file in Finder and a window will open showing the font. Check that window title, that's the name of the font that you have to use.
     */
     
-    static var fontName = "Museo Sans Rounded" //kenpixel.ttf
+    
+    struct fontName {
+        static var museo1000 = "Museo Sans Rounded 1000 Regular"
+        static var museo500 = "Museo Sans Rounded 500 Regular"
+        
+    }
+
 }
