@@ -181,12 +181,17 @@ class BattleScene: GameScene {
                 break
                 
             case .battleEndInterval:
+                self.mothership.update()
+                self.botMothership.update()
+                
                 if currentTime - battleEndTime >= 2 {
                     self.nextState = states.showBattleResult
                 }
                 break
                 
             case .showBattleResult:
+                self.mothership.update()
+                self.botMothership.update()
                 break
                 
             default:

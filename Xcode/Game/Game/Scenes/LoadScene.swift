@@ -45,7 +45,12 @@ class LoadScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                if MemoryCard.sharedInstance.playerData.needBattleTraining.boolValue {
+                    self.view?.presentScene(BattleTrainingScene(), transition: GameScene.transition)
+                } else {
+                    self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                }
+                
                 break
             default:
                 #if DEBUG
