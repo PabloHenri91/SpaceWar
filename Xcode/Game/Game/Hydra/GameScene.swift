@@ -198,14 +198,17 @@ class GameScene: SKScene {
         return true
     }
     
-#endif
-
-extension SKNode {
-    func printTree(name:String = "root") {
-        for node in self.children {
-            let nodeName = node.className.componentsSeparatedByString(".").last!
-            print(name + " " + nodeName + " " + node.zPosition.description)
-            node.printTree(name + " " + nodeName)
+    public extension SKNode {
+        func printTree(name:String = "root") {
+            for node in self.children {
+                let nodeName = node.className.componentsSeparatedByString(".").last!
+                print(name + " " + nodeName + " " + node.zPosition.description)
+                node.printTree(name + " " + nodeName)
+            }
         }
     }
-}
+    
+#endif
+
+
+
