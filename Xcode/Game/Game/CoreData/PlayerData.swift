@@ -12,7 +12,6 @@ import CoreData
 @objc(PlayerData)
 
 class PlayerData: NSManagedObject {
-
     
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
