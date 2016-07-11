@@ -32,7 +32,7 @@ extension MemoryCard {
         let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
         
         playerData.name = "Name"
-        playerData.points = 1000000
+        playerData.points = 0
         playerData.motherShip = self.newMothershipData()
         
         
