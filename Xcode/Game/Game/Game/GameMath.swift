@@ -226,11 +226,29 @@ class GameMath {
     }
     
     static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+
+        
+        
+        // win
         if mothership.health > 0 {
-            let points = mothership.level * 200 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
-            return points
+            if ((enemyMothership.level - mothership.level) > 0) {
+                let points = mothership.level * 200 + ((enemyMothership.level - mothership.level) * (mothership.level * 20))
+                return points
+            } else {
+                let points = mothership.level * 200
+                return points
+            }
+            
+        } else {
+            //loose
+            if ((enemyMothership.level - mothership.level) > 0) {
+                let points = mothership.level * 20 + ((enemyMothership.level - mothership.level) * (mothership.level * 2))
+                return points
+            } else {
+                let points = mothership.level * 20
+                return points
+            }
         }
-        return 0
     }
     
     //Mission Spaceship
