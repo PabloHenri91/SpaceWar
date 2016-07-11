@@ -68,6 +68,8 @@ class GameScene: SKScene {
         
         Spaceship.selectedSpaceship = nil
         
+        Mothership.mothershipList = Set<Mothership>()
+        Spaceship.spaceshipList = Set<Spaceship>()
         //TODO: Class.classSet = Set<Class>()
     }
     
@@ -197,3 +199,13 @@ class GameScene: SKScene {
     }
     
 #endif
+
+extension SKNode {
+    func printTree(name:String = "root") {
+        for node in self.children {
+            let nodeName = node.className.componentsSeparatedByString(".").last!
+            print(name + " " + nodeName + " " + node.zPosition.description)
+            node.printTree(name + " " + nodeName)
+        }
+    }
+}

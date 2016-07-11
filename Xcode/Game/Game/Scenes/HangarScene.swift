@@ -51,10 +51,12 @@ class HangarScene: GameScene {
         self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: "Selected spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 92, y: 72, horizontalAlignmentMode: .Left))
+        self.addChild(Label(color: SKColor.whiteColor(), text: "Selected spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 92, y: 72, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left))
         
         for ship in ships {
-            self.selectedShips.append(Spaceship(spaceshipData: ship))
+            let spaceship = Spaceship(spaceshipData: ship)
+            spaceship.loadAllyDetails()
+            self.selectedShips.append(spaceship)
         }
         
         
@@ -65,6 +67,8 @@ class HangarScene: GameScene {
                 self.slots.append(SpaceShipSlot(spaceShip: nil))
             }
             
+            self.slots[i].xAlign = .center
+            self.slots[i].yAlign = .up
             self.slots[i].screenPosition = CGPoint(x: 50 + (i * 74), y: 140)
             self.slots[i].resetPosition()
             self.addChild(self.slots[i])
@@ -81,7 +85,7 @@ class HangarScene: GameScene {
         self.spaceShipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Spaceships on hangar 09/10",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Spaceships on hangar 09/10",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<HangarSpaceShipCard>()

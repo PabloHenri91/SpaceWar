@@ -36,7 +36,7 @@ class BattleScene: GameScene {
     
     var botMothership:Mothership!
     var lastBotUpdate:Double = 0
-    var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
+    var botUpdateInterval:Double = 5//TODO: deve ser calculado para equilibrar o flow
     
     var battleEndTime: Double = 0
     
@@ -70,7 +70,7 @@ class BattleScene: GameScene {
         
         // BotSpaceships
         for _ in 0 ..< 4 {
-            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: GameMath.spaceshipBotSpaceshipLevel()))
+            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: GameMath.spaceshipBotSpaceshipLevel(), loadPhysics: true))
         }
         
         //TODO: remover gamb

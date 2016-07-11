@@ -114,10 +114,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.damage > 0 {
-                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                    }
-                    spaceship.getShot(shot)
+                    spaceship.getShot(shot, contact: contact)
                 }
             }
             break
@@ -125,20 +122,14 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.damage > 0 {
-                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                    }
-                    spaceship.getShot(shot)
+                    spaceship.getShot(shot, contact: contact)
                 }
             }
             break
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
-                if shot.damage > 0 {
-                    self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                }
-                (self.bodyB.node as? Mothership)?.getShot(shot)
+                (self.bodyB.node as? Mothership)?.getShot(shot, contact: contact)
             }
             break
             
@@ -229,10 +220,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.damage > 0 {
-                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                    }
-                    spaceship.getShot(shot)
+                    spaceship.getShot(shot, contact: contact)
                 }
             }
             break
@@ -253,10 +241,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
-                    if shot.damage > 0 {
-                        self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                    }
-                    spaceship.getShot(shot)
+                    spaceship.getShot(shot, contact: contact)
                 }
             }
             break
@@ -269,10 +254,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
-                if shot.damage > 0 {
-                    self.shotDamageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-                }
-                (self.bodyB.node as? Mothership)?.getShot(shot)
+                (self.bodyB.node as? Mothership)?.getShot(shot, contact: contact)
             }
             break
             
@@ -351,26 +333,4 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var mothership:UInt32 = categoryBitMask.shot.rawValue
     }
-    
-    func shotDamageEffect(points:Int, contactPoint: CGPoint, contact: SKPhysicsContact) {
-        
-        let duration = 0.5
-        var distance:CGFloat = 32
-        
-        if let _ = contact.bodyA.node as? Shot {
-            distance *= -1
-        }
-        
-        let vector = CGVector(dx: contact.contactNormal.dx * distance, dy: contact.contactNormal.dy * distance)
-        
-        let label = SKLabelNode(text: points.description)
-        label.position = contactPoint
-        label.fontColor = SKColor.whiteColor()
-        self.addChild(label)
-        label.runAction(SKAction.moveBy(vector, duration: duration))
-        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label] in
-            label?.removeFromParent()
-        }
-    }
-    
 }

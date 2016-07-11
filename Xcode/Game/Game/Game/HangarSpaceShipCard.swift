@@ -11,7 +11,7 @@ import SpriteKit
 class HangarSpaceShipCard: Control {
     
     var spaceShip: Spaceship!
-    var spaceShipImage: Control!
+    var spaceShipImage: Spaceship!
     var buttonDetalis: Button!
     var buttonSelect: Button?
     var buttonFix: Button?
@@ -41,9 +41,10 @@ class HangarSpaceShipCard: Control {
         self.addChild(Control(textureName: "hangarShipCardSelected"))
        
         self.spaceShip = spaceShip
-        self.spaceShipImage = Control(textureName: GameMath.spaceshipSkinImageName(level: self.spaceShip.level, type: self.spaceShip.type))
+        self.spaceShipImage = Spaceship(spaceshipData: spaceShip.spaceshipData!)
+        self.spaceShipImage.loadAllyDetails()
         self.addChild(self.spaceShipImage)
-        self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
+        self.spaceShipImage.screenPosition = CGPoint(x: 21+16, y: 41+16)
         self.spaceShipImage.resetPosition()
         
         self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
