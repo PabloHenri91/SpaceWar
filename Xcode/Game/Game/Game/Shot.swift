@@ -87,6 +87,27 @@ class Shot: Control {
     
     override func removeFromParent() {
         Shot.shotSet.remove(self)
+        
+        //Tentativa de corrigir bug do tiro sumir sem dar dano em naves ou namve mãe
+        if self.damage > 0 {
+            if let nodesAtPoint = self.parent?.nodesAtPoint(self.position) {
+                for node in nodesAtPoint {
+                    if let spaceship = node as? Spaceship {
+                        spaceship.getShot(self, contact: nil)
+                        super.removeFromParent()
+                        return
+                    }
+                    
+                    if let mothership = node as? Mothership {
+                        mothership.getShot(self, contact: nil)
+                        super.removeFromParent()
+                        return
+                    }
+                    
+                }
+            }
+        }
+        
         super.removeFromParent()
     }
 }

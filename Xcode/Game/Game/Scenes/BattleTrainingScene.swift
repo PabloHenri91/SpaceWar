@@ -60,6 +60,7 @@ class BattleTrainingScene: GameScene {
         
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
+        self.gameWorld.zPosition = -1000
         self.gameWorld.setScreenBox(Display.defaultSceneSize)
         self.addChild(self.gameWorld)
         self.physicsWorld.contactDelegate = self.gameWorld
@@ -77,7 +78,7 @@ class BattleTrainingScene: GameScene {
         self.mothership.position = CGPoint(x: 0, y: -330)
         
         // Spaceships
-        let spaceship = Spaceship(type: 0, level: 1)
+        let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
         self.mothership.spaceships.append(spaceship)
         spaceship.addWeapon(Weapon(type: 1, level: 1))
         
@@ -280,7 +281,6 @@ class BattleTrainingScene: GameScene {
                 self.tutorialControl = Control(textureName: "tutorialAim", x:110, y:228, xAlign: .center, yAlign: .center)
                 
                 if let tutorialControl = self.tutorialControl {
-                    tutorialControl.zPosition = 1
                     
                     let finalPosition = tutorialControl.position
                     let startScreenPosition = CGPoint(x: 7, y: 479)
@@ -309,14 +309,13 @@ class BattleTrainingScene: GameScene {
                     
                     guard let scene = self else { return }
                     
-                    let spaceship = Spaceship(type: 0, level: 1)
+                    let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
                     spaceship.addWeapon(Weapon(type: 1, level: 1))
                     scene.mothership.spaceships.append(spaceship)
                     scene.mothership.loadSpaceship(spaceship, gameWorld: scene.gameWorld, i: 1)
                     
                     scene.tutorialControl = Control(textureName:  "tutorialAskToSelectOther", x:32, y:175, xAlign: .center, yAlign: .center)
                     if let tutorialControl = scene.tutorialControl {
-                        tutorialControl.zPosition = 1
                         scene.addChild(tutorialControl)
                     }
                 })
@@ -346,7 +345,7 @@ class BattleTrainingScene: GameScene {
                 let button = Button(textureName: "button", text:"ok", x:93, y:378, xAlign: .center, yAlign: .center)
                 self.addChild(button)
                 
-                let meteor = Spaceship(extraType: 0, level: 1)
+                let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
                 meteor.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
                 meteor.position = CGPoint(x: 0, y: 200)
@@ -407,7 +406,7 @@ class BattleTrainingScene: GameScene {
                 button.zPosition = 2
                 self.addChild(button)
                 
-                let meteor = Spaceship(extraType: 0, level: 1)
+                let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
                 meteor.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
                 meteor.position = CGPoint(x: -100, y: -116)
@@ -418,7 +417,7 @@ class BattleTrainingScene: GameScene {
                 self.gameWorld.addChild(meteor)
                 self.enemySpaceships.append(meteor)
                 
-                let meteor2 = Spaceship(extraType: 0, level: 1)
+                let meteor2 = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor2.setBitMasksToSpaceship()
                 meteor2.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
                 meteor2.position = CGPoint(x: 100, y: -116)
@@ -470,12 +469,12 @@ class BattleTrainingScene: GameScene {
                     spaceship.retreat()
                 }
                 
-                var spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1)
+                var spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
                 spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1))
                 self.mothership.spaceships.append(spaceship)
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 2)
                 
-                spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1)
+                spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
                 spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1))
                 self.mothership.spaceships.append(spaceship)
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 3)
@@ -493,7 +492,7 @@ class BattleTrainingScene: GameScene {
                     botMothership.healthBar.update(position: botMothership.position)
                     
                     for _ in 0 ..< 4 {
-                        botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1))
+                        botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true))
                     }
                     
                     self.gameWorld.addChild(botMothership)

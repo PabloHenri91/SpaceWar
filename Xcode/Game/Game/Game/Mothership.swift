@@ -9,6 +9,8 @@
 import SpriteKit
 
 class Mothership: Control {
+    
+    static var mothershipList = Set<Mothership>()
 
     var level:Int!
     
@@ -51,7 +53,7 @@ class Mothership: Control {
         
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
-                self.spaceships.append(Spaceship(spaceshipData: spaceshipData))
+                self.spaceships.append(Spaceship(spaceshipData: spaceshipData, loadPhysics: true))
             }
         }
     }
@@ -68,6 +70,8 @@ class Mothership: Control {
         self.addChild(self.spriteNode)
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+        
+        Mothership.mothershipList.insert(self)
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
@@ -149,10 +153,10 @@ class Mothership: Control {
         return true
     }
     
-    func getShot(shot:Shot?) {
-        if let someShot = shot {
+    func getShot(shot:Shot?, contact: SKPhysicsContact?) {
+        if let shot = shot {
             
-            if self.health > 0 && self.health - someShot.damage <= 0 {
+            if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
                 
                 for spaceship in self.spaceships {
@@ -162,9 +166,13 @@ class Mothership: Control {
                 }
             }
             
-            self.health = self.health - someShot.damage
-            someShot.damage = 0
-            someShot.removeFromParent()
+            self.health = self.health - shot.damage
+            if self.health < 0 { self.health = 0 }
+            if shot.damage > 0 {
+                self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
+            }
+            shot.damage = 0
+            shot.removeFromParent()
             
             self.healthBar?.update(self.health, maxHealth: self.maxHealth)
         }
@@ -201,5 +209,33 @@ class Mothership: Control {
         for spaceship in self.spaceships {
             spaceship.update(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: self.spaceships)
         }
+    }
+    
+    func damageEffect(points:Int, contactPoint: CGPoint, contact: SKPhysicsContact?) {
+        
+        let duration = 0.5
+        var distance:CGFloat = 32
+        var vector = CGVector.zero
+        
+        if let contact = contact {
+            if let _ = contact.bodyA.node as? Shot {
+                distance *= -1
+            }
+            vector = CGVector(dx: contact.contactNormal.dx * distance, dy: contact.contactNormal.dy * distance)
+        }
+        
+        let label = SKLabelNode(text: points.description)
+        label.position = contactPoint
+        label.fontColor = SKColor.whiteColor()
+        self.parent?.addChild(label)
+        label.runAction(SKAction.moveBy(vector, duration: duration))
+        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label] in
+            label?.removeFromParent()
+        }
+    }
+    
+    override func removeFromParent() {
+        Mothership.mothershipList.remove(self)
+        super.removeFromParent()
     }
 }

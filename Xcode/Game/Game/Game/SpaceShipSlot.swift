@@ -17,6 +17,7 @@ class SpaceShipSlot: Control {
     init(spaceShip:Spaceship?) {
         
         super.init()
+        Control.controlList.insert(self)
         
         self.sprite = SKSpriteNode(imageNamed: "spaceShipSlotEmpty")
         
