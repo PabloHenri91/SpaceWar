@@ -44,14 +44,17 @@ class SpaceShipSlot: Control {
         }
     }
     
-    func update(spaceShip: Spaceship) {
+    func update(spaceShipData: SpaceshipData) {
+        
+        
+        motherShip.addSpaceshipData(spaceShipData)
+        
+        let spaceShip = Spaceship(spaceshipData: spaceShipData)
+        spaceShip.loadAllyDetails()
+        self.spaceShip = spaceShip
         self.sprite.removeFromParent()
         self.addChild(spaceShip)
         self.spaceShip = spaceShip
-        
-        if let spaceShipDataItem = spaceShip.spaceshipData {
-            motherShip.addSpaceshipData(spaceShipDataItem)
-        }
     }
     
     

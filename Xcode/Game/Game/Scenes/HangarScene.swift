@@ -225,7 +225,7 @@ class HangarScene: GameScene {
                                                     var slotEmptyFound = false
                                                     for slot in self.slots {
                                                         if(slot.spaceShip == nil) {
-                                                            slot.update(card.spaceShip)
+                                                            slot.update(card.spaceShip.spaceshipData!)
                                                             card.addSpaceship()
                                                             slotEmptyFound = true
                                                             break

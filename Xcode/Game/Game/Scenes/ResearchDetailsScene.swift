@@ -227,11 +227,17 @@ class ResearchDetailsScene: GameScene {
                     if let buttonBegin = self.buttonBegin {
                         
                         if (buttonBegin.containsPoint(touch.locationInNode(self.box))){
-                            if self.research.start() {
-                                self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - self.research.researchType.cost)
-                                self.nextState = .research
+                            
+                            if (self.playerData.points.integerValue > self.research.researchType.cost) {
+                                if self.research.start() {
+                                    self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - self.research.researchType.cost)
+                                    self.nextState = .research
+                                } else {
+                                    let alertBox = AlertBox(title: "Alert", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                    self.addChild(alertBox)
+                                }
                             } else {
-                                let alertBox = AlertBox(title: "Alert", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                let alertBox = AlertBox(title: "Alert", text: "No enough bucks bro 😢😢", type: AlertBox.messageType.OK)
                                 self.addChild(alertBox)
                             }
                         }
