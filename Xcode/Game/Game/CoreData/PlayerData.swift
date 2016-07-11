@@ -13,7 +13,9 @@ import CoreData
 
 class PlayerData: NSManagedObject {
 
+    
     @NSManaged var name: String
+    @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
     @NSManaged var motherShip: MothershipData
     @NSManaged var researches: NSSet
@@ -32,6 +34,7 @@ extension MemoryCard {
         let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
         
         playerData.name = "Name"
+        playerData.needBattleTraining = NSNumber(bool: true)
         playerData.points = 1000000
         playerData.motherShip = self.newMothershipData()
         
