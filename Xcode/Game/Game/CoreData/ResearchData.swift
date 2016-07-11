@@ -14,11 +14,23 @@ import CoreData
 class ResearchData: NSManagedObject {
 
     @NSManaged var done: NSNumber
-    @NSManaged var startDate: NSDate
+    @NSManaged var startDate: NSDate?
     @NSManaged var type: NSNumber
 
 }
 
 extension ResearchData {
+
+}
+
+extension MemoryCard {
     
+    func newResearchData() -> ResearchData {
+        
+        let researchData = NSEntityDescription.insertNewObjectForEntityForName("ResearchData", inManagedObjectContext: self.managedObjectContext) as! ResearchData
+        researchData.done = 0
+        researchData.startDate = nil
+        
+        return researchData
+    }
 }
