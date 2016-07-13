@@ -63,7 +63,7 @@ class BattleScene: GameScene {
         self.mothership.position = CGPoint(x: 0, y: -330)
         
         // BotMothership
-        self.botMothership = Mothership(level: 1)
+        self.botMothership = Mothership(level: self.mothership.level)
         self.botMothership.zRotation = CGFloat(M_PI)
         self.botMothership.position = CGPoint(x: 0, y: 330)
         self.gameWorld.addChild(self.botMothership)
@@ -78,7 +78,7 @@ class BattleScene: GameScene {
         for botSpaceship in self.botMothership.spaceships {
             
             let weaponTypeIndex = Int.random(Weapon.types.count)
-            var weaponLevel = Int.random(Weapon.types[weaponTypeIndex].maxLevel)
+            var weaponLevel = botSpaceship.level
             if weaponLevel <= 0 { weaponLevel = 1 }
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
