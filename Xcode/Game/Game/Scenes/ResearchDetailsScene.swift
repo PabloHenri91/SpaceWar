@@ -85,9 +85,9 @@ class ResearchDetailsScene: GameScene {
     
             if (time > 0) {
                 
-                
-                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp", x: 90, y: 411, xAlign: .center, yAlign: .center)
-                self.box.addChild(self.buttonSpeedUp!)
+                //TODO: descomentar
+//                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp", x: 90, y: 411, xAlign: .center, yAlign: .center)
+//                self.box.addChild(self.buttonSpeedUp!)
                 
                 self.labelTime = Label(text: GameMath.timeFormated(time), fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
                 self.box.addChild(self.labelTime)

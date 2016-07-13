@@ -41,8 +41,9 @@ class ResearchCard: Control {
             
             if (time > 0) {
                 
-                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp",  x: 86, y: 85)
-                self.addChild(self.buttonSpeedUp!)
+                //TODO: descomentar
+//                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp",  x: 86, y: 85)
+//                self.addChild(self.buttonSpeedUp!)
                 
                 self.labelDescription = Label(text: "Remaining Time: " + GameMath.timeFormated(time), fontSize: 12 , x: 137, y: 58)
                 self.addChild(self.labelDescription)

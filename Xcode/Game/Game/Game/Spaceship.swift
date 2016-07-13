@@ -482,6 +482,17 @@ class Spaceship: Control {
     func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
        
         if self.health > 0 {
+            
+            if self.isInsideAMothership && self.destination != self.startingPosition {
+                if let physicsBody = self.physicsBody {
+                    let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                    
+                    if velocitySquared < self.maxVelocitySquared {
+                        self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                    }
+                }
+            }
+            
             if (self.needToMove) {
 
                 if CGPoint.distanceSquared(self.position, self.destination) < 1024 {
@@ -499,7 +510,6 @@ class Spaceship: Control {
                 } else {
     
                     self.rotateToPoint(self.destination)
-                    
                     
                     if let physicsBody = self.physicsBody {
                         

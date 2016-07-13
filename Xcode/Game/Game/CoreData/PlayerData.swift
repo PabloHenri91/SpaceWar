@@ -34,7 +34,7 @@ extension MemoryCard {
         
         playerData.name = "Name"
         playerData.needBattleTraining = NSNumber(bool: true)
-        playerData.points = 1000000
+        playerData.points = 0
         playerData.motherShip = self.newMothershipData()
         
         

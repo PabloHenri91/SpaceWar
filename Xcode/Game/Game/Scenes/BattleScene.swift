@@ -74,7 +74,6 @@ class BattleScene: GameScene {
         }
         
         //TODO: remover gamb
-        var i = 1
         for botSpaceship in self.botMothership.spaceships {
             
             let weaponTypeIndex = Int.random(Weapon.types.count)
@@ -83,7 +82,7 @@ class BattleScene: GameScene {
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
             
-            botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*Int(self.botUpdateInterval)); return a }(), completion:
+            botSpaceship.runAction( { let a = SKAction(); a.duration = Double((1+Int.random(4))*Int(self.botUpdateInterval)); return a }(), completion:
                 { [weak botSpaceship] in
                     
                     guard let botSpaceship = botSpaceship else { return }
@@ -93,7 +92,6 @@ class BattleScene: GameScene {
                     botSpaceship.needToMove = true
                     botSpaceship.physicsBody?.dynamic = true
                 })
-            i += 1
         }
         //
         
@@ -157,23 +155,29 @@ class BattleScene: GameScene {
                 }
                 
                 
+                
                 if currentTime - self.lastBotUpdate > self.botUpdateInterval {
                     self.lastBotUpdate = currentTime
                     
+                    var aliveBotSpaceships = [Spaceship]()
+                    
                     for botSpaceship in self.botMothership.spaceships {
-                        
                         if !botSpaceship.isInsideAMothership && botSpaceship.health > 0 {
-                            
-                            botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                            
-                            
-                            if let _ = botSpaceship.targetNode {
-                                botSpaceship.needToMove = false
-                            } else {
-                                botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                                   y: botSpaceship.position.y - 150)
-                                botSpaceship.needToMove = true
-                            }
+                            aliveBotSpaceships.append(botSpaceship)
+                        }
+                    }
+                    
+                    if aliveBotSpaceships.count > 0 {
+                        let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
+                        
+                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                        
+                        if let _ = botSpaceship.targetNode {
+                            botSpaceship.needToMove = false
+                        } else {
+                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                               y: botSpaceship.position.y - 100)
+                            botSpaceship.needToMove = true
                         }
                     }
                 }

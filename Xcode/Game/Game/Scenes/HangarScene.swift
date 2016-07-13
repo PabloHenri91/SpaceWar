@@ -173,8 +173,8 @@ class HangarScene: GameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>) {
-        super.touchesEnded(touches)
+    override func touchesEnded(taps touches: Set<UITouch>) {
+        super.touchesEnded(taps: touches)
         
         //Estado atual
         if(self.state == self.nextState) {
