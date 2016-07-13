@@ -22,21 +22,15 @@ class GameMath {
         var resultado = 0
         var batalhas = 0
         var missoes = 0
-        var pesquisa = 0
         
         for i in 1..<(level+2) {
             batalhas = batalhas + (i - 1)
             if (i>2) {
                 missoes = missoes + (i - 2)
-                
-                if (i>3) {
-                    pesquisa = pesquisa + (i - 3)
-                    
-                    
-                }
+
             }
             
-            resultado = ((batalhas * 100) * (i - 1)) + (missoes * 50) + (pesquisa * 200)
+            resultado = ((batalhas * 100) * (i - 1)) + (missoes * 50)
         }
         
         return resultado
@@ -227,8 +221,6 @@ class GameMath {
     
     static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
 
-        
-        
         // win
         if mothership.health > 0 {
             if ((enemyMothership.level - mothership.level) > 0) {

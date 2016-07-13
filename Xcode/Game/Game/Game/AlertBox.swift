@@ -36,13 +36,13 @@ class AlertBox: Box {
             break
         case messageType.OKCancel:
             
-            self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:262, y:162)
+            self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:43, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
                 self?.removeFromParent()
                 })
             
-            self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:14, y:162)
+            self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:163, y:102)
             self.addChild(self.buttonCancel)
             self.buttonCancel.addHandler({ [weak self] in
                 self?.removeFromParent()

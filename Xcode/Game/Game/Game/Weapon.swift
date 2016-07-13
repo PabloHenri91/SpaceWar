@@ -123,20 +123,7 @@ class WeaponType {
 extension Weapon {
     
     static var types:[WeaponType] = [
-        {
-            let weaponType = WeaponType(maxLevel: 2,
-                damage: 2, range: 200, fireRate: 0.25)
-            weaponType.skins = [
-                "weaponAA"
-            ]
-            weaponType.shotSkins = [
-                "weaponAAShot"
-            ]
-            weaponType.name = "Mata pombo"
-            weaponType.weaponDescription = "Atira de longe, mas eh fraca"
-            return weaponType
-        }(),
-    
+        
         {
             let weaponType = WeaponType(maxLevel: 2,
                 damage: 10, range: 100, fireRate: 1)
@@ -146,30 +133,54 @@ extension Weapon {
             weaponType.shotSkins = [
                 "weaponBAShot"
             ]
+            
+            weaponType.name = "Super Pistol"
+            weaponType.weaponDescription = "A normal weapon"
+            
             return weaponType
         }(),
         
         {
             let weaponType = WeaponType(maxLevel: 2,
-                damage: 50, range: 50, fireRate: 2)
+                damage: 2, range: 150, fireRate: 0.25)
+            weaponType.skins = [
+                "weaponAA"
+            ]
+            weaponType.shotSkins = [
+                "weaponAAShot"
+            ]
+            weaponType.name = "Super Machine-gun"
+            weaponType.weaponDescription = "A thousand shots"
+            return weaponType
+        }(),
+        
+        {
+            let weaponType = WeaponType(maxLevel: 2,
+                damage: 40, range: 50, fireRate: 2)
             weaponType.skins = [
                 "weaponCA"
             ]
             weaponType.shotSkins = [
                 "weaponCAShot"
             ]
+            
+            weaponType.name = "Super shotgun"
+            weaponType.weaponDescription = "Close death"
             return weaponType
         }(),
         
         {
             let weaponType = WeaponType(maxLevel: 2,
-                damage: 8, range: 400, fireRate: 4)
+                damage: 15, range: 300, fireRate: 4)
             weaponType.skins = [
                 "weaponDA"
             ]
             weaponType.shotSkins = [
                 "weaponDAShot"
             ]
+            
+            weaponType.name = "Super sniper"
+            weaponType.weaponDescription = "Kill enemies from other side of the universe"
             return weaponType
         }()
     ]

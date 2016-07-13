@@ -28,10 +28,12 @@ class FactorySpaceShipCard: Control {
         self.addChild(Control(textureName: "hangarShipCardSelected"))
         
         self.spaceShip = spaceShip
-        self.spaceShipImage = Control(textureName: GameMath.spaceshipSkinImageName(level: self.spaceShip.level, type: self.spaceShip.type))
-        self.addChild(self.spaceShipImage)
-        self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
-        self.spaceShipImage.resetPosition()
+        //self.spaceShipImage = Control(textureName: GameMath.spaceshipSkinImageName(level: self.spaceShip.level, type: self.spaceShip.type))
+        self.addChild(self.spaceShip)
+        self.spaceShip.screenPosition = CGPoint(x: 37, y: 57)
+        self.spaceShip.resetPosition()
+        self.spaceShip.loadAllyDetails()
+        self.spaceShip.loadWeaponDetail()
         
         self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
         self.addChild(self.buttonDetalis)
@@ -49,7 +51,7 @@ class FactorySpaceShipCard: Control {
         self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name , x: 137, y: 23)
+        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name + " + " + self.spaceShip.weapon!.type.name!  , x: 137, y: 23)
         self.addChild(self.labelName)
         
       

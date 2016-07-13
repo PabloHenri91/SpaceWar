@@ -13,6 +13,7 @@ class FactoryScene: GameScene {
     
     var playerData = MemoryCard.sharedInstance.playerData
     let playerShips = MemoryCard.sharedInstance.playerData.unlockedSpaceships as! Set<SpaceshipData>
+    let weapons = MemoryCard.sharedInstance.playerData.weapons as! Set<WeaponData>
     
     var labelShips:Label!
     var buttonBack:Button!
@@ -67,7 +68,11 @@ class FactoryScene: GameScene {
         self.controlArray = Array<FactorySpaceShipCard>()
         
         for item in playerShips {
-            self.controlArray.append(FactorySpaceShipCard(spaceShip: Spaceship(spaceshipData: item)))
+            for weapon in weapons {
+                let spaceship = Spaceship(spaceshipData: item)
+                spaceship.weapon = Weapon(weaponData: weapon)
+                self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
+            }
         }
         
     
