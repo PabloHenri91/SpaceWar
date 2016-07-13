@@ -228,7 +228,7 @@ class ResearchDetailsScene: GameScene {
                         
                         if (buttonBegin.containsPoint(touch.locationInNode(self.box))){
                             
-                            if (self.playerData.points.integerValue > self.research.researchType.cost) {
+                            if (self.playerData.points.integerValue >= self.research.researchType.cost) {
                                 if self.research.start() {
                                     self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - self.research.researchType.cost)
                                     self.nextState = .research

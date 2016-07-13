@@ -78,8 +78,12 @@ class MissionSpaceshipCard: Control {
             self.addChild(self.buttonBegin!)
             
             
-            self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
-            self.addChild(self.buttonUpgrade!)
+            if self.missionSpaceship.level < 4 {
+                self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
+                self.addChild(self.buttonUpgrade!)
+            }
+            
+            
         }
     
         
@@ -162,6 +166,30 @@ class MissionSpaceshipCard: Control {
    
             }
         }
+    }
+    
+    func upgrade() -> Bool {
         
+        if self.playerData.points.integerValue >= 2000 {
+            self.missionSpaceship.level = self.missionSpaceship.level + 1
+            self.missionSpaceship.missionspaceshipData?.level = NSNumber(integer: (self.missionSpaceship.missionspaceshipData?.level.integerValue)! + 1)
+            self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - 2000)
+            self.labelLevel.setText(self.missionSpaceship.level.description)
+            
+            self.spaceShipImage.removeFromParent()
+            self.spaceShipImage = Control(textureName: "MissionSpaceship" + self.missionSpaceship.level.description)
+            self.addChild(self.spaceShipImage)
+            self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
+            self.spaceShipImage.resetPosition()
+            
+            if self.missionSpaceship.level == 4 {
+                self.buttonUpgrade?.removeFromParent()
+            }
+            
+            return true
+            
+        }
+        
+        return false
     }
 }

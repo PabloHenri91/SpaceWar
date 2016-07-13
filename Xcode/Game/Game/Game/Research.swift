@@ -72,11 +72,13 @@ class Research: Control {
             researchData.done = true
             
             if let weapon = self.researchType.weaponUnlocked {
-                MemoryCard.sharedInstance.playerData.addWeaponData(weapon)
+                let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
+                MemoryCard.sharedInstance.playerData.addWeaponData(weaponData)
             }
             
             if let spaceship = self.researchType.spaceshipUnlocked {
-                MemoryCard.sharedInstance.playerData.addSpaceshipData(spaceship)
+                let spaceShipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
+                MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceShipData)
             }
             
             MemoryCard.sharedInstance.playerData.motherShip.xp = NSNumber(integer: MemoryCard.sharedInstance.playerData.motherShip.xp.integerValue + Int(self.researchType.cost / 2))
@@ -104,8 +106,8 @@ class ResearchType {
     var lineType: ResearchLineType!
     var requisites: [String] = []
     var researchsNeeded: [Int] = []
-    var weaponUnlocked: WeaponData?
-    var spaceshipUnlocked: SpaceshipData?
+    var weaponUnlocked: Int?
+    var spaceshipUnlocked: Int?
     
     init(index:Int, name:String, duration:Int, cost: Int, lineType:ResearchLineType) {
         self.index = index
@@ -122,29 +124,72 @@ extension Research {
     
     static var types:[ResearchType] = [
         {
-            let research = ResearchType(index:0, name:"Super Mega Weapon", duration:120, cost:1000, lineType: .weapons)
-            research.researchDescription = "This research will unlock a Super Mega weapon, this powerfull weapon have a big range and can be used to kill anything."
-            research.researchsNeeded = []
-            research.requisites = ["Have 1 Super Weapon", "Play 10 times with a super weapon"]
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:1, name:"Super Mega Octblast Weapon", duration:1200, cost:10000, lineType: .weapons)
-            research.researchDescription = "A evolved version of Super Mega Weapon, this weapon have a so powerfull tecnology that can destroy planets!!!"
-            research.researchsNeeded = [0]
-            research.requisites = ["Have 1 Super Weapon very cool", "Play 10 times with a super weapon", "Win 3 matchs using a super weapon"]
-            return research
-        }(),
-        
-        
-        {
-            let research = ResearchType(index:2, name:"Super Mega Spaceship", duration:240, cost:2000, lineType: .spaceships)
-            research.researchDescription = "A very cool spaceship, you will win if research this, shut up and give me your money."
+            let research = ResearchType(index:0, name:"Weapons", duration:14400, cost:1000, lineType: .general)
+            research.researchDescription = "Do this research to unlock weapons researchs."
             research.researchsNeeded = []
             research.requisites = []
             return research
+        }(),
+        
+        {
+            let research = ResearchType(index:1, name:"Super machine-gun", duration:28800, cost:1000, lineType: .weapons)
+            research.researchDescription = "You will unlock a weapon who have a large range and a fabulous fire rate, your enemies will be confused with so many shots."
+            research.researchsNeeded = [0]
+            research.weaponUnlocked = 1
+            research.requisites = []
+            return research
+        }(),
+        
+        
+        {
+            let research = ResearchType(index:2, name:"Super shotgun", duration:28800, cost:1000, lineType: .weapons)
+            research.researchDescription = "This research unlock a weapon who have the world's deadliest shot, however only accepts enemies within 1 meter of you."
+            research.researchsNeeded = [0]
+            research.weaponUnlocked = 2
+            research.requisites = []
+            return research
+        }(),
+        
+        {
+            let research = ResearchType(index:3, name:"Super sniper", duration:28800, cost:1000, lineType: .weapons)
+            research.researchDescription = "This research unlock a weapon that can shot the other side of the universe!"
+            research.researchsNeeded = [0]
+            research.weaponUnlocked = 3
+            research.requisites = []
+            return research
+        }(),
+        
+        
+        
+        
+        {
+            let research = ResearchType(index:4, name:"Spaceships", duration:14400, cost:1000, lineType: .general)
+            research.researchDescription = "Do this research to unlock weapons researchs."
+            research.researchsNeeded = []
+            research.requisites = []
+            return research
+        }(),
+        
+        {
+            let research = ResearchType(index:5, name:"Faster Spaceship", duration:28800, cost:1000, lineType: .spaceships)
+            research.researchDescription = "This research will unlock a faster spaceship to buy in factory."
+            research.researchsNeeded = [4]
+            research.spaceshipUnlocked = 2
+            research.requisites = []
+            return research
+        }(),
+        
+        
+        {
+            let research = ResearchType(index:6, name:"Tanker Spaceship", duration:28800, cost:1000, lineType: .spaceships)
+            research.researchDescription = "This research will unlock a spaceship with a great amount of health."
+            research.researchsNeeded = [4]
+            research.spaceshipUnlocked = 1
+            research.requisites = []
+            return research
         }()
+        
+     
     
     ]
 }

@@ -65,7 +65,7 @@ class MothershipScene: GameScene {
         
         self.playerData = MemoryCard.sharedInstance.playerData
         
-        let xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
+        var xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         let xp = self.playerData.motherShip.xp.integerValue
         if (xpForNextLevel <= xp) {
             self.playerData.motherShip.level = NSNumber(int: self.playerData.motherShip.level.integerValue + 1)
@@ -73,6 +73,8 @@ class MothershipScene: GameScene {
             let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
             self.addChild(alertBox)
         }
+        
+        xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         
         self.addChild(Control(textureName: "background", x: 0, y: 0, xAlign: .center, yAlign: .center))
         
@@ -109,7 +111,7 @@ class MothershipScene: GameScene {
         //Label XP
         let labelXPShadowColor = SKColor(red: 67/255, green: 89/255, blue: 19/255, alpha: 1)// Verde
         let labelXPColor = SKColor.whiteColor()
-        let labelXPText = self.playerData.motherShip.xp.description + " XP"
+        let labelXPText = self.playerData.motherShip.xp.description + "/" + xpForNextLevel.description + " XP"
         //FontSize -2 13 +2
         
         self.labelXP = Label(color: labelXPColor, text: labelXPText, fontSize: 13, x: 54, y: 33+2, xAlign: .center, yAlign: .up, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center)

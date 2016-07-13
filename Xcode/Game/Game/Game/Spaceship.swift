@@ -813,13 +813,13 @@ extension Spaceship {
     static var types:[SpaceShipType] = [
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 10, health: 5, shieldPower: 5, shieldRecharge: 5)
+                speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
             spaceShipType.skins = [
-                "spaceshipBA",
-                "spaceshipBB"
+                "spaceshipCA",
+                "spaceshipCB"
             ]
-            spaceShipType.name = "Space Speeder"
-            spaceShipType.spaceshipDescription = "A very fast Spaceship"
+            spaceShipType.name = "Spaceship"
+            spaceShipType.spaceshipDescription = "The firs battle spaceship invented"
             spaceShipType.rarity = .commom
             spaceShipType.index = 0
             return spaceShipType
@@ -833,7 +833,7 @@ extension Spaceship {
                 "spaceshipAB"
             ]
             spaceShipType.name = "Space tanker"
-            spaceShipType.spaceshipDescription = "Can hold a great amount of damage"
+            spaceShipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceShipType.rarity = .commom
             spaceShipType.index = 1
             return spaceShipType
@@ -841,31 +841,16 @@ extension Spaceship {
         
         {
             let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 5, health: 5, shieldPower: 10, shieldRecharge: 5)
+            speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceShipType.skins = [
-                "spaceshipCA",
-                "spaceshipCB"
+                "spaceshipBA",
+                "spaceshipBB"
             ]
             
-            spaceShipType.name = "Space Shielder"
-            spaceShipType.spaceshipDescription = "Have the best defense"
+            spaceShipType.name = "Space Speeder"
+            spaceShipType.spaceshipDescription = "Flies at the speed of light."
             spaceShipType.rarity = .commom
             spaceShipType.index = 2
-            return spaceShipType
-        }(),
-        
-        {
-            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
-                speed: 5, health: 5, shieldPower: 5, shieldRecharge: 10)
-            spaceShipType.skins = [
-                "spaceshipFA",
-                "spaceshipFB"
-            ]
-            
-            spaceShipType.name = "Space Techno"
-            spaceShipType.spaceshipDescription = "Recharge your defanse in the light speed"
-            spaceShipType.rarity = .commom
-            spaceShipType.index = 3
             return spaceShipType
         }()
     ]

@@ -129,6 +129,7 @@ class ResearchScene: GameScene {
             self.cropBox.addChild(self.scrollNode!)
             
         } else {
+            self.scrollNode?.removeFromParent()
             self.labelNoResearchs = Label(text: "No researchs", fontSize: 24 , x: 160, y: 268)
             self.addChild(self.labelNoResearchs!)
         }
