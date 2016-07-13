@@ -76,7 +76,28 @@ class GameMath {
     }
     
     static func spaceshipBotSpaceshipLevel() -> Int {
-        return MemoryCard.sharedInstance.playerData.motherShip.level.integerValue * 2
+        
+        var resultado = 0
+        var batalhas = 0
+        var missoes = 0
+        
+        for i in 1..<(MemoryCard.sharedInstance.playerData.motherShip.level.integerValue) {
+            batalhas = batalhas + (i - 1)
+            if (i>2) {
+                missoes = missoes + (i - 2)
+            }
+            resultado = resultado + ((batalhas * 100) * (i - 1)) + (missoes * 50)
+        }
+        
+        var custo = 0
+        var nivel = 1
+        
+        while custo < resultado {
+            custo = custo + 4 * Int(100 * pow(1.1, Double(nivel)))
+            nivel += 1
+        }
+        
+        return nivel
     }
     
     // Spaceship upgrade
