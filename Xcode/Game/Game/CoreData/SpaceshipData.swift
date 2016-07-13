@@ -26,6 +26,10 @@ class SpaceshipData: NSManagedObject {
 
 extension MemoryCard {
     
+    func newSpaceshipData() -> SpaceshipData {
+        return self.newSpaceshipData(type: Int.random(Spaceship.types.count))
+    }
+    
     func newSpaceshipData(type type:Int) -> SpaceshipData {
         
         let spaceshipData = NSEntityDescription.insertNewObjectForEntityForName("SpaceshipData", inManagedObjectContext: self.managedObjectContext) as! SpaceshipData

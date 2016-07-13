@@ -423,6 +423,8 @@ class Spaceship: Control {
         
         if canfire {
             self.weapon?.fire(self.weaponRangeBonus)
+        } else {
+            self.targetNode = nil
         }
         
     }
@@ -707,6 +709,13 @@ class Spaceship: Control {
             spaceshipData.level = NSNumber(integer: spaceshipData.level.integerValue + 1)
             self.level = spaceshipData.level.integerValue
             
+            //TODO: remover gamb
+            for item in spaceshipData.weapons {
+                if let weaponData = item as? WeaponData {
+                    weaponData.level = NSNumber(integer: weaponData.level.integerValue + 1)
+                }
+            }
+            //
         }
     }
     

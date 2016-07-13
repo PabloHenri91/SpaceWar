@@ -20,6 +20,10 @@ class WeaponData: NSManagedObject {
 
 extension MemoryCard {
     
+    func newWeaponData() -> WeaponData {
+        return self.newWeaponData(type: Int.random(Weapon.types.count))
+    }
+    
     func newWeaponData(type type:Int) -> WeaponData {
         
         let weaponData = NSEntityDescription.insertNewObjectForEntityForName("WeaponData", inManagedObjectContext: self.managedObjectContext) as! WeaponData

@@ -145,6 +145,21 @@ extension MemoryCard {
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
         
+        
+        //Cheats
+        for spaceshipIndex in 0..<Spaceship.types.count {
+            for weaponIndex in 0..<Weapon.types.count {
+                let spaceshipData = self.newSpaceshipData(type: spaceshipIndex)
+                playerData.addSpaceshipData(spaceshipData)
+                
+                let weaponData = self.newWeaponData(type: weaponIndex)
+                playerData.addWeaponData(weaponData)
+                
+                spaceshipData.addWeaponData(weaponData)
+            }
+        }
+        
+        
         return playerData
     }
 }

@@ -82,7 +82,7 @@ class GameMath {
     }
     
     static func spaceshipBotSpaceshipLevel() -> Int {
-        return MemoryCard.sharedInstance.playerData.motherShip.level.integerValue * 3
+        return MemoryCard.sharedInstance.playerData.motherShip.level.integerValue * 2
     }
     
     // Spaceship upgrade
