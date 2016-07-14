@@ -23,7 +23,7 @@ class MissionTypeCard: Control {
         self.addChild(Control(textureName: "missionTypeCard"))
         self.addChild(Label(color:SKColor.whiteColor() ,text: "XP:" + missionType.xpBonus.description + " P:" + missionType.pointsBonus.description + " T:" + GameMath.timeFormated(missionType.duration) , x: 15, y: 17, horizontalAlignmentMode: .Left))
         
-        self.buttonSelect = Button(textureName: "buttonSelectMission", text: "", x: 219, y: 9, xAlign: .center, yAlign: .center)
+        self.buttonSelect = Button(textureName: "buttonSelectMission", text: "", x: 219, y: 9)
         self.addChild(self.buttonSelect)
         
     }

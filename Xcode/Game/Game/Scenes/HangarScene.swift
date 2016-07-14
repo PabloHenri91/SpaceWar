@@ -74,10 +74,8 @@ class HangarScene: GameScene {
             self.addChild(self.slots[i])
         }
         
-        let line = Control(textureName: "lineHangar")
+        let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
-        line.screenPosition = CGPoint(x: 0, y: 194)
-        line.resetPosition()
         
         self.spaceShipListShape = CropBox(textureName: "spaceShipListShape")
         self.addChild(spaceShipListShape)

@@ -51,10 +51,8 @@ class FactoryScene: GameScene {
         
     
         
-        let line = Control(textureName: "lineHangar")
+        let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
-        line.screenPosition = CGPoint(x: 0, y: 194)
-        line.resetPosition()
         
         self.spaceShipListShape = CropBox(textureName: "spaceShipListShape")
         self.addChild(spaceShipListShape)
@@ -62,7 +60,7 @@ class FactoryScene: GameScene {
         self.spaceShipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, xAlign: .center, yAlign: .center, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<FactorySpaceShipCard>()

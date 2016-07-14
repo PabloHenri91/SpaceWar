@@ -33,7 +33,12 @@ extension MemoryCard {
         let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
         
         playerData.name = "Name"
-        playerData.needBattleTraining = NSNumber(bool: true)
+        #if DEBUG
+            playerData.needBattleTraining = NSNumber(bool: false)
+        #else
+            playerData.needBattleTraining = NSNumber(bool: true)
+        #endif
+        
         playerData.points = 0
         playerData.motherShip = self.newMothershipData()
         

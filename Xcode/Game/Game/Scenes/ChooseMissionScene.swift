@@ -45,15 +45,13 @@ class ChooseMissionScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        let background = Control(textureName: "missionsAlert")
+        let background = Control(textureName: "missionsAlert", x: 17, y: 24, xAlign: .center, yAlign: .center)
         self.addChild(background)
-        background.screenPosition = CGPoint(x: 17, y: 24)
-        background.resetPosition()
         
         self.buttonBack = Button(textureName: "buttonCancelChooseMission", text: "", x: 282, y: 7, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
-        self.addChild(Label(color: SKColor.blackColor(), text: "Choose mission",fontSize: 12, x: 161, y: 42))
+        self.addChild(Label(color: SKColor.blackColor(), text: "Choose mission",fontSize: 12, x: 161, y: 42, xAlign: .center, yAlign: .center))
         
         self.controlArray = Array<MissionTypeCard>()
         
@@ -62,7 +60,7 @@ class ChooseMissionScene: GameScene {
         }
         
         
-        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 31, y: 68, spacing: 10 , scrollDirection: .vertical)
+        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 31, y: 68, xAlign: .center, yAlign: .center, spacing: 10 , scrollDirection: .vertical)
         self.scrollNode.canScroll = false
         self.addChild(self.scrollNode)
         

@@ -24,7 +24,6 @@ class LoadScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        
     }
     
     override func update(currentTime: NSTimeInterval) {
