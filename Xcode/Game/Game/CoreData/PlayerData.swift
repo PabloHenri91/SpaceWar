@@ -13,6 +13,7 @@ import CoreData
 
 class PlayerData: NSManagedObject {
     
+    @NSManaged var botUpdateInterval: NSNumber
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
@@ -31,6 +32,8 @@ extension MemoryCard {
     func newPlayerData() -> PlayerData {
         
         let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
+        
+        playerData.botUpdateInterval = NSNumber(double: 10)
         
         playerData.name = "Name"
         #if DEBUG

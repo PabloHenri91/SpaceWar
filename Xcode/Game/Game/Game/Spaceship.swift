@@ -363,7 +363,7 @@ class Spaceship: Control {
                     if enemySpaceship.canBeTarget(self) {
                         
                         if currentTarget != nil {
-                            if CGPoint.distanceSquared(self.destination, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
+                            if CGPoint.distanceSquared(self.position, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
                                 currentTarget = enemySpaceship
                             }
                         } else {

@@ -36,12 +36,14 @@ class BattleScene: GameScene {
     
     var botMothership:Mothership!
     var lastBotUpdate:Double = 0
-    static var botUpdateInterval:Double = 5//TODO: deve ser calculado para equilibrar o flow
+    var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
     
     var battleEndTime: Double = 0
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        
+        self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
@@ -145,7 +147,7 @@ class BattleScene: GameScene {
                 
                 
                 
-                if currentTime - self.lastBotUpdate > BattleScene.botUpdateInterval {
+                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
                     self.lastBotUpdate = currentTime
                     
                     var aliveBotSpaceships = [Spaceship]()
@@ -232,8 +234,8 @@ class BattleScene: GameScene {
                     if self.botMothership.health <= 0 {
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! 😃 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
-                            if BattleScene.botUpdateInterval > 0 {
-                                BattleScene.botUpdateInterval -= 1
+                            if self.botUpdateInterval > 0 {
+                                self.playerData.botUpdateInterval = NSNumber(double: self.botUpdateInterval - 1)
                             }
                             self.nextState = states.mothership
                         })
@@ -241,7 +243,7 @@ class BattleScene: GameScene {
                     } else {
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. 😱 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
-                            BattleScene.botUpdateInterval += 1
+                            self.playerData.botUpdateInterval = NSNumber(double: self.botUpdateInterval + 1)
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)
