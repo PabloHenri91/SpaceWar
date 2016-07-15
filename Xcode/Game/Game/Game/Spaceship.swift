@@ -532,7 +532,7 @@ class Spaceship: Control {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
-                            if abs(self.totalRotationToDestination) <= 0.1 {
+                            if abs(self.totalRotationToDestination) <= 0.05 {
                                 self.fire(allySpaceships: allySpaceships)
                             }
                         }
@@ -544,7 +544,7 @@ class Spaceship: Control {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
-                            if abs(self.totalRotationToDestination) <= 0.1 {
+                            if abs(self.totalRotationToDestination) <= 0.05 {
                                 self.fire(allySpaceships: allySpaceships)
                             }
                         }
