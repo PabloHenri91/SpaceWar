@@ -36,7 +36,7 @@ class BattleScene: GameScene {
     
     var botMothership:Mothership!
     var lastBotUpdate:Double = 0
-    var botUpdateInterval:Double = 5//TODO: deve ser calculado para equilibrar o flow
+    static var botUpdateInterval:Double = 5//TODO: deve ser calculado para equilibrar o flow
     
     var battleEndTime: Double = 0
     
@@ -81,17 +81,6 @@ class BattleScene: GameScene {
             if weaponLevel <= 0 { weaponLevel = 1 }
             botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
             botSpaceship.addChild(botSpaceship.weapon!)
-            
-            botSpaceship.runAction( { let a = SKAction(); a.duration = Double((1+Int.random(4))*Int(self.botUpdateInterval)); return a }(), completion:
-                { [weak botSpaceship] in
-                    
-                    guard let botSpaceship = botSpaceship else { return }
-                    
-                    botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
-                        y: botSpaceship.startingPosition.y - 150)
-                    botSpaceship.needToMove = true
-                    botSpaceship.physicsBody?.dynamic = true
-                })
         }
         //
         
@@ -156,28 +145,36 @@ class BattleScene: GameScene {
                 
                 
                 
-                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
+                if currentTime - self.lastBotUpdate > BattleScene.botUpdateInterval {
                     self.lastBotUpdate = currentTime
                     
                     var aliveBotSpaceships = [Spaceship]()
                     
                     for botSpaceship in self.botMothership.spaceships {
-                        if !botSpaceship.isInsideAMothership && botSpaceship.health > 0 {
+                        if botSpaceship.health > 0 {
                             aliveBotSpaceships.append(botSpaceship)
                         }
                     }
                     
                     if aliveBotSpaceships.count > 0 {
+                        
                         let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
                         
-                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                        
-                        if let _ = botSpaceship.targetNode {
-                            botSpaceship.needToMove = false
-                        } else {
-                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                               y: botSpaceship.position.y - 100)
+                        if botSpaceship.isInsideAMothership {
+                            botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
+                                                               y: botSpaceship.startingPosition.y - 150)
                             botSpaceship.needToMove = true
+                            botSpaceship.physicsBody?.dynamic = true
+                        } else {
+                            botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                            
+                            if let _ = botSpaceship.targetNode {
+                                botSpaceship.needToMove = false
+                            } else {
+                                botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                   y: botSpaceship.position.y - 100)
+                                botSpaceship.needToMove = true
+                            }
                         }
                     }
                 }
@@ -235,12 +232,16 @@ class BattleScene: GameScene {
                     if self.botMothership.health <= 0 {
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! 😃 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
+                            if BattleScene.botUpdateInterval > 0 {
+                                BattleScene.botUpdateInterval -= 1
+                            }
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)
                     } else {
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. 😱 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
+                            BattleScene.botUpdateInterval += 1
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)

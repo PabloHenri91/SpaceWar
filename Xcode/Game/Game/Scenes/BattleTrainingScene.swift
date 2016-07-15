@@ -239,7 +239,6 @@ class BattleTrainingScene: GameScene {
         } else {
             
             self.state = self.nextState
-            print(self.state)
             //Próximo estado
             switch (self.nextState) {
                 
