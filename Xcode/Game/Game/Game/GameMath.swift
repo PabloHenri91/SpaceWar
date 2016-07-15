@@ -104,13 +104,13 @@ class GameMath {
     static func spaceshipUpgradeCost(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
         case .commom:
-            return Int(100 * pow(1.1, Double(level)))
+            return Int(100 * pow(2, Double(level)))
         case .rare:
-            return Int(200 * pow(1.1, Double(level)))
+            return Int(200 * pow(2, Double(level)))
         case .epic:
-            return Int(500 * pow(1.1, Double(level)))
+            return Int(500 * pow(2, Double(level)))
         case .legendary:
-            return Int(1000 * pow(1.1, Double(level)))
+            return Int(1000 * pow(2, Double(level)))
         default:
             #if DEBUG
                 fatalError()
@@ -179,19 +179,20 @@ class GameMath {
     static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
         case .commom:
-            return Int(50 * pow(1.1, Double(level)))
+            return Int(10 * pow(2, Double(level)))
         case .rare:
-            return Int(100 * pow(1.1, Double(level)))
+            return Int(20 * pow(2, Double(level)))
         case .epic:
-            return Int(200 * pow(1.1, Double(level)))
+            return Int(50 * pow(2, Double(level)))
         case .legendary:
-            return Int(400 * pow(1.1, Double(level)))
+            return Int(100 * pow(2, Double(level)))
         default:
             #if DEBUG
                 fatalError()
             #endif
             break
         }
+
     }
     
     // Weapons
