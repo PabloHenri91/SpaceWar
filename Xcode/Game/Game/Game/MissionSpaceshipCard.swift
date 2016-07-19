@@ -185,6 +185,7 @@ class MissionSpaceshipCard: Control {
             
             if self.missionSpaceship.level == 4 {
                 self.buttonUpgrade?.removeFromParent()
+                self.buttonUpgrade = nil
             }
             
             return true

@@ -61,7 +61,7 @@ class Mothership: Control {
     private func load(level level:Int) {
         self.level = level
         
-        self.health = GameMath.mothershipMaxHealth(level: self.level)
+        self.health = 1
         self.maxHealth = health
         
         //Gráfico
