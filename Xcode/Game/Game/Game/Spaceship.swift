@@ -53,6 +53,7 @@ class Spaceship: Control {
     var rotationToDestination:CGFloat = 0
     var totalRotationToDestination:CGFloat = 0
     var startingPosition = CGPoint.zero
+    var startingZPosition = CGFloat(0)
     
     var maxAngularVelocity:CGFloat = 3
     var force:CGFloat = 20
@@ -63,6 +64,11 @@ class Spaceship: Control {
     
     var healthBar:HealthBar!
     var weaponRangeSprite:SKShapeNode!
+    
+    //Respawn
+    var deathCount = 0
+    var deathTime = 0.0
+    var lastSecond = 0.0
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -322,8 +328,9 @@ class Spaceship: Control {
     }
     
     func resetToStartingPosition() {
+        self.isInsideAMothership = true
         self.position = self.startingPosition
-        self.zRotation = 0
+        self.zRotation = self.startingZPosition
         self.physicsBody?.velocity = CGVector.zero
         self.physicsBody?.angularVelocity = 0
         self.physicsBody?.dynamic = false
@@ -453,7 +460,29 @@ class Spaceship: Control {
         }
     }
     
+    func respawn() {
+        self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+        
+        if Spaceship.selectedSpaceship == self {
+            Spaceship.retreatSelectedSpaceship()
+        } else {
+            self.retreat()
+        }
+        self.resetToStartingPosition()
+        
+        self.hidden = false
+        
+        self.health = self.maxHealth
+        self.healthBar.update(1, maxHealth: 1)
+        self.healthBar.update(position: self.position)
+        self.healthBar.hidden = false
+    }
+    
     func die() {
+        self.deathTime = GameScene.currentTime
+        self.lastSecond = GameScene.currentTime
+        self.deathCount += 1
+        
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
         particles.position.x = self.position.x
@@ -475,20 +504,22 @@ class Spaceship: Control {
         self.hidden = true
         self.physicsBody = nil
         self.healthBar.hidden = true
-        self.removeFromParent()
-        self.healthBar.removeFromParent()
     }
     
     func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
        
         if self.health > 0 {
             
-            if self.isInsideAMothership && self.destination != self.startingPosition {
-                if let physicsBody = self.physicsBody {
-                    let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
-                    
-                    if velocitySquared < self.maxVelocitySquared {
-                        self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+            if self.isInsideAMothership {
+                if self.destination != self.startingPosition {
+                    if let physicsBody = self.physicsBody {
+                        let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                        
+                        self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
+                        
+                        if velocitySquared < self.maxVelocitySquared {
+                            self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                        }
                     }
                 }
             }
@@ -554,6 +585,21 @@ class Spaceship: Control {
                     if !self.isInsideAMothership {
                         self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
                     }
+                }
+            }
+        } else {
+            if GameScene.currentTime - self.lastSecond > 1 {
+                self.lastSecond = GameScene.currentTime
+                if GameScene.currentTime - self.deathTime > Double(self.deathCount * 5) {
+                    self.respawn()
+                } else {
+                    let label = Label(text: Int((self.deathCount * 5) - Int(GameScene.currentTime - self.deathTime)).description)
+                    label.position = self.startingPosition
+                    self.parent?.addChild(label)
+                    
+                    label.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak label] in
+                        label?.removeFromParent()
+                    })
                 }
             }
         }
