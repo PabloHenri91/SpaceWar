@@ -97,8 +97,14 @@ class BattleScene: GameScene {
         
         //Spaceships
         
+        self.mothership.health = GameMath.mothershipMaxHealth(self.mothership, enemyMothership: self.botMothership)
+        self.mothership.maxHealth = self.mothership.health
+        
         self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
         self.mothership.healthBar.update(position: self.mothership.position)
+        
+        self.botMothership.health = self.mothership.health
+        self.botMothership.maxHealth = self.mothership.health
         
         self.botMothership.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
         self.botMothership.healthBar.barPosition = .down

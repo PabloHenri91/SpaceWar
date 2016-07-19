@@ -93,7 +93,7 @@ class GameMath {
         var nivel = 1
         
         while custo < resultado {
-            custo = custo + 4 * Int(100 * pow(1.1, Double(nivel)))
+            custo = custo + 4 * Int(100 * pow(1.3, Double(nivel)))
             nivel += 1
         }
         
@@ -104,13 +104,13 @@ class GameMath {
     static func spaceshipUpgradeCost(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
         case .commom:
-            return Int(100 * pow(2, Double(level)))
+            return Int(100 * pow(1.3, Double(level)))
         case .rare:
-            return Int(200 * pow(2, Double(level)))
+            return Int(200 * pow(1.3, Double(level)))
         case .epic:
-            return Int(500 * pow(2, Double(level)))
+            return Int(500 * pow(1.3, Double(level)))
         case .legendary:
-            return Int(1000 * pow(2, Double(level)))
+            return Int(1000 * pow(1.3, Double(level)))
         default:
             #if DEBUG
                 fatalError()
@@ -179,13 +179,13 @@ class GameMath {
     static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceShipType) -> Int {
         switch type.rarity! {
         case .commom:
-            return Int(10 * pow(2, Double(level)))
+            return Int(10 * pow(1.1, Double(level)))
         case .rare:
-            return Int(20 * pow(2, Double(level)))
+            return Int(20 * pow(1.1, Double(level)))
         case .epic:
-            return Int(50 * pow(2, Double(level)))
+            return Int(50 * pow(1.1, Double(level)))
         case .legendary:
-            return Int(100 * pow(2, Double(level)))
+            return Int(100 * pow(1.1, Double(level)))
         default:
             #if DEBUG
                 fatalError()
@@ -212,8 +212,17 @@ class GameMath {
     // Mothership
     static let mothershipHealthPointsPerLevel = 8
     
-    static func mothershipMaxHealth(level level:Int) -> Int {
-        let maxHealth = Int(200 * pow(1.1, Double(level - 1)))
+    static func mothershipMaxHealth(mothership:Mothership , enemyMothership: Mothership) -> Int {
+        var dps = 0
+        for spaceship in mothership.spaceships {
+            dps = dps + Int(Double((spaceship.weapon?.damage)!) / (spaceship.weapon?.fireInterval)!)
+        }
+        
+        for spaceship in enemyMothership.spaceships {
+            dps = dps + Int(Double((spaceship.weapon?.damage)!) / (spaceship.weapon?.fireInterval)!)
+        }
+        
+        let maxHealth = Int((dps / 2) * 5)
         return maxHealth
     }
     

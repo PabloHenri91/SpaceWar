@@ -140,18 +140,21 @@ class MissionScene: GameScene {
                                             if (buttonBegin.containsPoint(touch.locationInNode(card))) {
                                                 self.nextState = .chooseMission
                                                 self.selectedSpaceship = card.missionSpaceship
+                                                return
                                             }
                                         }
                                         
                                         if let buttonColect = card.buttonColect {
                                             if(buttonColect.containsPoint(touch.locationInNode(card))) {
                                                 card.colect()
+                                                return
                                             }
                                         }
                                         
                                         if let buttonSpeedUp = card.buttonSpeedUp {
                                             if(buttonSpeedUp.containsPoint(touch.locationInNode(card))) {
                                                 print("SpeedUP")
+                                                return
                                             }
                                         }
                                         
@@ -170,6 +173,7 @@ class MissionScene: GameScene {
                                                 )
                                                 
                                                 self.addChild(alertBox)
+                                                return
                                             }
                                         }
                                     

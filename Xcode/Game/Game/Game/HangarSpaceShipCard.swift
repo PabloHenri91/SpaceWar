@@ -83,7 +83,8 @@ class HangarSpaceShipCard: Control {
                 self.labelDescription = Label(text: GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)) , fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
             }
         } else {
-            self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            //self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description , fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
         }
         
       
@@ -148,9 +149,9 @@ class HangarSpaceShipCard: Control {
     }
     
     func reloadCard() {
-        self.labelLevel.removeFromParent()
-        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
-        self.addChild(self.labelLevel)
+      
+        self.labelLevel.setText(self.spaceShip.level.description)
+        self.labelDescription.setText("Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description)
     }
     
 }
