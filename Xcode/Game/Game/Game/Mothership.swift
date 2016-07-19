@@ -106,8 +106,10 @@ class Mothership: Control {
             break
         }
         spaceship.startingPosition = spaceship.position
+        spaceship.destination = spaceship.position
         
         spaceship.zRotation = self.zRotation
+        spaceship.startingZPosition = spaceship.zRotation
         
         if isAlly {
             spaceship.loadAllyDetails()
