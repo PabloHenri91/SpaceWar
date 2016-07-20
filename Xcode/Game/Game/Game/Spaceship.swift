@@ -71,6 +71,8 @@ class Spaceship: Control {
     var deathTime = 0.0
     var lastSecond = 0.0
     
+    var healPerFrame = 1
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -188,6 +190,12 @@ class Spaceship: Control {
         self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, type: self.type)
         
+        //TODO: GameMath.calculatedHealPerFrame
+        let calculatedHealPerFrame = Int(self.maxHealth/5/60)
+        if calculatedHealPerFrame > self.healPerFrame {
+            self.healPerFrame = calculatedHealPerFrame
+        }
+        
         self.energyShield = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
         self.maxEnergyShield = energyShield
         
@@ -248,9 +256,11 @@ class Spaceship: Control {
     func touchEnded() {
         
         if self == Spaceship.selectedSpaceship {
-            //esqueca o que está fazendo
-            self.targetNode = nil
-            self.needToMove = false
+            if !self.isInsideAMothership {
+                self.targetNode = nil
+                self.needToMove = false
+                self.setBitMasksToSpaceship()
+            }
             self.showWeaponRangeSprite()
             
         } else {
@@ -276,6 +286,7 @@ class Spaceship: Control {
                     spaceship.targetNode = nil
                     
                     spaceship.destination = touch.locationInNode(parent)
+                    spaceship.physicsBody?.dynamic = true
                     spaceship.needToMove = true
                     spaceship.setMoveArrowToDestination()
                 }
@@ -509,11 +520,26 @@ class Spaceship: Control {
         self.healthBar.hidden = true
     }
     
+    func heal() {
+        if self.health < self.maxHealth {
+            self.health = self.health + self.healPerFrame
+            if self.health > self.maxHealth {
+                self.health = self.maxHealth
+            }
+            self.healthBar.update(self.health, maxHealth: self.maxHealth)
+        }
+    }
+    
     func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
        
         if self.health > 0 {
             
             if self.isInsideAMothership {
+                
+                if CGPoint.distanceSquared(self.position, self.startingPosition) < 256 {
+                    self.heal()
+                }
+                
                 if self.destination != self.startingPosition {
                     if let physicsBody = self.physicsBody {
                         let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)

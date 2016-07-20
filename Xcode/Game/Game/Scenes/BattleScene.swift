@@ -169,19 +169,26 @@ class BattleScene: GameScene {
                         let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
                         
                         if botSpaceship.isInsideAMothership {
-                            botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
-                                                               y: botSpaceship.startingPosition.y - 150)
-                            botSpaceship.needToMove = true
-                            botSpaceship.physicsBody?.dynamic = true
-                        } else {
-                            botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                            
-                            if let _ = botSpaceship.targetNode {
-                                botSpaceship.needToMove = false
-                            } else {
-                                botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                                   y: botSpaceship.position.y - 100)
+                            if botSpaceship.health == botSpaceship.maxHealth {
+                                botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
+                                                                   y: botSpaceship.startingPosition.y - 150)
                                 botSpaceship.needToMove = true
+                                botSpaceship.physicsBody?.dynamic = true
+                            }
+                        } else {
+                            
+                            if botSpaceship.health <= botSpaceship.maxHealth/10 {
+                                botSpaceship.retreat()
+                            } else {
+                                botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                                
+                                if let _ = botSpaceship.targetNode {
+                                    botSpaceship.needToMove = false
+                                } else {
+                                    botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                       y: botSpaceship.position.y - 100)
+                                    botSpaceship.needToMove = true
+                                }
                             }
                         }
                     }
