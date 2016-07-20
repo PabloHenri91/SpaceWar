@@ -48,10 +48,18 @@ class MemoryCard {
             if(fetchRequestData.count > 0) {
                 print("Loading game...")
                 self.playerData = (fetchRequestData.lastObject as! PlayerData)
+                self.updateModelVersion()
                 self.autoSave = true
             } else {
                 self.newGame()
             }
+        }
+    }
+    
+    func updateModelVersion() {
+        //SpaceWar 2
+        if self.playerData.battery == nil {
+            self.playerData.battery = self.newBatteryData()
         }
     }
     
@@ -93,7 +101,7 @@ class MemoryCard {
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        var coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
@@ -110,11 +118,13 @@ class MemoryCard {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             
-            #if DEBUG
-                try! NSFileManager.defaultManager().removeItemAtURL(url)
-            #endif
+            try! ALIterativeMigrator.iterativeMigrateURL(url, ofType: NSSQLiteStoreType, toModel: self.managedObjectModel, orderedModelNames: [ "SpaceWar", "SpaceWar 2" ])
             
-            abort()
+            coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+            
+            try! coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            
+            return coordinator
         }
         
         return coordinator
