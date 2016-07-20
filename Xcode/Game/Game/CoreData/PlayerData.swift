@@ -17,6 +17,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
+    @NSManaged var premiumPoints: NSNumber
     @NSManaged var motherShip: MothershipData
     @NSManaged var researches: NSSet
     @NSManaged var spaceships: NSSet
@@ -43,6 +44,7 @@ extension MemoryCard {
         #endif
         
         playerData.points = 0
+        playerData.premiumPoints = 100
         playerData.motherShip = self.newMothershipData()
         
         

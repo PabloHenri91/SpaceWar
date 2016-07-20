@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
     <entity name="FriendData" representedClassName="FriendData" syncable="YES">
         <attribute name="acceptedInvite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
@@ -25,6 +25,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="needBattleTraining" attributeType="Boolean" syncable="YES"/>
         <attribute name="points" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="premiumPoints" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="invitedFriends" toMany="YES" deletionRule="Nullify" destinationEntity="FriendData" inverseName="parentPlayer" inverseEntity="FriendData" syncable="YES"/>
         <relationship name="missionSpaceships" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MissionSpaceshipData" inverseName="parentPlayer" inverseEntity="MissionSpaceshipData" syncable="YES"/>
         <relationship name="motherShip" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="parentPlayer" inverseEntity="MothershipData" syncable="YES"/>
@@ -60,7 +61,7 @@
         <element name="FriendData" positionX="-279" positionY="-45" width="128" height="120"/>
         <element name="MissionSpaceshipData" positionX="-279" positionY="-45" width="128" height="105"/>
         <element name="MothershipData" positionX="-488" positionY="-198" width="128" height="28"/>
-        <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="210"/>
+        <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="225"/>
         <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="105"/>
         <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="150"/>
         <element name="WeaponData" positionX="-459" positionY="45" width="128" height="28"/>
