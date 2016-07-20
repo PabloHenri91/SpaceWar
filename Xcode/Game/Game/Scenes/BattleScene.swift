@@ -217,6 +217,9 @@ class BattleScene: GameScene {
             case .battle:
                 break
             case .battleEnd:
+                self.mothership.endBattle()
+                self.botMothership.endBattle()
+                
                 self.battleEndTime = currentTime
                 self.nextState = .battleEndInterval
                 break
@@ -284,10 +287,12 @@ class BattleScene: GameScene {
                 case states.battle:
                     
                     for spaceship in self.mothership.spaceships {
-                        if let parent = spaceship.parent {
-                            if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                spaceship.touchEnded()
-                                return
+                        if spaceship.health > 0 {
+                            if let parent = spaceship.parent {
+                                if spaceship.containsPoint(touch.locationInNode(parent)) {
+                                    spaceship.touchEnded()
+                                    return
+                                }
                             }
                         }
                     }
@@ -360,10 +365,12 @@ class BattleScene: GameScene {
                 case states.battle:
                     
                     for spaceship in self.mothership.spaceships {
-                        if let parent = spaceship.parent {
-                            if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                spaceship.touchEnded()
-                                return
+                        if spaceship.health > 0 {
+                            if let parent = spaceship.parent {
+                                if spaceship.containsPoint(touch.locationInNode(parent)) {
+                                    spaceship.touchEnded()
+                                    return
+                                }
                             }
                         }
                     }

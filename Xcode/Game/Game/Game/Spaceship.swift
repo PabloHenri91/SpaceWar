@@ -66,6 +66,7 @@ class Spaceship: Control {
     var weaponRangeSprite:SKShapeNode!
     
     //Respawn
+    var canRespawn = true
     var deathCount = 0
     var deathTime = 0.0
     var lastSecond = 0.0
@@ -268,14 +269,16 @@ class Spaceship: Control {
     
     static func touchEnded(touch: UITouch) {
         if let spaceship = Spaceship.selectedSpaceship {
-            if let parent = spaceship.parent {
-                
-                //Precisa mover, esqueca o que está fazendo
-                spaceship.targetNode = nil
-                
-                spaceship.destination = touch.locationInNode(parent)
-                spaceship.needToMove = true
-                spaceship.setMoveArrowToDestination()
+            if spaceship.health > 0 {
+                if let parent = spaceship.parent {
+                    
+                    //Precisa mover, esqueca o que está fazendo
+                    spaceship.targetNode = nil
+                    
+                    spaceship.destination = touch.locationInNode(parent)
+                    spaceship.needToMove = true
+                    spaceship.setMoveArrowToDestination()
+                }
             }
         }
     }
@@ -588,18 +591,20 @@ class Spaceship: Control {
                 }
             }
         } else {
-            if GameScene.currentTime - self.lastSecond > 1 {
-                self.lastSecond = GameScene.currentTime
-                if GameScene.currentTime - self.deathTime > Double(self.deathCount * 5) {
-                    self.respawn()
-                } else {
-                    let label = Label(text: Int((self.deathCount * 5) - Int(GameScene.currentTime - self.deathTime)).description)
-                    label.position = self.startingPosition
-                    self.parent?.addChild(label)
-                    
-                    label.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak label] in
-                        label?.removeFromParent()
-                    })
+            if self.canRespawn {
+                if GameScene.currentTime - self.lastSecond > 1 {
+                    self.lastSecond = GameScene.currentTime
+                    if GameScene.currentTime - self.deathTime > Double(self.deathCount * 5) {//TODO self.deathCount * 5
+                        self.respawn()
+                    } else {
+                        let label = Label(text: Int((self.deathCount * 5) - Int(GameScene.currentTime - self.deathTime)).description)
+                        label.position = self.startingPosition
+                        self.parent?.addChild(label)
+                        
+                        label.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak label] in
+                            label?.removeFromParent()
+                            })
+                    }
                 }
             }
         }

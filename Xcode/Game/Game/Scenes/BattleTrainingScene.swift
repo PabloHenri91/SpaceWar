@@ -499,6 +499,8 @@ class BattleTrainingScene: GameScene {
                     var i = 1
                     for botSpaceship in botMothership.spaceships {
                         
+                        botSpaceship.canRespawn = false
+                        
                         let weaponTypeIndex = Int.random(Weapon.types.count)
                         botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: 1)
                         botSpaceship.weapon?.damage = 1

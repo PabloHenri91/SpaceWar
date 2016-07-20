@@ -180,7 +180,18 @@ class Mothership: Control {
         }
     }
     
+    func endBattle() {
+        for spaceship in self.spaceships {
+            spaceship.canRespawn = false
+            spaceship.needToMove = false
+            spaceship.targetNode = nil
+        }
+    }
+    
     func die() {
+        
+        self.endBattle()
+        
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
         particles.position.x = self.position.x
