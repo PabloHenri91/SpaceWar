@@ -74,13 +74,20 @@ class BattleTrainingScene: GameScene {
         
         // Mothership
         self.mothership = Mothership(level: 10)
+        self.mothership.health = 500
+        self.mothership.maxHealth = 500
+        
+        
         self.gameWorld.addChild(self.mothership)
         self.mothership.position = CGPoint(x: 0, y: -330)
+        
+        self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
+        self.mothership.healthBar.update(position: self.mothership.position)
         
         // Spaceships
         let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
         self.mothership.spaceships.append(spaceship)
-        spaceship.addWeapon(Weapon(type: 1, level: 1))
+        spaceship.addWeapon(Weapon(type: 0, level: 1))
         
         self.mothership.loadSpaceships(self.gameWorld)
         
@@ -309,7 +316,7 @@ class BattleTrainingScene: GameScene {
                     guard let scene = self else { return }
                     
                     let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
-                    spaceship.addWeapon(Weapon(type: 1, level: 1))
+                    spaceship.addWeapon(Weapon(type: 0, level: 1))
                     scene.mothership.spaceships.append(spaceship)
                     scene.mothership.loadSpaceship(spaceship, gameWorld: scene.gameWorld, i: 1)
                     
@@ -478,10 +485,10 @@ class BattleTrainingScene: GameScene {
                 self.mothership.spaceships.append(spaceship)
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 3)
                 
-                self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
-                self.mothership.healthBar.update(position: self.mothership.position)
                 
                 self.botMothership = Mothership(level: 1)
+                self.botMothership!.health = 150
+                self.botMothership!.maxHealth = 150
                 if let botMothership = self.botMothership {
                     botMothership.zRotation = CGFloat(M_PI)
                     botMothership.position = CGPoint(x: 0, y: 330)

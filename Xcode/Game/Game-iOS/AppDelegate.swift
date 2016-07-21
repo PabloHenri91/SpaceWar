@@ -10,6 +10,9 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKShareKit
 import FBSDKLoginKit
+import Fabric
+import Crashlytics
+import GameAnalytics
 
 
 @UIApplicationMain
@@ -28,6 +31,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //print(result.hashValue)
             FacebookGameInviter.sharedInstance.updateInvitedFriends()
         }
+        
+        
+        Fabric.with([Crashlytics.self, GameAnalytics.self])
+
+        // Enable log to output simple details (disable in production)
+        GameAnalytics.setEnabledInfoLog(true)
+        // Enable log to output full event JSON (disable in production)
+        GameAnalytics.setEnabledVerboseLog(true)
+        
+        // Example: configure available virtual currencies and item types for later use in resource events
+        // GameAnalytics.configureAv$ailableResourceCurrencies(["gems", "gold"])
+        // GameAnalytics.configureAvailableResourceItemTypes(["boost", "lives"])
+        
+        // Example: configure available custom dimensions for later use when specifying these
+        // GameAnalytics.configureAvailableCustomDimensions01(["ninja", "samurai"])
+        // GameAnalytics.configureAvailableCustomDimensions02(["whale", "dolphin"])
+        // GameAnalytics.configureAvailableCustomDimensions03(["horde", "alliance"])
+        
+        // Configure build version
+        GameAnalytics.configureBuild("1.0.0")
+        
+        // initialize GameAnalytics - this method will use app keys injected by Fabric
+        GameAnalytics.initializeWithConfiguredGameKeyAndGameSecret()
+        // to manually specify keys use this method:
+        //GameAnalytics.initializeWithGameKey("[game_key]", gameSecret:"[game_secret]")
+
         
         return true
     }
