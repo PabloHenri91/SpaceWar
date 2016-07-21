@@ -69,7 +69,7 @@ class BatteryControl: Control {
                 while self.charge < self.maxCharge {
                     
                     if GameMath.batteryChargeTime(self.lastCharge) <= 0 {
-                        self.lastCharge = NSDate(timeInterval: 5, sinceDate: self.lastCharge)
+                        self.lastCharge = NSDate(timeInterval: GameMath.batteryChargeInterval, sinceDate: self.lastCharge)
                         battery.lastCharge = self.lastCharge
                         
                         self.charge += 1
