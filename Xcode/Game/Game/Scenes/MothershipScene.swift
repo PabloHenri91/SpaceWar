@@ -60,6 +60,8 @@ class MothershipScene: GameScene {
     var labelXP:Label!
     var labelXPShadow:Label!
     
+    var batteryControl:BatteryControl!
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -77,6 +79,9 @@ class MothershipScene: GameScene {
         xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         
         self.addChild(Control(textureName: "background", x: 0, y: 0, xAlign: .center, yAlign: .center))
+        
+        self.batteryControl = BatteryControl(x: 93, y: 395, xAlign: .center, yAlign: .center)
+        self.addChild(self.batteryControl)
         
         //Header
         self.addChild(Control(textureName: "control1", x: 0, y: 0, xAlign: .center, yAlign: .up))
@@ -147,6 +152,7 @@ class MothershipScene: GameScene {
             //Estado atual
             switch (self.state) {
             default:
+                self.batteryControl.update()
                 break
             }
         } else {
@@ -199,6 +205,29 @@ class MothershipScene: GameScene {
                 switch (self.state) {
                 case states.mothership:
                     if(self.buttonBattle.containsPoint(touch.locationInNode(self))) {
+                        
+                        if let battery = self.playerData.battery {
+                            if battery.charge.integerValue > 0 {
+                                self.batteryControl.useCharge()
+                            } else {
+                                
+                                self.blackSpriteNode.hidden = false
+                                self.blackSpriteNode.zPosition = 100000
+                                
+                                
+                                let teste = AlertBox(title: "Alerta!!!", text: "Battery Critically Low", type: .OK)
+                                teste.zPosition = self.blackSpriteNode.zPosition + 1
+                                self.addChild(teste)
+                                teste.buttonOK.addHandler {
+                                    print("ok")
+                                    self.nextState = .mothership
+                                }
+                                self.nextState = .alert
+                                
+                                return
+                            }
+                        }
+                        
                         if (self.playerData.motherShip.spaceships.count == 4) {
                             self.nextState = states.battle
                         } else {
