@@ -25,7 +25,8 @@ extension MemoryCard {
         
         let batteryData = NSEntityDescription.insertNewObjectForEntityForName("BatteryData", inManagedObjectContext: self.managedObjectContext) as! BatteryData
         
-        batteryData.charge = 10
+        batteryData.charge = 4
+        batteryData.lastCharge = NSDate()
         
         return batteryData
     }

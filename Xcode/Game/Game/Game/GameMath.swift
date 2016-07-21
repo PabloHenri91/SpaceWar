@@ -276,7 +276,7 @@ class GameMath {
     
     //Mission Spaceship
     
-    static func MissionFinishTime(fromDate: NSDate, missionTime: Int) -> Int {
+    static func missionFinishTime(fromDate: NSDate, missionTime: Int) -> Int {
         
         let date = NSDate(timeInterval: NSTimeInterval(missionTime), sinceDate: fromDate)
         return Int(date.timeIntervalSinceNow)
@@ -284,11 +284,21 @@ class GameMath {
     }
     
     
-    static func ResearchFinishTime(beginDate: NSDate, researchTime: Int) -> Int {
+    static func researchFinishTime(beginDate: NSDate, researchTime: Int) -> Int {
         
         let date = NSDate(timeInterval: NSTimeInterval(researchTime), sinceDate: beginDate)
         return Int(date.timeIntervalSinceNow)
         
+    }
+    
+    
+    //Battery
+    static let maxCharge = 4
+    static let batteryChargeInterval = 6.0 * 60.0
+    
+    static func batteryChargeTime(beginChargeDate: NSDate) -> Int {
+        let date = NSDate(timeInterval: batteryChargeInterval, sinceDate: beginChargeDate)
+        return Int(date.timeIntervalSinceNow)
     }
     
 }
