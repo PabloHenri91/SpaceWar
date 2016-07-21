@@ -22,8 +22,8 @@ class Metrics {
         
     }
     
-    static func upLevel() {
-        
+    static func upLevel(level: String, time:NSDate) {
+        GameAnalytics.addDesignEventWithEventId("LevelUp" + level.description , value: time)
     }
   
 }
