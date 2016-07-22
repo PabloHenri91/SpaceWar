@@ -18,6 +18,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
+        self.addChild(SKSpriteNode(imageNamed: "battleArea"))
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
