@@ -13,7 +13,7 @@ class Metrics {
     static var battlesPlayed = 0
     
     static func win() {
-        GameAnalytics.addProgressionEventWithProgressionStatus(<#T##progressionStatus: GAProgressionStatus##GAProgressionStatus#>, progression01: <#T##String!#>, progression02: <#T##String!#>, progression03: <#T##String!#>)
+        //GameAnalytics.addProgressionEventWithProgressionStatus(<#T##progressionStatus: GAProgressionStatus##GAProgressionStatus#>, progression01: <#T##String!#>, progression02: <#T##String!#>, progression03: <#T##String!#>)
     }
 
     static func openTheGame() {
