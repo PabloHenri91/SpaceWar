@@ -69,6 +69,18 @@ class Shot: Control {
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.shot.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.shot
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.shot
+        
+        //Tentativa de corrigir: Naves coladas atravessam o tiro
+        if self.damage > 0 {
+            for spaceship in Spaceship.spaceshipList {
+                if self.shooter != spaceship {
+                    if CGPoint.distanceSquared(spaceship.position, self.position) < 256 {
+                        spaceship.getShot(self, contact: nil)
+                        break
+                    }
+                }
+            }
+        }
     }
     
     static func update() {
@@ -88,22 +100,16 @@ class Shot: Control {
     override func removeFromParent() {
         Shot.shotSet.remove(self)
         
-        //Tentativa de corrigir bug do tiro sumir sem dar dano em naves ou namve mãe
         if self.damage > 0 {
-            if let nodesAtPoint = self.parent?.nodesAtPoint(self.position) {
-                for node in nodesAtPoint {
-                    if let spaceship = node as? Spaceship {
-                        spaceship.getShot(self, contact: nil)
-                        super.removeFromParent()
-                        return
-                    }
-                    
-                    if let mothership = node as? Mothership {
-                        mothership.getShot(self, contact: nil)
-                        super.removeFromParent()
-                        return
-                    }
-                    
+            for spaceship in Spaceship.spaceshipList {
+                if self.intersectsNode(spaceship) {
+                    spaceship.getShot(self, contact: nil)
+                }
+            }
+            
+            for mothership in Mothership.mothershipList {
+                if self.intersectsNode(mothership) {
+                    mothership.getShot(self, contact: nil)
                 }
             }
         }
