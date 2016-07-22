@@ -26,6 +26,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var weapons: NSSet
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
+    @NSManaged var startDate: NSDate?
 
 }
 
@@ -126,6 +127,8 @@ extension MemoryCard {
         //list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
+        
+        playerData.startDate = NSDate()
         
         return playerData
     }

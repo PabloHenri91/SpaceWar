@@ -38,10 +38,14 @@ class BattleScene: GameScene {
     var lastBotUpdate:Double = 0
     var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
     
-    var battleEndTime: Double = 0
+    var battleEndTime: Double = 0 //TODO: Essa variavel ta com nome ruinzinho em Pablo
+    var battleBeginInterval: NSTimeInterval = 0
+    var battleEndInterval: NSTimeInterval = 0
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        
+        Metrics.battlesPlayed += 1
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
@@ -222,8 +226,12 @@ class BattleScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .battle:
+                self.battleBeginInterval = currentTime
                 break
             case .battleEnd:
+                self.battleEndInterval = currentTime - self.battleBeginInterval
+                Metrics.battleTime(self.battleEndInterval)
+                
                 self.mothership.endBattle()
                 self.botMothership.endBattle()
                 
