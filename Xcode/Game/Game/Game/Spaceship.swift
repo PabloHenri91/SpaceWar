@@ -591,7 +591,7 @@ class Spaceship: Control {
                         if mothership.health <= 0 {
                             self.targetNode = nil
                         } else {
-                            self.rotateToPoint(targetNode.position)
+                            self.rotateToPoint(CGPoint(x: self.position.x, y: targetNode.position.y))
                             if abs(self.totalRotationToDestination) <= 0.05 {
                                 self.fire(allySpaceships: allySpaceships)
                             }

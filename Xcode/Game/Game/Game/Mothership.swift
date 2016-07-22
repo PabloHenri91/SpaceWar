@@ -141,7 +141,7 @@ class Mothership: Control {
         
         if let spaceshipWeapon = spaceship.weapon {
             let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.spriteNode.size.height/2
-            if CGPoint.distance(self.position, spaceship.position) > range {
+            if CGPoint.distance(CGPoint(x: spaceship.position.x, y:self.position.y), spaceship.position) > range {
                 return false
             }
         } else {
