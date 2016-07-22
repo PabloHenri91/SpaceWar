@@ -12,8 +12,18 @@ class Metrics {
     
     static var battlesPlayed = 0
     
+    static func killerSpaceship(spaceship: String) {
+        GameAnalytics.addDesignEventWithEventId("Killer:" + spaceship)
+    }
+    
     static func win() {
-        //GameAnalytics.addProgressionEventWithProgressionStatus(<#T##progressionStatus: GAProgressionStatus##GAProgressionStatus#>, progression01: <#T##String!#>, progression02: <#T##String!#>, progression03: <#T##String!#>)
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
+        GameAnalytics.addDesignEventWithEventId("BattleWin:" + level.description)
+    }
+    
+    static func loose() {
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
+        GameAnalytics.addDesignEventWithEventId("BattleLoose:" + level.description)
     }
 
     static func openTheGame() {
