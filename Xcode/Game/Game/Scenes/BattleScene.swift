@@ -45,7 +45,11 @@ class BattleScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        Metrics.battlesPlayed += 1
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
+        
+        #if(iOS)
+            Metrics.battlesPlayed += 1
+        #endif
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
@@ -229,8 +233,12 @@ class BattleScene: GameScene {
                 self.battleBeginInterval = currentTime
                 break
             case .battleEnd:
+                //TODO: musica do fim da partida
+                //Music.sharedInstance.stop()
                 self.battleEndInterval = currentTime - self.battleBeginInterval
-                Metrics.battleTime(self.battleEndInterval)
+                #if(iOS)
+                    Metrics.battleTime(self.battleEndInterval)
+                #endif
                 
                 self.mothership.endBattle()
                 self.botMothership.endBattle()

@@ -58,6 +58,8 @@ class BattleTrainingScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
+        
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
         self.gameWorld.zPosition = -1000

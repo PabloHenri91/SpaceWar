@@ -65,6 +65,8 @@ class MothershipScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
+        
         self.playerData = MemoryCard.sharedInstance.playerData
         
         var xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
