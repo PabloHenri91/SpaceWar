@@ -73,6 +73,10 @@ class Spaceship: Control {
     
     var healPerFrame = 1
     
+    //statistics
+    var killCount = 0
+
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -460,6 +464,11 @@ class Spaceship: Control {
             
             if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
+                if let spaceship = shot.shooter as? Spaceship {
+                    print(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                }
+                
+                
             }
             
             self.health = self.health - shot.damage

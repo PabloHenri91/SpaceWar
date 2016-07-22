@@ -256,6 +256,11 @@ class BattleScene: GameScene {
                     self.addChild(alertBox)
                 } else {
                     if self.botMothership.health <= 0 {
+                        
+                        #if os(iOS)
+                            Metrics.win()
+                        #endif
+                        
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! 😃 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
                             if self.botUpdateInterval > 0 {
@@ -265,6 +270,11 @@ class BattleScene: GameScene {
                         })
                         self.addChild(alertBox)
                     } else {
+                        
+                        #if os(iOS)
+                            Metrics.loose()
+                        #endif
+                        
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. 😱 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
                             self.playerData.botUpdateInterval = NSNumber(double: self.botUpdateInterval + 1)
