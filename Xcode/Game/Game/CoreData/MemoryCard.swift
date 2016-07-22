@@ -61,6 +61,10 @@ class MemoryCard {
         if self.playerData.battery == nil {
             self.playerData.battery = self.newBatteryData()
         }
+        
+        if self.playerData.startDate == nil {
+            self.playerData.startDate = NSDate()
+        }
     }
     
     func reset() {

@@ -36,9 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self, GameAnalytics.self])
 
         // Enable log to output simple details (disable in production)
-        GameAnalytics.setEnabledInfoLog(true)
+        //GameAnalytics.setEnabledInfoLog(true)
         // Enable log to output full event JSON (disable in production)
-        GameAnalytics.setEnabledVerboseLog(true)
+        //GameAnalytics.setEnabledVerboseLog(true)
         
         // Example: configure available virtual currencies and item types for later use in resource events
         // GameAnalytics.configureAv$ailableResourceCurrencies(["gems", "gold"])
@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         MemoryCard.sharedInstance.saveGame()
+        Metrics.battlesPlayedPerSession()
+        Metrics.battlesPlayed = 0
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -98,6 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+        Metrics.openTheGame()
     }
 
     func applicationWillTerminate(application: UIApplication) {

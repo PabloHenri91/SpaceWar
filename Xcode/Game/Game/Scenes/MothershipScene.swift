@@ -70,6 +70,11 @@ class MothershipScene: GameScene {
         if (xpForNextLevel <= xp) {
             self.playerData.motherShip.level = NSNumber(int: self.playerData.motherShip.level.integerValue + 1)
             self.playerData.motherShip.xp = NSNumber(integer: xp - xpForNextLevel)
+            
+            #if os(iOS)
+                Metrics.levelUp()
+            #endif
+            
             let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
             self.addChild(alertBox)
         }
