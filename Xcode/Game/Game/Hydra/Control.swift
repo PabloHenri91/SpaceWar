@@ -101,6 +101,7 @@ class Control: SKNode {
     }
     
     func resetPosition() {
+        //TODO: quebrou aqui
         self.position = CGPoint(
             x: Int(screenPosition.x/Display.screenScale) + Int(Display.translate.x * CGFloat(xAlign.rawValue)),
             y: -Int(screenPosition.y/Display.screenScale) - Int(Display.translate.y * CGFloat(yAlign.rawValue)))
