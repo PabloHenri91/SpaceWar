@@ -70,7 +70,10 @@ class FactorySpaceShipCard: Control {
     
     func buySpaceship(){
         
-        let weaponTypeIndex = Int.random(Weapon.types.count)
+        var weaponTypeIndex = Int.random(Weapon.types.count)
+        if let weapon = self.spaceShip.weapon {
+            weaponTypeIndex = weapon.type.index
+        }
         let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceShip.type.index)
         let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
         spaceshipData.addWeaponData(weaponData)

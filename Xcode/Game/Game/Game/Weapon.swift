@@ -105,8 +105,7 @@ class WeaponType {
     var name:String!
     var weaponDescription:String!
 
-    
-
+    var index:Int!
     
     init(maxLevel:Int,
          damage:Int, range:Int, fireRate:Double) {
@@ -135,8 +134,8 @@ extension Weapon {
             ]
             
             weaponType.name = "Super Pistol"
-            weaponType.weaponDescription = "A normal weapon"
-            
+            weaponType.weaponDescription = "A normal weapon."
+            weaponType.index = 0
             return weaponType
         }(),
         
@@ -150,7 +149,8 @@ extension Weapon {
                 "weaponAAShot"
             ]
             weaponType.name = "Super Machine-gun"
-            weaponType.weaponDescription = "A thousand shots"
+            weaponType.weaponDescription = "A thousand shots."
+            weaponType.index = 1
             return weaponType
         }(),
         
@@ -164,8 +164,9 @@ extension Weapon {
                 "weaponCAShot"
             ]
             
-            weaponType.name = "Super shotgun"
-            weaponType.weaponDescription = "Close death"
+            weaponType.name = "Super Shotgun"
+            weaponType.weaponDescription = "Close death."
+            weaponType.index = 1
             return weaponType
         }(),
         
@@ -179,8 +180,9 @@ extension Weapon {
                 "weaponDAShot"
             ]
             
-            weaponType.name = "Super sniper"
-            weaponType.weaponDescription = "Kill enemies from other side of the universe"
+            weaponType.name = "Super Sniper"
+            weaponType.weaponDescription = "Kill enemies from other side of the universe."
+            weaponType.index = 2
             return weaponType
         }()
     ]
