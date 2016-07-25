@@ -45,7 +45,10 @@ class BattleScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        Metrics.battlesPlayed += 1
+        #if os(iOS)
+           Metrics.battlesPlayed += 1
+        #endif
+        
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
@@ -230,7 +233,11 @@ class BattleScene: GameScene {
                 break
             case .battleEnd:
                 self.battleEndInterval = currentTime - self.battleBeginInterval
-                Metrics.battleTime(self.battleEndInterval)
+                
+                #if os(iOS)
+                    Metrics.battleTime(self.battleEndInterval)
+                #endif
+                
                 
                 self.mothership.endBattle()
                 self.botMothership.endBattle()
