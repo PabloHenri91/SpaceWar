@@ -240,6 +240,11 @@ class BattleScene: GameScene {
                     Metrics.battleTime(self.battleEndInterval)
                 #endif
                 
+                #if os(iOS)
+                    Metrics.battleTime(self.battleEndInterval)
+                #endif
+                
+                
                 self.mothership.endBattle()
                 self.botMothership.endBattle()
                 
