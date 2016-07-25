@@ -71,18 +71,6 @@ class Shot: Control {
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.shot.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.shot
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.shot
-        
-        //Tentativa de corrigir: Naves coladas atravessam o tiro
-        if self.damage > 0 {
-            for spaceship in Spaceship.spaceshipList {
-                if self.shooter != spaceship {
-                    if CGPoint.distanceSquared(spaceship.position, self.position) < 256 {
-                        spaceship.getShot(self, contact: nil)
-                        break
-                    }
-                }
-            }
-        }
     }
     
     static func update() {

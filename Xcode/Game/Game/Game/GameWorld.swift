@@ -117,10 +117,20 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         case categoryBitMask.spaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
             //spaceship criou um shot
+            if let shot = self.bodyB.node as? Shot {
+                if let spaceship = self.bodyA.node as? Spaceship {
+                    spaceship.getShot(shot, contact: contact)
+                }
+            }
             break
             
         case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
             //spaceship criou um shot
+            if let shot = self.bodyB.node as? Shot {
+                if let spaceship = self.bodyA.node as? Spaceship {
+                    spaceship.getShot(shot, contact: contact)
+                }
+            }
             break
             
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
