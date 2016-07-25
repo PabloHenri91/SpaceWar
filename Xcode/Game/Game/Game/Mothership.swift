@@ -26,6 +26,8 @@ class Mothership: Control {
     
     var healthBar:HealthBar!
     
+    var explosionSoundEffect:SoundEffect!
+    
     override var description: String {
         return "\nMothership\n" +
             "level: " + level.description + "\n" +
@@ -72,6 +74,12 @@ class Mothership: Control {
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
         
         Mothership.mothershipList.insert(self)
+        
+        self.loadSoundEffects()
+    }
+    
+    func loadSoundEffects() {
+        self.explosionSoundEffect = SoundEffect(soundType: SoundEffect.effectTypes.explosion, node: self)
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
@@ -192,6 +200,7 @@ class Mothership: Control {
         
         self.endBattle()
         
+        self.explosionSoundEffect.play()
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
         particles.position.x = self.position.x
