@@ -179,6 +179,7 @@ class HangarScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                 case states.normal:
+                    
                     if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .mothership
                         return

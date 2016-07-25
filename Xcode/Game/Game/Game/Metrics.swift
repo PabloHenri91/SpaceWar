@@ -34,7 +34,7 @@ class Metrics {
         formatter.timeZone = NSTimeZone.localTimeZone()
         let hour = formatter.stringFromDate(date)
         
-        GameAnalytics.addDesignEventWithEventId("OpenTheGameAtHour" , value: Int(hour))
+        GameAnalytics.addDesignEventWithEventId("OpenTheGameAtHour:" + hour)
     }
     
     static func battlesPlayedPerSession() {
