@@ -22,6 +22,8 @@ class Weapon: Control {
     
     var weaponData:WeaponData?
     
+    var initShotSoundEffect:SoundEffect!
+    
     override var description: String {
         return "\nWeapon\n" +
             "level: " + level.description + "\n" +
@@ -45,6 +47,10 @@ class Weapon: Control {
         fatalError("NÃO IMPLEMENTADO")
     }
     
+    func loadSoundEffects() {
+        self.initShotSoundEffect = SoundEffect(soundFile: self.type.initSoundFileName, node: self)
+    }
+    
     private func load(type:Int, level:Int) {
         
         self.type = Weapon.types[type]
@@ -64,6 +70,8 @@ class Weapon: Control {
                fatalError("Não conseguiu carregar weaponShotTexture")
             #endif
         }
+        
+        self.loadSoundEffects()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,8 +86,10 @@ class Weapon: Control {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {
                     if parentSpaceshipPhysicsBody.dynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
+                            
                             let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
                             parentSpaceshipParent.addChild(shot)
+                            self.initShotSoundEffect.play()
                         }
                     }
                 }
@@ -106,6 +116,8 @@ class WeaponType {
     var weaponDescription:String!
 
     var index:Int!
+    
+    var initSoundFileName = ""
     
     init(maxLevel:Int,
          damage:Int, range:Int, fireRate:Double) {
@@ -134,6 +146,7 @@ extension Weapon {
             ]
             
             weaponType.name = "Super Pistol"
+            weaponType.initSoundFileName = "laser5.mp3"
             weaponType.weaponDescription = "A normal weapon."
             weaponType.index = 0
             return weaponType
@@ -149,6 +162,7 @@ extension Weapon {
                 "weaponAAShot"
             ]
             weaponType.name = "Super Machine-gun"
+            weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
             weaponType.index = 1
             return weaponType
@@ -165,6 +179,7 @@ extension Weapon {
             ]
             
             weaponType.name = "Super Shotgun"
+            weaponType.initSoundFileName = "laser1.mp3"
             weaponType.weaponDescription = "Close death."
             weaponType.index = 1
             return weaponType
@@ -181,6 +196,7 @@ extension Weapon {
             ]
             
             weaponType.name = "Super Sniper"
+            weaponType.initSoundFileName = "laser9.mp3"
             weaponType.weaponDescription = "Kill enemies from other side of the universe."
             weaponType.index = 2
             return weaponType

@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class Music: NSObject {
+class Music {
     
     enum musicTypes {
         case noMusic
@@ -16,7 +16,7 @@ class Music: NSObject {
         case battle
     }
     
-    struct musicNames {
+    struct fileNames {
         static var menu = [
             "klamm_one-morning-in-space.mp3",
             "klamm_space-life.mp3"]
@@ -43,10 +43,10 @@ class Music: NSObject {
             case .noMusic:
                 return
             case .menu:
-                musicNames.appendContentsOf(Music.musicNames.menu)
+                musicNames.appendContentsOf(Music.fileNames.menu)
                 break
             case .battle:
-                musicNames.appendContentsOf(Music.musicNames.battle)
+                musicNames.appendContentsOf(Music.fileNames.battle)
                 break
             }
             
@@ -68,6 +68,7 @@ class Music: NSObject {
         
         do {
             try self.audioPlayer = AVAudioPlayer(contentsOfURL: backgroundMusicURL!)
+            self.audioPlayer.volume = 0.3
             self.audioPlayer.numberOfLoops = -1
             self.audioPlayer.prepareToPlay()
             self.play()

@@ -76,6 +76,7 @@ class Spaceship: Control {
     //statistics
     var killCount = 0
 
+    var explosionSoundEffect:SoundEffect!
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -187,7 +188,12 @@ class Spaceship: Control {
         self.load(loadPhysics)
     }
     
+    func loadSoundEffects() {
+        self.explosionSoundEffect = SoundEffect(soundType: SoundEffect.effectTypes.explosion, node: self)
+    }
+    
     private func load(loadPhysics:Bool) {
+        self.loadSoundEffects()
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
         self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
         self.maxHealth = health
@@ -506,6 +512,7 @@ class Spaceship: Control {
         self.lastSecond = GameScene.currentTime
         self.deathCount += 1
         
+        self.explosionSoundEffect.play()
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
         particles.position.x = self.position.x
