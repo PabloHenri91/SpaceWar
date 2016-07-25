@@ -10,6 +10,17 @@ import SpriteKit
 
 class GameWorld: SKNode, SKPhysicsContactDelegate {
     
+    enum zPositions: CGFloat {
+        case battleArea
+        case mothership
+        case shot
+        case spaceship
+        case sparks
+        case explosion
+        case spaceshipHealthBar
+        case damageEffect
+    }
+    
     var physicsWorld:SKPhysicsWorld!
     var defaultGravity = CGVector(dx: 0, dy: 0)
     

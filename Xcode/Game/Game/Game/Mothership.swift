@@ -205,7 +205,7 @@ class Mothership: Control {
         
         particles.position.x = self.position.x
         particles.position.y = self.position.y
-        particles.zPosition = self.zPosition
+        particles.zPosition = GameWorld.zPositions.explosion.rawValue
         
         particles.numParticlesToEmit = 1000
         particles.particleSpeedRange = 1000
@@ -251,8 +251,16 @@ class Mothership: Control {
         label.fontColor = SKColor.whiteColor()
         self.parent?.addChild(label)
         label.runAction(SKAction.moveBy(vector, duration: duration))
-        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label] in
+        
+        let particles = SKEmitterNode(fileNamed: "spark.sks")!
+        particles.position = contactPoint
+        particles.zPosition = GameWorld.zPositions.sparks.rawValue
+        particles.emissionAngle = CGFloat(-atan2(vector.dx, vector.dy)) + CGFloat(M_PI/2)
+        self.parent?.addChild(particles)
+        
+        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label, weak particles] in
             label?.removeFromParent()
+            particles?.removeFromParent()
         }
     }
     

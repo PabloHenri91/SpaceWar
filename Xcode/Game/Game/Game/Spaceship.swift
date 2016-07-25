@@ -232,6 +232,9 @@ class Spaceship: Control {
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
+        
+        self.zPosition = GameWorld.zPositions.spaceship.rawValue
+        
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.dynamic = false
         
@@ -521,7 +524,7 @@ class Spaceship: Control {
         particles.particlePositionRange = CGVector(dx: self.weaponRangeBonus, dy: self.weaponRangeBonus)
         
         if let parent = self.parent {
-            particles.zPosition = self.zPosition
+            particles.zPosition = GameWorld.zPositions.explosion.rawValue
             parent.addChild(particles)
             
             let action = SKAction()
@@ -836,13 +839,25 @@ class Spaceship: Control {
         }
         
         let label = SKLabelNode(text: points.description)
+        label.zPosition = GameWorld.zPositions.damageEffect.rawValue
         label.position = contactPoint
         label.fontColor = SKColor.whiteColor()
         self.parent?.addChild(label)
         label.runAction(SKAction.moveBy(vector, duration: duration))
-        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label] in
+        
+        
+        let particles = SKEmitterNode(fileNamed: "spark.sks")!
+        particles.position = contactPoint
+        particles.zPosition = GameWorld.zPositions.sparks.rawValue
+        particles.emissionAngle = CGFloat(-atan2(vector.dx, vector.dy)) + CGFloat(M_PI/2)
+        self.parent?.addChild(particles)
+        
+        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label, weak particles] in
             label?.removeFromParent()
+            particles?.removeFromParent()
         }
+        
+        
     }
     
     override func removeFromParent() {

@@ -23,6 +23,8 @@ class Shot: Control {
     init(shooter:SKNode, damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
+        self.zPosition = GameWorld.zPositions.shot.rawValue
+        
         self.shooter = shooter
         self.damage = damage
         self.rangeSquared = range * range

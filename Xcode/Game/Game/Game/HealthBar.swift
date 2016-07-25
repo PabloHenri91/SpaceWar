@@ -20,6 +20,8 @@ class HealthBar: Control {
     init(size:CGSize, borderColor:SKColor) {
         super.init()
         
+        self.zPosition = GameWorld.zPositions.spaceshipHealthBar.rawValue
+        
         self.biggerSide = size.width > size.height ? size.width : size.height
         
         let spriteNodeBorder = SKSpriteNode(texture: nil, color: borderColor, size: CGSize(width: biggerSide, height: 4))

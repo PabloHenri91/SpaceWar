@@ -126,6 +126,8 @@
 		8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
 		846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
+		8478D4891D4678E9000E09DD /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4871D4678E9000E09DD /* spark.sks */; };
+		8478D48A1D4678E9000E09DD /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4881D4678E9000E09DD /* spark.png */; };
 		848021061D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
 		848021071D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
@@ -148,6 +150,8 @@
 		848FD6D21D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */; };
 		848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */; };
 		848FD6D41D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */; };
+		8495A35D1D4686BF00A4205F /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4871D4678E9000E09DD /* spark.sks */; };
+		8495A35E1D4686BF00A4205F /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4881D4678E9000E09DD /* spark.png */; };
 		84A6C8311D141788006717B9 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		84AF821A1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
 		84AF821B1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
@@ -294,6 +298,8 @@
 		844CF2921CE789AA0032F6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		844CF2991CE78BFB0032F6AA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		846F65CF1CF4777B00A2E69F /* Mothership.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mothership.swift; sourceTree = "<group>"; };
+		8478D4871D4678E9000E09DD /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
+		8478D4881D4678E9000E09DD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		848021051D0ADB220078320A /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
 		848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryData.swift; sourceTree = "<group>"; };
 		848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpaceWar-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -586,6 +592,15 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		8495A35C1D4684F400A4205F /* Spark */ = {
+			isa = PBXGroup;
+			children = (
+				8478D4871D4678E9000E09DD /* spark.sks */,
+				8478D4881D4678E9000E09DD /* spark.png */,
+			);
+			name = Spark;
+			sourceTree = "<group>";
+		};
 		84C011491D4642D900EC7080 /* SoundEffect */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +644,7 @@
 		84D621201D258E39005D550C /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				8495A35C1D4684F400A4205F /* Spark */,
 				848742351D25925500A8082D /* Explosion */,
 			);
 			path = Effects;
@@ -740,8 +756,10 @@
 				3AA0C97F1CFDB3B5008EE628 /* FacebookSDK-4_12-for-iOS.docset in Resources */,
 				84C011661D46433400EC7080 /* explosion7.wav in Resources */,
 				848FD6CB1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */,
+				8478D48A1D4678E9000E09DD /* spark.png in Resources */,
 				844CF29A1CE78BFB0032F6AA /* Media.xcassets in Resources */,
 				84C011931D4659B800EC7080 /* laser8.mp3 in Resources */,
+				8478D4891D4678E9000E09DD /* spark.sks in Resources */,
 				84C0118D1D4659B800EC7080 /* laser5.mp3 in Resources */,
 				844CF2771CE77B400032F6AA /* LaunchScreen.storyboard in Resources */,
 				84C0118B1D4659B800EC7080 /* laser4.mp3 in Resources */,
@@ -789,6 +807,7 @@
 				848FD6D21D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */,
 				84D6212C1D259021005D550C /* explosion.png in Resources */,
 				84C0115D1D46433400EC7080 /* explosion2.wav in Resources */,
+				8495A35D1D4686BF00A4205F /* spark.sks in Resources */,
 				84C011881D4659B800EC7080 /* laser2.mp3 in Resources */,
 				84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				84C0118C1D4659B800EC7080 /* laser4.mp3 in Resources */,
@@ -801,6 +820,7 @@
 				84C011901D4659B800EC7080 /* laser6.mp3 in Resources */,
 				848FD6D41D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */,
 				84C011921D4659B800EC7080 /* laser7.mp3 in Resources */,
+				8495A35E1D4686BF00A4205F /* spark.png in Resources */,
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
 				84C011941D4659B800EC7080 /* laser8.mp3 in Resources */,
 				84C0115B1D46433400EC7080 /* explosion1.wav in Resources */,
