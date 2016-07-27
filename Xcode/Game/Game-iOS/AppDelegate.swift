@@ -81,6 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //http://stackoverflow.com/questions/12221528/nsdate-get-precise-time-independent-of-device-clock
         print("treta na hora")
         MemoryCard.sharedInstance.resetTimers()
+        Metrics.tryCheat()
         
     }
 
