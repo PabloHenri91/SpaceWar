@@ -65,6 +65,9 @@ class MemoryCard {
         if self.playerData.startDate == nil {
             self.playerData.startDate = NSDate()
         }
+        
+        //SpaceWar 3
+        
     }
     
     func reset() {
@@ -122,7 +125,7 @@ class MemoryCard {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             
-            try! ALIterativeMigrator.iterativeMigrateURL(url, ofType: NSSQLiteStoreType, toModel: self.managedObjectModel, orderedModelNames: [ "SpaceWar", "SpaceWar 2" ])
+            try! ALIterativeMigrator.iterativeMigrateURL(url, ofType: NSSQLiteStoreType, toModel: self.managedObjectModel, orderedModelNames: [ "SpaceWar", "SpaceWar 2", "SpaceWar 3"])
             
             coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
             
@@ -156,5 +159,34 @@ class MemoryCard {
                 abort()
             }
         }
+    }
+    
+    func resetTimers() {
+        let researchs = playerData.researches
+        let missionShips = playerData.missionSpaceships
+        let battery = playerData.battery
+        
+        for item in researchs {
+            if let research = item as? ResearchData {
+                if research.done == 0 {
+                    if research.startDate != nil {
+                        research.startDate = NSDate()
+                    }
+                }
+            }
+        }
+        
+        for item in missionShips {
+            if let missionShip = item as? MissionSpaceshipData {
+                if (missionShip.missionType.intValue >= 0) {
+                    missionShip.startMissionDate = NSDate()
+                }
+            }
+        }
+        
+        battery?.lastCharge = NSDate()
+        
+    
+        
     }
 }

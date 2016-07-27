@@ -8,8 +8,9 @@
 
 import UIKit
 import SpriteKit
+import GameKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GKGameCenterControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class GameViewController: UIViewController {
         #endif
         
         skView.presentScene(scene, transition: GameScene.transition)
+        
+        self.authenticateLocalPlayer()
     }
     
     override func viewWillLayoutSubviews() {
@@ -58,4 +61,62 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    
+    //shows leaderboard screen
+    func showLeader() {
+        let vc = self.view?.window?.rootViewController
+        let gc = GKGameCenterViewController()
+        gc.gameCenterDelegate = self
+        vc?.presentViewController(gc, animated: true, completion: nil)
+    }
+    
+    //hides leaderboard screen
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
+    {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    //initiate gamecenter
+    func authenticateLocalPlayer(){
+        
+        let localPlayer = GKLocalPlayer.localPlayer()
+        
+        localPlayer.authenticateHandler = {(viewController, error) -> Void in
+            
+            if (viewController != nil) {
+                self.presentViewController(viewController!, animated: true, completion: nil)
+            }
+                
+            else {
+                print((GKLocalPlayer.localPlayer().authenticated))
+            }
+        }
+        
+    }
+    
+    
+    func saveLevel(level:Int) {
+        
+        //check if user is signed in
+        if GKLocalPlayer.localPlayer().authenticated {
+            
+            let scoreReporter = GKScore(leaderboardIdentifier: "com.Spacewar.Rank") //leaderboard id here
+            
+            scoreReporter.value = Int64(level) //score variable here (same as above)
+            
+            let scoreArray: [GKScore] = [scoreReporter]
+            
+            GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -> Void in
+                if error != nil {
+                    print("error")
+                }
+            })
+            
+        }
+        
+    }
+
+    
 }

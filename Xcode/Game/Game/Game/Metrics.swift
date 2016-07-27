@@ -12,6 +12,10 @@ class Metrics {
     
     static var battlesPlayed = 0
     
+    static func tryCheat() {
+        GameAnalytics.addDesignEventWithEventId("tryCheat")
+    }
+    
     static func killerSpaceship(spaceship: String) {
         GameAnalytics.addDesignEventWithEventId("Killer:" + spaceship)
     }
