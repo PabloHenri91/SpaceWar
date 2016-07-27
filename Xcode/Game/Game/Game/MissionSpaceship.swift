@@ -13,7 +13,6 @@ class MissionSpaceship: Control {
     var missionType:Int = -1
     var level:Int!
     var missionspaceshipData:MissionSpaceshipData?
-    var missionStartDate:NSDate?
     
     
     init(missionSpaceshipData:MissionSpaceshipData) {
@@ -24,7 +23,6 @@ class MissionSpaceship: Control {
         
         if missionSpaceshipData.missionType.integerValue >= 0 {
             self.missionType = missionSpaceshipData.missionType.integerValue
-            self.missionStartDate = missionSpaceshipData.startMissionDate
         }
         
     }

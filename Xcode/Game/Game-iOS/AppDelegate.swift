@@ -56,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GameAnalytics.initializeWithConfiguredGameKeyAndGameSecret()
         // to manually specify keys use this method:
         //GameAnalytics.initializeWithGameKey("[game_key]", gameSecret:"[game_secret]")
+        
+        print("didFinishLaunch")
 
         
         return true
@@ -78,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //http://stackoverflow.com/questions/13741585/notify-app-when-ipad-date-time-settings-changed
         //http://stackoverflow.com/questions/12221528/nsdate-get-precise-time-independent-of-device-clock
         print("treta na hora")
+        MemoryCard.sharedInstance.resetTimers()
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

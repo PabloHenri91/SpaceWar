@@ -166,7 +166,7 @@ extension Weapon {
             
             weaponType.name = "Super Shotgun"
             weaponType.weaponDescription = "Close death."
-            weaponType.index = 1
+            weaponType.index = 2
             return weaponType
         }(),
         
@@ -182,7 +182,7 @@ extension Weapon {
             
             weaponType.name = "Super Sniper"
             weaponType.weaponDescription = "Kill enemies from other side of the universe."
-            weaponType.index = 2
+            weaponType.index = 3
             return weaponType
         }()
     ]

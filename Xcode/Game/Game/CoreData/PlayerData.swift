@@ -68,25 +68,25 @@ extension MemoryCard {
         spaceshipData = self.newSpaceshipData(type: 0)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 1)
+        weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
 
         
         //adicionei a nave 2 na nave mae 2 vezes
-        spaceshipData = self.newSpaceshipData(type: 1)
+        spaceshipData = self.newSpaceshipData(type: 0)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 2)
+        weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
      
         
         //adicionei a nave 3 na nave mae
-        spaceshipData = self.newSpaceshipData(type: 2)
+        spaceshipData = self.newSpaceshipData(type: 0)
         playerData.motherShip.addSpaceshipData(spaceshipData)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 3)
+        weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
         
         
@@ -94,16 +94,14 @@ extension MemoryCard {
         playerData.unlockedSpaceships = NSSet()
         
         spaceshipData = self.newSpaceshipData(type: 0)
+        weaponData = self.newWeaponData(type: 0)
+        spaceshipData.addWeaponData(weaponData)
         playerData.unlockSpaceshipData(spaceshipData)
         
 
         
         //weapons
         playerData.weapons = NSSet()
-        
-        weaponData = self.newWeaponData(type: 0)
-        playerData.addWeaponData(weaponData)
-        
         
         // mission spaceships
         playerData.missionSpaceships = NSOrderedSet()

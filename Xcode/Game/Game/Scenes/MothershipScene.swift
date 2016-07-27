@@ -16,20 +16,10 @@ class MothershipScene: GameScene {
         
         //Estados de saida da scene
         case battle
-        
-        //Estados de saida da scene
         case hangar
-        
-        //Estados de saida da scene
         case social
-        
-        //Estados de saida da scene
         case research
-        
-        //Estados de saida da scene
         case mission
-        
-        //Estados de saida da scene
         case factory
         
         //Estado de mensagem de alerta
@@ -43,6 +33,9 @@ class MothershipScene: GameScene {
     var nextState = states.mothership
     
     var playerData:PlayerData!
+    
+    var buttonRanking:Button!
+    var buttonSocial:Button!
     
     var buttonBattle:Button!
     var buttonMission:Button!
@@ -77,6 +70,9 @@ class MothershipScene: GameScene {
             
             #if os(iOS)
                 Metrics.levelUp()
+                if let vc = self.view?.window?.rootViewController as? GameViewController {
+                    vc.saveLevel(Int(self.playerData.motherShip.level))
+                }
             #endif
             
             let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
@@ -133,6 +129,14 @@ class MothershipScene: GameScene {
         self.addChild(self.labelXP)
         //
         
+        
+        self.buttonRanking = Button(textureName: "button", text: "Ranking", x: 96, y: 200, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonRanking)
+        
+        self.buttonSocial = Button(textureName: "button", text: "Social", x: 96, y: 250, xAlign: .center, yAlign: .center)
+        self.addChild(self.buttonSocial)
+        
+        
         //Footer
         self.addChild(Control(textureName: "footerBackground", x: 0, y: 521, xAlign: .center, yAlign: .down))
         
@@ -172,7 +176,7 @@ class MothershipScene: GameScene {
                 break
             case .social:
                 #if os(iOS)
-                    self.view?.presentScene(SocialScene(), transition: GameScene.transition)
+                    self.view?.presentScene(InviteFriendsScene(), transition: GameScene.transition)
                 #endif
                 break
             case .hangar:
@@ -186,6 +190,9 @@ class MothershipScene: GameScene {
                 break
             case .factory:
                 self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
+                break
+            case .social:
+                self.view?.presentScene(SocialScene(), transition: GameScene.transition)
                 break
             case .alert:
                 break
@@ -211,6 +218,16 @@ class MothershipScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                 case states.mothership:
+                    
+                    if(self.buttonRanking.containsPoint(touch.locationInNode(self))) {
+                        #if os(iOS)
+                            if let vc = self.view?.window?.rootViewController as? GameViewController {
+                                vc.showLeader()
+                            }
+                        #endif
+                        return
+                    }
+                    
                     if(self.buttonBattle.containsPoint(touch.locationInNode(self))) {
                         
                         if let battery = self.playerData.battery {

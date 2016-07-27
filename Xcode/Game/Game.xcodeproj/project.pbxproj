@@ -20,6 +20,8 @@
 		3A4065F81D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */; };
 		3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
 		3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
+		3A4138801D463A830026B47E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A41387F1D463A830026B47E /* GameKit.framework */; };
+		3A4138821D469EA80026B47E /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4138811D469EA80026B47E /* SocialScene.swift */; };
 		3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
 		3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
@@ -45,7 +47,7 @@
 		3AA0C9851CFDB3B5008EE628 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8871CFDB3B4008EE628 /* FBSDKLoginKit.framework */; };
 		3AA0C9861CFDB3B5008EE628 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */; };
 		3AA0C9871CFDB3B5008EE628 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
-		3AA0CA281CFDBCB5008EE628 /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */; };
+		3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA271CFDBCB5008EE628 /* InviteFriendsScene.swift */; };
 		3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */; };
 		3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */; };
 		3AAA933E1D22BEDF00DD4757 /* MissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */; };
@@ -190,6 +192,8 @@
 		3A4065F31D2C616500B886DB /* ResearchCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchCard.swift; sourceTree = "<group>"; };
 		3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchDetailsScene.swift; sourceTree = "<group>"; };
 		3A4065F91D2D902200B886DB /* MultiLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineLabel.swift; sourceTree = "<group>"; };
+		3A41387F1D463A830026B47E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		3A4138811D469EA80026B47E /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
 		3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-500-webfont.ttf"; sourceTree = "<group>"; };
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
@@ -210,8 +214,9 @@
 		3AA0C8871CFDB3B4008EE628 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
+		3AA0CA271CFDBCB5008EE628 /* InviteFriendsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsScene.swift; sourceTree = "<group>"; };
 		3AA0CA291CFE13BA008EE628 /* FacebookClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookClient.swift; sourceTree = "<group>"; };
+		3AA631731D47EEAA00BC6E50 /* SpaceWar 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 3.xcdatamodel"; sourceTree = "<group>"; };
 		3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
 		3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionScene.swift; sourceTree = "<group>"; };
 		3AAA93411D22BF1900DD4757 /* FactoryScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
@@ -299,6 +304,7 @@
 				3AA0C9871CFDB3B5008EE628 /* FBSDKShareKit.framework in Frameworks */,
 				3AA0C9841CFDB3B5008EE628 /* FBSDKCoreKit.framework in Frameworks */,
 				3AA0C9821CFDB3B5008EE628 /* FBAudienceNetwork.framework in Frameworks */,
+				3A4138801D463A830026B47E /* GameKit.framework in Frameworks */,
 				3AA0C9851CFDB3B5008EE628 /* FBSDKLoginKit.framework in Frameworks */,
 				3A0F318E1D410EBA00FDFBFE /* GameAnalytics.framework in Frameworks */,
 				3AA0C97A1CFDB3B5008EE628 /* AccountKit.framework in Frameworks */,
@@ -372,6 +378,7 @@
 		843CB48C1CDD131A00674F48 = {
 			isa = PBXGroup;
 			children = (
+				3A41387F1D463A830026B47E /* GameKit.framework */,
 				844CF27C1CE77BE80032F6AA /* Game */,
 				843CB4961CDD131A00674F48 /* Products */,
 			);
@@ -505,7 +512,8 @@
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
 				3A4065F61D2D71E500B886DB /* ResearchDetailsScene.swift */,
 				3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */,
-				3AA0CA271CFDBCB5008EE628 /* SocialScene.swift */,
+				3AA0CA271CFDBCB5008EE628 /* InviteFriendsScene.swift */,
+				3A4138811D469EA80026B47E /* SocialScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -612,6 +620,11 @@
 					844CF2651CE77B3F0032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = JZ3J7RVLD7;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					844CF2841CE789A90032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -733,6 +746,7 @@
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */,
+				3A4138821D469EA80026B47E /* SocialScene.swift in Sources */,
 				3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				843620781CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				843620801CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
@@ -770,7 +784,7 @@
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
 				844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */,
-				3AA0CA281CFDBCB5008EE628 /* SocialScene.swift in Sources */,
+				3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */,
 				843620641CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
 				3AAA933E1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843620821CEB77400082A9D7 /* StringExtension.swift in Sources */,
@@ -1078,10 +1092,11 @@
 		842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3AA631731D47EEAA00BC6E50 /* SpaceWar 3.xcdatamodel */,
 				84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */,
 				842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */,
 			);
-			currentVersion = 84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */;
+			currentVersion = 3AA631731D47EEAA00BC6E50 /* SpaceWar 3.xcdatamodel */;
 			path = SpaceWar.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

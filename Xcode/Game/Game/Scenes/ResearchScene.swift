@@ -1,5 +1,5 @@
 //
-//  SocialScene.swift
+//  ResearchScene.swift
 //  Game
 //
 //  Created by Paulo Henrique dos Santos on 28/06/16.

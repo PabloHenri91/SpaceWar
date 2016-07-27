@@ -79,9 +79,9 @@ class ResearchDetailsScene: GameScene {
         let labelRequiriments = Label(text: "Requiriments", fontSize: 16, x: 13, y: 250, horizontalAlignmentMode: .Left)
         self.box.addChild(labelRequiriments)
         
-        if (self.research.researchStartDate != nil) {
+        if (self.research.researchData!.startDate != nil) {
             
-            let time = GameMath.researchFinishTime(self.research.researchStartDate! , researchTime: self.research.researchType.duration)
+            let time = GameMath.researchFinishTime(self.research.researchData!.startDate! , researchTime: self.research.researchType.duration)
     
             if (time > 0) {
                 
@@ -152,9 +152,9 @@ class ResearchDetailsScene: GameScene {
                     self.lastUpdate = currentTime
                     
                     if (self.needUpdate) {
-                        if (self.research.researchStartDate != nil) {
+                        if (self.research.researchData?.startDate != nil) {
                             
-                            let time = GameMath.researchFinishTime(self.research.researchStartDate! , researchTime: self.research.researchType.duration)
+                            let time = GameMath.researchFinishTime(self.research.researchData!.startDate! , researchTime: self.research.researchType.duration)
                             
                             if (time > 0) {
                                 self.labelTime.setText(GameMath.timeFormated(time))
