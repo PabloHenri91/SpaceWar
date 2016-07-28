@@ -16,6 +16,12 @@ class MissionScene: GameScene {
     
     var selectedSpaceship: MissionSpaceship?
     
+    var buttonBack:Button!
+    
+    var playerDataCard:PlayerDataCard!
+    
+    var missionHeaderControl: Control!
+    
     var scrollNode:ScrollNode!
     var controlArray:Array<MissionSpaceshipCard>!
     
@@ -44,6 +50,14 @@ class MissionScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+//        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
+//        self.addChild(self.buttonBack)
+        
+        self.backgroundColor = SKColor(red: 201/255, green: 207/255, blue: 213/255, alpha: 1)
+        
+        
+        
+        
         self.controlArray = Array<MissionSpaceshipCard>()
         
         for item in missionShips {
@@ -63,8 +77,9 @@ class MissionScene: GameScene {
         let labelTitle = Label(text: "MINNER SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        self.playerDataCard = PlayerDataCard(playerData: MemoryCard.sharedInstance.playerData)
+        self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
+        
         
         self.gameTabBar = GameTabBar(state: GameTabBar.states.mission)
         self.addChild(self.gameTabBar)
@@ -169,7 +184,13 @@ class MissionScene: GameScene {
                         return
                     }
                     
+                   
+                    
                     if (self.missionHeaderControl.containsPoint(touch.locationInNode(self))){
+                        return
+                    }
+                    
+                    if (self.playerDataCard.containsPoint(touch.locationInNode(self))) {
                         return
                     }
                     
