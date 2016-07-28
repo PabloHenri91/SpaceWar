@@ -30,21 +30,20 @@ class MissionSpaceshipCard: Control {
         
         super.init()
         
-        self.addChild(Control(textureName: "hangarShipCardSelected"))
+        self.addChild(Control(textureName: "MissionSpaceshipCard"))
         
         self.missionSpaceship = missionSpaceship
-        self.spaceShipImage = Control(textureName: "MissionSpaceship" + missionSpaceship.level.description)
+        self.spaceShipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
         self.addChild(self.spaceShipImage)
-        self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
-        self.spaceShipImage.resetPosition()
+ 
         
  
         
         
-        self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 15, x: 262, y: 14)
+        self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 11, x: 259, y: 16, shadowColor: SKColor(red: 229/255, green: 228/255, blue: 229/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: "Mission Spaceship " + self.missionSpaceship.level.description , x: 137, y: 23)
+        self.labelName = Label(color:SKColor.whiteColor() ,text: "MINER SPACESHIP" , fontSize: 13, x: 12, y: 17, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 30/255, green: 39/255, blue: 47/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelName)
         
         
@@ -64,23 +63,23 @@ class MissionSpaceshipCard: Control {
                 self.labelDescription = Label(text: "Remaining Time: " + GameMath.timeFormated(time), fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
             } else {
                 
-                self.buttonColect = Button(textureName: "buttonSmall", text: "Colect",  x: 86, y: 85)
+                self.buttonColect = Button(textureName: "buttonGreen", text: "Colect",  x: 129, y: 91)
                 self.addChild(self.buttonColect!)
                 
-                self.labelDescription = Label(text: "Mission finished", fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+                self.labelDescription = Label(text: "Mission finished", fontSize: 10 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
             }
             
             
         } else {
             
-            self.labelDescription = Label(text: "No mission", fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
             
-            self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin",  x: 29, y: 85)
+            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 10,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonBegin!)
             
             
             if self.missionSpaceship.level < 4 {
-                self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
+                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 10 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
             
@@ -119,10 +118,10 @@ class MissionSpaceshipCard: Control {
             
             self.labelDescription.setText("No mission")
             
-            self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin",  x: 29, y: 85)
+            self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin",  x: 129, y: 91)
             self.addChild(self.buttonBegin!)
             
-            self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
+            self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 207, y: 91)
             self.addChild(self.buttonUpgrade!)
         }
         

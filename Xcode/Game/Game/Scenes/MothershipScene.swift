@@ -68,7 +68,14 @@ class MothershipScene: GameScene {
                 }
             #endif
             
+            self.blackSpriteNode.hidden = false
+            self.blackSpriteNode.zPosition = 100000
+            
             let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
+            alertBox.buttonOK.addHandler({
+                self.nextState = .mothership
+            })
+            self.nextState = .alert
             self.addChild(alertBox)
         }
         
@@ -135,7 +142,14 @@ class MothershipScene: GameScene {
                 self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
                 break
             case .social:
-                self.view?.presentScene(SocialScene(), transition: GameScene.transition)
+                #if os(iOS)
+                   self.view?.presentScene(SocialScene(), transition: GameScene.transition)
+                #else
+                   self.nextState = .mothership
+                #endif
+                
+                
+    
                 break
             case .alert:
                 break
@@ -182,11 +196,10 @@ class MothershipScene: GameScene {
                                 self.blackSpriteNode.zPosition = 100000
                                 
                                 
-                                let teste = AlertBox(title: "Alerta!!!", text: "Battery Critically Low", type: .OK)
+                                let teste = AlertBox(title: "Alert!!!", text: "Battery Critically Low", type: .OK)
                                 teste.zPosition = self.blackSpriteNode.zPosition + 1
                                 self.addChild(teste)
                                 teste.buttonOK.addHandler {
-                                    print("ok")
                                     self.nextState = .mothership
                                 }
                                 self.nextState = .alert
@@ -202,11 +215,10 @@ class MothershipScene: GameScene {
                             self.blackSpriteNode.zPosition = 100000
                             
                             
-                            let teste = AlertBox(title: "Alerta!!!", text: "Estão faltando naves, vá ao hangar", type: .OK)
+                            let teste = AlertBox(title: "Alert!!!", text: "Missing spaceships, go to hangar", type: .OK)
                             teste.zPosition = self.blackSpriteNode.zPosition + 1
                             self.addChild(teste)
                             teste.buttonOK.addHandler {
-                                print("ok")
                                 self.nextState = .hangar
                             }
                             self.nextState = .alert
