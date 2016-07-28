@@ -181,6 +181,14 @@ class Button: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func containsPoint(p: CGPoint) -> Bool {
+        if self.hidden {
+            return false
+        } else {
+            return super.containsPoint(p)
+        }
+    }
+    
     class func resetButtons() {
         for button in Button.buttonList {
             button.resetPosition()
