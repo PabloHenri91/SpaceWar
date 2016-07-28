@@ -17,7 +17,7 @@ class MultiLineLabel: Control {
     var text: String!
     var maxHeight: Int?
     
-    init( text:String , maxWidth: Int = 200, x:Int = 0, y:Int = 0, color:SKColor = GameColors.black, fontName:String = GameFonts.fontName.museo500, fontSize:CGFloat = GameFonts.fontSize.medium.rawValue , xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode  = .Center ) {
+    init( text:String , maxWidth: Int = 200, x:Int = 0, y:Int = 0, color:SKColor = GameColors.black, fontName:String = GameFonts.fontName.museo500, fontSize:CGFloat = 16 , xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode  = .Center ) {
         
         super.init()
         self.text = NSLocalizedString(text, tableName: nil, comment:"")

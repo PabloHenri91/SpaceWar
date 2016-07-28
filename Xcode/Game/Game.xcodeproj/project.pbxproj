@@ -158,6 +158,8 @@
 		84A6C8311D141788006717B9 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		84AF821A1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
 		84AF821B1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
+		84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B22F041D47D7D30034C03F /* PlayerDataCard.swift */; };
+		84B22F061D47D7D30034C03F /* PlayerDataCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B22F041D47D7D30034C03F /* PlayerDataCard.swift */; };
 		84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
@@ -370,6 +372,7 @@
 		848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3"; sourceTree = "<group>"; };
 		848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pandamindset_pandamindset---space-sleepers.mp3"; sourceTree = "<group>"; };
 		84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleTrainingScene.swift; sourceTree = "<group>"; };
+		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
 		84C0114B1D46433400EC7080 /* explosion1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion1.wav; sourceTree = "<group>"; };
 		84C0114C1D46433400EC7080 /* explosion2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion2.wav; sourceTree = "<group>"; };
@@ -599,6 +602,7 @@
 				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
 				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
+				84B22F041D47D7D30034C03F /* PlayerDataCard.swift */,
 				3A4065F01D2C54E600B886DB /* Research.swift */,
 				3A4065F31D2C616500B886DB /* ResearchCard.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
@@ -951,6 +955,7 @@
 				3AD261981D2562A000189671 /* FactorySpaceShipCard.swift in Sources */,
 				843620741CEB77400082A9D7 /* GameScene.swift in Sources */,
 				3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */,
+				84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
@@ -1049,6 +1054,7 @@
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				3AFD26801D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */,
+				84B22F061D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
 				8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */,
 				843620711CEB77400082A9D7 /* GameColors.swift in Sources */,
 				3AD261A21D26B61D00189671 /* MissionSpaceship.swift in Sources */,

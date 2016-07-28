@@ -21,11 +21,6 @@ class MothershipScene: GameScene {
         case research
         case mission
         case factory
-        
-        //Estado de mensagem de alerta
-        case alert
-        
-        
     }
     
     //Estados iniciais
@@ -43,17 +38,9 @@ class MothershipScene: GameScene {
     var buttonLab:Button!
     var buttonBuy:Button!
     
-    var labelLevel:Label!
-    var labelLevelShadow:Label!
-    
-    var labelPoints:Label!
-    //var labelPointsBorder = [Label]()
-    var labelPointsShadow:Label!
-    
-    var labelXP:Label!
-    var labelXPShadow:Label!
-    
     var batteryControl:BatteryControl!
+    
+    var playerDataCard:PlayerDataCard!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -61,6 +48,8 @@ class MothershipScene: GameScene {
         Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
         
         self.playerData = MemoryCard.sharedInstance.playerData
+        
+        self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
         
         var xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         let xp = self.playerData.motherShip.xp.integerValue
@@ -81,9 +70,10 @@ class MothershipScene: GameScene {
         
         xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         
-        self.addChild(Control(textureName: "background", x: 0, y: 0, xAlign: .center, yAlign: .center))
+        self.playerDataCard = PlayerDataCard(playerData: self.playerData)
+        self.addChild(self.playerDataCard)
         
-        self.batteryControl = BatteryControl(x: 93, y: 395, xAlign: .center, yAlign: .center)
+        self.batteryControl = BatteryControl(x: 75, y: 229, xAlign: .center, yAlign: .center)
         self.addChild(self.batteryControl)
         
         //Header
@@ -146,7 +136,7 @@ class MothershipScene: GameScene {
         self.buttonMission = Button(textureName: "buttonSocial", x: 58, y: 521, xAlign: .center, yAlign: .down)
         self.addChild(self.buttonMission)
         
-        self.buttonBattle = Button(textureName: "buttonBattle", x: 115, y: 514, xAlign: .center, yAlign: .down)
+        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonBattle)
         
         self.buttonLab = Button(textureName: "buttonLab", x: 0, y: 521, xAlign: .center, yAlign: .down)
