@@ -18,11 +18,9 @@ class PlayerDataCard: Control {
     
     var xpBarCircle:SKShapeNode!
     var xpBarSpriteNode:SKSpriteNode?
-    
-//    var labelPoints:Label!
-//    var labelPointsShadow:Label!
 
-    init(playerData:PlayerData) {
+    override init() {
+        let playerData = MemoryCard.sharedInstance.playerData
         
         super.init(textureName: "playerDataCardBackground", x: -58, y: 0, xAlign: .center, yAlign: .up)
         

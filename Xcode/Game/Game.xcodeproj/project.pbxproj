@@ -163,6 +163,8 @@
 		84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
+		84BF0FC61D4A758F00145F5B /* GameTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF0FC51D4A758F00145F5B /* GameTabBar.swift */; };
+		84BF0FC71D4A758F00145F5B /* GameTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF0FC51D4A758F00145F5B /* GameTabBar.swift */; };
 		84C0115A1D46433400EC7080 /* explosion1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C0114B1D46433400EC7080 /* explosion1.wav */; };
 		84C0115B1D46433400EC7080 /* explosion1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C0114B1D46433400EC7080 /* explosion1.wav */; };
 		84C0115C1D46433400EC7080 /* explosion2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C0114C1D46433400EC7080 /* explosion2.wav */; };
@@ -374,6 +376,7 @@
 		84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleTrainingScene.swift; sourceTree = "<group>"; };
 		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
+		84BF0FC51D4A758F00145F5B /* GameTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabBar.swift; sourceTree = "<group>"; };
 		84C0114B1D46433400EC7080 /* explosion1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion1.wav; sourceTree = "<group>"; };
 		84C0114C1D46433400EC7080 /* explosion2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion2.wav; sourceTree = "<group>"; };
 		84C0114D1D46433400EC7080 /* explosion3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion3.wav; sourceTree = "<group>"; };
@@ -594,6 +597,7 @@
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
 				3AD261971D2562A000189671 /* FactorySpaceShipCard.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
+				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				3A7E60D11D14878F00D00590 /* HangarSpaceShipCard.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
@@ -942,6 +946,7 @@
 				84C0117A1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
+				84BF0FC61D4A758F00145F5B /* GameTabBar.swift in Sources */,
 				3A3307971D414F2A005CCB4F /* Metrics.swift in Sources */,
 				84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */,
@@ -1050,6 +1055,7 @@
 				3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
+				84BF0FC71D4A758F00145F5B /* GameTabBar.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,

@@ -11,18 +11,18 @@ import SpriteKit
 class MothershipScene: GameScene {
     
     enum states : String {
-        //Estado principal
-        case mothership
         
         case alert
         
         //Estados de saida da scene
         case battle
-        case hangar
         case social
+        
         case research
         case mission
+        case mothership
         case factory
+        case hangar
     }
     
     //Estados iniciais
@@ -35,14 +35,16 @@ class MothershipScene: GameScene {
     var buttonSocial:Button!
     
     var buttonBattle:Button!
-    var buttonMission:Button!
-    var buttonHangar:Button!
-    var buttonLab:Button!
-    var buttonBuy:Button!
     
     var batteryControl:BatteryControl!
     
     var playerDataCard:PlayerDataCard!
+    var gameTabBar:GameTabBar!
+    
+    var buttonResearch:Button!
+    var buttonMission:Button!
+    var buttonFactory:Button!
+    var buttonHangar:Button!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -72,8 +74,15 @@ class MothershipScene: GameScene {
         
         xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
         
-        self.playerDataCard = PlayerDataCard(playerData: self.playerData)
+        self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
+        
+        self.gameTabBar = GameTabBar(state: GameTabBar.states.battle)
+        self.addChild(self.gameTabBar)
+        self.buttonResearch = self.gameTabBar.buttonResearch
+        self.buttonMission = self.gameTabBar.buttonMission
+        self.buttonFactory = self.gameTabBar.buttonFactory
+        self.buttonHangar = self.gameTabBar.buttonHangar
         
         self.batteryControl = BatteryControl(x: 75, y: 229, xAlign: .center, yAlign: .center)
         self.addChild(self.batteryControl)
@@ -86,23 +95,8 @@ class MothershipScene: GameScene {
         self.addChild(self.buttonSocial)
         self.buttonSocial.hidden = true
         
-        //Footer
-        self.addChild(Control(textureName: "footerBackground", x: 0, y: 521, xAlign: .center, yAlign: .down))
-        
-        self.buttonHangar = Button(textureName: "buttonHangar", x: 262, y: 521, xAlign: .center, yAlign: .down)
-        self.addChild(self.buttonHangar)
-        
-        self.buttonMission = Button(textureName: "buttonSocial", x: 58, y: 521, xAlign: .center, yAlign: .down)
-        self.addChild(self.buttonMission)
-        
         self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonBattle)
-        
-        self.buttonLab = Button(textureName: "buttonLab", x: 0, y: 521, xAlign: .center, yAlign: .down)
-        self.addChild(self.buttonLab)
-        
-        self.buttonBuy = Button(textureName: "buttonBuy", x: 204, y: 521, xAlign: .center, yAlign: .down)
-        self.addChild(self.buttonBuy)
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -221,22 +215,22 @@ class MothershipScene: GameScene {
                         return
                     }
                     
-                    if(self.buttonMission.containsPoint(touch.locationInNode(self))) {
+                    if(self.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mission
                         return
                     }
                     
-                    if(self.buttonHangar.containsPoint(touch.locationInNode(self))) {
+                    if(self.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.hangar
                         return
                     }
                     
-                    if(self.buttonLab.containsPoint(touch.locationInNode(self))) {
+                    if(self.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research
                         return
                     }
                     
-                    if(self.buttonBuy.containsPoint(touch.locationInNode(self))) {
+                    if(self.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.factory
                         return
                     }

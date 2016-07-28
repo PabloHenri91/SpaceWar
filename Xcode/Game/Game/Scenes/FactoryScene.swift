@@ -13,43 +13,40 @@ class FactoryScene: GameScene {
     
     var playerData = MemoryCard.sharedInstance.playerData
     let unlockedSpaceships = MemoryCard.sharedInstance.playerData.unlockedSpaceships as! Set<SpaceshipData>
-
     
     var labelShips:Label!
-    var buttonBack:Button!
     
     var scrollNode:ScrollNode!
     var controlArray:Array<FactorySpaceShipCard>!
     
     var spaceShipListShape: CropBox!
     
-    
     enum states : String {
-        //Estado principal
-        case normal
         
         //Estado de alertBox
         case alert
         
-        
-        //Estados de saida da scene
+        case research
+        case mission
         case mothership
-        
+        case factory
+        case hangar
     }
     
     //Estados iniciais
-    var state = states.normal
-    var nextState = states.normal
+    var state = states.factory
+    var nextState = states.factory
+    
+    var playerDataCard:PlayerDataCard!
+    var gameTabBar:GameTabBar!
+    
+    var buttonResearch:Button!
+    var buttonMission:Button!
+    var buttonMothership:Button!
+    var buttonHangar:Button!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        
-        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonBack)
-        
- 
-        
-    
         
         let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
@@ -75,7 +72,15 @@ class FactoryScene: GameScene {
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
         self.spaceShipListShape.addChild(self.scrollNode)
         
+        self.playerDataCard = PlayerDataCard()
+        self.addChild(self.playerDataCard)
         
+        self.gameTabBar = GameTabBar(state: GameTabBar.states.factory)
+        self.addChild(self.gameTabBar)
+        self.buttonResearch = self.gameTabBar.buttonResearch
+        self.buttonMission = self.gameTabBar.buttonMission
+        self.buttonMothership = self.gameTabBar.buttonMothership
+        self.buttonHangar = self.gameTabBar.buttonHangar
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -85,7 +90,7 @@ class FactoryScene: GameScene {
             //Estado atual
             switch (self.state) {
                 
-            case states.normal:
+            case states.factory:
                 break
                 
             default:
@@ -97,13 +102,24 @@ class FactoryScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
-            case states.normal:
-                self.blackSpriteNode.hidden = true
+            case .research:
+                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
                 break
                 
+            case .mission:
+                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
+                break
                 
             case .mothership:
                 self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                break
+                
+            case states.factory:
+                self.blackSpriteNode.hidden = true
+                break
+                
+            case .hangar:
+                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
                 break
                 
             case .alert:
@@ -125,12 +141,27 @@ class FactoryScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.normal:
-                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = .mothership
+                case states.factory:
+                    
+                    if(self.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.research
                         return
                     }
                     
+                    if(self.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.mission
+                        return
+                    }
+                    
+                    if(self.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.mothership
+                        return
+                    }
+                    
+                    if(self.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.hangar
+                        return
+                    }
                     
                     if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceShipListShape.cropNode))) {
                         for item in self.scrollNode.cells {
@@ -152,13 +183,10 @@ class FactoryScene: GameScene {
                                                 teste.zPosition = self.blackSpriteNode.zPosition + 1
                                                 self.addChild(teste)
                                                 teste.buttonOK.addHandler {
-                                                    self.nextState = .normal
+                                                    self.nextState = .factory
                                                 }
                                                 self.nextState = .alert
-                                                
                                             }
-                                            
-                                
                                         }
                                     }
                                 }

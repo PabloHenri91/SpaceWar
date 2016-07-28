@@ -14,7 +14,8 @@ class BatteryControl: Control {
     var charge = 0
     var lastCharge:NSDate!
     
-    var labelTimer:Label!
+    var labelTimerLabel:Label!
+    var labelTimerValue:Label!
     var chargeIndicator = [Control]()
     
     
@@ -31,8 +32,9 @@ class BatteryControl: Control {
             self.addChild(control)
         }
         
-        self.labelTimer = Label(color: GameColors.white, text: "?", x: 67, y: 43)
-        self.addChild(self.labelTimer)
+        let color = SKColor(red: 60/255, green: 75/255, blue: 88/255, alpha: 1)
+        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:9, x: 85, y: 33)
+        self.addChild(self.labelTimerValue)
         
         self.updateLabels()
     }
@@ -92,7 +94,7 @@ class BatteryControl: Control {
                 
                 var text = "Full"
                 if self.charge < self.maxCharge {
-                    text = GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
+                    text = "Next charge: " + GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
                 }
                 
                 var i = 0
@@ -101,7 +103,7 @@ class BatteryControl: Control {
                     i += 1
                 }
                 
-                self.labelTimer.setText(text)
+                self.labelTimerValue.setText(text)
             }
         }
     }

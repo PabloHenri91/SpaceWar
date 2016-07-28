@@ -17,33 +17,33 @@ class MissionScene: GameScene {
     var selectedSpaceship: MissionSpaceship?
     var cropBox: CropBox!
     
-    var buttonBack:Button!
-    
     var scrollNode:ScrollNode!
     var controlArray:Array<MissionSpaceshipCard>!
     
     enum states : String {
-        //Estado principal
-        case normal
         
-        //Estados de saida da scene
+        case research
+        case mission
         case mothership
+        case factory
+        case hangar
         
         case chooseMission
-        
-        
     }
     
     //Estados iniciais
-    var state = states.normal
-    var nextState = states.normal
+    var state = states.mission
+    var nextState = states.mission
+    
+    var gameTabBar:GameTabBar!
+    
+    var buttonResearch:Button!
+    var buttonMothership:Button!
+    var buttonFactory:Button!
+    var buttonHangar:Button!
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        
-        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonBack)
-        
         
         self.controlArray = Array<MissionSpaceshipCard>()
         
@@ -59,7 +59,12 @@ class MissionScene: GameScene {
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
         self.cropBox.addChild(self.scrollNode)
         
-        
+        self.gameTabBar = GameTabBar(state: GameTabBar.states.mission)
+        self.addChild(self.gameTabBar)
+        self.buttonResearch = self.gameTabBar.buttonResearch
+        self.buttonMothership = self.gameTabBar.buttonMothership
+        self.buttonFactory = self.gameTabBar.buttonFactory
+        self.buttonHangar = self.gameTabBar.buttonHangar
     }
     
     
@@ -69,7 +74,7 @@ class MissionScene: GameScene {
         if(self.state == self.nextState) {
             //Estado atual
             switch (self.state) {
-            case .normal:
+            case .mission:
                 
                 for item in self.scrollNode.cells {
                     if let card = item as? MissionSpaceshipCard {
@@ -88,11 +93,23 @@ class MissionScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
-            case .normal:
+            case .research:
+                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
+                break
+                
+            case .mission:
                 break
                 
             case .mothership:
                 self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                break
+                
+            case .factory:
+                self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
+                break
+                
+            case .hangar:
+                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
                 break
                 
             case .chooseMission:
@@ -123,11 +140,25 @@ class MissionScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.normal:
+                case states.mission:
                     
+                    if(self.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.research
+                        return
+                    }
                     
-                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = .mothership
+                    if(self.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.mothership
+                        return
+                    }
+                    
+                    if(self.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.factory
+                        return
+                    }
+                    
+                    if(self.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        self.nextState = states.hangar
                         return
                     }
                     
