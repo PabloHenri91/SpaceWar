@@ -9,13 +9,6 @@
 import SpriteKit
 
 class GameFonts {
-
-    internal enum fontSize:CGFloat {
-        case small = 10
-        case medium = 16
-        
-        case large = 32
-    }
     
     /*
     No problem to use custom fonts, I did it. Follow these steps:

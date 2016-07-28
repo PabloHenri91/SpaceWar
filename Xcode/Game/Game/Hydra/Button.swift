@@ -26,15 +26,13 @@ class Button: Control {
         self.event!.addHandler(handler)
     }
     
-    enum labelColors {
-        case black
-        case white
-    }
+    private var labelColor = SKColor.blackColor()
     
-    private var labelColor = labelColors.black
-    
-    init(textureName:String, icon:String = "", text:String = "", fontSize:GameFonts.fontSize = .medium, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, alpha:CGFloat = CGFloat(1), touchArea:CGSize = CGSize.zero,
-        top:Int = 0, bottom:Int = 0, left:Int = 0, right:Int = 0, fontColor:labelColors = .black) {
+    init(textureName:String, icon:String = "", text:String = "", fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, alpha:CGFloat = CGFloat(1), touchArea:CGSize = CGSize.zero,
+        top:Int = 0, bottom:Int = 0, left:Int = 0, right:Int = 0,
+        fontColor:SKColor = SKColor.blackColor(), fontShadowColor:SKColor = SKColor.clearColor(), fontShadowOffset:CGPoint = CGPoint.zero,
+        pressedFontColor:SKColor = SKColor.whiteColor(), pressedFontShadowColor:SKColor = SKColor.clearColor(), pressedFontShadowOffset:CGPoint = CGPoint.zero,
+        fontName:String = GameFonts.fontName.museo500) {
             super.init()
             
             self.labelColor = fontColor
@@ -81,28 +79,31 @@ class Button: Control {
                 icon.colorBlendFactor = 1
                 self.button.addChild(icon)
                 icon.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
-                icon.zPosition = self.button.zPosition + 1
             }
             
             if (text != "") {
-                let labelNode = SKLabelNode(fontNamed: GameFonts.fontName.museo500)
+                let labelNode = SKLabelNode(fontNamed: fontName)
                 labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
-                labelNode.fontSize = fontSize.rawValue
-                
-                switch self.labelColor {
-                case .black:
-                    labelNode.fontColor = GameColors.black
-                    break
-                case .white:
-                    labelNode.fontColor = GameColors.white
-                    break
-                }
-                
+                labelNode.fontSize = fontSize
+                labelNode.fontColor = fontColor
                 labelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                 labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                 labelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
+                
+                if fontShadowColor != SKColor.clearColor() {
+                    let shadowLabelNode = SKLabelNode(fontNamed: fontName)
+                    shadowLabelNode.text = labelNode.text
+                    shadowLabelNode.fontSize = fontSize
+                    shadowLabelNode.fontColor = fontShadowColor
+                    shadowLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+                    shadowLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+                    shadowLabelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
+                    shadowLabelNode.position = CGPoint(x: shadowLabelNode.position.x + fontShadowOffset.x, y: shadowLabelNode.position.y + fontShadowOffset.y)
+                    
+                    self.button.addChild(shadowLabelNode)
+                }
+                
                 self.button.addChild(labelNode)
-                labelNode.zPosition = self.button.zPosition + 1
             }
             
             let texturePressed = SKTexture(imageNamed: "\(textureName)Pressed")
@@ -129,29 +130,47 @@ class Button: Control {
                 iconPressed.colorBlendFactor = 1
                 self.buttonPressed.addChild(iconPressed)
                 iconPressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2 - 2)
-                iconPressed.zPosition = self.buttonPressed.zPosition + 1
             }
             
             if (text != "") {
-                let labelNodePressed = SKLabelNode(fontNamed: GameFonts.fontName.museo500)
+                let labelNodePressed = SKLabelNode(fontNamed: fontName)
                 labelNodePressed.text = NSLocalizedString(text, tableName: nil, comment:"")
-                labelNodePressed.fontSize = fontSize.rawValue
-                
-                switch self.labelColor {
-                case .black:
-                    labelNodePressed.fontColor = GameColors.white
-                    break
-                case .white:
-                    labelNodePressed.fontColor = GameColors.black
-                    break
-                }
-                
+                labelNodePressed.fontSize = fontSize
+                labelNodePressed.fontColor = pressedFontColor
                 labelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                 labelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-                //TODO: deslocamento vindo por parâmetro
                 labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
+                
+                var shadowColor = SKColor.clearColor()
+                if pressedFontShadowColor != SKColor.clearColor() {
+                    shadowColor = pressedFontShadowColor
+                } else {
+                    if fontShadowColor != SKColor.clearColor() {
+                        shadowColor = fontShadowColor
+                    }
+                }
+                
+                if shadowColor != SKColor.clearColor() {
+                    
+                    var shadowOffset = CGPoint.zero
+                    if pressedFontShadowOffset != CGPoint.zero {
+                        shadowOffset = pressedFontShadowOffset
+                    } else {
+                        shadowOffset = fontShadowOffset
+                    }
+                    
+                    let shadowLabelNodePressed = SKLabelNode(fontNamed: fontName)
+                    shadowLabelNodePressed.text = labelNodePressed.text
+                    shadowLabelNodePressed.fontSize = fontSize
+                    shadowLabelNodePressed.fontColor = shadowColor
+                    shadowLabelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+                    shadowLabelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+                    shadowLabelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
+                    shadowLabelNodePressed.position = CGPoint(x: shadowLabelNodePressed.position.x + shadowOffset.x, y: shadowLabelNodePressed.position.y + shadowOffset.y)
+                    self.buttonPressed.addChild(shadowLabelNodePressed)
+                }
+                
                 self.buttonPressed.addChild(labelNodePressed)
-                labelNodePressed.zPosition = self.buttonPressed.zPosition + 1
             }
             
             Button.buttonList.insert(self)

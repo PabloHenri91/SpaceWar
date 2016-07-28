@@ -14,8 +14,8 @@ class BatteryControl: Control {
     var charge = 0
     var lastCharge:NSDate!
     
-    var labelCharge:Label!
     var labelTimer:Label!
+    var chargeIndicator = [Control]()
     
     
     var lastUpdate:NSTimeInterval = 0
@@ -23,10 +23,15 @@ class BatteryControl: Control {
     init(x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up) {
         super.init(textureName: "batteryBackground", x: x, y: y, xAlign: xAlign, yAlign: yAlign)
         
-        self.labelCharge = Label(color: GameColors.white, text: self.charge.description + "/" + self.maxCharge.description, x: 67, y: 21)
-        self.addChild(self.labelCharge)
+        self.chargeIndicator.append(Control(textureName: "charge0", x: 1, y: 1))
+        self.chargeIndicator.append(Control(textureName: "charge1", x: 42, y: 1))
+        self.chargeIndicator.append(Control(textureName: "charge1", x: 85, y: 1))
+        self.chargeIndicator.append(Control(textureName: "charge2", x: 128, y: 1))
+        for control in self.chargeIndicator {
+            self.addChild(control)
+        }
         
-        self.labelTimer = Label(color: GameColors.white, text: "?", x: 67, y: 63)
+        self.labelTimer = Label(color: GameColors.white, text: "?", x: 67, y: 43)
         self.addChild(self.labelTimer)
         
         self.updateLabels()
@@ -90,7 +95,12 @@ class BatteryControl: Control {
                     text = GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
                 }
                 
-                self.labelCharge.setText(charge.description + "/" + self.maxCharge.description)
+                var i = 0
+                for control in chargeIndicator {
+                    control.hidden = charge <= i
+                    i += 1
+                }
+                
                 self.labelTimer.setText(text)
             }
         }

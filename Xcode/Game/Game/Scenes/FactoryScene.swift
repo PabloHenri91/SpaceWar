@@ -60,7 +60,7 @@ class FactoryScene: GameScene {
         self.spaceShipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, xAlign: .center, yAlign: .center, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .center, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<FactorySpaceShipCard>()

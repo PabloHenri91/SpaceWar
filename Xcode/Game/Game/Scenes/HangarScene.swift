@@ -51,7 +51,7 @@ class HangarScene: GameScene {
         self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: "Selected spaceships",fontSize: GameFonts.fontSize.medium.rawValue, x: 92, y: 72, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left))
+        self.addChild(Label(color: SKColor.whiteColor(), text: "Selected spaceships",fontSize: 16, x: 92, y: 72, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left))
         
         for ship in ships {
             let spaceship = Spaceship(spaceshipData: ship)
@@ -83,7 +83,7 @@ class HangarScene: GameScene {
         self.spaceShipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Spaceships on hangar 09/10",fontSize: GameFonts.fontSize.medium.rawValue, x: 57, y: 213, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "Spaceships on hangar 09/10",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<HangarSpaceShipCard>()
