@@ -15,9 +15,12 @@ class MissionScene: GameScene {
     let missionShips = MemoryCard.sharedInstance.playerData.missionSpaceships
     
     var selectedSpaceship: MissionSpaceship?
-    var cropBox: CropBox!
     
     var buttonBack:Button!
+    
+    var playerDataCard:PlayerDataCard!
+    
+    var missionHeaderControl: Control!
     
     var scrollNode:ScrollNode!
     var controlArray:Array<MissionSpaceshipCard>!
@@ -41,8 +44,12 @@ class MissionScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonBack)
+//        self.buttonBack = Button(textureName: "button", text: "Back", x: 96, y: 10, xAlign: .center, yAlign: .center)
+//        self.addChild(self.buttonBack)
+        
+        self.backgroundColor = SKColor(red: 201/255, green: 207/255, blue: 213/255, alpha: 1)
+        
+        
         
         
         self.controlArray = Array<MissionSpaceshipCard>()
@@ -52,12 +59,20 @@ class MissionScene: GameScene {
             self.controlArray.append(MissionSpaceshipCard(missionSpaceship: MissionSpaceship(missionSpaceshipData: item as! MissionSpaceshipData)))
             
         }
+
         
-        self.cropBox = CropBox(name: "crop", textureName: "missionSpaceshipsCropBox", x: 20, y: 86)
-        self.addChild(self.cropBox)
+        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 20, y: 130, xAlign: .center, spacing: 16 , scrollDirection: .vertical)
+        self.addChild(self.scrollNode)
         
-        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
-        self.cropBox.addChild(self.scrollNode)
+        
+        self.missionHeaderControl = Control(textureName: "missionSceneHeader", x:0, y:63, xAlign: .center, yAlign: .center)
+        self.addChild(self.missionHeaderControl)
+        
+        let labelTitle = Label(text: "MINNER SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(labelTitle)
+        
+        self.playerDataCard = PlayerDataCard(playerData: MemoryCard.sharedInstance.playerData)
+        self.addChild(self.playerDataCard)
         
         
     }
@@ -126,16 +141,18 @@ class MissionScene: GameScene {
                 case states.normal:
                     
                     
-                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
-                        self.nextState = .mothership
+                    if (self.playerDataCard.containsPoint(touch.locationInNode(self))){
                         return
                     }
                     
-                    if (self.scrollNode.containsPoint(touch.locationInNode(self.cropBox.cropNode))) {
+                    if (self.missionHeaderControl.containsPoint(touch.locationInNode(self))){
+                        return
+                    }
+                    
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self))) {
                         for item in self.scrollNode.cells {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
                                 if let card = item as? MissionSpaceshipCard {
-                                    if ((card.position.y < 250) && (card.position.y > -250)){
                                         if let buttonBegin = card.buttonBegin{
                                             if (buttonBegin.containsPoint(touch.locationInNode(card))) {
                                                 self.nextState = .chooseMission
@@ -176,9 +193,6 @@ class MissionScene: GameScene {
                                                 return
                                             }
                                         }
-                                    
-                                    }
-                                    
                                     
                                     return
                                 }
