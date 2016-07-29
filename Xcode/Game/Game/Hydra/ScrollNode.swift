@@ -26,7 +26,8 @@ class ScrollNode: Control {
     var firstCellPositionX:CGFloat = 0
     var firstCellPositionY:CGFloat = 0
     
-    let force = 1
+    let force = 2
+    var maxVelocity = CGFloat(30)
     var width = 0
     var height = 0
     
@@ -75,7 +76,7 @@ class ScrollNode: Control {
                 control.physicsBody?.categoryBitMask = 0
                 control.physicsBody?.collisionBitMask = 0
                 control.physicsBody?.contactTestBitMask = 0
-                control.physicsBody?.linearDamping = 4
+                control.physicsBody?.linearDamping = 8
                 
                 self.addChild(control)
                 
@@ -140,7 +141,7 @@ class ScrollNode: Control {
                         
                         if(!outOfBounds && !containsPoins) {
                             
-                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dx)!) < 20) {
+                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dx)!) < scrollNode.maxVelocity) {
                                 
                                 let i = round((scrollNode.firstCellPositionX - scrollNode.cells[0].position.x) / CGFloat(scrollNode.width + scrollNode.spacing/Int(Display.screenScale)))
                                 
@@ -177,7 +178,7 @@ class ScrollNode: Control {
                         
                         if(!outOfBounds && !containsPoins) {
                             
-                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dy)!) < 20) {
+                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dy)!) < scrollNode.maxVelocity) {
                                 
                                 let i = round((scrollNode.cells[0].position.y - scrollNode.firstCellPositionY) / CGFloat(scrollNode.height + scrollNode.spacing/Int(Display.screenScale)))
                                 

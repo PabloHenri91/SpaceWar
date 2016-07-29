@@ -40,11 +40,6 @@ class FactoryScene: GameScene {
     var playerDataCard:PlayerDataCard!
     var gameTabBar:GameTabBar!
     
-    var buttonResearch:Button!
-    var buttonMission:Button!
-    var buttonMothership:Button!
-    var buttonHangar:Button!
-    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -77,10 +72,6 @@ class FactoryScene: GameScene {
         
         self.gameTabBar = GameTabBar(state: GameTabBar.states.factory)
         self.addChild(self.gameTabBar)
-        self.buttonResearch = self.gameTabBar.buttonResearch
-        self.buttonMission = self.gameTabBar.buttonMission
-        self.buttonMothership = self.gameTabBar.buttonMothership
-        self.buttonHangar = self.gameTabBar.buttonHangar
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -143,22 +134,22 @@ class FactoryScene: GameScene {
                 switch (self.state) {
                 case states.factory:
                     
-                    if(self.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research
                         return
                     }
                     
-                    if(self.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.mission
                         return
                     }
                     
-                    if(self.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.mothership
                         return
                     }
                     
-                    if(self.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.hangar
                         return
                     }

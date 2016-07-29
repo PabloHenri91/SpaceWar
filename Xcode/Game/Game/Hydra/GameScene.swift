@@ -28,7 +28,7 @@ class GameScene: SKScene {
     
     static var currentTime:NSTimeInterval = 0
     
-    static var transition = SKTransition.crossFadeWithDuration(0.5)
+    static var transition = SKTransition.crossFadeWithDuration(0)
     
     var blackSpriteNode:BlackSpriteNode!
     
