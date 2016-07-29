@@ -43,6 +43,29 @@ class FactoryScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        let actionDuration = 0.25
+        
+        switch GameTabBar.lastState {
+        case .research, .mission, .mothership:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        case .factory:
+            break
+        case .hangar:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        }
+        
         let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
         
@@ -51,21 +74,44 @@ class FactoryScene: GameScene {
         self.spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
         self.spaceShipListShape.resetPosition()
         
-        
         self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .center, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
         self.controlArray = Array<FactorySpaceShipCard>()
         
         for item in self.unlockedSpaceships {
-                let spaceship = Spaceship(spaceshipData: item)
-                print(item.weapons)
-                self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
+            let spaceship = Spaceship(spaceshipData: item)
+            self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
         }
-        
     
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
         self.spaceShipListShape.addChild(self.scrollNode)
+        
+        switch GameTabBar.lastState {
+        case .research, .mission, .mothership:
+            for node in self.children {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+            }
+            break
+        case .factory:
+            break
+        case .hangar:
+            for node in self.children {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+            }
+            break
+        }
+        
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+            for node in GameScene.lastChildren {
+                node.removeFromParent()
+            }
+            GameScene.lastChildren = [SKNode]()
+        })
         
         self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
@@ -94,15 +140,18 @@ class FactoryScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
-                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(ResearchScene())
                 break
                 
             case .mission:
-                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MothershipScene())
                 break
                 
             case states.factory:
@@ -110,7 +159,8 @@ class FactoryScene: GameScene {
                 break
                 
             case .hangar:
-                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(HangarScene())
                 break
                 
             case .alert:

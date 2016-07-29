@@ -576,7 +576,7 @@ class BattleTrainingScene: GameScene {
                 
             case .mothership:
                 MemoryCard.sharedInstance.playerData.needBattleTraining = NSNumber(bool: false)
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                self.view?.presentScene(MothershipScene())
                 break
                 
             case .endBattle:

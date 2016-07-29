@@ -194,7 +194,7 @@ class ResearchDetailsScene: GameScene {
                 break
                 
             case .research:
-                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
+                self.view?.presentScene(ResearchScene())
                 break
                 
             

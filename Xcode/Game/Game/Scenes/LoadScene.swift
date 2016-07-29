@@ -45,9 +45,9 @@ class LoadScene: GameScene {
             switch (self.nextState) {
             case .mothership:
                 if MemoryCard.sharedInstance.playerData.needBattleTraining.boolValue {
-                    self.view?.presentScene(BattleTrainingScene(), transition: GameScene.transition)
+                    self.view?.presentScene(BattleTrainingScene())
                 } else {
-                    self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                    self.view?.presentScene(MothershipScene())
                 }
                 
                 break

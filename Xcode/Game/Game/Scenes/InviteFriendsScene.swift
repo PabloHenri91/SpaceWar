@@ -118,7 +118,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
 
                 
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                self.view?.presentScene(MothershipScene())
                 break
                 
             default:

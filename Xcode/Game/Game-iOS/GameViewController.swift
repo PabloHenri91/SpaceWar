@@ -26,7 +26,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             skView.showsNodeCount = true
         #endif
         
-        skView.presentScene(scene, transition: GameScene.transition)
+        skView.presentScene(scene)
         
         self.authenticateLocalPlayer()
     }

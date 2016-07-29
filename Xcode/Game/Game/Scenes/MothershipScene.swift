@@ -44,6 +44,29 @@ class MothershipScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        let actionDuration = 0.25
+        
+        switch GameTabBar.lastState {
+        case .research, .mission:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        case .mothership:
+            break
+        case .factory, .hangar:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        }
+        
         Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
         
         self.playerData = MemoryCard.sharedInstance.playerData
@@ -90,23 +113,31 @@ class MothershipScene: GameScene {
         self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonBattle)
         
-        GameScene.currentChildren = self.children
-        
-        for node in self.children {
-            let nodePosition = node.position
-            
-            switch GameTabBar.lastState {
-            case .research, .mission:
-                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                break
-            case .mothership:
-                break
-            case .factory, .hangar:
+        switch GameTabBar.lastState {
+        case .research, .mission:
+            for node in self.children {
+                let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                break
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
-            node.runAction(SKAction.moveTo(nodePosition, duration: 0.25))
+            break
+        case .mothership:
+            break
+        case .factory, .hangar:
+            for node in self.children {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+            }
+            break
         }
+        
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+            for node in GameScene.lastChildren {
+                node.removeFromParent()
+            }
+            GameScene.lastChildren = [SKNode]()
+        })
         
         self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
@@ -130,40 +161,50 @@ class MothershipScene: GameScene {
             
             //Próximo estado
             switch (self.nextState) {
-            case .battle:
-                self.view?.presentScene(BattleScene(), transition: GameScene.transition)
+                
+            case .research:
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(ResearchScene())
                 break
+                
+            case .mission:
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MissionScene())
+                break
+                
+            case .mothership:
+                self.blackSpriteNode.hidden = true
+                break
+                
+            case .factory:
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(FactoryScene())
+                break
+                
+            case .hangar:
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(HangarScene())
+                break
+                
+            case .battle:
+                self.view?.presentScene(BattleScene())
+                break
+                
             case .social:
                 #if os(iOS)
-                    self.view?.presentScene(InviteFriendsScene(), transition: GameScene.transition)
+                    self.view?.presentScene(InviteFriendsScene())
                 #endif
                 break
-            case .hangar:
-                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
-                break
-            case .research:
-                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
-                break
-            case .mission:
-                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
-                break
-            case .factory:
-                self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
-                break
+            
             case .social:
                 #if os(iOS)
-                   self.view?.presentScene(SocialScene(), transition: GameScene.transition)
+                   self.view?.presentScene(SocialScene())
                 #else
                    self.nextState = .mothership
                 #endif
-                
-                
     
                 break
             case .alert:
-                break
-            case .mothership:
-                self.blackSpriteNode.hidden = true
                 break
                 
             default:

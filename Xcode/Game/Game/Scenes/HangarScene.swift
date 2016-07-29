@@ -49,6 +49,21 @@ class HangarScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        let actionDuration = 0.25
+        
+        switch GameTabBar.lastState {
+        case .research, .mission, .mothership, .factory:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        case .hangar:
+            break
+        }
+        
         self.addChild(Label(color: SKColor.whiteColor(), text: "Selected spaceships",fontSize: 16, x: 92, y: 72, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left))
         
         for ship in ships {
@@ -116,6 +131,25 @@ class HangarScene: GameScene {
             self.scrollNode.append(item)
         }
         
+        switch GameTabBar.lastState {
+        case .research, .mission, .mothership, .factory:
+            for node in self.children {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+            }
+            break
+        case .hangar:
+            break
+        }
+        
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+            for node in GameScene.lastChildren {
+                node.removeFromParent()
+            }
+            GameScene.lastChildren = [SKNode]()
+        })
+        
         self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
         
@@ -152,25 +186,29 @@ class HangarScene: GameScene {
             
             //Próximo estado
             switch (self.nextState) {
-            
-            case states.hangar:
-                self.blackSpriteNode.hidden = true
-                break
                 
             case .research:
-                self.view?.presentScene(ResearchScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(ResearchScene())
                 break
                 
             case .mission:
-                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MothershipScene())
                 break
                 
             case .factory:
-                self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(FactoryScene())
+                break
+                
+            case states.hangar:
+                self.blackSpriteNode.hidden = true
                 break
                 
             case .alert:

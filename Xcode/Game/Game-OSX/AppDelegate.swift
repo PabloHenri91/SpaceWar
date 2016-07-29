@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             skView.showsNodeCount = true
         #endif
         
-        self.skView.presentScene(scene, transition: GameScene.transition)
+        self.skView.presentScene(scene)
     }
     
     func windowDidResize(notification: NSNotification) {

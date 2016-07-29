@@ -45,11 +45,44 @@ class ResearchScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        let actionDuration = 0.25
+        
+        switch GameTabBar.lastState {
+        case .research:
+            break
+        case .mission, .mothership, .factory, .hangar:
+            for node in GameScene.lastChildren {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
+                node.removeFromParent()
+                self.addChild(node)
+            }
+            break
+        }
         
         self.cropBox = CropBox(name: "crop", textureName: "missionSpaceshipsCropBox", x: 20, y: 86)
         self.addChild(self.cropBox)
         
         self.updateResearchs()
+        
+        switch GameTabBar.lastState {
+        case .research:
+            break
+        case .mission, .mothership, .factory, .hangar:
+            for node in self.children {
+                let nodePosition = node.position
+                node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+            }
+            break
+        }
+        
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+            for node in GameScene.lastChildren {
+                node.removeFromParent()
+            }
+            GameScene.lastChildren = [SKNode]()
+        })
         
         self.playerDataCard = PlayerDataCard()
         self.addChild(self.playerDataCard)
@@ -89,24 +122,31 @@ class ResearchScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
+            case .research:
+                break
+                
             case .mission:
-                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(MothershipScene())
                 break
                 
             case .factory:
-                self.view?.presentScene(FactoryScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(FactoryScene())
                 break
                 
             case .hangar:
-                self.view?.presentScene(HangarScene(), transition: GameScene.transition)
+                GameScene.lastChildren = self.children
+                self.view?.presentScene(HangarScene())
                 break
                 
             case .researchDetails:
-                self.view?.presentScene(ResearchDetailsScene(research: self.research!), transition: GameScene.transition)
+                self.view?.presentScene(ResearchDetailsScene(research: self.research!))
                 break
                 
             default:

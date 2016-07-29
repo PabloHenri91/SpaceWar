@@ -16,7 +16,6 @@ import Foundation
 class GameScene: SKScene {
     
     static var lastChildren = [SKNode]()
-    static var currentChildren = [SKNode]()
     
     static var selectedButton:Button? {
         willSet(newValue) {
@@ -41,7 +40,7 @@ class GameScene: SKScene {
         Display.updateSceneSize()
         
         super.init(size: Display.currentSceneSize)
-        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
+        self.backgroundColor = SKColor(red: 201/255, green: 207/255, blue: 213/255, alpha: 1)
         
         Control.controlList = Set<Control>()
         Button.buttonList = Set<Button>()

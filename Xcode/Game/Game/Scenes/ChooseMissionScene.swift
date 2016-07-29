@@ -85,7 +85,7 @@ class ChooseMissionScene: GameScene {
             switch (self.nextState) {
                 
             case .missionScene:
-                self.view?.presentScene(MissionScene(), transition: GameScene.transition)
+                self.view?.presentScene(MissionScene())
                 break
                 
             default:
