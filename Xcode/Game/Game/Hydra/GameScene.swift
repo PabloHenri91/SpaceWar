@@ -15,6 +15,9 @@ import Foundation
 
 class GameScene: SKScene {
     
+    static var lastChildren = [SKNode]()
+    static var currentChildren = [SKNode]()
+    
     static var selectedButton:Button? {
         willSet(newValue) {
             #if os(tvOS)
