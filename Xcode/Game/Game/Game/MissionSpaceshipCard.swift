@@ -20,6 +20,7 @@ class MissionSpaceshipCard: Control {
     var labelName: Label!
     var labelDescription: Label!
     var needUpdate: Bool = true
+    var timeBar: TimeBar?
     
     
     var lastUpdate:NSTimeInterval = 0
@@ -35,10 +36,7 @@ class MissionSpaceshipCard: Control {
         self.missionSpaceship = missionSpaceship
         self.spaceShipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
         self.addChild(self.spaceShipImage)
- 
-        
- 
-        
+
         
         self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 11, x: 259, y: 16, shadowColor: SKColor(red: 229/255, green: 228/255, blue: 229/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
@@ -56,23 +54,27 @@ class MissionSpaceshipCard: Control {
             
             if (time > 0) {
                 
-                //TODO: descomentar
-//                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp",  x: 86, y: 85)
-//                self.addChild(self.buttonSpeedUp!)
+                self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.buttonSpeedUp!)
                 
-                self.labelDescription = Label(text: "Remaining Time: " + GameMath.timeFormated(time), fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+                self.timeBar = TimeBar(x: 97, y: 50)
+                self.addChild(self.timeBar!.cropNode)
+                
+                
             } else {
                 
-                self.buttonColect = Button(textureName: "buttonGreen", text: "Colect",  x: 129, y: 91)
+                self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 10, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonColect!)
                 
-                self.labelDescription = Label(text: "Mission finished", fontSize: 10 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+                self.timeBar = TimeBar(x: 97, y: 50)
+                self.addChild(self.timeBar!.cropNode)
             }
             
             
         } else {
             
             self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+            self.addChild(self.labelDescription)
             
             self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 10,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonBegin!)
@@ -86,8 +88,6 @@ class MissionSpaceshipCard: Control {
             
         }
     
-        
-        self.addChild(self.labelDescription)
         
     }
     
@@ -115,14 +115,19 @@ class MissionSpaceshipCard: Control {
             self.buttonColect!.removeFromParent()
             self.buttonColect = nil
             
+            self.timeBar?.cropNode.removeFromParent()
             
-            self.labelDescription.setText("No mission")
+            self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+            self.addChild(self.labelDescription)
             
-            self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin",  x: 129, y: 91)
+            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 10,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonBegin!)
             
-            self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 207, y: 91)
-            self.addChild(self.buttonUpgrade!)
+            
+            if self.missionSpaceship.level < 4 {
+                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 10 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.buttonUpgrade!)
+            }
         }
         
     }
@@ -141,21 +146,23 @@ class MissionSpaceshipCard: Control {
                     
                     
                     if (time > 0) {
-                        self.labelDescription.setText("Remaining Time: " + GameMath.timeFormated(time))
+                        if let timer = self.timeBar {
+                            timer.update(self.missionSpaceship)
+                        }
+                       
                     } else  {
                         self.needUpdate = false
                         if let missionspaceshipData = self.missionSpaceship.missionspaceshipData {
                             
                             
                             self.buttonSpeedUp?.removeFromParent()
-                            
-                            if let buttonColect = self.buttonColect {
-                                buttonColect.removeFromParent()
-                            }
-                            
-                            self.buttonColect = Button(textureName: "buttonSmall", text: "Colect",  x: 86, y: 85)
+                            self.buttonColect?.removeFromParent()
+                          
+                            self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 10, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                             self.addChild(self.buttonColect!)
-                            self.labelDescription.setText("Mission finished")
+                            if let timer = self.timeBar {
+                                timer.update(self.missionSpaceship)
+                            }
                             
                         }
                     }

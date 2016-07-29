@@ -22,6 +22,8 @@
 		3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
 		3A4138801D463A830026B47E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A41387F1D463A830026B47E /* GameKit.framework */; };
 		3A4138821D469EA80026B47E /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4138811D469EA80026B47E /* SocialScene.swift */; };
+		3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
+		3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
 		3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
 		3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
@@ -237,6 +239,7 @@
 		3A4065F91D2D902200B886DB /* MultiLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineLabel.swift; sourceTree = "<group>"; };
 		3A41387F1D463A830026B47E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		3A4138811D469EA80026B47E /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
+		3A5984511D4B6CB6009FDA6D /* TimeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeBar.swift; sourceTree = "<group>"; };
 		3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-500-webfont.ttf"; sourceTree = "<group>"; };
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
@@ -613,6 +616,7 @@
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
+				3A5984511D4B6CB6009FDA6D /* TimeBar.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1004,6 +1008,7 @@
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
 				844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */,
 				3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */,
+				3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				843620641CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
 				3AAA933E1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843620821CEB77400082A9D7 /* StringExtension.swift in Sources */,
@@ -1076,6 +1081,7 @@
 				3A4065F51D2C616500B886DB /* ResearchCard.swift in Sources */,
 				84F855DE1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				84F855F41CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
+				3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				843620651CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
 				84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */,
 			);
