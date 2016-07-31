@@ -58,6 +58,8 @@ class BattleTrainingScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
+        
         Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
         
         // GameWorld

@@ -12,7 +12,6 @@ class FactoryScene: GameScene {
     
     
     var playerData = MemoryCard.sharedInstance.playerData
-    let unlockedSpaceships = MemoryCard.sharedInstance.playerData.unlockedSpaceships as! Set<SpaceshipData>
     
     var labelShips:Label!
     
@@ -79,9 +78,18 @@ class FactoryScene: GameScene {
         
         self.controlArray = Array<FactorySpaceShipCard>()
         
-        for item in self.unlockedSpaceships {
-            let spaceship = Spaceship(spaceshipData: item)
-            self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
+        //TODO: ???
+        for item in self.playerData.unlockedSpaceships {
+            if let spaceship = item as? SpaceshipData {
+                for item in self.playerData.weapons {
+                    if let weapon = item as? WeaponData {
+                        let spaceship = Spaceship(type: spaceship.type.integerValue, level: 1)
+                        let weapon = Weapon(type: weapon.type.integerValue, level: 1)
+                        spaceship.addWeapon(weapon)
+                        self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
+                    }
+                }
+            }
         }
     
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)

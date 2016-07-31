@@ -38,12 +38,13 @@ class BattleScene: GameScene {
     var lastBotUpdate:Double = 0
     var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
     
-    var battleEndTime: Double = 0 //TODO: Essa variavel ta com nome ruinzinho em Pablo
-    var battleBeginInterval: NSTimeInterval = 0
-    var battleEndInterval: NSTimeInterval = 0
+    var battleEndTime: Double = 0
+    var battleBeginTime: Double = 0
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        
+        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
         
         Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
         
@@ -230,20 +231,15 @@ class BattleScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .battle:
-                self.battleBeginInterval = currentTime
+                self.battleBeginTime = currentTime
                 break
             case .battleEnd:
                 //TODO: musica do fim da partida
                 //Music.sharedInstance.stop()
-                self.battleEndInterval = currentTime - self.battleBeginInterval
-                #if(iOS)
-                    Metrics.battleTime(self.battleEndInterval)
-                #endif
                 
                 #if os(iOS)
-                    Metrics.battleTime(self.battleEndInterval)
+                    Metrics.battleTime(currentTime - self.battleBeginTime)
                 #endif
-                
                 
                 self.mothership.endBattle()
                 self.botMothership.endBattle()

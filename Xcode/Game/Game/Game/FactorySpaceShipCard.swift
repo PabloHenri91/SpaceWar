@@ -51,9 +51,13 @@ class FactorySpaceShipCard: Control {
         self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name + " + " + self.spaceShip.weapon!.type.name!  , x: 137, y: 23)
-        self.addChild(self.labelName)
-        
+        if let weapon = self.spaceShip.weapon {
+            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name + " + " + weapon.type.name  , x: 137, y: 23)
+            self.addChild(self.labelName)
+        } else {
+            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name, x: 137, y: 23)
+            self.addChild(self.labelName)
+        }
       
         self.labelDescription = Label(text: "Price: " + GameMath.spaceshipPrice(self.spaceShip.type).description, fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
         self.addChild(self.labelDescription)
