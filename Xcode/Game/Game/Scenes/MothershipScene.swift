@@ -185,15 +185,7 @@ class MothershipScene: GameScene {
                     self.view?.presentScene(InviteFriendsScene())
                 #endif
                 break
-            
-            case .social:
-                #if os(iOS)
-                   self.view?.presentScene(SocialScene())
-                #else
-                   self.nextState = .mothership
-                #endif
-    
-                break
+                
             case .alert:
                 break
                 

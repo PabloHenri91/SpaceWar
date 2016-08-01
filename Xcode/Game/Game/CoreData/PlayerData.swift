@@ -116,7 +116,7 @@ extension MemoryCard {
         playerData.researches = NSSet()
         
         for research in Research.types {
-            var newResearch = self.newResearchData()
+            let newResearch = self.newResearchData()
             newResearch.type = research.index
             playerData.addResearchData(newResearch)
         }

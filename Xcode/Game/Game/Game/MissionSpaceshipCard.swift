@@ -152,9 +152,7 @@ class MissionSpaceshipCard: Control {
                        
                     } else  {
                         self.needUpdate = false
-                        if let missionspaceshipData = self.missionSpaceship.missionspaceshipData {
-                            
-                            
+                        if let _ = self.missionSpaceship.missionspaceshipData {
                             self.buttonSpeedUp?.removeFromParent()
                             self.buttonColect?.removeFromParent()
                           
@@ -163,7 +161,6 @@ class MissionSpaceshipCard: Control {
                             if let timer = self.timeBar {
                                 timer.update(self.missionSpaceship)
                             }
-                            
                         }
                     }
                     

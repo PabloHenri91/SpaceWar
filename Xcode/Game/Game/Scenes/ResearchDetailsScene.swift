@@ -197,8 +197,6 @@ class ResearchDetailsScene: GameScene {
                 self.view?.presentScene(ResearchScene())
                 break
                 
-            
-                
             default:
                 #if DEBUG
                     fatalError()
