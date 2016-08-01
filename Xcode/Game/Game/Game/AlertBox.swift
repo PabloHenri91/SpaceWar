@@ -21,6 +21,10 @@ class AlertBox: Box {
     init(title:String, text:String, type:AlertBox.messageType) {
         super.init(textureName: "alertBox")
         
+        let scene = Control.gameScene
+        scene.blackSpriteNode.hidden = false
+        scene.blackSpriteNode.zPosition = 100000
+        
         self.zPosition = 1000000
         
         self.addChild(Label(text:title, x:141, y:24))
@@ -31,6 +35,7 @@ class AlertBox: Box {
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:93, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
             })
             break
@@ -39,12 +44,14 @@ class AlertBox: Box {
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:43, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
                 })
             
             self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:163, y:102)
             self.addChild(self.buttonCancel)
             self.buttonCancel.addHandler({ [weak self] in
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
                 })
             break

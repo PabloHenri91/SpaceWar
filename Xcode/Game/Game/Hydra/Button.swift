@@ -32,7 +32,8 @@ class Button: Control {
         top:Int = 0, bottom:Int = 0, left:Int = 0, right:Int = 0,
         fontColor:SKColor = SKColor.blackColor(), fontShadowColor:SKColor = SKColor.clearColor(), fontShadowOffset:CGPoint = CGPoint.zero,
         pressedFontColor:SKColor = SKColor.whiteColor(), pressedFontShadowColor:SKColor = SKColor.clearColor(), pressedFontShadowOffset:CGPoint = CGPoint.zero,
-        fontName:String = GameFonts.fontName.museo500) {
+        fontName:String = GameFonts.fontName.museo500,
+        textOffset:CGPoint = CGPoint.zero) {
             super.init()
             
             self.labelColor = fontColor
@@ -84,21 +85,23 @@ class Button: Control {
             if (text != "") {
                 let labelNode = SKLabelNode(fontNamed: fontName)
                 labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
-                labelNode.fontSize = fontSize
+                labelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                 labelNode.fontColor = fontColor
                 labelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                 labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                 labelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
+                labelNode.position = CGPoint(x: labelNode.position.x + textOffset.x, y: labelNode.position.y + textOffset.y)
                 
                 if fontShadowColor != SKColor.clearColor() {
                     let shadowLabelNode = SKLabelNode(fontNamed: fontName)
                     shadowLabelNode.text = labelNode.text
-                    shadowLabelNode.fontSize = fontSize
+                    shadowLabelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                     shadowLabelNode.fontColor = fontShadowColor
                     shadowLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                     shadowLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                     shadowLabelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
                     shadowLabelNode.position = CGPoint(x: shadowLabelNode.position.x + fontShadowOffset.x, y: shadowLabelNode.position.y + fontShadowOffset.y)
+                    shadowLabelNode.position = CGPoint(x: shadowLabelNode.position.x + textOffset.x, y: shadowLabelNode.position.y + textOffset.y)
                     
                     self.button.addChild(shadowLabelNode)
                 }
@@ -135,11 +138,12 @@ class Button: Control {
             if (text != "") {
                 let labelNodePressed = SKLabelNode(fontNamed: fontName)
                 labelNodePressed.text = NSLocalizedString(text, tableName: nil, comment:"")
-                labelNodePressed.fontSize = fontSize
+                labelNodePressed.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                 labelNodePressed.fontColor = pressedFontColor
                 labelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                 labelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                 labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
+                labelNodePressed.position = CGPoint(x: labelNodePressed.position.x + textOffset.x, y: labelNodePressed.position.y + textOffset.y)
                 
                 var shadowColor = SKColor.clearColor()
                 if pressedFontShadowColor != SKColor.clearColor() {
@@ -161,12 +165,14 @@ class Button: Control {
                     
                     let shadowLabelNodePressed = SKLabelNode(fontNamed: fontName)
                     shadowLabelNodePressed.text = labelNodePressed.text
-                    shadowLabelNodePressed.fontSize = fontSize
+                    shadowLabelNodePressed.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                     shadowLabelNodePressed.fontColor = shadowColor
                     shadowLabelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
                     shadowLabelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
                     shadowLabelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
                     shadowLabelNodePressed.position = CGPoint(x: shadowLabelNodePressed.position.x + shadowOffset.x, y: shadowLabelNodePressed.position.y + shadowOffset.y)
+                    shadowLabelNodePressed.position = CGPoint(x: shadowLabelNodePressed.position.x + textOffset.x, y: shadowLabelNodePressed.position.y + textOffset.y)
+                    
                     self.buttonPressed.addChild(shadowLabelNodePressed)
                 }
                 

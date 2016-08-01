@@ -73,32 +73,6 @@ class MothershipScene: GameScene {
         
         self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
         
-        var xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
-        let xp = self.playerData.motherShip.xp.integerValue
-        if (xpForNextLevel <= xp) {
-            self.playerData.motherShip.level = NSNumber(int: self.playerData.motherShip.level.integerValue + 1)
-            self.playerData.motherShip.xp = NSNumber(integer: xp - xpForNextLevel)
-            
-            #if os(iOS)
-                Metrics.levelUp()
-                if let vc = self.view?.window?.rootViewController as? GameViewController {
-                    vc.saveLevel(Int(self.playerData.motherShip.level))
-                }
-            #endif
-            
-            self.blackSpriteNode.hidden = false
-            self.blackSpriteNode.zPosition = 100000
-            
-            let alertBox = AlertBox(title: "Level up", text: "You go to level " + self.playerData.motherShip.level.description + "! 😃 ", type: AlertBox.messageType.OK)
-            alertBox.buttonOK.addHandler({
-                self.nextState = .mothership
-            })
-            self.nextState = .alert
-            self.addChild(alertBox)
-        }
-        
-        xpForNextLevel = GameMath.xpForNextLevel(level: self.playerData.motherShip.level.integerValue)
-        
         self.batteryControl = BatteryControl(x: 75, y: 229, xAlign: .center, yAlign: .center)
         self.addChild(self.batteryControl)
         
@@ -110,7 +84,7 @@ class MothershipScene: GameScene {
         self.addChild(self.buttonSocial)
         self.buttonSocial.hidden = true
         
-        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
         self.addChild(self.buttonBattle)
         
         switch GameTabBar.lastState {
@@ -146,6 +120,14 @@ class MothershipScene: GameScene {
         self.addChild(self.gameTabBar)
     }
     
+    override func setAlertState() {
+        self.nextState = .alert
+    }
+    
+    override func setDefaultState() {
+        self.nextState = .mothership
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
@@ -163,11 +145,15 @@ class MothershipScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(ResearchScene())
                 break
                 
             case .mission:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MissionScene())
                 break
@@ -177,11 +163,15 @@ class MothershipScene: GameScene {
                 break
                 
             case .factory:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(FactoryScene())
                 break
                 
             case .hangar:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(HangarScene())
                 break
@@ -242,10 +232,6 @@ class MothershipScene: GameScene {
                                 self.batteryControl.useCharge()
                             } else {
                                 
-                                self.blackSpriteNode.hidden = false
-                                self.blackSpriteNode.zPosition = 100000
-                                
-                                
                                 let teste = AlertBox(title: "Alert!!!", text: "Battery Critically Low", type: .OK)
                                 teste.zPosition = self.blackSpriteNode.zPosition + 1
                                 self.addChild(teste)
@@ -261,9 +247,6 @@ class MothershipScene: GameScene {
                         if (self.playerData.motherShip.spaceships.count == 4) {
                             self.nextState = states.battle
                         } else {
-                            self.blackSpriteNode.hidden = false
-                            self.blackSpriteNode.zPosition = 100000
-                            
                             
                             let teste = AlertBox(title: "Alert!!!", text: "Missing spaceships, go to hangar", type: .OK)
                             teste.zPosition = self.blackSpriteNode.zPosition + 1

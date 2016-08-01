@@ -118,6 +118,13 @@ class MissionScene: GameScene {
         self.addChild(self.gameTabBar)
     }
     
+    override func setAlertState() {
+        //TODO: self.nextState = .alert
+    }
+    
+    override func setDefaultState() {
+        self.nextState = .mission
+    }
     
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
@@ -145,6 +152,8 @@ class MissionScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(ResearchScene())
                 break
@@ -153,16 +162,22 @@ class MissionScene: GameScene {
                 break
                 
             case .mothership:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MothershipScene())
                 break
                 
             case .factory:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(FactoryScene())
                 break
                 
             case .hangar:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(HangarScene())
                 break
@@ -242,6 +257,9 @@ class MissionScene: GameScene {
                                         if let buttonColect = card.buttonColect {
                                             if(buttonColect.containsPoint(touch.locationInNode(card))) {
                                                 card.colect()
+                                                self.playerDataCard.updatePoints()
+                                                self.playerDataCard.updateXP()
+                                                
                                                 return
                                             }
                                         }
@@ -263,6 +281,8 @@ class MissionScene: GameScene {
                                                         if card.upgrade() == false {
                                                             let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro 😢😢", type: AlertBox.messageType.OK)
                                                             self.addChild(alertBox2)
+                                                        } else {
+                                                            self.playerDataCard.updatePoints()
                                                         }
                                                     }
                                                 )

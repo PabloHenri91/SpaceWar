@@ -18,6 +18,7 @@ class Spaceship: Control {
         case skin
         case teamDetail
         case weaponDetail
+        case levelDetail
         case selectedDetail
         case touchAreaEffect
     }
@@ -227,6 +228,12 @@ class Spaceship: Control {
         }
         
         self.increaseTouchArea()
+        
+        #if DEBUG
+            let labelLevel = Label(color: GameColors.white, text: self.level.description, fontSize: 16, x: 0, y: 0, shadowColor: GameColors.black, shadowOffset: CGPoint(x: 1, y: -1))
+            labelLevel.zPosition = zPositions.levelDetail.rawValue
+            self.addChild(labelLevel)
+        #endif
         
         Spaceship.spaceshipList.insert(self)
     }

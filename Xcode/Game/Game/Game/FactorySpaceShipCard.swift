@@ -64,16 +64,11 @@ class FactorySpaceShipCard: Control {
         
     }
     
-    
-    
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func buySpaceship(){
-        
+    func buySpaceship() {
         var weaponTypeIndex = Int.random(Weapon.types.count)
         if let weapon = self.spaceShip.weapon {
             weaponTypeIndex = weapon.type.index
@@ -82,10 +77,7 @@ class FactorySpaceShipCard: Control {
         let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
         spaceshipData.addWeaponData(weaponData)
         self.playerData.addSpaceshipData(spaceshipData)
-        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceShip.type))
-        
+        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceShip.type))//ok
     }
-
-    
 }
 

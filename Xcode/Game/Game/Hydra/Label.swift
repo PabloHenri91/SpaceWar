@@ -31,7 +31,7 @@ class Label: Control {
         
         self.labelNode = SKLabelNode(fontNamed: fontName)
         self.labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
-        self.labelNode.fontSize = fontSize
+        self.labelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
         self.labelNode.fontColor = color
         self.labelNode.verticalAlignmentMode = verticalAlignmentMode
         self.labelNode.horizontalAlignmentMode = horizontalAlignmentMode
@@ -39,7 +39,7 @@ class Label: Control {
         self.shadowLabelNode = SKLabelNode(fontNamed: fontName)
         self.shadowLabelNode.position = shadowOffset
         self.shadowLabelNode.text = self.labelNode.text
-        self.shadowLabelNode.fontSize = fontSize
+        self.shadowLabelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
         self.shadowLabelNode.fontColor = shadowColor
         self.shadowLabelNode.verticalAlignmentMode = verticalAlignmentMode
         self.shadowLabelNode.horizontalAlignmentMode = horizontalAlignmentMode

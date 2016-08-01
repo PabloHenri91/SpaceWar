@@ -18,13 +18,10 @@ class Music {
     
     struct fileNames {
         static var menu = [
-            //"klamm_one-morning-in-space.mp3",
             "klamm_space-life.mp3"]
         static var battle = [
-            //"broken-satellite_beyond-the-pixeled-rainbow.mp3",
             "bus-blanchie_bright-stars.mp3",
             "jredd_magma-crystal-falls.mp3",
-            "laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3",
             "pandamindset_pandamindset---space-sleepers.mp3"]
     }
     

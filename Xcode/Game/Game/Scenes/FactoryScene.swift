@@ -128,6 +128,14 @@ class FactoryScene: GameScene {
         self.addChild(self.gameTabBar)
     }
     
+    override func setAlertState() {
+        self.nextState = .alert
+    }
+    
+    override func setDefaultState() {
+        self.nextState = .factory
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
@@ -148,16 +156,22 @@ class FactoryScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(ResearchScene())
                 break
                 
             case .mission:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MothershipScene())
                 break
@@ -167,6 +181,8 @@ class FactoryScene: GameScene {
                 break
                 
             case .hangar:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(HangarScene())
                 break
@@ -222,11 +238,8 @@ class FactoryScene: GameScene {
                                             
                                             if (self.playerData.points.integerValue > GameMath.spaceshipPrice(card.spaceShip.type)) {
                                                 card.buySpaceship()
+                                                self.playerDataCard.updatePoints()
                                             } else {
-                                                
-                                                self.blackSpriteNode.hidden = false
-                                                self.blackSpriteNode.zPosition = 100000
-                                                
                                                 
                                                 let teste = AlertBox(title: "Alert!!!", text: "Insuficient funds!", type: .OK)
                                                 teste.zPosition = self.blackSpriteNode.zPosition + 1

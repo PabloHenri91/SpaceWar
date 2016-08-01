@@ -33,7 +33,7 @@ class BatteryControl: Control {
         }
         
         let color = SKColor(red: 60/255, green: 75/255, blue: 88/255, alpha: 1)
-        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:9, x: 85, y: 33)
+        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:11, x: 85, y: 33)
         self.addChild(self.labelTimerValue)
         
         self.updateLabels()

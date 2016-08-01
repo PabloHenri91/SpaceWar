@@ -54,7 +54,7 @@ class MissionSpaceshipCard: Control {
             
             if (time > 0) {
                 
-                self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 11, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonSpeedUp!)
                 
                 self.timeBar = TimeBar(x: 97, y: 50)
@@ -63,7 +63,7 @@ class MissionSpaceshipCard: Control {
                 
             } else {
                 
-                self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 10, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonColect!)
                 
                 self.timeBar = TimeBar(x: 97, y: 50)
@@ -76,12 +76,12 @@ class MissionSpaceshipCard: Control {
             self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
             self.addChild(self.labelDescription)
             
-            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 10,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 11,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonBegin!)
             
             
             if self.missionSpaceship.level < 4 {
-                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 10 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
             
@@ -120,12 +120,12 @@ class MissionSpaceshipCard: Control {
             self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
             self.addChild(self.labelDescription)
             
-            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 10,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.buttonBegin = Button(textureName: "buttonBlue", text: "BEGIN",  fontSize: 11,  x: 97, y: 79, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 42/255, green: 121/255, blue: 146/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonBegin!)
             
             
             if self.missionSpaceship.level < 4 {
-                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 10 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
         }
@@ -158,7 +158,7 @@ class MissionSpaceshipCard: Control {
                             self.buttonSpeedUp?.removeFromParent()
                             self.buttonColect?.removeFromParent()
                           
-                            self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 10, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                            self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                             self.addChild(self.buttonColect!)
                             if let timer = self.timeBar {
                                 timer.update(self.missionSpaceship)

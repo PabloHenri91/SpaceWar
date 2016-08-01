@@ -91,6 +91,13 @@ class ResearchScene: GameScene {
         self.addChild(self.gameTabBar)
     }
     
+    override func setAlertState() {
+        //TODO: self.nextState = .alert
+    }
+    
+    override func setDefaultState() {
+        self.nextState = .research
+    }
     
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
@@ -126,21 +133,29 @@ class ResearchScene: GameScene {
                 break
                 
             case .mission:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MothershipScene())
                 break
                 
             case .factory:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(FactoryScene())
                 break
                 
             case .hangar:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(HangarScene())
                 break
@@ -248,6 +263,7 @@ class ResearchScene: GameScene {
                                             if let buttonColect = card.buttonColect {
                                                 if(buttonColect.containsPoint(touch.locationInNode(card))) {
                                                     card.research.colect()
+                                                    self.playerDataCard.updateXP()
                                                     self.updateResearchs()
                                                 }
                                             }

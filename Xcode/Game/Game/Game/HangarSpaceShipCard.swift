@@ -80,11 +80,11 @@ class HangarSpaceShipCard: Control {
         
         if self.crashed {
             if let spaceshipData = self.spaceShip.spaceshipData {
-                self.labelDescription = Label(text: GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)) , fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+                self.labelDescription = Label(text: GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)) , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
             }
         } else {
-            //self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
-            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description , fontSize: 8 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            //self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
         }
         
       
@@ -130,22 +130,19 @@ class HangarSpaceShipCard: Control {
         self.selected = !selected
     }
     
-    func addSpaceship(){
+    func addSpaceship() {
         self.buttonSelect!.removeFromParent()
         self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
         self.addChild(self.buttonSelect!)
         self.selected = !selected
-        
     }
     
-    func upgradeSpaceship(cost: Int){
-        
+    func upgradeSpaceship(cost: Int) {
         let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceShip.level, type: self.spaceShip.type)
         self.spaceShip.upgrade()
         self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - cost)
         self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xp)
         self.reloadCard()
-        
     }
     
     func reloadCard() {

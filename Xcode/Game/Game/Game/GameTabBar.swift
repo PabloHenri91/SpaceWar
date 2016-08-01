@@ -27,66 +27,76 @@ class GameTabBar: Control {
     var buttonFactory:Button!
     var buttonHangar:Button!
     
-    var hover:Control!
+    var hover:Button!
     
     init(state:states) {
-        super.init(textureName: "tabBarBackground", x: -54, y: 512, xAlign: .center, yAlign: .up)
+        super.init(textureName: "tabBarBackground", x: -54, y: 513, xAlign: .center, yAlign: .up)
         
         let top = 9
         let bottom = 9
         let left = 9
         let right = 9
         
+        let hoverTextFontName = GameFonts.fontName.museo1000
+        let hoverTextFontSize = CGFloat(11)
+        
+        let hoverTextColor = SKColor.whiteColor()
+        let hoverTextShadowColor = SKColor(red: 0, green: 0, blue: 0, alpha: 20/100)
+        
+        let hoverTextOffset = CGPoint(x: 0, y: -9)
+        
+        let hoverTextShadowOffset = CGPoint(x: 0, y: -1)
+        
         switch GameTabBar.lastState {
             
         case .research:
-            self.buttonResearch = Button(textureName: "tabBarButton", x:84 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMission = Button(textureName: "tabBarButton", x:166 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMothership = Button(textureName: "tabBarButton", x:218 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonFactory = Button(textureName: "tabBarButton", x:270 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonHangar = Button(textureName: "tabBarButton", x:322 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonResearch = Button(textureName: "tabBarButton0", x:84 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMission = Button(textureName: "tabBarButton1", x:166 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMothership = Button(textureName: "tabBarButton2", x:218 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonFactory = Button(textureName: "tabBarButton3", x:270 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonHangar = Button(textureName: "tabBarButton4", x:322 ,y: 18, top: top, bottom: bottom, left: left, right: right)
             
-            self.hover = Control(textureName: "buttonResearch", x:54 ,y: 0)
+            self.hover = Button(textureName: "buttonResearch", text: "Researches", fontSize: hoverTextFontSize, x:54 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
             break
             
         case .mission:
-            self.buttonResearch = Button(textureName: "tabBarButton", x:68 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMission = Button(textureName: "tabBarButton", x:142 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMothership = Button(textureName: "tabBarButton", x:222 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonFactory = Button(textureName: "tabBarButton", x:273 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonHangar = Button(textureName: "tabBarButton", x:323 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonResearch = Button(textureName: "tabBarButton0", x:68 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMission = Button(textureName: "tabBarButton1", x:142 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMothership = Button(textureName: "tabBarButton2", x:222 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonFactory = Button(textureName: "tabBarButton3", x:273 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonHangar = Button(textureName: "tabBarButton4", x:323 ,y: 18, top: top, bottom: bottom, left: left, right: right)
             
-            self.hover = Control(textureName: "buttonMission", x:112 ,y: 0)
+            self.hover = Button(textureName: "buttonMission", text: "Miners", fontSize: hoverTextFontSize, x: 112 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
             break
             
         case .mothership:
-            self.buttonResearch = Button(textureName: "tabBarButton", x:73 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMission = Button(textureName: "tabBarButton", x:121 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMothership = Button(textureName: "tabBarButton", x:199 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonFactory = Button(textureName: "tabBarButton", x:277 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonHangar = Button(textureName: "tabBarButton", x:326 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonResearch = Button(textureName: "tabBarButton0", x:73 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMission = Button(textureName: "tabBarButton1", x:121 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMothership = Button(textureName: "tabBarButton2", x:199 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonFactory = Button(textureName: "tabBarButton3", x:277 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonHangar = Button(textureName: "tabBarButton4", x:326 ,y: 18, top: top, bottom: bottom, left: left, right: right)
             
-            self.hover = Control(textureName: "tabBarButtonBattle", x:169 ,y: 0)
+            self.hover = Button(textureName: "tabBarButtonBattle", text: "Battle", fontSize: hoverTextFontSize, x: 169 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
             break
             
         case .factory:
-            self.buttonResearch = Button(textureName: "tabBarButton", x:75 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMission = Button(textureName: "tabBarButton", x:126 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMothership = Button(textureName: "tabBarButton", x:176 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonFactory = Button(textureName: "tabBarButton", x:257 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonHangar = Button(textureName: "tabBarButton", x:330 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonResearch = Button(textureName: "tabBarButton0", x:75 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMission = Button(textureName: "tabBarButton1", x:126 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMothership = Button(textureName: "tabBarButton2", x:176 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonFactory = Button(textureName: "tabBarButton3", x:257 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonHangar = Button(textureName: "tabBarButton4", x:330 ,y: 18, top: top, bottom: bottom, left: left, right: right)
             
-            self.hover = Control(textureName: "buttonFactory", x:227 ,y: 0)
+            self.hover = Button(textureName: "buttonFactory", text: "Factory", fontSize: hoverTextFontSize, x: 227, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
             break
             
         case .hangar:
-            self.buttonResearch = Button(textureName: "tabBarButton", x:77 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMission = Button(textureName: "tabBarButton", x:129 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonMothership = Button(textureName: "tabBarButton", x:181 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonFactory = Button(textureName: "tabBarButton", x:233 ,y: 18, top: top, bottom: bottom, left: left, right: right)
-            self.buttonHangar = Button(textureName: "tabBarButton", x:315 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonResearch = Button(textureName: "tabBarButton0", x:77 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMission = Button(textureName: "tabBarButton1", x:129 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonMothership = Button(textureName: "tabBarButton2", x:181 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonFactory = Button(textureName: "tabBarButton3", x:233 ,y: 18, top: top, bottom: bottom, left: left, right: right)
+            self.buttonHangar = Button(textureName: "tabBarButton4", x:315 ,y: 18, top: top, bottom: bottom, left: left, right: right)
             
-            self.hover = Control(textureName: "buttonHangar", x:285 ,y: 0)
+            self.hover = Button(textureName: "buttonHangar", text: "Hangar", fontSize: hoverTextFontSize, x: 285, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
             break
         }
         
@@ -103,7 +113,7 @@ class GameTabBar: Control {
                 self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:270 ,y: 18)), duration: actionDuration))
                 self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:322 ,y: 18)), duration: actionDuration))
                 
-                let control = Control(textureName: "buttonResearch")
+                let control = Button(textureName: "buttonResearch", text: "Researches", fontSize: hoverTextFontSize, x:0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
                 control.alpha = 0
                 control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
                 self.hover.addChild(control)
@@ -118,7 +128,7 @@ class GameTabBar: Control {
                 self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:273 ,y: 18)), duration: actionDuration))
                 self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:323 ,y: 18)), duration: actionDuration))
                 
-                let control = Control(textureName: "buttonMission")
+                let control = Button(textureName: "buttonMission", text: "Miners", fontSize: hoverTextFontSize, x: 0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
                 control.alpha = 0
                 control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
                 self.hover.addChild(control)
@@ -133,7 +143,7 @@ class GameTabBar: Control {
                 self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:277 ,y: 18)), duration: actionDuration))
                 self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:326 ,y: 18)), duration: actionDuration))
                 
-                let control = Control(textureName: "tabBarButtonBattle")
+                let control = Button(textureName: "tabBarButtonBattle", text: "Battle", fontSize: hoverTextFontSize, x: 0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
                 control.alpha = 0
                 control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
                 self.hover.addChild(control)
@@ -148,7 +158,7 @@ class GameTabBar: Control {
                 self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:257 ,y: 18)), duration: actionDuration))
                 self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:330 ,y: 18)), duration: actionDuration))
                 
-                let control = Control(textureName: "buttonFactory")
+                let control = Button(textureName: "buttonFactory", text: "Factory", fontSize: hoverTextFontSize, x: 0, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
                 control.alpha = 0
                 control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
                 self.hover.addChild(control)
@@ -162,7 +172,7 @@ class GameTabBar: Control {
                 self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:233 ,y: 18)), duration: actionDuration))
                 self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:315 ,y: 18)), duration: actionDuration))
                 
-                let control = Control(textureName: "buttonHangar")
+                let control = Button(textureName: "buttonHangar", text: "Hangar", fontSize: hoverTextFontSize, x: 0, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
                 control.alpha = 0
                 control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
                 self.hover.addChild(control)

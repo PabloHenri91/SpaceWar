@@ -157,6 +157,14 @@ class HangarScene: GameScene {
         self.addChild(self.gameTabBar)
     }
     
+    override func setAlertState() {
+        self.nextState = .alert
+    }
+    
+    override func setDefaultState() {
+        self.nextState = .hangar
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
@@ -188,21 +196,29 @@ class HangarScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(ResearchScene())
                 break
                 
             case .mission:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MissionScene())
                 break
                 
             case .mothership:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(MothershipScene())
                 break
                 
             case .factory:
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
                 self.view?.presentScene(FactoryScene())
                 break
@@ -301,11 +317,6 @@ class HangarScene: GameScene {
                                                     
                                                     if !slotEmptyFound {
                                                         
-                                                        
-                                                        self.blackSpriteNode.hidden = false
-                                                        self.blackSpriteNode.zPosition = 100000
-                                                        
-                                                        
                                                         let teste = AlertBox(title: "Alert!!!", text: "Mothership full, remove a spaceship!", type: .OK)
                                                         teste.zPosition = self.blackSpriteNode.zPosition + 1
                                                         self.addChild(teste)
@@ -325,8 +336,10 @@ class HangarScene: GameScene {
                                         if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
                                             if ((card.position.y < 140) && (card.position.y > -130)) {
                                                 let cost = GameMath.spaceshipUpgradeCost(level: card.spaceShip.level, type: card.spaceShip.type)
-                                                if (cost < self.playerData.points.integerValue) {
+                                                if (cost <= self.playerData.points.integerValue) {
                                                     card.upgradeSpaceship(cost)
+                                                    self.playerDataCard.updatePoints()
+                                                    self.playerDataCard.updateXP()
                                                 } else {
                                                     let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
                                                     teste.zPosition = self.blackSpriteNode.zPosition + 1

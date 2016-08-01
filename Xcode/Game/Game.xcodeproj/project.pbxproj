@@ -141,8 +141,6 @@
 		848A7D391D40034500AC72F1 /* ALIterativeMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */; };
 		848F8B791D0602BE00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
 		848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
-		848FD6C71D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C01D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 */; };
-		848FD6C81D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C01D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 */; };
 		848FD6C91D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */; };
 		848FD6CA1D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */; };
 		848FD6CB1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */; };
@@ -151,8 +149,6 @@
 		848FD6CE1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */; };
 		848FD6CF1D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */; };
 		848FD6D01D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */; };
-		848FD6D11D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */; };
-		848FD6D21D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */; };
 		848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */; };
 		848FD6D41D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */; };
 		8495A35D1D4686BF00A4205F /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4871D4678E9000E09DD /* spark.sks */; };
@@ -369,12 +365,10 @@
 		848A7D361D40034500AC72F1 /* ALIterativeMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIterativeMigrator.h; sourceTree = "<group>"; };
 		848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIterativeMigrator.m; sourceTree = "<group>"; };
 		848F8B771D06022500434FFB /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
-		848FD6C01D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "broken-satellite_beyond-the-pixeled-rainbow.mp3"; sourceTree = "<group>"; };
 		848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bus-blanchie_bright-stars.mp3"; sourceTree = "<group>"; };
 		848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jredd_magma-crystal-falls.mp3"; sourceTree = "<group>"; };
 		848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_one-morning-in-space.mp3"; sourceTree = "<group>"; };
 		848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_space-life.mp3"; sourceTree = "<group>"; };
-		848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3"; sourceTree = "<group>"; };
 		848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pandamindset_pandamindset---space-sleepers.mp3"; sourceTree = "<group>"; };
 		84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleTrainingScene.swift; sourceTree = "<group>"; };
 		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
@@ -652,12 +646,10 @@
 		848FD6BF1D42A4850002D4F5 /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				848FD6C01D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 */,
 				848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */,
 				848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */,
 				848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */,
 				848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */,
-				848FD6C51D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 */,
 				848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */,
 			);
 			path = Music;
@@ -854,9 +846,7 @@
 				844CF2741CE77B400032F6AA /* Assets.xcassets in Resources */,
 				3AA0C97E1CFDB3B5008EE628 /* FacebookMessengerShareKitSDK-1_3-for-iOS.docset in Resources */,
 				3AA0C97D1CFDB3B5008EE628 /* FacebookAudienceNetworkSDK-4_12-for-iOS.docset in Resources */,
-				848FD6C71D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 in Resources */,
 				84D621231D258EC4005D550C /* explosion.sks in Resources */,
-				848FD6D11D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */,
 				3AA0C9801CFDB3B5008EE628 /* install_docsets.sh in Resources */,
 				84C011951D4659B800EC7080 /* laser9.mp3 in Resources */,
 				84C011601D46433400EC7080 /* explosion4.wav in Resources */,
@@ -892,7 +882,6 @@
 				84D621241D258EC4005D550C /* explosion.sks in Resources */,
 				84C011611D46433400EC7080 /* explosion4.wav in Resources */,
 				84C011631D46433400EC7080 /* explosion5.wav in Resources */,
-				848FD6D21D42A4BA0002D4F5 /* laffe-the-fox_laffe-the-fox---left-alone-in-outer-space.mp3 in Resources */,
 				84D6212C1D259021005D550C /* explosion.png in Resources */,
 				84C0115D1D46433400EC7080 /* explosion2.wav in Resources */,
 				8495A35D1D4686BF00A4205F /* spark.sks in Resources */,
@@ -912,7 +901,6 @@
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
 				84C011941D4659B800EC7080 /* laser8.mp3 in Resources */,
 				84C0115B1D46433400EC7080 /* explosion1.wav in Resources */,
-				848FD6C81D42A4BA0002D4F5 /* broken-satellite_beyond-the-pixeled-rainbow.mp3 in Resources */,
 				84C011671D46433400EC7080 /* explosion7.wav in Resources */,
 				84C0118A1D4659B800EC7080 /* laser3.mp3 in Resources */,
 				848FD6CC1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */,

@@ -93,6 +93,14 @@ class GameScene: SKScene {
         ScrollNode.update()
     }
     
+    func setAlertState() {
+        fatalError()
+    }
+    
+    func setDefaultState() {
+        fatalError()
+    }
+    
     override func didFinishUpdate() {
         //print("dX: " + Control.dx.description + " dY: " + Control.dy.description)
         Control.dx = 0
