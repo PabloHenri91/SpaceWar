@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "spaceShipSlotEmpty.png",
+      "filename" : "spaceshipSlotBackground.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "spaceshipSlotBackground@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "spaceshipSlotBackground@3x.png",
       "scale" : "3x"
     }
   ],

@@ -73,7 +73,9 @@ class MothershipScene: GameScene {
         
         self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
         
-        self.batteryControl = BatteryControl(x: 75, y: 229, xAlign: .center, yAlign: .center)
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "BATTLESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        
+        self.batteryControl = BatteryControl(x: 75, y: 231, xAlign: .center, yAlign: .center)
         self.addChild(self.batteryControl)
         
         self.buttonRanking = Button(textureName: "button", text: "Ranking", x: 96, y: 200, xAlign: .center, yAlign: .center)
@@ -84,8 +86,27 @@ class MothershipScene: GameScene {
         self.addChild(self.buttonSocial)
         self.buttonSocial.hidden = true
         
-        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 287, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
+        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 289, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
         self.addChild(self.buttonBattle)
+        
+        var spaceshipSlots = [SpaceshipSlot]()
+        for i in 0..<4 {
+            let spaceshipSlot = SpaceshipSlot(spaceship: nil)
+            spaceshipSlot.xAlign = .center
+            spaceshipSlot.yAlign = .up
+            spaceshipSlot.screenPosition = CGPoint(x: 6 + (i * 80), y: 144)
+            spaceshipSlot.resetPosition()
+            self.addChild(spaceshipSlot)
+            spaceshipSlots.append(spaceshipSlot)
+        }
+        
+        var i = 0
+        for item in self.playerData.motherShip.spaceships {
+            if let spaceshipData = item as? SpaceshipData {
+                spaceshipSlots[i].update(spaceshipData)
+            }
+            i += 1
+        }
         
         switch GameTabBar.lastState {
         case .research, .mission:

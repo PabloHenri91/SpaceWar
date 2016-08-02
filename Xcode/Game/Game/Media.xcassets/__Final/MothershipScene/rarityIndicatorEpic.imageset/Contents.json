@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "lineHangar.png",
+      "filename" : "rarityIndicatorEpic.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "rarityIndicatorEpic@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "rarityIndicatorEpic@3x.png",
       "scale" : "3x"
     }
   ],

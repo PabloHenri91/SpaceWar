@@ -1,5 +1,5 @@
 //
-//  MissionSpaceShipCard.swift
+//  MissionSpaceshipCard.swift
 //  Game
 //
 //  Created by Paulo Henrique dos Santos on 04/07/16.
@@ -11,7 +11,7 @@ import SpriteKit
 class MissionSpaceshipCard: Control {
     
     var missionSpaceship: MissionSpaceship!
-    var spaceShipImage: Control!
+    var spaceshipImage: Control!
     var buttonBegin: Button?
     var buttonSpeedUp: Button?
     var buttonColect: Button?
@@ -34,8 +34,8 @@ class MissionSpaceshipCard: Control {
         self.addChild(Control(textureName: "MissionSpaceshipCard"))
         
         self.missionSpaceship = missionSpaceship
-        self.spaceShipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
-        self.addChild(self.spaceShipImage)
+        self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
+        self.addChild(self.spaceshipImage)
 
         
         self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 11, x: 259, y: 16, shadowColor: SKColor(red: 229/255, green: 228/255, blue: 229/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
@@ -180,11 +180,11 @@ class MissionSpaceshipCard: Control {
             self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - 2000)
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
-            self.spaceShipImage.removeFromParent()
-            self.spaceShipImage = Control(textureName: "MissionSpaceship" + self.missionSpaceship.level.description)
-            self.addChild(self.spaceShipImage)
-            self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
-            self.spaceShipImage.resetPosition()
+            self.spaceshipImage.removeFromParent()
+            self.spaceshipImage = Control(textureName: "MissionSpaceship" + self.missionSpaceship.level.description)
+            self.addChild(self.spaceshipImage)
+            self.spaceshipImage.screenPosition = CGPoint(x: 21, y: 41)
+            self.spaceshipImage.resetPosition()
             
             if self.missionSpaceship.level == 4 {
                 self.buttonUpgrade?.removeFromParent()

@@ -23,7 +23,7 @@ class Spaceship: Control {
         case touchAreaEffect
     }
     
-    var type:SpaceShipType!
+    var type:SpaceshipType!
     var level:Int!
     
     //Vida e Escudo de Energia
@@ -230,9 +230,9 @@ class Spaceship: Control {
         self.increaseTouchArea()
         
         #if DEBUG
-            let labelLevel = Label(color: GameColors.white, text: self.level.description, fontSize: 16, x: 0, y: 0, shadowColor: GameColors.black, shadowOffset: CGPoint(x: 1, y: -1))
-            labelLevel.zPosition = zPositions.levelDetail.rawValue
-            self.addChild(labelLevel)
+//            let labelLevel = Label(color: GameColors.white, text: self.level.description, fontSize: 16, x: 0, y: 0, shadowColor: GameColors.black, shadowOffset: CGPoint(x: 1, y: -1))
+//            labelLevel.zPosition = zPositions.levelDetail.rawValue
+//            self.addChild(labelLevel)
         #endif
         
         Spaceship.spaceshipList.insert(self)
@@ -881,16 +881,16 @@ public enum TargetType:Int {
     case towers
 }
 
-public enum RarityType:Int {
-    case commom
-    case rare
-    case epic
-    case legendary
-}
-
-class SpaceShipType {
+class SpaceshipType {
     
-    var rarity: RarityType!
+    enum rarityTypes {
+        case commom
+        case rare
+        case epic
+        case legendary
+    }
+    
+    var rarity:rarityTypes = .commom
     
     var skins = [String]()
     
@@ -926,15 +926,15 @@ class SpaceShipType {
 
 extension Spaceship {
     
-    static var extraTypes:[SpaceShipType] = [
+    static var extraTypes:[SpaceshipType] = [
         {
-            let spaceShipType = SpaceShipType(maxLevel: 2, targetPriorityType: 0,
+            let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
                 speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
-            spaceShipType.skins = [
+            spaceshipType.skins = [
                 "tutorialMeteor"
             ]
-            spaceShipType.index = 0
-            return spaceShipType
+            spaceshipType.index = 0
+            return spaceshipType
         }()
     ]
     
@@ -944,48 +944,48 @@ extension Spaceship {
         [TargetType.towers, TargetType.mothership]
     ]
     
-    static var types:[SpaceShipType] = [
+    static var types:[SpaceshipType] = [
         {
-            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
                 speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
-            spaceShipType.skins = [
+            spaceshipType.skins = [
                 "spaceshipCA",
                 "spaceshipCB"
             ]
-            spaceShipType.name = "Spaceship"
-            spaceShipType.spaceshipDescription = "The firs battle spaceship invented"
-            spaceShipType.rarity = .commom
-            spaceShipType.index = 0
-            return spaceShipType
+            spaceshipType.name = "Spaceship"
+            spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
+            spaceshipType.rarity = .commom
+            spaceshipType.index = 0
+            return spaceshipType
         }(),
         
         {
-            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
             speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
-            spaceShipType.skins = [
+            spaceshipType.skins = [
                 "spaceshipAA",
                 "spaceshipAB"
             ]
-            spaceShipType.name = "Space tanker"
-            spaceShipType.spaceshipDescription = "Can hold a great amount of damage."
-            spaceShipType.rarity = .commom
-            spaceShipType.index = 1
-            return spaceShipType
+            spaceshipType.name = "Space tanker"
+            spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
+            spaceshipType.rarity = .commom
+            spaceshipType.index = 1
+            return spaceshipType
         }(),
         
         {
-            let spaceShipType = SpaceShipType(maxLevel: 100, targetPriorityType: 0,
+            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
             speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceShipType.skins = [
+            spaceshipType.skins = [
                 "spaceshipBA",
                 "spaceshipBB"
             ]
             
-            spaceShipType.name = "Space Speeder"
-            spaceShipType.spaceshipDescription = "Flies at the speed of light."
-            spaceShipType.rarity = .commom
-            spaceShipType.index = 2
-            return spaceShipType
+            spaceshipType.name = "Space Speeder"
+            spaceshipType.spaceshipDescription = "Flies at the speed of light."
+            spaceshipType.rarity = .commom
+            spaceshipType.index = 2
+            return spaceshipType
         }()
     ]
 }

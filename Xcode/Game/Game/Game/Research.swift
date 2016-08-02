@@ -74,10 +74,10 @@ class Research: Control {
                 if let weapon = self.researchType.weaponUnlocked {
                     let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
                     
-                    let spaceShipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
-                    spaceShipData.addWeaponData(weaponData)
-                    spaceShipData
-                    MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceShipData)
+                    let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
+                    spaceshipData.addWeaponData(weaponData)
+                    spaceshipData
+                    MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
                 }
             }
             

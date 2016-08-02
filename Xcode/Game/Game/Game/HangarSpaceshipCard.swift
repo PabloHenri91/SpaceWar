@@ -1,5 +1,5 @@
 //
-//  HangarSpaceShipCard.swift
+//  HangarSpaceshipCard.swift
 //  Game
 //
 //  Created by Paulo Henrique dos Santos on 17/06/16.
@@ -8,10 +8,10 @@
 
 import SpriteKit
 
-class HangarSpaceShipCard: Control {
+class HangarSpaceshipCard: Control {
     
-    var spaceShip: Spaceship!
-    var spaceShipImage: Spaceship!
+    var spaceship: Spaceship!
+    var spaceshipImage: Spaceship!
     var buttonDetalis: Button!
     var buttonSelect: Button?
     var buttonFix: Button?
@@ -24,13 +24,13 @@ class HangarSpaceShipCard: Control {
     
     var playerData = MemoryCard.sharedInstance.playerData
     
-    init(spaceShip: Spaceship, selected: Bool) {
+    init(spaceship: Spaceship, selected: Bool) {
         
         self.selected = selected
         super.init()
         
         
-        if let spaceshipData = spaceShip.spaceshipData {
+        if let spaceshipData = spaceship.spaceshipData {
          
             if (GameMath.spaceshipFixTime(spaceshipData.crashDate) > 0) {
                 self.crashed = true
@@ -40,12 +40,12 @@ class HangarSpaceShipCard: Control {
         
         self.addChild(Control(textureName: "hangarShipCardSelected"))
        
-        self.spaceShip = spaceShip
-        self.spaceShipImage = Spaceship(spaceshipData: spaceShip.spaceshipData!)
-        self.spaceShipImage.loadAllyDetails()
-        self.addChild(self.spaceShipImage)
-        self.spaceShipImage.screenPosition = CGPoint(x: 21+16, y: 41+16)
-        self.spaceShipImage.resetPosition()
+        self.spaceship = spaceship
+        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        self.spaceshipImage.loadAllyDetails()
+        self.addChild(self.spaceshipImage)
+        self.spaceshipImage.screenPosition = CGPoint(x: 21+16, y: 41+16)
+        self.spaceshipImage.resetPosition()
         
         self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
         self.addChild(self.buttonDetalis)
@@ -72,19 +72,19 @@ class HangarSpaceShipCard: Control {
         
 
         
-        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
+        self.labelLevel = Label(text: String(self.spaceship.level) , fontSize: 15, x: 262, y: 14)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name , x: 137, y: 23)
+        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceship.type.name , x: 137, y: 23)
         self.addChild(self.labelName)
         
         if self.crashed {
-            if let spaceshipData = self.spaceShip.spaceshipData {
+            if let spaceshipData = self.spaceship.spaceshipData {
                 self.labelDescription = Label(text: GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)) , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
             }
         } else {
-            //self.labelDescription = Label(text: self.spaceShip.type.spaceshipDescription, fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
-            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            //self.labelDescription = Label(text: self.spaceship.type.spaceshipDescription, fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
         }
         
       
@@ -95,7 +95,7 @@ class HangarSpaceShipCard: Control {
     
     func update() {
         if self.crashed {
-            if let spaceshipData = spaceShip.spaceshipData {
+            if let spaceshipData = spaceship.spaceshipData {
                 if (GameMath.spaceshipFixTime(spaceshipData.crashDate) > 0) {
                     self.labelDescription.setText(GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)))
                 } else {
@@ -138,8 +138,8 @@ class HangarSpaceShipCard: Control {
     }
     
     func upgradeSpaceship(cost: Int) {
-        let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceShip.level, type: self.spaceShip.type)
-        self.spaceShip.upgrade()
+        let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceship.level, type: self.spaceship.type)
+        self.spaceship.upgrade()
         self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - cost)
         self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xp)
         self.reloadCard()
@@ -147,8 +147,8 @@ class HangarSpaceShipCard: Control {
     
     func reloadCard() {
       
-        self.labelLevel.setText(self.spaceShip.level.description)
-        self.labelDescription.setText("Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceShip.level, type: self.spaceShip.type).description)
+        self.labelLevel.setText(self.spaceship.level.description)
+        self.labelDescription.setText("Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description)
     }
     
 }
