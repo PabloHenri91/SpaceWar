@@ -93,8 +93,12 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>museosansrounded-1000-webfont.ttf</string>
+		<string>museosansrounded-100-webfont.ttf</string>
+		<string>museosansrounded-300-webfont.ttf</string>
 		<string>museosansrounded-500-webfont.ttf</string>
+		<string>museosansrounded-700-webfont.ttf</string>
+		<string>museosansrounded-900-webfont.ttf</string>
+		<string>museosansrounded-1000-webfont.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

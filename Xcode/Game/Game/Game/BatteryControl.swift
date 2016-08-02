@@ -18,6 +18,8 @@ class BatteryControl: Control {
     var labelTimerValue:Label!
     var chargeIndicator = [Control]()
     
+    let timerPositionX:CGFloat = 85
+    let timerPositionY:CGFloat = 32
     
     var lastUpdate:NSTimeInterval = 0
     
@@ -33,7 +35,11 @@ class BatteryControl: Control {
         }
         
         let color = SKColor(red: 60/255, green: 75/255, blue: 88/255, alpha: 1)
-        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:11, x: 85, y: 33)
+        
+        self.labelTimerLabel = Label(color: color, text: "Next charge: ", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .Right, fontName: GameFonts.fontName.museo700)
+        self.addChild(self.labelTimerLabel)
+        
+        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelTimerValue)
         
         self.updateLabels()
@@ -41,6 +47,19 @@ class BatteryControl: Control {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func centerLabels() {
+        
+        let labelTimerLabelWidth = self.labelTimerLabel.calculateAccumulatedFrame().size.width
+        let labelTimerValueWidth = self.labelTimerValue.calculateAccumulatedFrame().size.width
+        let translateX:CGFloat = (labelTimerLabelWidth - labelTimerValueWidth)/2
+        
+        self.labelTimerLabel.screenPosition = CGPoint(x: timerPositionX + translateX, y: timerPositionY)
+        self.labelTimerLabel.resetPosition()
+        
+        self.labelTimerValue.screenPosition = CGPoint(x: timerPositionX + translateX, y: timerPositionY)
+        self.labelTimerValue.resetPosition()
     }
     
     func useCharge() -> Bool {
@@ -90,11 +109,9 @@ class BatteryControl: Control {
                     }
                 }
                 
-                
-                
-                var text = "Full"
+                var text = ""
                 if self.charge < self.maxCharge {
-                    text = "Next charge: " + GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
+                    text = GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
                 }
                 
                 var i = 0
@@ -104,6 +121,11 @@ class BatteryControl: Control {
                 }
                 
                 self.labelTimerValue.setText(text)
+                if text == "" {
+                    self.labelTimerLabel.setText("Full")
+                }
+                
+                self.centerLabels()
             }
         }
     }

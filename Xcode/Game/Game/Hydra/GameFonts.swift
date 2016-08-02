@@ -23,8 +23,11 @@ class GameFonts {
     static var minFontSize = CGFloat(11)
     
     struct fontName {
-        static var museo1000 = "Museo Sans Rounded 1000 Regular"
+        static var museo100 = "Museo Sans Rounded 100 Regular"
+        static var museo300 = "Museo Sans Rounded 300 Regular"
         static var museo500 = "Museo Sans Rounded 500 Regular"
+        static var museo700 = "Museo Sans Rounded 700 Regular"
+        static var museo900 = "Museo Sans Rounded 900 Regular"
+        static var museo1000 = "Museo Sans Rounded 1000 Regular"
     }
-
 }
