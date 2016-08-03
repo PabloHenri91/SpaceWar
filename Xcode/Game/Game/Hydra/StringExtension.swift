@@ -9,6 +9,9 @@
 
 extension String {
     
+    static let winEmojis = ["😀","😃","😄","😆","😉","🙂","😋","😜","😝"]
+    static let loseEmojis = ["😑","😒","😞","😡","☹️","😖","😱","😓","🤕"]
+    
     /// Truncates the string to length number of characters and
     /// appends optional trailing string if longer
     func truncate(length: Int, trailing: String? = nil) -> String {
@@ -19,5 +22,13 @@ extension String {
         } else {
             return self
         }
+    }
+    
+    static func winEmoji() -> String {
+        return winEmojis[Int.random(winEmojis.count)]
+    }
+    
+    static func loseEmoji() -> String {
+        return loseEmojis[Int.random(loseEmojis.count)]
     }
 }

@@ -238,38 +238,33 @@ class MothershipScene: GameScene {
                         return
                     }
                     
-                    if(self.buttonBattle.containsPoint(touch.locationInNode(self))) {
+                    if self.buttonBattle.containsPoint(touch.locationInNode(self)) {
+                        
+                        if (self.playerData.motherShip.spaceships.count != 4) {
+                            let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .OK)
+                            self.addChild(alertBox)
+                            alertBox.buttonOK.addHandler {
+                                self.nextState = .hangar
+                            }
+                            self.nextState = .alert
+                            return
+                        }
                         
                         if let battery = self.playerData.battery {
                             if battery.charge.integerValue > 0 {
                                 self.batteryControl.useCharge()
                             } else {
-                                
-                                let teste = AlertBox(title: "Alert!!!", text: "Battery Critically Low", type: .OK)
-                                teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                self.addChild(teste)
-                                teste.buttonOK.addHandler {
+                                let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .OK)
+                                self.addChild(alertBox)
+                                alertBox.buttonOK.addHandler {
                                     self.nextState = .mothership
                                 }
                                 self.nextState = .alert
-                                
                                 return
                             }
                         }
                         
-                        if (self.playerData.motherShip.spaceships.count == 4) {
-                            self.nextState = states.battle
-                        } else {
-                            
-                            let teste = AlertBox(title: "Alert!!!", text: "Missing spaceships, go to hangar", type: .OK)
-                            teste.zPosition = self.blackSpriteNode.zPosition + 1
-                            self.addChild(teste)
-                            teste.buttonOK.addHandler {
-                                self.nextState = .hangar
-                            }
-                            self.nextState = .alert
-                        }
-                        
+                        self.nextState = states.battle
                         return
                     }
                     

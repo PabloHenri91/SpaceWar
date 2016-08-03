@@ -232,11 +232,11 @@ class ResearchDetailsScene: GameScene {
                                     //TODO: self.playerDataCard.updatePoits()
                                     self.nextState = .research
                                 } else {
-                                    let alertBox = AlertBox(title: "Alert", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
                                     self.addChild(alertBox)
                                 }
                             } else {
-                                let alertBox = AlertBox(title: "Alert", text: "No enough bucks bro 😢😢", type: AlertBox.messageType.OK)
+                                let alertBox = AlertBox(title: "Alert!", text: "No enough bucks bro 😢😢", type: AlertBox.messageType.OK)
                                 self.addChild(alertBox)
                             }
                         }

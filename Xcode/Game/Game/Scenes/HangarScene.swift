@@ -313,10 +313,9 @@ class HangarScene: GameScene {
                                                     
                                                     if !slotEmptyFound {
                                                         
-                                                        let teste = AlertBox(title: "Alert!!!", text: "Mothership full, remove a spaceship!", type: .OK)
-                                                        teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                                        self.addChild(teste)
-                                                        teste.buttonOK.addHandler {
+                                                        let alertBox = AlertBox(title: "Alert!", text: "Mothership full, remove a spaceship.", type: .OK)
+                                                        self.addChild(alertBox)
+                                                        alertBox.buttonOK.addHandler {
                                                             self.nextState = .hangar
                                                         }
                                                         self.nextState = .alert
@@ -345,10 +344,9 @@ class HangarScene: GameScene {
                                                     }
                                                     
                                                 } else {
-                                                    let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
-                                                    teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                                    self.addChild(teste)
-                                                    teste.buttonOK.addHandler {
+                                                    let alertBox = AlertBox(title: "Alert!", text: "Insuficient points.", type: .OK)
+                                                    self.addChild(alertBox)
+                                                    alertBox.buttonOK.addHandler {
                                                         self.nextState = .hangar
                                                     }
                                                     self.nextState = .alert

@@ -238,10 +238,9 @@ class FactoryScene: GameScene {
                                                 self.playerDataCard.updatePoints()
                                             } else {
                                                 
-                                                let teste = AlertBox(title: "Alert!!!", text: "Insuficient funds!", type: .OK)
-                                                teste.zPosition = self.blackSpriteNode.zPosition + 1
-                                                self.addChild(teste)
-                                                teste.buttonOK.addHandler {
+                                                let alertBox = AlertBox(title: "Alert!", text: "Insuficient funds.", type: .OK)
+                                                self.addChild(alertBox)
+                                                alertBox.buttonOK.addHandler {
                                                     self.nextState = .factory
                                                 }
                                                 self.nextState = .alert

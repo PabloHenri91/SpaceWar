@@ -590,8 +590,7 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .showBattleResult:
-                
-                let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! 😃", type: AlertBox.messageType.OK)
+                let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! " + String.winEmoji(), type: AlertBox.messageType.OK)
                 alertBox.buttonOK.addHandler({
                     self.nextState = states.mothership
                 })

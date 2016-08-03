@@ -110,8 +110,8 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
             case states.normal:
                 self.blackSpriteNode.hidden = true
                 
-                if let teste = self.loadingImage {
-                    teste.removeFromParent()
+                if let spriteNode = self.loadingImage {
+                    spriteNode.removeFromParent()
                 }
                 
                 break
