@@ -11,7 +11,7 @@ import SpriteKit
 class HangarScene: GameScene {
     
     var selectedShips = [Spaceship]()
-    var slots = [SpaceShipSlot]()
+    var slots = [SpaceshipSlot]()
     var playerData = MemoryCard.sharedInstance.playerData
     let ships = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
     let playerShips = MemoryCard.sharedInstance.playerData.spaceships as! Set<SpaceshipData>
@@ -19,10 +19,10 @@ class HangarScene: GameScene {
     var labelShips:Label!
     
     var scrollNode:ScrollNode!
-    var controlArray:Array<HangarSpaceShipCard>!
-    var crashedSpaceships:Array<HangarSpaceShipCard>!
+    var controlArray:Array<HangarspaceshipCard>!
+    var crashedspaceships:Array<HangarspaceshipCard>!
     
-    var spaceShipListShape: CropBox!
+    var spaceshipListShape: CropBox!
     
     var lastUpdate: NSTimeInterval = 0
     
@@ -75,9 +75,9 @@ class HangarScene: GameScene {
         
         for i in 0..<4 {
             if (i < self.selectedShips.count) {
-                self.slots.append(SpaceShipSlot(spaceShip: self.selectedShips[i]))
+                self.slots.append(SpaceshipSlot(spaceship: self.selectedShips[i]))
             } else {
-                self.slots.append(SpaceShipSlot(spaceShip: nil))
+                self.slots.append(SpaceshipSlot(spaceship: nil))
             }
             
             self.slots[i].xAlign = .center
@@ -90,17 +90,17 @@ class HangarScene: GameScene {
         let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
         
-        self.spaceShipListShape = CropBox(textureName: "spaceShipListShape")
-        self.addChild(spaceShipListShape)
-        self.spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
-        self.spaceShipListShape.resetPosition()
+        self.spaceshipListShape = CropBox(textureName: "spaceshipListShape")
+        self.addChild(spaceshipListShape)
+        self.spaceshipListShape.screenPosition = CGPoint(x: 20, y: 228)
+        self.spaceshipListShape.resetPosition()
         
         
-        self.labelShips = Label(color: SKColor.whiteColor(), text: "Spaceships on hangar 09/10",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left)
+        self.labelShips = Label(color: SKColor.whiteColor(), text: "spaceships on hangar 09/10",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .up, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
-        self.controlArray = Array<HangarSpaceShipCard>()
-        self.crashedSpaceships = Array<HangarSpaceShipCard>()
+        self.controlArray = Array<HangarspaceshipCard>()
+        self.crashedspaceships = Array<HangarspaceshipCard>()
         
       
         let orderedplayerShips = playerShips.sort({ $0.level.integerValue > $1.level.integerValue })
@@ -108,16 +108,16 @@ class HangarScene: GameScene {
         for item in orderedplayerShips {
             var selected = false
             for slot in self.slots {
-                if (slot.spaceShip?.spaceshipData == item) {
+                if (slot.spaceship?.spaceshipData == item) {
                     selected = true
                     break
                 }
             }
             
             if GameMath.spaceshipFixTime(item.crashDate) < 0 {
-                self.controlArray.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
+                self.controlArray.append(HangarspaceshipCard(spaceship: Spaceship(spaceshipData: item),selected: selected))
             } else {
-                self.crashedSpaceships.append(HangarSpaceShipCard(spaceShip: Spaceship(spaceshipData: item),selected: selected))
+                self.crashedspaceships.append(HangarspaceshipCard(spaceship: Spaceship(spaceshipData: item),selected: selected))
             }
             
         }
@@ -125,9 +125,9 @@ class HangarScene: GameScene {
         
         
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
-        self.spaceShipListShape.addChild(self.scrollNode)
+        self.spaceshipListShape.addChild(self.scrollNode)
         
-        for item in self.crashedSpaceships {
+        for item in self.crashedspaceships {
             self.scrollNode.append(item)
         }
         
@@ -169,7 +169,7 @@ class HangarScene: GameScene {
                 if ((currentTime - self.lastUpdate) > 1) {
                     self.lastUpdate = currentTime
                     for item in self.scrollNode.cells {
-                        if let card = item as? HangarSpaceShipCard {
+                        if let card = item as? HangarspaceshipCard {
                             card.update()
                         }
                     }
@@ -256,9 +256,9 @@ class HangarScene: GameScene {
                         if(slot.containsPoint(touch.locationInNode(self))) {
                             
                             for item in self.scrollNode.cells {
-                                if let card = item as? HangarSpaceShipCard {
-                                    if (card.spaceShip.spaceshipData == slot.spaceShip?.spaceshipData) {
-                                        card.removeSpaceship()
+                                if let card = item as? HangarspaceshipCard {
+                                    if (card.spaceship.spaceshipData == slot.spaceship?.spaceshipData) {
+                                        card.removespaceship()
                                     }
                                 }
                             }
@@ -268,20 +268,20 @@ class HangarScene: GameScene {
                     }
                     
                     
-                    if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceShipListShape.cropNode))) {
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceshipListShape.cropNode))) {
                         for item in self.scrollNode.cells {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
-                                if let card = item as? HangarSpaceShipCard {
+                                if let card = item as? HangarspaceshipCard {
                                     if let buttonSelect = card.buttonSelect{
                                         if (buttonSelect.containsPoint(touch.locationInNode(card))) {
                                             if ((card.position.y < 140) && (card.position.y > -130)) {
                                                 
                                                 if card.selected {
                                                     
-                                                    card.removeSpaceship()
+                                                    card.removespaceship()
                                                     
                                                     for slot in self.slots {
-                                                        if(slot.spaceShip?.spaceshipData == card.spaceShip.spaceshipData) {
+                                                        if(slot.spaceship?.spaceshipData == card.spaceship.spaceshipData) {
                                                             slot.remove()
                                                             break
                                                         }
@@ -291,9 +291,9 @@ class HangarScene: GameScene {
                                                     
                                                     var slotEmptyFound = false
                                                     for slot in self.slots {
-                                                        if(slot.spaceShip == nil) {
-                                                            slot.update(card.spaceShip.spaceshipData!)
-                                                            card.addSpaceship()
+                                                        if(slot.spaceship == nil) {
+                                                            slot.update(card.spaceship.spaceshipData!)
+                                                            card.addspaceship()
                                                             slotEmptyFound = true
                                                             break
                                                         }
@@ -324,9 +324,9 @@ class HangarScene: GameScene {
                                         
                                         if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
                                             if ((card.position.y < 140) && (card.position.y > -130)) {
-                                                let cost = GameMath.spaceshipUpgradeCost(level: card.spaceShip.level, type: card.spaceShip.type)
+                                                let cost = GameMath.spaceshipUpgradeCost(level: card.spaceship.level, type: card.spaceship.type)
                                                 if (cost < self.playerData.points.integerValue) {
-                                                    card.upgradeSpaceship(cost)
+                                                    card.upgradespaceship(cost)
                                                 } else {
                                                     let teste = AlertBox(title: "Alert!!!", text: "Insuficient points", type: .OK)
                                                     teste.zPosition = self.blackSpriteNode.zPosition + 1

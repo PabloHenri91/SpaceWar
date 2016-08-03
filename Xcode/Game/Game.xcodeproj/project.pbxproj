@@ -23,6 +23,8 @@
 		3A4138821D469EA80026B47E /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4138811D469EA80026B47E /* SocialScene.swift */; };
 		3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
 		3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
+		3A5984551D4F8E01009FDA6D /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984541D4F8E01009FDA6D /* ChooseAsteroidAlert.swift */; };
+		3A5984561D4F8E01009FDA6D /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984541D4F8E01009FDA6D /* ChooseAsteroidAlert.swift */; };
 		3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
 		3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */; };
@@ -239,6 +241,7 @@
 		3A4065F91D2D902200B886DB /* MultiLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineLabel.swift; sourceTree = "<group>"; };
 		3A4138811D469EA80026B47E /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
 		3A5984511D4B6CB6009FDA6D /* TimeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeBar.swift; sourceTree = "<group>"; };
+		3A5984541D4F8E01009FDA6D /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-500-webfont.ttf"; sourceTree = "<group>"; };
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
@@ -598,6 +601,7 @@
 			children = (
 				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
+				3A5984541D4F8E01009FDA6D /* ChooseAsteroidAlert.swift */,
 				3AD261971D2562A000189671 /* FactorySpaceShipCard.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
@@ -615,8 +619,8 @@
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				3A7E60CE1D14331600D00590 /* SpaceShipSlot.swift */,
-				843803D01CEF3A54007152BC /* Weapon.swift */,
 				3A5984511D4B6CB6009FDA6D /* TimeBar.swift */,
+				843803D01CEF3A54007152BC /* Weapon.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -951,6 +955,7 @@
 				3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				84BF0FC61D4A758F00145F5B /* GameTabBar.swift in Sources */,
+				3A5984551D4F8E01009FDA6D /* ChooseAsteroidAlert.swift in Sources */,
 				3A3307971D414F2A005CCB4F /* Metrics.swift in Sources */,
 				84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */,
@@ -1061,6 +1066,7 @@
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				84BF0FC71D4A758F00145F5B /* GameTabBar.swift in Sources */,
+				3A5984561D4F8E01009FDA6D /* ChooseAsteroidAlert.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,

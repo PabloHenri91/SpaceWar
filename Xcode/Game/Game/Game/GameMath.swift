@@ -39,22 +39,22 @@ class GameMath {
     
     
     // de 5 a 30, fixo pela nave
-    static func spaceshipSpeedAtribute(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipSpeedAtribute(level level:Int, type:SpaceshipType) -> Int {
         return type.speedBonus
     }
     
     // Pontos de HP, aumenta 10 por cento por level
-    static func spaceshipMaxHealth(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipMaxHealth(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.healthBonus * 10) * pow(1.1, Double(level - 1)))
     }
     
     // Pontos de escudo, aumenta 10 por cento por level
-    static func spaceshipShieldPower(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipShieldPower(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldPowerBonus) * pow(1.1, Double(level - 1)))
     }
     
     // Quantidade de pontos de escudo recarregado por segundo
-    static func spaceshipShieldRecharge(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipShieldRecharge(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
     
@@ -66,7 +66,7 @@ class GameMath {
         return CGFloat(maxVelocity * maxVelocity)
     }
     
-    static func spaceshipSkinImageName(level level:Int, type:SpaceShipType) -> String {
+    static func spaceshipSkinImageName(level level:Int, type:SpaceshipType) -> String {
         let level = Float(level)
         let maxLevel = Float(type.maxLevel)
         
@@ -101,7 +101,7 @@ class GameMath {
     }
     
     // Spaceship upgrade
-    static func spaceshipUpgradeCost(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipUpgradeCost(level level:Int, type:SpaceshipType) -> Int {
         switch type.rarity! {
         case .commom:
             return Int(100 * pow(1.3, Double(level)))
@@ -120,7 +120,7 @@ class GameMath {
     }
     
     
-    static func spaceshipPrice(type:SpaceShipType) -> Int {
+    static func spaceshipPrice(type:SpaceshipType) -> Int {
         switch type.rarity! {
         case .commom:
             return 1000
@@ -176,7 +176,7 @@ class GameMath {
         
     }
     
-    static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceShipType) -> Int {
+    static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceshipType) -> Int {
         switch type.rarity! {
         case .commom:
             return Int(10 * pow(1.1, Double(level)))

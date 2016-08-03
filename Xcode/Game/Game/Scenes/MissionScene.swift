@@ -15,6 +15,7 @@ class MissionScene: GameScene {
     let missionShips = MemoryCard.sharedInstance.playerData.missionSpaceships
     
     var selectedSpaceship: MissionSpaceship?
+    var selectedCard: MissionSpaceshipCard?
     
     var buttonBack:Button!
     
@@ -24,6 +25,8 @@ class MissionScene: GameScene {
     
     var scrollNode:ScrollNode!
     var controlArray:Array<MissionSpaceshipCard>!
+    
+    var chooseAsteroidAlert: ChooseAsteroidAlert?
     
     enum states : String {
         
@@ -81,7 +84,7 @@ class MissionScene: GameScene {
         self.missionHeaderControl = Control(textureName: "missionSceneHeader", x:0, y:63, xAlign: .center, yAlign: .center)
         self.addChild(self.missionHeaderControl)
         
-        let labelTitle = Label(text: "MINNER SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(text: "MINING SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
         
@@ -150,6 +153,10 @@ class MissionScene: GameScene {
                 break
                 
             case .mission:
+                self.blackSpriteNode.hidden = true
+                self.scrollNode.canScroll = true
+                self.chooseAsteroidAlert?.scrollNode.removeFromParent()
+                self.chooseAsteroidAlert?.removeFromParent()
                 break
                 
             case .mothership:
@@ -169,7 +176,15 @@ class MissionScene: GameScene {
                 
             case .chooseMission:
                 if let spaceship = self.selectedSpaceship {
-                    self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
+                    //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
+                    self.blackSpriteNode.hidden = false
+                    self.blackSpriteNode.zPosition = 10000
+                    self.chooseAsteroidAlert = ChooseAsteroidAlert(minerSpaceship: spaceship)
+                    self.chooseAsteroidAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                    self.scrollNode.canScroll = false
+                    self.chooseAsteroidAlert!.buttonCancel.addHandler({ self.nextState = .mission
+                    })
+                    self.addChild(self.chooseAsteroidAlert!)
                 } else {
                     #if DEBUG
                         fatalError()
@@ -235,6 +250,7 @@ class MissionScene: GameScene {
                                             if (buttonBegin.containsPoint(touch.locationInNode(card))) {
                                                 self.nextState = .chooseMission
                                                 self.selectedSpaceship = card.missionSpaceship
+                                                self.selectedCard = card
                                                 return
                                             }
                                         }
@@ -277,6 +293,24 @@ class MissionScene: GameScene {
                             }
                         }
                         
+                    }
+                    
+                    break
+                    
+                case .chooseMission:
+                    
+                    if self.chooseAsteroidAlert!.scrollNode.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.cropBox.cropNode)) {
+                        for item in self.chooseAsteroidAlert!.scrollNode.cells {
+                            if (item.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.scrollNode))) {
+                                if let missionTypeCard = item as? MissionTypeCard {
+                                    if missionTypeCard.buttonSelect.containsPoint(touch.locationInNode(missionTypeCard)){
+                                        missionTypeCard.selectMission()
+                                        self.nextState = .mission
+                                    }
+                                    
+                                }
+                            }
+                        }
                     }
                     
                     break

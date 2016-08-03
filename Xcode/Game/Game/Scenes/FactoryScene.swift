@@ -16,9 +16,9 @@ class FactoryScene: GameScene {
     var labelShips:Label!
     
     var scrollNode:ScrollNode!
-    var controlArray:Array<FactorySpaceShipCard>!
+    var controlArray:Array<FactorySpaceshipCard>!
     
-    var spaceShipListShape: CropBox!
+    var spaceshipListShape: CropBox!
     
     enum states : String {
         
@@ -68,32 +68,26 @@ class FactoryScene: GameScene {
         let line = Control(textureName: "lineHangar", x: 0, y: 194, xAlign: .center, yAlign: .center)
         self.addChild(line)
         
-        self.spaceShipListShape = CropBox(textureName: "spaceShipListShape")
-        self.addChild(spaceShipListShape)
-        self.spaceShipListShape.screenPosition = CGPoint(x: 20, y: 228)
-        self.spaceShipListShape.resetPosition()
+        self.spaceshipListShape = CropBox(textureName: "spaceshipListShape")
+        self.addChild(spaceshipListShape)
+        self.spaceshipListShape.screenPosition = CGPoint(x: 20, y: 228)
+        self.spaceshipListShape.resetPosition()
         
         self.labelShips = Label(color: SKColor.whiteColor(), text: "Unlocked spaceships",fontSize: 16, x: 57, y: 213, xAlign: .center, yAlign: .center, horizontalAlignmentMode: .Left)
         self.addChild(self.labelShips)
         
-        self.controlArray = Array<FactorySpaceShipCard>()
+        self.controlArray = Array<FactorySpaceshipCard>()
         
         //TODO: ???
         for item in self.playerData.unlockedSpaceships {
-            if let spaceship = item as? SpaceshipData {
-                for item in self.playerData.weapons {
-                    if let weapon = item as? WeaponData {
-                        let spaceship = Spaceship(type: spaceship.type.integerValue, level: 1)
-                        let weapon = Weapon(type: weapon.type.integerValue, level: 1)
-                        spaceship.addWeapon(weapon)
-                        self.controlArray.append(FactorySpaceShipCard(spaceShip: spaceship))
-                    }
-                }
+            if let spaceshipData = item as? SpaceshipData {
+                let spaceship = Spaceship(spaceshipData: spaceshipData)
+                self.controlArray.append(FactorySpaceshipCard(spaceship: spaceship))
             }
         }
     
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 0, y: 75, spacing: 0 , scrollDirection: .vertical)
-        self.spaceShipListShape.addChild(self.scrollNode)
+        self.spaceshipListShape.addChild(self.scrollNode)
         
         switch GameTabBar.lastState {
         case .research, .mission, .mothership:
@@ -212,15 +206,15 @@ class FactoryScene: GameScene {
                         return
                     }
                     
-                    if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceShipListShape.cropNode))) {
+                    if (self.scrollNode.containsPoint(touch.locationInNode(self.spaceshipListShape.cropNode))) {
                         for item in self.scrollNode.cells {
                             if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
-                                if let card = item as? FactorySpaceShipCard {
+                                if let card = item as? FactorySpaceshipCard {
                                     
                                     if (card.buttonBuy.containsPoint(touch.locationInNode(card))) {
                                         if ((card.position.y < 140) && (card.position.y > -130)) {
                                             
-                                            if (self.playerData.points.integerValue > GameMath.spaceshipPrice(card.spaceShip.type)) {
+                                            if (self.playerData.points.integerValue > GameMath.spaceshipPrice(card.spaceship.type)) {
                                                 card.buySpaceship()
                                             } else {
                                                 

@@ -11,7 +11,7 @@ import SpriteKit
 class MissionSpaceshipCard: Control {
     
     var missionSpaceship: MissionSpaceship!
-    var spaceShipImage: Control!
+    var spaceshipImage: Control!
     var buttonBegin: Button?
     var buttonSpeedUp: Button?
     var buttonColect: Button?
@@ -34,22 +34,22 @@ class MissionSpaceshipCard: Control {
         self.addChild(Control(textureName: "MissionSpaceshipCard"))
         
         self.missionSpaceship = missionSpaceship
-        self.spaceShipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
-        self.addChild(self.spaceShipImage)
+        self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
+        self.addChild(self.spaceshipImage)
 
         
         self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 11, x: 259, y: 16, shadowColor: SKColor(red: 229/255, green: 228/255, blue: 229/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: "MINER SPACESHIP" , fontSize: 13, x: 12, y: 17, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 30/255, green: 39/255, blue: 47/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.labelName = Label(color:SKColor.whiteColor() ,text: "MINING SPACESHIP" , fontSize: 13, x: 12, y: 17, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 30/255, green: 39/255, blue: 47/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelName)
         
         
-        if (self.missionSpaceship.missionType >= 0) {
+        if (Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue) >= 0) {
             
             
             
-            let mission = MissionSpaceship.types[self.missionSpaceship.missionType]
+            let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
             let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
             
             if (time > 0) {
@@ -103,7 +103,7 @@ class MissionSpaceshipCard: Control {
             
             self.needUpdate = false
             
-            let mission = MissionSpaceship.types[self.missionSpaceship.missionType]
+            let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
             
             missionspaceshipData.missionType = NSNumber(integer: -1)
             self.missionSpaceship.missionType = -1
@@ -117,6 +117,8 @@ class MissionSpaceshipCard: Control {
             
             self.timeBar?.cropNode.removeFromParent()
             
+            
+            self.labelDescription?.removeFromParent()
             self.labelDescription = Label(text: "No mining now.", fontSize: 11 , x: 97, y: 60, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
             self.addChild(self.labelDescription)
             
@@ -139,9 +141,9 @@ class MissionSpaceshipCard: Control {
             
             
             if (self.needUpdate) {
-                if (self.missionSpaceship.missionType >= 0) {
+                if (self.missionSpaceship.missionspaceshipData?.missionType.intValue >= 0) {
                     
-                    let mission = MissionSpaceship.types[self.missionSpaceship.missionType]
+                    let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
                     let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
                     
                     
@@ -171,9 +173,40 @@ class MissionSpaceshipCard: Control {
                     self.needUpdate = false
                 }
    
+            } else {
+                if (self.missionSpaceship.missionspaceshipData!.missionType.intValue >= 0) {
+                    
+                    let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
+                    let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
+                    
+                    if (time > 0) {
+                        
+                        self.needUpdate = true
+                        
+                        self.buttonBegin?.removeFromParent()
+                        self.buttonUpgrade?.removeFromParent()
+                        
+                        self.buttonBegin = nil
+                        self.buttonUpgrade = nil
+    
+                        self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                        self.addChild(self.buttonSpeedUp!)
+                        
+                        self.timeBar = TimeBar(x: 97, y: 50)
+                        self.addChild(self.timeBar!.cropNode)
+                        
+                        if let timer = self.timeBar {
+                            timer.update(self.missionSpaceship)
+                        }
+                        
+                    }
+
+                }
             }
         }
     }
+    
+
     
     func upgrade() -> Bool {
         
@@ -183,12 +216,10 @@ class MissionSpaceshipCard: Control {
             self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - 2000)
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
-            self.spaceShipImage.removeFromParent()
-            self.spaceShipImage = Control(textureName: "MissionSpaceship" + self.missionSpaceship.level.description)
-            self.addChild(self.spaceShipImage)
-            self.spaceShipImage.screenPosition = CGPoint(x: 21, y: 41)
-            self.spaceShipImage.resetPosition()
-            
+            self.spaceshipImage.removeFromParent()
+            self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
+            self.addChild(self.spaceshipImage)
+
             if self.missionSpaceship.level == 4 {
                 self.buttonUpgrade?.removeFromParent()
                 self.buttonUpgrade = nil

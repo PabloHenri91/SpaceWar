@@ -8,22 +8,22 @@
 
 import SpriteKit
 
-class SpaceShipSlot: Control {
+class SpaceshipSlot: Control {
     
-    var spaceShip:Spaceship?
+    var spaceship:Spaceship?
     
     var sprite:SKSpriteNode!
     let motherShip = MemoryCard.sharedInstance.playerData.motherShip
-    init(spaceShip:Spaceship?) {
+    init(spaceship:Spaceship?) {
         
         super.init()
         Control.controlList.insert(self)
         
-        self.sprite = SKSpriteNode(imageNamed: "spaceShipSlotEmpty")
+        self.sprite = SKSpriteNode(imageNamed: "spaceshipSlotEmpty")
         
-        if let spaceShipeFromInit = spaceShip {
-            self.addChild(spaceShipeFromInit)
-            self.spaceShip = spaceShipeFromInit
+        if let spaceshipFromInit = spaceship {
+            self.addChild(spaceshipFromInit)
+            self.spaceship = spaceshipFromInit
         } else {
             self.addChild(self.sprite)
         }
@@ -34,27 +34,27 @@ class SpaceShipSlot: Control {
     }
     
     func remove() {
-        if let item = self.spaceShip {
+        if let item = self.spaceship {
             item.removeFromParent()
             self.addChild(self.sprite)
-            if let spaceShipDataItem = item.spaceshipData {
-               motherShip.removeSpaceshipData(spaceShipDataItem)
+            if let spaceshipDataItem = item.spaceshipData {
+               motherShip.removeSpaceshipData(spaceshipDataItem)
             }
-            self.spaceShip = nil
+            self.spaceship = nil
         }
     }
     
-    func update(spaceShipData: SpaceshipData) {
+    func update(spaceshipData: SpaceshipData) {
         
         
-        motherShip.addSpaceshipData(spaceShipData)
+        motherShip.addSpaceshipData(spaceshipData)
         
-        let spaceShip = Spaceship(spaceshipData: spaceShipData)
-        spaceShip.loadAllyDetails()
-        self.spaceShip = spaceShip
+        let spaceship = Spaceship(spaceshipData: spaceshipData)
+        spaceship.loadAllyDetails()
+        self.spaceship = spaceship
         self.sprite.removeFromParent()
-        self.addChild(spaceShip)
-        self.spaceShip = spaceShip
+        self.addChild(spaceship)
+        self.spaceship = spaceship
     }
     
     

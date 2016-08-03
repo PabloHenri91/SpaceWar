@@ -8,10 +8,10 @@
 
 import SpriteKit
 
-class FactorySpaceShipCard: Control {
+class FactorySpaceshipCard: Control {
     
-    var spaceShip: Spaceship!
-    var spaceShipImage: Control!
+    var spaceship: Spaceship!
+    var spaceshipImage: Control!
     var buttonDetalis: Button!
     var buttonBuy: Button!
     var labelLevel: Label!
@@ -20,20 +20,19 @@ class FactorySpaceShipCard: Control {
     
     var playerData = MemoryCard.sharedInstance.playerData
     
-    init(spaceShip: Spaceship) {
+    init(spaceship: Spaceship) {
         
         super.init()
         
 
         self.addChild(Control(textureName: "hangarShipCardSelected"))
         
-        self.spaceShip = spaceShip
-        //self.spaceShipImage = Control(textureName: GameMath.spaceshipSkinImageName(level: self.spaceShip.level, type: self.spaceShip.type))
-        self.addChild(self.spaceShip)
-        self.spaceShip.screenPosition = CGPoint(x: 37, y: 57)
-        self.spaceShip.resetPosition()
-        self.spaceShip.loadAllyDetails()
-        self.spaceShip.loadWeaponDetail()
+        self.spaceship = spaceship
+        self.addChild(self.spaceship)
+        self.spaceship.screenPosition = CGPoint(x: 37, y: 57)
+        self.spaceship.resetPosition()
+        self.spaceship.loadAllyDetails()
+        self.spaceship.loadWeaponDetail()
         
         self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
         self.addChild(self.buttonDetalis)
@@ -48,18 +47,18 @@ class FactorySpaceShipCard: Control {
         
         
         
-        self.labelLevel = Label(text: String(self.spaceShip.level) , fontSize: 15, x: 262, y: 14)
+        self.labelLevel = Label(text: String(self.spaceship.level) , fontSize: 15, x: 262, y: 14)
         self.addChild(self.labelLevel)
         
-        if let weapon = self.spaceShip.weapon {
-            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name + " + " + weapon.type.name  , x: 137, y: 23)
+        if let weapon = self.spaceship.weapon {
+            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceship.type.name + " + " + weapon.type.name  , x: 137, y: 23)
             self.addChild(self.labelName)
         } else {
-            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceShip.type.name, x: 137, y: 23)
+            self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceship.type.name, x: 137, y: 23)
             self.addChild(self.labelName)
         }
       
-        self.labelDescription = Label(text: "Price: " + GameMath.spaceshipPrice(self.spaceShip.type).description, fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
+        self.labelDescription = Label(text: "Price: " + GameMath.spaceshipPrice(self.spaceship.type).description, fontSize: 12 , x: 62, y: 58, horizontalAlignmentMode: .Left)
         self.addChild(self.labelDescription)
         
     }
@@ -75,14 +74,14 @@ class FactorySpaceShipCard: Control {
     func buySpaceship(){
         
         var weaponTypeIndex = Int.random(Weapon.types.count)
-        if let weapon = self.spaceShip.weapon {
+        if let weapon = self.spaceship.weapon {
             weaponTypeIndex = weapon.type.index
         }
-        let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceShip.type.index)
+        let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceship.type.index)
         let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
         spaceshipData.addWeaponData(weaponData)
         self.playerData.addSpaceshipData(spaceshipData)
-        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceShip.type))
+        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceship.type))
         
     }
 
