@@ -26,6 +26,16 @@ class Box: Control {
         
         self.size = self.calculateAccumulatedFrame().size
     }
+    
+    init (spriteNode: SKSpriteNode, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
+        
+        let position = CGPoint(
+            x: x == -1 ? Display.sceneSize.width/2  : CGFloat(1),
+            y: y == -1 ? Display.sceneSize.height/2 : CGFloat(1))
+        
+
+        super.init(spriteNode: spriteNode, x: Int(position.x), y: Int(position.y), xAlign: xAlign, yAlign: yAlign)
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

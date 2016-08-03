@@ -43,6 +43,7 @@ class MissionType {
     var index: Int
     var minHangarLevel: Int
     var diamondChance: Int
+    var name = ""
     
     init(index: Int, minHangarLevel: Int, duration: Int, xpBonus: Int, pointsBonus: Int, diamondChance: Int) {
         

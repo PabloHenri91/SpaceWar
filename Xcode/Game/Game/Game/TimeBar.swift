@@ -41,7 +41,7 @@ class TimeBar: CropBox {
     
     func update(missionShip:MissionSpaceship) {
         let startDate = missionShip.missionspaceshipData!.startMissionDate
-        let mission = MissionSpaceship.types[missionShip.missionType]
+        let mission = MissionSpaceship.types[Int(missionShip.missionspaceshipData!.missionType.intValue)]
         let length = mission.duration
         self.update(startDate!, length: length)
     }

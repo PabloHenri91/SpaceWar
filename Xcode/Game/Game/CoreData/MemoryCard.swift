@@ -66,7 +66,59 @@ class MemoryCard {
             self.playerData.startDate = NSDate()
         }
         
-        //SpaceWar 3
+        //nova estrutura de pesquisas
+        
+        if self.playerData.weapons.count > 0 {
+            let weapons = self.playerData.weapons
+            let spaceships = self.playerData.unlockedSpaceships
+
+            
+            self.playerData.weapons = NSSet()
+            self.playerData.unlockedSpaceships = NSSet()
+            self.playerData.researches = NSSet()
+            
+            for research in Research.types {
+                let newResearch = self.newResearchData()
+                newResearch.type = research.index
+                self.playerData.addResearchData(newResearch)
+            }
+            
+            
+            let researchs = self.playerData.researches
+            
+            
+            for weapon in weapons {
+                for spaceship in spaceships {
+                    
+                    let weaponData = self.newWeaponData(type: Int((weapon as! WeaponData).type))
+                    
+                    let spaceshipData = self.newSpaceshipData(type: Int((spaceship as! SpaceshipData).type))
+                    spaceshipData.addWeaponData(weaponData)
+                    spaceshipData
+                    self.playerData.unlockSpaceshipData(spaceshipData)
+                    
+         
+                    
+                    print(weaponData.type.intValue)
+                    print(spaceshipData.type.intValue)
+                    print()
+                    
+                    self.playerData.unlockSpaceshipData(spaceshipData)
+                    
+                    for research in researchs {
+                        let researchData = research as! ResearchData
+                        let researchType = Research.types[Int(researchData.type.intValue)]
+                        
+                        if ((researchType.weaponUnlocked == Int(weaponData.type.intValue)) && (researchType.spaceshipUnlocked == Int(spaceshipData.type.intValue))) {
+                            researchData.done = 1
+                        }
+                        
+                    }
+                    
+                    
+                }
+            }
+        }
         
     }
     
@@ -184,9 +236,6 @@ class MemoryCard {
             }
         }
         
-        battery?.lastCharge = NSDate()
-        
-    
-        
+        battery?.lastCharge = NSDate()  
     }
 }

@@ -75,17 +75,10 @@ class FactoryScene: GameScene {
         
         self.controlArray = Array<FactorySpaceshipCard>()
         
-        //TODO: ???
         for item in self.playerData.unlockedSpaceships {
-            if let spaceship = item as? SpaceshipData {
-                for item in self.playerData.weapons {
-                    if let weapon = item as? WeaponData {
-                        let spaceship = Spaceship(type: spaceship.type.integerValue, level: 1)
-                        let weapon = Weapon(type: weapon.type.integerValue, level: 1)
-                        spaceship.addWeapon(weapon)
-                        self.controlArray.append(FactorySpaceshipCard(spaceship: spaceship))
-                    }
-                }
+            if let spaceshipData = item as? SpaceshipData {
+                let spaceship = Spaceship(spaceshipData: spaceshipData)
+                self.controlArray.append(FactorySpaceshipCard(spaceship: spaceship))
             }
         }
     
