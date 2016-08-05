@@ -122,10 +122,16 @@ class ResearchType {
 
 extension Research {
     
+    static func cheatDuration() {
+        for researchType in Research.types {
+            researchType.duration = 3
+        }
+    }
+    
     static var types:[ResearchType] = [
         {
-            let research = ResearchType(index:0, name:"Spaceship with machine gun", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A commom spaceship with a fast machine gun."
+            let research = ResearchType(index:0, name:"Spaceship with Machine Gun", duration:28800, cost:0, lineType: .general)
+            research.researchDescription = "A commom spaceship with a fast Machine Gun."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 0
             research.researchsNeeded = []
@@ -134,7 +140,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:1, name:"Spaceship with shotgun", duration:43200, cost:0, lineType: .weapons)
+            let research = ResearchType(index:1, name:"Spaceship with Shotgun", duration:43200, cost:0, lineType: .weapons)
             research.researchDescription = "A commom spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 0
@@ -144,7 +150,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:2, name:"Spaceship with sniper rifle", duration:86400, cost:0, lineType: .weapons)
+            let research = ResearchType(index:2, name:"Spaceship with Sniper", duration:86400, cost:0, lineType: .weapons)
             research.researchDescription = "A commom spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 0
@@ -155,7 +161,7 @@ extension Research {
         
         
         {
-            let research = ResearchType(index:3, name:"Space tanker with pistol", duration:14400, cost:0, lineType: .general)
+            let research = ResearchType(index:3, name:"Space Tanker with Pistol", duration:14400, cost:0, lineType: .general)
             research.researchDescription = "A resistant spaceship with a commom gun."
             research.weaponUnlocked = 0
             research.spaceshipUnlocked = 1
@@ -165,8 +171,8 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:4, name:"Space tanker with machine gun", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A resistant spaceship with a fast machine gun."
+            let research = ResearchType(index:4, name:"Space Tanker with Machine Gun", duration:28800, cost:0, lineType: .general)
+            research.researchDescription = "A resistant spaceship with a fast Machine Gun."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 1
             research.researchsNeeded = [3]
@@ -175,7 +181,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:5, name:"Space tanker with shotgun", duration:43200, cost:0, lineType: .weapons)
+            let research = ResearchType(index:5, name:"Space Tanker with Shotgun", duration:43200, cost:0, lineType: .weapons)
             research.researchDescription = "A resistante spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 1
@@ -185,7 +191,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:6, name:"Space tanker with sniper rifle", duration:86400, cost:0, lineType: .weapons)
+            let research = ResearchType(index:6, name:"Space Tanker with Sniper", duration:86400, cost:0, lineType: .weapons)
             research.researchDescription = "A resistant spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 1
@@ -195,7 +201,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:7, name:"Space speeder with pistol", duration:14400, cost:0, lineType: .general)
+            let research = ResearchType(index:7, name:"Space Speeder with Pistol", duration:14400, cost:0, lineType: .general)
             research.researchDescription = "A fast spaceship with a commom gun."
             research.weaponUnlocked = 0
             research.spaceshipUnlocked = 2
@@ -205,8 +211,8 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:8, name:"Space speeder with machine gun", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A fast spaceship with a fast machine gun."
+            let research = ResearchType(index:8, name:"Space Speeder with Machine Gun", duration:28800, cost:0, lineType: .general)
+            research.researchDescription = "A fast spaceship with a fast Machine Gun."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 2
             research.researchsNeeded = [7]
@@ -215,7 +221,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:9, name:"Space speeder with shotgun", duration:43200, cost:0, lineType: .weapons)
+            let research = ResearchType(index:9, name:"Space Speeder with Shotgun", duration:43200, cost:0, lineType: .weapons)
             research.researchDescription = "A fast spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 2
@@ -225,7 +231,7 @@ extension Research {
         }(),
         
         {
-            let research = ResearchType(index:10, name:"Space speeder with sniper rifle", duration:86400, cost:0, lineType: .weapons)
+            let research = ResearchType(index:10, name:"Space Speeder with Sniper", duration:86400, cost:0, lineType: .weapons)
             research.researchDescription = "A fast spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 2

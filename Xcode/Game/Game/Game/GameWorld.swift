@@ -11,14 +11,14 @@ import SpriteKit
 class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     enum zPositions: CGFloat {
-        case battleArea
-        case mothership
-        case shot
-        case spaceship
-        case sparks
-        case explosion
-        case spaceshipHealthBar
-        case damageEffect
+        case battleArea = 0
+        case mothership = 10
+        case shot = 20
+        case spaceship = 30
+        case sparks = 40
+        case explosion = 50
+        case spaceshipHealthBar = 60
+        case damageEffect = 70
     }
     
     var physicsWorld:SKPhysicsWorld!

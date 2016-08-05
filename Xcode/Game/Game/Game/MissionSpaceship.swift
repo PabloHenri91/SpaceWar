@@ -24,16 +24,12 @@ class MissionSpaceship: Control {
         if missionSpaceshipData.missionType.integerValue >= 0 {
             self.missionType = missionSpaceshipData.missionType.integerValue
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
-
-
 
 class MissionType {
     
@@ -53,13 +49,17 @@ class MissionType {
         self.xpBonus = xpBonus
         self.pointsBonus = pointsBonus
         self.diamondChance = diamondChance
-        
     }
-    
 }
 
 
 extension MissionSpaceship {
+    
+    static func cheatDuration() {
+        for missionType in MissionSpaceship.types {
+            missionType.duration = 3
+        }
+    }
     
     static var types:[MissionType] = [
     

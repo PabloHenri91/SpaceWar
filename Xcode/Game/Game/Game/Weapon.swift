@@ -161,7 +161,7 @@ extension Weapon {
             weaponType.shotSkins = [
                 "weaponAAShot"
             ]
-            weaponType.name = "Super Machine-gun"
+            weaponType.name = "Super Machine Gun"
             weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
             weaponType.index = 1

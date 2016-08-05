@@ -79,6 +79,8 @@ class Spaceship: Control {
 
     var explosionSoundEffect:SoundEffect!
     
+    var labelLevel:Label!
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -122,7 +124,8 @@ class Spaceship: Control {
     }
     
     func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
-        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
+        let size = self.calculateAccumulatedFrame().size
+        self.healthBar = HealthBar(size: size, borderColor: borderColor)
         gameWorld.addChild(self.healthBar)
     }
     
@@ -229,11 +232,9 @@ class Spaceship: Control {
         
         self.increaseTouchArea()
         
-        #if DEBUG
-//            let labelLevel = Label(color: GameColors.white, text: self.level.description, fontSize: 16, x: 0, y: 0, shadowColor: GameColors.black, shadowOffset: CGPoint(x: 1, y: -1))
-//            labelLevel.zPosition = zPositions.levelDetail.rawValue
-//            self.addChild(labelLevel)
-        #endif
+        self.labelLevel = Label(color: SKColor(red: 0, green: 0, blue: 0, alpha: 0.5), text: self.level.description, fontSize: 16, x: 0, y: 0)
+        self.labelLevel.zPosition = zPositions.levelDetail.rawValue
+        self.addChild(self.labelLevel)
         
         Spaceship.spaceshipList.insert(self)
     }
@@ -821,14 +822,11 @@ class Spaceship: Control {
             
             spaceshipData.level = NSNumber(integer: spaceshipData.level.integerValue + 1)
             self.level = spaceshipData.level.integerValue
-            
-            //TODO: remover gamb
             for item in spaceshipData.weapons {
                 if let weaponData = item as? WeaponData {
                     weaponData.level = NSNumber(integer: weaponData.level.integerValue + 1)
                 }
             }
-            //
         }
     }
     
@@ -926,6 +924,21 @@ class SpaceshipType {
 
 extension Spaceship {
     
+    static func cheatUnlockAll() {
+        let memoryCard = MemoryCard.sharedInstance
+        let playerData = memoryCard.playerData
+        playerData.unlockedSpaceships = NSSet()
+        
+        for spaceshipType in Spaceship.types {
+            for weaponType in Weapon.types {
+                let spaceshipData = memoryCard.newSpaceshipData(type: spaceshipType.index)
+                let weaponData = memoryCard.newWeaponData(type: weaponType.index)
+                spaceshipData.addWeaponData(weaponData)
+                playerData.unlockSpaceshipData(spaceshipData)
+            }
+        }
+    }
+    
     static var extraTypes:[SpaceshipType] = [
         {
             let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
@@ -966,7 +979,7 @@ extension Spaceship {
                 "spaceshipAA",
                 "spaceshipAB"
             ]
-            spaceshipType.name = "Space tanker"
+            spaceshipType.name = "Space Tanker"
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceshipType.rarity = .commom
             spaceshipType.index = 1
