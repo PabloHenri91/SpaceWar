@@ -30,7 +30,7 @@ class TimeBar: CropBox {
         border.anchorPoint = CGPoint(x: 0, y: 1)
         self.addChild(border)
         
-        self.labelDescription = Label(text: "teste" , fontSize: 11, x: 85, y: 15, xAlign: .center , shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.labelDescription = Label(text: "teste" , fontSize: 11, x: 85, y: 15, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelDescription)
     }
     
