@@ -77,11 +77,13 @@ class GameMath {
     
     static func spaceshipBotSpaceshipLevel() -> Int {
         
+        let playerData = MemoryCard.sharedInstance.playerData
+        
         var resultado = 0
         var batalhas = 0
         var missoes = 0
         
-        for i in 1..<(MemoryCard.sharedInstance.playerData.motherShip.level.integerValue) {
+        for i in 1..<(playerData.motherShip.level.integerValue) {
             batalhas = batalhas + (i - 1)
             if (i>2) {
                 missoes = missoes + (i - 2)
@@ -95,6 +97,10 @@ class GameMath {
         while custo < resultado {
             custo = custo + 4 * Int(100 * pow(1.3, Double(nivel)))
             nivel += 1
+        }
+        
+        if playerData.botUpdateInterval.integerValue < 0 {
+            nivel += abs(playerData.botUpdateInterval.integerValue)
         }
         
         return nivel

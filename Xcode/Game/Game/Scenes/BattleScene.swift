@@ -54,6 +54,10 @@ class BattleScene: GameScene {
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
+        if self.botUpdateInterval < 0 {
+            self.botUpdateInterval = 0
+        }
+        
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
         self.gameWorld.setScreenBox(Display.defaultSceneSize)
@@ -80,20 +84,16 @@ class BattleScene: GameScene {
         self.gameWorld.addChild(self.botMothership)
         
         // BotSpaceships
+        let botSpaceshipLevel = GameMath.spaceshipBotSpaceshipLevel()
         for _ in 0 ..< 4 {
-            self.botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: GameMath.spaceshipBotSpaceshipLevel(), loadPhysics: true))
+            var level = botSpaceshipLevel + Int.random(min: -2, max: 2)
+            if level < 1 {
+                level = 1
+            }
+            let botSpaceship = Spaceship(type: Int.random(Spaceship.types.count), level: level, loadPhysics: true)
+            botSpaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: botSpaceship.level))
+            self.botMothership.spaceships.append(botSpaceship)
         }
-        
-        //TODO: remover gamb
-        for botSpaceship in self.botMothership.spaceships {
-            
-            let weaponTypeIndex = Int.random(Weapon.types.count)
-            var weaponLevel = botSpaceship.level
-            if weaponLevel <= 0 { weaponLevel = 1 }
-            botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: weaponLevel)
-            botSpaceship.addChild(botSpaceship.weapon!)
-        }
-        //
         
         //Spaceships
         
@@ -272,9 +272,9 @@ class BattleScene: GameScene {
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! " + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
-                            if self.botUpdateInterval > 0 {
-                                self.playerData.botUpdateInterval = NSNumber(double: self.botUpdateInterval - 1)
-                            }
+                            
+                            self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
+                            
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)
@@ -286,14 +286,12 @@ class BattleScene: GameScene {
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. " + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
-                            self.playerData.botUpdateInterval = NSNumber(double: self.botUpdateInterval + 1)
+                            self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue + 1
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)
                     }
                 }
-                
-                
                 
                 break
             case .mothership:
