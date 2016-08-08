@@ -190,8 +190,14 @@ class GameTabBar: Control {
         self.addChild(self.buttonMothership)
         self.addChild(self.buttonFactory)
         self.addChild(self.buttonHangar)
-        
         self.addChild(self.hover)
+        
+        Button.buttonList.remove(self.buttonResearch)
+        Button.buttonList.remove(self.buttonMission)
+        Button.buttonList.remove(self.buttonMothership)
+        Button.buttonList.remove(self.buttonFactory)
+        Button.buttonList.remove(self.buttonHangar)
+        Button.buttonList.remove(self.hover)
     }
     
     required init?(coder aDecoder: NSCoder) {
