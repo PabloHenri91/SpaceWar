@@ -250,12 +250,11 @@ class Spaceship: Control {
         
         self.physicsBody?.linearDamping = 2
         self.physicsBody?.angularDamping = 4
-        self.physicsBody?.friction = 0
-        self.physicsBody?.restitution = 2
+//        self.physicsBody?.friction = 0
+//        self.physicsBody?.restitution = 0
         
         self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
         self.force = self.maxVelocitySquared / 60
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
