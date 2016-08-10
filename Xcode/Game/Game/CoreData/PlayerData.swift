@@ -106,10 +106,7 @@ extension MemoryCard {
         // mission spaceships
         playerData.missionSpaceships = NSOrderedSet()
         
-        var missionSpaceshipData = self.newMissionSpaceshipData()
-        playerData.addMissionSpaceshipData(missionSpaceshipData)
-        
-        missionSpaceshipData = self.newMissionSpaceshipData()
+        let missionSpaceshipData = self.newMissionSpaceshipData()
         playerData.addMissionSpaceshipData(missionSpaceshipData)
         
         //researches

@@ -26,20 +26,21 @@ class MissionTypeCard: Control {
         let iconTime = Control(textureName: "timeIcon", x: 13, y: 26)
         self.addChild(iconTime)
         
-        let labelTime = Label(text: GameMath.timeFormated(missionType.duration) , fontSize: 10, x: 30, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000)
+        let labelTime = Label(text: GameMath.timeFormated(missionType.duration) , fontSize: 10, x: 30, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(labelTime)
         
-        let iconFragments = Control(textureName: "fragIcon", x: 87, y: 26)
-        self.addChild(iconFragments)
         
-        let labelFragments = Label(text: missionType.pointsBonus.description , fontSize: 10, x: 103, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelFragments)
-        
-        let iconXP = Control(textureName: "xpIcon", x: 151, y: 26)
+        let iconXP = Control(textureName: "xpIcon", x: 87, y: 26)
         self.addChild(iconXP)
         
-        let labelXP = Label(text: missionType.xpBonus.description , fontSize: 10, x: 167, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000)
+        let labelXP = Label(text: missionType.xpBonus.description , fontSize: 10, x: 103, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(labelXP)
+        
+        let iconFragments = Control(textureName: "fragIcon", x: 151, y: 26)
+        self.addChild(iconFragments)
+        
+        let labelFragments = Label(text: missionType.pointsBonus.description , fontSize: 10, x: 167, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
+        self.addChild(labelFragments)
         
         self.buttonSelect = Button(textureName: "asteroidSelectButton", text: "", x: 245, y: 11)
         self.addChild(self.buttonSelect)

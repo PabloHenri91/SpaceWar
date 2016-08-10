@@ -54,6 +54,7 @@
 		3AAA93401D22BEE500DD4757 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */; };
 		3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA93411D22BF1900DD4757 /* FactoryScene.swift */; };
 		3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA93411D22BF1900DD4757 /* FactoryScene.swift */; };
+		3AD1E5E01D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD1E5DF1D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift */; };
 		3AD261981D2562A000189671 /* FactorySpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */; };
 		3AD261991D2562A000189671 /* FactorySpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */; };
 		3AD2619E1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */; };
@@ -270,6 +271,7 @@
 		3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
 		3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionScene.swift; sourceTree = "<group>"; };
 		3AAA93411D22BF1900DD4757 /* FactoryScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
+		3AD1E5DF1D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyMinnerSpaceshipAlert.swift; sourceTree = "<group>"; };
 		3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactorySpaceshipCard.swift; sourceTree = "<group>"; };
 		3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipData.swift; sourceTree = "<group>"; };
 		3AD261A01D26B61D00189671 /* MissionSpaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceship.swift; sourceTree = "<group>"; };
@@ -491,6 +493,18 @@
 			path = DocSets;
 			sourceTree = "<group>";
 		};
+		3AD1E5DE1D5A64EA00FD4BEF /* Minner */ = {
+			isa = PBXGroup;
+			children = (
+				842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */,
+				3AD261A01D26B61D00189671 /* MissionSpaceship.swift */,
+				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
+				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
+				3AD1E5DF1D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift */,
+			);
+			name = Minner;
+			sourceTree = "<group>";
+		};
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,7 +625,7 @@
 			children = (
 				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
-				842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */,
+				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
 				3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
@@ -619,9 +633,6 @@
 				3A7E60D11D14878F00D00590 /* HangarSpaceshipCard.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
-				3AD261A01D26B61D00189671 /* MissionSpaceship.swift */,
-				3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */,
-				3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				84B22F041D47D7D30034C03F /* PlayerDataCard.swift */,
 				3A4065F01D2C54E600B886DB /* Research.swift */,
@@ -983,6 +994,7 @@
 				84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
 				842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
+				3AD1E5E01D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift in Sources */,
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */,

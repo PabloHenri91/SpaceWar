@@ -65,41 +65,49 @@ extension MissionSpaceship {
     
         {
             let missionSpaceshipType = MissionType(index: 0, minHangarLevel: 1, duration: 30, xpBonus: 50, pointsBonus: 50, diamondChance: 0)
+            missionSpaceshipType.name = "TINY ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 1, minHangarLevel: 1, duration: 300, xpBonus: 200, pointsBonus: 400, diamondChance: 1)
+            missionSpaceshipType.name = "LITTLE ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 2, minHangarLevel: 2, duration: 1800, xpBonus: 1000, pointsBonus: 2000, diamondChance: 2)
+            missionSpaceshipType.name = "MEDIUM ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 3, minHangarLevel: 2, duration: 3600, xpBonus: 1500, pointsBonus: 3500, diamondChance: 5)
+            missionSpaceshipType.name = "BIG ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 4, minHangarLevel: 3, duration: 7200, xpBonus: 2000, pointsBonus: 5000, diamondChance: 10)
+            missionSpaceshipType.name = "HUGE ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 5, minHangarLevel: 3, duration: 14400, xpBonus: 3000, pointsBonus: 7500, diamondChance: 15)
+            missionSpaceshipType.name = "GIANT ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 6, minHangarLevel: 4, duration: 28800, xpBonus: 5000, pointsBonus: 12000, diamondChance: 20)
+            missionSpaceshipType.name = "IMMENSE ASTEROID"
             return missionSpaceshipType
         }(),
         
         {
             let missionSpaceshipType = MissionType(index: 7, minHangarLevel: 4, duration: 86400, xpBonus: 10000, pointsBonus: 24000, diamondChance: 25)
+            missionSpaceshipType.name = "COLOSSAL ASTEROID"
             return missionSpaceshipType
         }(),
     
