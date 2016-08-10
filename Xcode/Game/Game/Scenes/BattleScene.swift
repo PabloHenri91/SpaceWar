@@ -48,9 +48,7 @@ class BattleScene: GameScene {
         
         Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
         
-        #if(iOS)
-            Metrics.battlesPlayed += 1
-        #endif
+        Metrics.battlesPlayed += 1
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
@@ -237,9 +235,7 @@ class BattleScene: GameScene {
                 //TODO: musica do fim da partida
                 //Music.sharedInstance.stop()
                 
-                #if os(iOS)
-                    Metrics.battleTime(currentTime - self.battleBeginTime)
-                #endif
+                Metrics.battleTime(currentTime - self.battleBeginTime)
                 
                 self.mothership.endBattle()
                 self.botMothership.endBattle()
@@ -268,9 +264,7 @@ class BattleScene: GameScene {
                 } else {
                     if self.botMothership.health <= 0 {
                         
-                        #if os(iOS)
-                            Metrics.win()
-                        #endif
+                        Metrics.win()
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! " + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
@@ -287,9 +281,7 @@ class BattleScene: GameScene {
                         self.addChild(alertBox)
                     } else {
                         
-                        #if os(iOS)
-                            Metrics.loose()
-                        #endif
+                        Metrics.loose()
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. " + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({

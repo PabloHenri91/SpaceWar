@@ -33,12 +33,10 @@ class PlayerDataCard: Control {
             playerData.motherShip.level = NSNumber(int: playerData.motherShip.level.integerValue + 1)
             playerData.motherShip.xp = NSNumber(integer: playerData.motherShip.xp.integerValue - xpForNextLevel)
             
-            #if os(iOS)
-                Metrics.levelUp()
-                if let vc = Control.gameScene.view?.window?.rootViewController as? GameViewController {
-                    vc.saveLevel(Int(playerData.motherShip.level))
-                }
-            #endif
+            Metrics.levelUp()
+            if let vc = Control.gameScene.view?.window?.rootViewController as? GameViewController {
+                vc.saveLevel(Int(playerData.motherShip.level))
+            }
             
             let scene = Control.gameScene
             
@@ -185,12 +183,10 @@ class PlayerDataCard: Control {
             self.updateLevel()
             playerData.motherShip.xp = NSNumber(integer: playerData.motherShip.xp.integerValue - xpForNextLevel)
             
-            #if os(iOS)
-                Metrics.levelUp()
-                if let vc = Control.gameScene.view?.window?.rootViewController as? GameViewController {
-                    vc.saveLevel(Int(playerData.motherShip.level))
-                }
-            #endif
+            Metrics.levelUp()
+            if let vc = Control.gameScene.view?.window?.rootViewController as? GameViewController {
+                vc.saveLevel(Int(playerData.motherShip.level))
+            }
             
             let scene = Control.gameScene
             

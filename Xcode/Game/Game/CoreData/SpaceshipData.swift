@@ -13,15 +13,15 @@ import CoreData
 
 class SpaceshipData: NSManagedObject {
 
+    @NSManaged var crashDate: NSDate
+    @NSManaged var killCount: NSNumber
     @NSManaged var level: NSNumber
     @NSManaged var type: NSNumber
     @NSManaged var xp: NSNumber
-    @NSManaged var weapons: NSSet
-    @NSManaged var crashDate: NSDate
     
+    @NSManaged var parentMothership: MothershipData?
     @NSManaged var parentPlayer: PlayerData?
-    
-
+    @NSManaged var weapons: NSSet
 }
 
 extension MemoryCard {
@@ -34,11 +34,13 @@ extension MemoryCard {
         
         let spaceshipData = NSEntityDescription.insertNewObjectForEntityForName("SpaceshipData", inManagedObjectContext: self.managedObjectContext) as! SpaceshipData
         
+        spaceshipData.crashDate = NSDate(timeInterval: -7200, sinceDate: NSDate())
+        spaceshipData.killCount = 0
         spaceshipData.level = 1
         spaceshipData.type = type
         spaceshipData.xp = 0
+        
         spaceshipData.weapons = NSSet()
-        spaceshipData.crashDate = NSDate(timeInterval: -7200, sinceDate: NSDate())
         
         return spaceshipData
     }

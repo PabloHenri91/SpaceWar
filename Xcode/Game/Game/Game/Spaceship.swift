@@ -75,7 +75,7 @@ class Spaceship: Control {
     var healPerFrame = 1
     
     //statistics
-    var killCount = 0
+    var isAlly = true
 
     var explosionSoundEffect:SoundEffect!
     
@@ -160,6 +160,7 @@ class Spaceship: Control {
     }
     
     func loadAllyDetails() {
+        self.isAlly = true
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipAlly")
         spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.zPosition = zPositions.teamDetail.rawValue
@@ -167,6 +168,7 @@ class Spaceship: Control {
     }
     
     func loadEnemyDetails() {
+        self.isAlly = false
         let spriteNode = SKSpriteNode(imageNamed: "spaceshipEnemy")
         spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.zPosition = zPositions.teamDetail.rawValue
@@ -481,10 +483,13 @@ class Spaceship: Control {
             if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
                 if let spaceship = shot.shooter as? Spaceship {
-                    print(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                    if spaceship.isAlly {
+                        if let spaceshipData = spaceship.spaceshipData {
+                            spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
+                            Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                        }
+                    }
                 }
-                
-                
             }
             
             self.health = self.health - shot.damage
