@@ -21,6 +21,8 @@ class PlayerDataCard: Control {
     
     var xpBarCircle:SKShapeNode!
     var xpBarSpriteNode:SKSpriteNode?
+    
+    var statistics:PlayerDataCardStatistics!
 
     override init() {
         let playerData = MemoryCard.sharedInstance.playerData
@@ -51,6 +53,10 @@ class PlayerDataCard: Control {
         xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.integerValue)
         
         super.init(textureName: "playerDataCardBackground", x: -58, y: 0, xAlign: .center, yAlign: .up)
+        self.zPosition = 100
+        
+        self.statistics = PlayerDataCardStatistics()
+        self.addChild(self.statistics)
         
         self.loadXPBar(xp: playerData.motherShip.xp.integerValue, xpForNextLevel: xpForNextLevel)
         self.loadLabelXP(playerData.motherShip.xp.description + "/" + xpForNextLevel.description)
@@ -67,11 +73,15 @@ class PlayerDataCard: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update() {
+        self.statistics.update()
+    }
+    
     func loadResourcesLabels(points:Int, premiumPoints:Int) {
         let valueFontName = GameFonts.fontName.museo1000
         let fontSize = CGFloat(9)
-        let pointsColor = SKColor(red: 45/255, green: 195/255, blue: 245/255, alpha: 1)
-        let premiumPointsColor = SKColor(red: 255/255, green: 162/255, blue: 87/255, alpha: 1)
+        let pointsColor = SKColor(red: 255/255, green: 162/255, blue: 87/255, alpha: 1)
+        let premiumPointsColor = SKColor(red: 119/255, green: 97/255, blue: 174/255, alpha: 1)
         
         let labelPointsValuePosition = CGPoint(x: 287, y: 27)
         
@@ -256,5 +266,108 @@ class PlayerDataCard: Control {
         let action = SKAction.sequence(actions)
         
         self.labelPremiumPoints.runAction(action)
+    }
+}
+
+class PlayerDataCardStatistics: Control {
+    
+    let spriteNodeWidth = 435
+    
+    let playerDataCardBackground2PositionY = 384
+    var playerDataCardBackground2Width:CGFloat = 0
+    
+    var touchIsMooving = false
+    
+    var isOpen = false
+    
+    override init() {
+        
+        let spriteNode = SKSpriteNode(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 1, height: 1))
+        
+        super.init(spriteNode: spriteNode, size: CGSize(width: self.spriteNodeWidth, height: self.playerDataCardBackground2PositionY), x: 0, y: 0)
+        Control.controlList.remove(self)
+        self.zPosition = -50
+        self.position = self.getPositionWithScreenPosition(CGPoint(x: 0, y: -self.playerDataCardBackground2PositionY))
+        
+        let control = Control(textureName: "playerDataCardBackground2", y: self.playerDataCardBackground2PositionY)
+        self.playerDataCardBackground2Width = control.size.width
+        self.addChild(control)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateOnTouchesBegan() {
+        self.touchIsMooving = true
+    }
+    
+    func update() {
+        if self.touchIsMooving {
+            let lastPosition = self.position
+            var y:CGFloat = lastPosition.y + Control.dy
+            if y < 0 { y = 0 }
+            if Int(y) > self.playerDataCardBackground2PositionY { y = CGFloat(self.playerDataCardBackground2PositionY) }
+            self.position = CGPoint(x: lastPosition.x, y: y)
+            
+            Control.gameScene.blackSpriteNode.alpha = 1 - self.position.y/CGFloat(self.playerDataCardBackground2PositionY)
+            Control.gameScene.blackSpriteNode.zPosition = 25
+            Control.gameScene.blackSpriteNode.hidden = false
+        }
+    }
+    
+    func updateOnTouchesEnded() {
+        
+        if self.touchIsMooving {
+            
+            if abs(Control.totalDy) > 16 {
+                if Control.totalDy > 0 {
+                    self.close()
+                } else {
+                    self.open()
+                }
+            } else {
+                if self.isOpen {
+                    self.forceOpen()
+                } else {
+                    self.forceClose()
+                }
+            }
+            
+            if Control.touchesArray.count <= 0 {
+                self.touchIsMooving = false
+            }
+            
+        } else {
+            self.close()
+        }
+    }
+    
+    func close() {
+        if self.isOpen {
+            self.isOpen = false
+            self.forceClose()
+        }
+    }
+    
+    private func forceClose() {
+        self.runAction(SKAction.moveTo(CGPoint(x:0, y: self.playerDataCardBackground2PositionY), duration: 0.25))
+        Control.gameScene.blackSpriteNode.runAction(SKAction.fadeAlphaTo(0, duration: 0.25)) {
+            Control.gameScene.blackSpriteNode.hidden = true
+            Control.gameScene.blackSpriteNode.alpha = 1
+        }
+    }
+    
+    func open() {
+        if !self.isOpen {
+            self.isOpen = true
+            self.forceOpen()
+        }
+    }
+    
+    private func forceOpen() {
+        self.runAction(SKAction.moveTo(CGPoint(x:0, y: 0), duration: 0.25))
+        Control.gameScene.blackSpriteNode.hidden = false
+        Control.gameScene.blackSpriteNode.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
     }
 }

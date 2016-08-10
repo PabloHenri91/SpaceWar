@@ -47,7 +47,7 @@ class Control: SKNode {
     var yAlign = yAlignments.up
     var xAlign = xAlignments.left
     
-    var size:CGSize!
+    var size = CGSize.zero
     
     var screenPosition:CGPoint = CGPointZero
     
@@ -82,6 +82,7 @@ class Control: SKNode {
         if !(size == CGSize.zero) {
             spriteNode.size = size
         }
+        self.size = spriteNode.size
         spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
         spriteNode.name = name
         self.addChild(spriteNode)
@@ -225,9 +226,9 @@ class Control: SKNode {
             
         #endif
         
-        Control.touchesEndedUpdate()
-        
         responder.touchesEnded(touches)
+        
+        Control.touchesEndedUpdate()
     }
     
     static func touchesCancelled(responder:UIResponder) {

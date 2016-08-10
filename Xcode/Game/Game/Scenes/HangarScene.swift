@@ -168,7 +168,9 @@ class HangarScene: GameScene {
             //Estado atual
             switch (self.state) {
                 
-            case states.hangar:
+            case .hangar:
+                
+                self.playerDataCard.update()
                 
                 if ((currentTime - self.lastUpdate) > 1) {
                     self.lastUpdate = currentTime
@@ -219,7 +221,7 @@ class HangarScene: GameScene {
                 self.view?.presentScene(FactoryScene())
                 break
                 
-            case states.hangar:
+            case .hangar:
                 self.blackSpriteNode.hidden = true
                 break
                 
@@ -235,6 +237,43 @@ class HangarScene: GameScene {
         }
     }
     
+    override func touchesBegan(touches: Set<UITouch>) {
+        super.touchesBegan(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                let point = touch.locationInNode(self)
+                switch (self.state) {
+                case .hangar:
+                    if self.playerDataCard.containsPoint(point) {
+                        self.playerDataCard.statistics.updateOnTouchesBegan()
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>) {
+        super.touchesEnded(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for _ in touches {
+                switch (self.state) {
+                case .hangar:
+                    self.playerDataCard.statistics.updateOnTouchesEnded()
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
     override func touchesEnded(taps touches: Set<UITouch>) {
         super.touchesEnded(taps: touches)
         
@@ -242,7 +281,11 @@ class HangarScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.hangar:
+                case .hangar:
+                    
+                    if self.playerDataCard.statistics.isOpen {
+                        return
+                    }
                     
                     if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research

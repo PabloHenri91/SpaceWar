@@ -133,7 +133,8 @@ class FactoryScene: GameScene {
             //Estado atual
             switch (self.state) {
                 
-            case states.factory:
+            case .factory:
+                self.playerDataCard.update()
                 break
                 
             default:
@@ -166,7 +167,7 @@ class FactoryScene: GameScene {
                 self.view?.presentScene(MothershipScene())
                 break
                 
-            case states.factory:
+            case .factory:
                 self.blackSpriteNode.hidden = true
                 break
                 
@@ -189,6 +190,43 @@ class FactoryScene: GameScene {
         }
     }
     
+    override func touchesBegan(touches: Set<UITouch>) {
+        super.touchesBegan(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                let point = touch.locationInNode(self)
+                switch (self.state) {
+                case .factory:
+                    if self.playerDataCard.containsPoint(point) {
+                        self.playerDataCard.statistics.updateOnTouchesBegan()
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>) {
+        super.touchesEnded(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for _ in touches {
+                switch (self.state) {
+                case .factory:
+                    self.playerDataCard.statistics.updateOnTouchesEnded()
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
     override func touchesEnded(taps touches: Set<UITouch>) {
         super.touchesEnded(taps: touches)
         
@@ -196,7 +234,11 @@ class FactoryScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.factory:
+                case .factory:
+                    
+                    if self.playerDataCard.statistics.isOpen {
+                        return
+                    }
                     
                     if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research

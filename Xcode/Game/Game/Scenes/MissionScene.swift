@@ -137,6 +137,8 @@ class MissionScene: GameScene {
             switch (self.state) {
             case .mission:
                 
+                self.playerDataCard.update()
+                
                 for item in self.scrollNode.cells {
                     if let card = item as? MissionSpaceshipCard {
                         card.update(currentTime)
@@ -216,16 +218,55 @@ class MissionScene: GameScene {
         }
     }
     
-   
+    override func touchesBegan(touches: Set<UITouch>) {
+        super.touchesBegan(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                let point = touch.locationInNode(self)
+                switch (self.state) {
+                case .mission:
+                    if self.playerDataCard.containsPoint(point) {
+                        self.playerDataCard.statistics.updateOnTouchesBegan()
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
     
     override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
+            for _ in touches {
+                switch (self.state) {
+                case .mission:
+                    self.playerDataCard.statistics.updateOnTouchesEnded()
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(taps touches: Set<UITouch>) {
+        super.touchesEnded(taps: touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.mission:
+                case .mission:
+                    
+                    if self.playerDataCard.statistics.isOpen {
+                        return
+                    }
                     
                     if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research

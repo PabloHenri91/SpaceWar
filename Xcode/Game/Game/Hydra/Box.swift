@@ -23,8 +23,6 @@ class Box: Control {
         spriteNode.texture?.filteringMode = Display.filteringMode
         
         super.init(spriteNode: spriteNode, x: Int(position.x), y: Int(position.y), xAlign: xAlign, yAlign: yAlign)
-        
-        self.size = self.calculateAccumulatedFrame().size
     }
     
     init (spriteNode: SKSpriteNode, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {

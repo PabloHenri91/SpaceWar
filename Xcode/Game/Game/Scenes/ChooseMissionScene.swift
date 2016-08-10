@@ -104,7 +104,7 @@ class ChooseMissionScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.normal:
+                case .normal:
                     
                     
                     if(self.buttonBack.containsPoint(touch.locationInNode(self))) {

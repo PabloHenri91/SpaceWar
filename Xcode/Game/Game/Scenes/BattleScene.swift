@@ -123,7 +123,7 @@ class BattleScene: GameScene {
         if(self.state == self.nextState) {
             switch (self.state) {
                 
-            case states.battle:
+            case .battle:
                 
                 var enemyHealth = 0
                 for botSpaceship in self.botMothership.spaceships {
@@ -316,7 +316,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case states.battle:
+                case .battle:
                     
                     for spaceship in self.mothership.spaceships {
                         if spaceship.health > 0 {
@@ -361,7 +361,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case states.battle:
+                case .battle:
                     
                     if let parent = self.botMothership.spriteNode.parent {
                         if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
@@ -394,7 +394,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case states.battle:
+                case .battle:
                     
                     for spaceship in self.mothership.spaceships {
                         if spaceship.health > 0 {

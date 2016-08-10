@@ -73,7 +73,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
             //Próximo estado
             switch (self.nextState) {
                 
-            case states.inviteAll:
+            case .inviteAll:
                 
                 
                 self.loadingImage = SKSpriteNode(imageNamed: "circleLoading")
@@ -90,7 +90,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                 
                 break
                 
-            case states.inviteSomeFriends:
+            case .inviteSomeFriends:
                 
                 
                 self.loadingImage = SKSpriteNode(imageNamed: "circleLoading")
@@ -107,7 +107,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                 
                 break
                 
-            case states.normal:
+            case .normal:
                 self.blackSpriteNode.hidden = true
                 
                 if let spriteNode = self.loadingImage {
@@ -137,7 +137,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.normal:
+                case .normal:
                     if(self.buttonInviteAll.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .inviteAll
                         return

@@ -107,6 +107,8 @@ class ResearchScene: GameScene {
             switch (self.state) {
             case .research:
                 
+                self.playerDataCard.update()
+                
                 if let scrollNode = self.scrollNode {
                     
                     for item in scrollNode.cells {
@@ -118,7 +120,6 @@ class ResearchScene: GameScene {
                 }
                 
                 break
-                
                 
             default:
                 break
@@ -208,6 +209,43 @@ class ResearchScene: GameScene {
         
     }
     
+    override func touchesBegan(touches: Set<UITouch>) {
+        super.touchesBegan(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for touch in touches {
+                let point = touch.locationInNode(self)
+                switch (self.state) {
+                case .research:
+                    if self.playerDataCard.containsPoint(point) {
+                        self.playerDataCard.statistics.updateOnTouchesBegan()
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>) {
+        super.touchesEnded(touches)
+        
+        //Estado atual
+        if(self.state == self.nextState) {
+            for _ in touches {
+                switch (self.state) {
+                case .research:
+                    self.playerDataCard.statistics.updateOnTouchesEnded()
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
     override func touchesEnded(taps touches: Set<UITouch>) {
         super.touchesEnded(taps: touches)
         
@@ -215,7 +253,11 @@ class ResearchScene: GameScene {
         if(self.state == self.nextState) {
             for touch in touches {
                 switch (self.state) {
-                case states.research:
+                case .research:
+                    
+                    if self.playerDataCard.statistics.isOpen {
+                        return
+                    }
                     
                     if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.mission
