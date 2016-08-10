@@ -270,8 +270,8 @@ class Control: SKNode {
         }
         
         Button.update()
-        Control.touchesEndedUpdate()
         responder.touchesEnded(Set<NSEvent>(arrayLiteral: theEvent))
+        Control.touchesEndedUpdate()
     }
     #endif
 }
