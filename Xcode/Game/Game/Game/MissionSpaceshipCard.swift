@@ -214,10 +214,8 @@ class MissionSpaceshipCard: Control {
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
             self.spaceshipImage.removeFromParent()
-            self.spaceshipImage = Control(textureName: "MissionSpaceship" + self.missionSpaceship.level.description)
+            self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
             self.addChild(self.spaceshipImage)
-            self.spaceshipImage.screenPosition = CGPoint(x: 21, y: 41)
-            self.spaceshipImage.resetPosition()
             
             if self.missionSpaceship.level == 4 {
                 self.buttonUpgrade?.removeFromParent()
@@ -230,4 +228,13 @@ class MissionSpaceshipCard: Control {
         
         return false
     }
+    
+    override func removeFromParent() {
+        self.buttonBegin?.removeFromParent()
+        self.buttonSpeedUp?.removeFromParent()
+        self.buttonColect?.removeFromParent()
+        self.buttonUpgrade?.removeFromParent()
+        super.removeFromParent()
+    }
+    
 }

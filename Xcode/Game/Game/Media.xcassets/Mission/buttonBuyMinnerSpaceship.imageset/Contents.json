@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "chooseAsteroidCancelButtonPressed.png",
+      "filename" : "buttonBuyMinnerSpaceship.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "chooseAsteroidCancelButtonPressed@2x.png",
+      "filename" : "buttonBuyMinnerSpaceship@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "chooseAsteroidCancelButtonPressed@3x.png",
+      "filename" : "buttonBuyMinnerSpaceship@3x.png",
       "scale" : "3x"
     }
   ],

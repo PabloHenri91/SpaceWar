@@ -14,7 +14,7 @@ class ChooseAsteroidAlert:Box {
     var minerSpaceship: MissionSpaceship!
     var cropBox: CropBox!
     
-    var scrollNode:ScrollNode!
+    var scrollNode:ScrollNode?
     var controlArray:Array<Control>!
     
     init(minerSpaceship: MissionSpaceship) {
@@ -24,10 +24,15 @@ class ChooseAsteroidAlert:Box {
         
         spriteNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        self.buttonCancel = Button(textureName: "chooseAsteroidCancelButton", x: 105, y: -233,  top: 10, bottom: 10, left: 10, right: 10)
+        self.buttonCancel = Button(textureName: "cancelButtonGray", x: 105, y: -233,  top: 10, bottom: 10, left: 10, right: 10)
         self.addChild(self.buttonCancel)
         
-        var labelTitle = Label(color:SKColor.whiteColor() ,text: "CHOOSE ASTEROID" , fontSize: 13, x: -127, y: -220, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        self.buttonCancel.addHandler({ [weak self] in
+            self?.removeFromParent()
+            self?.scrollNode?.removeFromParent()
+            })
+        
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: "CHOOSE ASTEROID" , fontSize: 13, x: -127, y: -220, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
         self.minerSpaceship = minerSpaceship
@@ -45,10 +50,7 @@ class ChooseAsteroidAlert:Box {
         self.addChild(self.cropBox.cropNode)
         
         
-        self.buttonCancel.addHandler({ [weak self] in
-            self?.removeFromParent()
-            self?.scrollNode?.removeFromParent()
-            })
+        
         
         
         
@@ -65,14 +67,15 @@ class ChooseAsteroidAlert:Box {
             }
             
             self.scrollNode = ScrollNode(name: "scroll", cells: self.controlArray, x: 0 , y: 0, spacing: 0 , scrollDirection: .vertical)
+        
             
             if (self.minerSpaceship.level < 4) {
-                self.scrollNode.canScroll = false
+                self.scrollNode!.canScroll = false
             }
             
-            self.cropBox.addChild(self.scrollNode)
-            self.scrollNode.alpha = 0
-            self.scrollNode.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
+            self.cropBox.addChild(self.scrollNode!)
+            self.scrollNode!.alpha = 0
+            self.scrollNode!.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
         }
         
         

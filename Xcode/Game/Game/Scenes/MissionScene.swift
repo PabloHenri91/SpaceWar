@@ -17,7 +17,7 @@ class MissionScene: GameScene {
     var selectedSpaceship: MissionSpaceship?
     var selectedCard: MissionSpaceshipCard?
     
-    var buttonBack:Button!
+    var buttonBuy:Button?
     
     var playerDataCard:PlayerDataCard!
     
@@ -27,6 +27,7 @@ class MissionScene: GameScene {
     var controlArray:Array<MissionSpaceshipCard>!
     
     var chooseAsteroidAlert: ChooseAsteroidAlert?
+    var buyMinnerSpaceshipAlert: BuyMinnerSpaceshipAlert?
     
     enum states : String {
         
@@ -37,6 +38,7 @@ class MissionScene: GameScene {
         case hangar
         
         case chooseMission
+        case buySpaceship
     }
     
     //Estados iniciais
@@ -84,6 +86,14 @@ class MissionScene: GameScene {
         self.missionHeaderControl = Control(textureName: "missionSceneHeader", x:0, y:63, xAlign: .center, yAlign: .center)
         self.addChild(self.missionHeaderControl)
         
+        if self.playerData.missionSpaceships.count < 4 {
+            
+            self.buttonBuy = Button(textureName: "buttonBuyMinnerSpaceship", x: 278, y: 85, xAlign: .left, top: 10, bottom: 10, left: 10, right: 10)
+            self.addChild(self.buttonBuy!)
+            
+        }
+        
+        
         let labelTitle = Label(text: "MINING SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
@@ -129,6 +139,36 @@ class MissionScene: GameScene {
         self.nextState = .mission
     }
     
+    func updateScrollNode() {
+        
+        self.controlArray = Array<MissionSpaceshipCard>()
+        
+        for item in MemoryCard.sharedInstance.playerData.missionSpaceships {
+            self.controlArray.append(MissionSpaceshipCard(missionSpaceship: MissionSpaceship(missionSpaceshipData: item as! MissionSpaceshipData)))
+        }
+        
+        for item in self.scrollNode.cells {
+            if let card = item as? MissionSpaceshipCard {
+                card.removeFromParent()
+            }
+        }
+        
+        self.scrollNode.removeFromParent()
+        
+        self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 20, y: 130, xAlign: .center, spacing: 16 , scrollDirection: .vertical)
+        
+        self.scrollNode.zPosition = -1000
+        
+        self.addChild(self.scrollNode)
+        
+        if MemoryCard.sharedInstance.playerData.missionSpaceships.count == 4 {
+            self.buttonBuy?.removeFromParent()
+            self.buttonBuy = nil
+        }
+        
+        
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
@@ -164,8 +204,9 @@ class MissionScene: GameScene {
             case .mission:
                 self.blackSpriteNode.hidden = true
                 self.scrollNode.canScroll = true
-                self.chooseAsteroidAlert?.scrollNode.removeFromParent()
+                self.chooseAsteroidAlert?.scrollNode?.removeFromParent()
                 self.chooseAsteroidAlert?.removeFromParent()
+                self.buyMinnerSpaceshipAlert?.removeFromParent()
                 break
                 
             case .mothership:
@@ -205,6 +246,17 @@ class MissionScene: GameScene {
                         fatalError()
                     #endif
                 }
+                break
+                
+            case .buySpaceship:
+                self.blackSpriteNode.hidden = false
+                self.blackSpriteNode.zPosition = 10000
+                self.buyMinnerSpaceshipAlert = BuyMinnerSpaceshipAlert()
+                self.buyMinnerSpaceshipAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                self.scrollNode.canScroll = false
+                self.buyMinnerSpaceshipAlert!.buttonCancel.addHandler({ self.nextState = .mission
+                })
+                self.addChild(self.buyMinnerSpaceshipAlert!)
                 break
                 
             default:
@@ -247,7 +299,12 @@ class MissionScene: GameScene {
                         return
                     }
                     
-                   
+                    if let safeButtonBuy = self.buttonBuy {
+                        if (safeButtonBuy.containsPoint(touch.locationInNode(self))){
+                            self.nextState = .buySpaceship
+                        }
+                    }
+                    
                     
                     if (self.missionHeaderControl.containsPoint(touch.locationInNode(self))){
                         return
@@ -319,16 +376,40 @@ class MissionScene: GameScene {
                     
                 case .chooseMission:
                     
-                    if self.chooseAsteroidAlert!.scrollNode.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.cropBox.cropNode)) {
-                        for item in self.chooseAsteroidAlert!.scrollNode.cells {
-                            if (item.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.scrollNode))) {
-                                if let missionTypeCard = item as? MissionTypeCard {
-                                    if missionTypeCard.buttonSelect.containsPoint(touch.locationInNode(missionTypeCard)){
-                                        missionTypeCard.selectMission()
-                                        self.nextState = .mission
+                    if let scroll = self.chooseAsteroidAlert!.scrollNode {
+                        
+                        if scroll.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.cropBox.cropNode)) {
+                            for item in scroll.cells {
+                                if (item.containsPoint(touch.locationInNode(scroll))) {
+                                    if let missionTypeCard = item as? MissionTypeCard {
+                                        if missionTypeCard.buttonSelect.containsPoint(touch.locationInNode(missionTypeCard)){
+                                            missionTypeCard.selectMission()
+                                            self.nextState = .mission
+                                        }
+                                        
                                     }
-                                    
                                 }
+                            }
+                        }
+                        
+                    }
+ 
+                    break
+                    
+                case .buySpaceship:
+                    if let buyAlert = self.buyMinnerSpaceshipAlert {
+                        if buyAlert.buttonBuy.containsPoint(touch.locationInNode(buyAlert)){
+                            if buyAlert.buyMinningSpaceship() == false {
+                                
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
+                                alertBox.buttonOK.addHandler({ self.nextState = .mission
+                                })
+                                self.addChild(alertBox)
+                                
+                            } else {
+                                self.updateScrollNode()
+                                self.playerDataCard.updatePoints()
+                                self.nextState = .mission
                             }
                         }
                     }
