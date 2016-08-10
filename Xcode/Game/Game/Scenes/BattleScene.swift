@@ -254,7 +254,9 @@ class BattleScene: GameScene {
                 let battleXP:Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
                 let battlePoints:Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
                 
-                self.playerData.points = NSNumber(integer: self.playerData.points.integerValue + battlePoints)
+                self.playerData.points = self.playerData.points.integerValue + battlePoints
+                self.playerData.pointsSum = self.playerData.pointsSum.integerValue + battlePoints
+                
                 self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
@@ -274,6 +276,11 @@ class BattleScene: GameScene {
                         alertBox.buttonOK.addHandler({
                             
                             self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
+                            self.playerData.winCount = self.playerData.winCount.integerValue + 1
+                            self.playerData.winningStreakCurrent = self.playerData.winningStreakCurrent.integerValue + 1
+                            if self.playerData.winningStreakCurrent.integerValue > self.playerData.winningStreakBest.integerValue {
+                                self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.integerValue
+                            }
                             
                             self.nextState = states.mothership
                         })
@@ -287,6 +294,7 @@ class BattleScene: GameScene {
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. " + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
                             self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue + 1
+                            self.playerData.winningStreakCurrent = 0
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)

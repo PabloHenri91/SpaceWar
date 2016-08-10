@@ -108,7 +108,9 @@ class MissionSpaceshipCard: Control {
             missionspaceshipData.missionType = NSNumber(integer: -1)
             self.missionSpaceship.missionType = -1
             
-            self.playerData.points = NSNumber(integer: self.playerData.points.integerValue + mission.pointsBonus)
+            self.playerData.points = self.playerData.points.integerValue + mission.pointsBonus
+            self.playerData.pointsSum = self.playerData.pointsSum.integerValue + mission.pointsBonus
+            
             self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + mission.xpBonus)
 
             
@@ -210,7 +212,7 @@ class MissionSpaceshipCard: Control {
         if self.playerData.points.integerValue >= 2000 {
             self.missionSpaceship.level = self.missionSpaceship.level + 1
             self.missionSpaceship.missionspaceshipData?.level = NSNumber(integer: (self.missionSpaceship.missionspaceshipData?.level.integerValue)! + 1)
-            self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - 2000)
+            self.playerData.points = self.playerData.points.integerValue - 2000
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
             self.spaceshipImage.removeFromParent()

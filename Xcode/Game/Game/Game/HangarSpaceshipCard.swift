@@ -140,7 +140,7 @@ class HangarSpaceshipCard: Control {
     func upgradeSpaceship(cost: Int) {
         let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceship.level, type: self.spaceship.type)
         self.spaceship.upgrade()
-        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - cost)
+        self.playerData.points = self.playerData.points.integerValue - cost
         self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xp)
         self.reloadCard()
     }

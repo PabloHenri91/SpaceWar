@@ -57,6 +57,7 @@ class MemoryCard {
     }
     
     func updateModelVersion() {
+        
         //SpaceWar 2
         if self.playerData.battery == nil {
             self.playerData.battery = self.newBatteryData()
@@ -97,7 +98,6 @@ class MemoryCard {
                     spaceshipData
                     self.playerData.unlockSpaceshipData(spaceshipData)
                     
-         
                     
                     print(weaponData.type.intValue)
                     print(spaceshipData.type.intValue)
@@ -112,14 +112,10 @@ class MemoryCard {
                         if ((researchType.weaponUnlocked == Int(weaponData.type.intValue)) && (researchType.spaceshipUnlocked == Int(spaceshipData.type.intValue))) {
                             researchData.done = 1
                         }
-                        
                     }
-                    
-                    
                 }
             }
         }
-        
     }
     
     func reset() {
@@ -163,8 +159,13 @@ class MemoryCard {
         var coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
+        
+        let options = Dictionary(dictionaryLiteral:
+            (NSMigratePersistentStoresAutomaticallyOption, true),
+            (NSInferMappingModelAutomaticallyOption , true))
+        
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -177,11 +178,11 @@ class MemoryCard {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             
-            try! ALIterativeMigrator.iterativeMigrateURL(url, ofType: NSSQLiteStoreType, toModel: self.managedObjectModel, orderedModelNames: [ "SpaceWar", "SpaceWar 2", "SpaceWar 3"])
+            try! ALIterativeMigrator.iterativeMigrateURL(url, ofType: NSSQLiteStoreType, toModel: self.managedObjectModel, orderedModelNames: [ "SpaceWar", "SpaceWar 2", "SpaceWar 3", "SpaceWar 4"])
             
             coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
             
-            try! coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try! coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
             
             return coordinator
         }

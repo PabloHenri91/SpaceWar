@@ -77,7 +77,7 @@ class FactorySpaceshipCard: Control {
         let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
         spaceshipData.addWeaponData(weaponData)
         self.playerData.addSpaceshipData(spaceshipData)
-        self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceship.type))//ok
+        self.playerData.points = self.playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceship.type)
     }
 }
 

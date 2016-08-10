@@ -18,6 +18,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
+    @NSManaged var pointsSum: NSNumber
     @NSManaged var premiumPoints: NSNumber
     @NSManaged var motherShip: MothershipData
     @NSManaged var researches: NSSet
@@ -27,6 +28,9 @@ class PlayerData: NSManagedObject {
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
     @NSManaged var startDate: NSDate?
+    @NSManaged var winCount: NSNumber
+    @NSManaged var winningStreakBest: NSNumber
+    @NSManaged var winningStreakCurrent: NSNumber
 
 }
 
@@ -47,6 +51,7 @@ extension MemoryCard {
         #endif
         
         playerData.points = 0
+        playerData.pointsSum = 0
         playerData.premiumPoints = 100
         playerData.motherShip = self.newMothershipData()
         
@@ -124,6 +129,10 @@ extension MemoryCard {
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
         playerData.startDate = NSDate()
+        
+        playerData.winCount = 0
+        playerData.winningStreakCurrent = 0
+        playerData.winningStreakBest = 0
         
         return playerData
     }

@@ -69,7 +69,7 @@ class BuyMinnerSpaceshipAlert:Box {
         if self.playerData.points.integerValue >= 2000 {
             let missionSpaceshipData = MemoryCard.sharedInstance.newMissionSpaceshipData()
             self.playerData.addMissionSpaceshipData(missionSpaceshipData)
-            self.playerData.points = NSNumber(integer: self.playerData.points.integerValue - 2000)
+            self.playerData.points = self.playerData.points.integerValue - 2000
             return true
         }
         
