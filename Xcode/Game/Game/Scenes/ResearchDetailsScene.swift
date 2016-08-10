@@ -79,44 +79,49 @@ class ResearchDetailsScene: GameScene {
         let labelRequiriments = Label(text: "Requiriments", fontSize: 16, x: 13, y: 250, horizontalAlignmentMode: .Left)
         self.box.addChild(labelRequiriments)
         
-        if (self.research.researchData!.startDate != nil) {
+        if let researchData = self.research.researchData {
             
-            let time = GameMath.researchFinishTime(self.research.researchData!.startDate! , researchTime: self.research.researchType.duration)
-    
-            if (time > 0) {
+        
+        
+            if (researchData.startDate != nil) {
                 
-                //TODO: descomentar
-//                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp", x: 90, y: 411, xAlign: .center, yAlign: .center)
-//                self.box.addChild(self.buttonSpeedUp!)
+                let time = GameMath.researchFinishTime(researchData.startDate! , researchTime: self.research.researchType.duration)
                 
-                self.labelTime = Label(text: GameMath.timeFormated(time), fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
-                self.box.addChild(self.labelTime)
+                if (time > 0) {
+                    
+                    //TODO: descomentar
+                    //                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp", x: 90, y: 411, xAlign: .center, yAlign: .center)
+                    //                self.box.addChild(self.buttonSpeedUp!)
+                    
+                    self.labelTime = Label(text: GameMath.timeFormated(time), fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
+                    self.box.addChild(self.labelTime)
+                    
+                    
+                } else {
+                    
+                    
+                    
+                    self.buttonColect = Button(textureName: "buttonSmall", text: "Colect", x: 90, y: 411, xAlign: .center, yAlign: .center)
+                    self.box.addChild(self.buttonColect!)
+                    
+                    self.labelTime = Label(text: "Finished", fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
+                    self.box.addChild(self.labelTime)
+                }
                 
-
+                
             } else {
                 
-             
                 
-                self.buttonColect = Button(textureName: "buttonSmall", text: "Colect", x: 90, y: 411, xAlign: .center, yAlign: .center)
-                self.box.addChild(self.buttonColect!)
-                
-                self.labelTime = Label(text: "Finished", fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
+                self.labelTime = Label(text: GameMath.timeFormated(self.research.researchType.duration), fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
                 self.box.addChild(self.labelTime)
+                
+                
+                self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin", x: 90, y: 411)
+                self.box.addChild(self.buttonBegin!)
+                
+                
+                
             }
-            
-            
-        } else {
-            
-            
-            self.labelTime = Label(text: GameMath.timeFormated(self.research.researchType.duration), fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
-            self.box.addChild(self.labelTime)
-            
-            
-            self.buttonBegin = Button(textureName: "buttonSmall", text: "Begin", x: 90, y: 411)
-            self.box.addChild(self.buttonBegin!)
-    
-            
-            
         }
         
         self.controlArray = Array<MultiLineLabel>()

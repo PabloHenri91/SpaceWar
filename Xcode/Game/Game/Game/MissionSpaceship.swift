@@ -11,18 +11,24 @@ import SpriteKit
 class MissionSpaceship: Control {
     
     var missionType:Int = -1
-    var level:Int!
+    var level:Int = 1
     var missionspaceshipData:MissionSpaceshipData?
     
+    init(type:Int, level:Int) {
+        super.init()
+        self.load(type, level: level)
+    }
     
     init(missionSpaceshipData:MissionSpaceshipData) {
-        
         super.init()
         self.missionspaceshipData = missionSpaceshipData
-        self.level = missionSpaceshipData.level.integerValue
-        
-        if missionSpaceshipData.missionType.integerValue >= 0 {
-            self.missionType = missionSpaceshipData.missionType.integerValue
+        self.load(missionSpaceshipData.missionType.integerValue, level: missionSpaceshipData.level.integerValue)
+    }
+    
+    func load(type:Int, level:Int) {
+        self.level = level
+        if type >= 0 {
+            self.missionType = type
         }
     }
     

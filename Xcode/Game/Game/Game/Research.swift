@@ -14,11 +14,21 @@ class Research: Control {
     var researchData:ResearchData?
     var researches = MemoryCard.sharedInstance.playerData.researches
     
-    init(researchData:ResearchData) {
-        self.researchData = researchData
-        self.researchType = Research.types[researchData.type.integerValue]
-        
+    
+    init(type:Int) {
         super.init()
+        self.load(type)
+    }
+    
+    init(researchData:ResearchData) {
+        super.init()
+        
+        self.researchData = researchData
+        self.load(researchData.type.integerValue)
+    }
+    
+    func load(type:Int) {
+        self.researchType = Research.types[type]
     }
     
     required init?(coder aDecoder: NSCoder) {
