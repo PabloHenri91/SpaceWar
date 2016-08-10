@@ -139,6 +139,18 @@
 		847C6BB01D4BC14300C2E36E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847C6BAF1D4BC14300C2E36E /* GameKit.framework */; };
 		848021061D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
 		848021071D0ADB220078320A /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848021051D0ADB220078320A /* HealthBar.swift */; };
+		8481A26E1D5BC452006DD7DD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847C6BAF1D4BC14300C2E36E /* GameKit.framework */; };
+		8481A26F1D5BC456006DD7DD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0F318A1D410E4400FDFBFE /* Crashlytics.framework */; };
+		8481A2701D5BC456006DD7DD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0F31891D410E4400FDFBFE /* Fabric.framework */; };
+		8481A2711D5BC456006DD7DD /* GameAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0F318D1D410EBA00FDFBFE /* GameAnalytics.framework */; };
+		8481A2721D5BC460006DD7DD /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */; };
+		8481A2731D5BC460006DD7DD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */; };
+		8481A2741D5BC460006DD7DD /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8841CFDB3B4008EE628 /* FBAudienceNetwork.framework */; };
+		8481A2751D5BC460006DD7DD /* FBNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8851CFDB3B4008EE628 /* FBNotifications.framework */; };
+		8481A2761D5BC460006DD7DD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8861CFDB3B4008EE628 /* FBSDKCoreKit.framework */; };
+		8481A2771D5BC460006DD7DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8871CFDB3B4008EE628 /* FBSDKLoginKit.framework */; };
+		8481A2781D5BC460006DD7DD /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */; };
+		8481A2791D5BC460006DD7DD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D381D40034500AC72F1 /* ALIterativeMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */; };
@@ -470,6 +482,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8481A26F1D5BC456006DD7DD /* Crashlytics.framework in Frameworks */,
+				8481A2711D5BC456006DD7DD /* GameAnalytics.framework in Frameworks */,
+				8481A2771D5BC460006DD7DD /* FBSDKLoginKit.framework in Frameworks */,
+				8481A2721D5BC460006DD7DD /* AccountKit.framework in Frameworks */,
+				8481A2731D5BC460006DD7DD /* Bolts.framework in Frameworks */,
+				8481A26E1D5BC452006DD7DD /* GameKit.framework in Frameworks */,
+				8481A2741D5BC460006DD7DD /* FBAudienceNetwork.framework in Frameworks */,
+				8481A2701D5BC456006DD7DD /* Fabric.framework in Frameworks */,
+				8481A2791D5BC460006DD7DD /* FBSDKShareKit.framework in Frameworks */,
+				8481A2761D5BC460006DD7DD /* FBSDKCoreKit.framework in Frameworks */,
+				8481A2751D5BC460006DD7DD /* FBNotifications.framework in Frameworks */,
+				8481A2781D5BC460006DD7DD /* FBSDKMessengerShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1456,6 +1480,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FacebookSDKs-iOS-4",
+				);
 				INFOPLIST_FILE = SpaceWarTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1470,6 +1499,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FacebookSDKs-iOS-4",
+				);
 				INFOPLIST_FILE = SpaceWarTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1516,6 +1550,7 @@
 				84A767AD1D5BBF3200A8D808 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

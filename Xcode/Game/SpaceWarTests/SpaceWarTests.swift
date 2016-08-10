@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import SpriteKit
+@testable import SpaceWar
 
 class SpaceWarTests: XCTestCase {
     
@@ -20,16 +22,33 @@ class SpaceWarTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testResearchScene() {
+        let scene = ResearchScene()
+        Control.gameScene.view?.presentScene(scene)
+        scene.update(GameScene.currentTime)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testMissionScene() {
+        let scene = MissionScene()
+        Control.gameScene.view?.presentScene(scene)
+        scene.update(GameScene.currentTime)
     }
     
+    func testMothershipScene() {
+        let scene = MothershipScene()
+        Control.gameScene.view?.presentScene(scene)
+        scene.update(GameScene.currentTime)
+    }
+    
+    func testFactoryScene() {
+        let scene = FactoryScene()
+        Control.gameScene.view?.presentScene(scene)
+        scene.update(GameScene.currentTime)
+    }
+    
+    func testHangarScene() {
+        let scene = HangarScene()
+        Control.gameScene.view?.presentScene(scene)
+        scene.update(GameScene.currentTime)
+    }
 }
