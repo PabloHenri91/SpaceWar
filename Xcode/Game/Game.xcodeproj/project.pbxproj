@@ -158,6 +158,7 @@
 		8495A35D1D4686BF00A4205F /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4871D4678E9000E09DD /* spark.sks */; };
 		8495A35E1D4686BF00A4205F /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4881D4678E9000E09DD /* spark.png */; };
 		84A6C8311D141788006717B9 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
+		84A767A81D5BBF3200A8D808 /* SpaceWarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A767A71D5BBF3200A8D808 /* SpaceWarTests.swift */; };
 		84AF821A1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
 		84AF821B1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
 		84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B22F041D47D7D30034C03F /* PlayerDataCard.swift */; };
@@ -234,6 +235,16 @@
 		84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E91CECCE5C00FB63D2 /* ResearchData.swift */; };
 		84F855FC1CECCE5C00FB63D2 /* ResearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E91CECCE5C00FB63D2 /* ResearchData.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84A767AA1D5BBF3200A8D808 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 843CB48D1CDD131A00674F48 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844CF2651CE77B3F0032F6AA;
+			remoteInfo = SpaceWar;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3A0F31441D410C2900FDFBFE /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
@@ -385,6 +396,9 @@
 		848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_one-morning-in-space.mp3"; sourceTree = "<group>"; };
 		848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_space-life.mp3"; sourceTree = "<group>"; };
 		848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pandamindset_pandamindset---space-sleepers.mp3"; sourceTree = "<group>"; };
+		84A767A51D5BBF3200A8D808 /* SpaceWarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceWarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84A767A71D5BBF3200A8D808 /* SpaceWarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceWarTests.swift; sourceTree = "<group>"; };
+		84A767A91D5BBF3200A8D808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleTrainingScene.swift; sourceTree = "<group>"; };
 		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
@@ -446,6 +460,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		844CF2821CE789A90032F6AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A767A21D5BBF3200A8D808 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -525,6 +546,7 @@
 			children = (
 				847C6BAF1D4BC14300C2E36E /* GameKit.framework */,
 				844CF27C1CE77BE80032F6AA /* Game */,
+				84A767A61D5BBF3200A8D808 /* SpaceWarTests */,
 				843CB4961CDD131A00674F48 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -534,6 +556,7 @@
 			children = (
 				844CF2661CE77B3F0032F6AA /* SpaceWar.app */,
 				844CF2851CE789A90032F6AA /* Game-OSX.app */,
+				84A767A51D5BBF3200A8D808 /* SpaceWarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -697,6 +720,15 @@
 			name = Spark;
 			sourceTree = "<group>";
 		};
+		84A767A61D5BBF3200A8D808 /* SpaceWarTests */ = {
+			isa = PBXGroup;
+			children = (
+				84A767A71D5BBF3200A8D808 /* SpaceWarTests.swift */,
+				84A767A91D5BBF3200A8D808 /* Info.plist */,
+			);
+			path = SpaceWarTests;
+			sourceTree = "<group>";
+		};
 		84C011491D4642D900EC7080 /* SoundEffect */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +836,24 @@
 			productReference = 844CF2851CE789A90032F6AA /* Game-OSX.app */;
 			productType = "com.apple.product-type.application";
 		};
+		84A767A41D5BBF3200A8D808 /* SpaceWarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84A767AE1D5BBF3200A8D808 /* Build configuration list for PBXNativeTarget "SpaceWarTests" */;
+			buildPhases = (
+				84A767A11D5BBF3200A8D808 /* Sources */,
+				84A767A21D5BBF3200A8D808 /* Frameworks */,
+				84A767A31D5BBF3200A8D808 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84A767AB1D5BBF3200A8D808 /* PBXTargetDependency */,
+			);
+			name = SpaceWarTests;
+			productName = SpaceWarTests;
+			productReference = 84A767A51D5BBF3200A8D808 /* SpaceWarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -825,6 +875,10 @@
 					};
 					844CF2841CE789A90032F6AA = {
 						CreatedOnToolsVersion = 7.3.1;
+					};
+					84A767A41D5BBF3200A8D808 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 844CF2651CE77B3F0032F6AA;
 					};
 				};
 			};
@@ -854,6 +908,7 @@
 			targets = (
 				844CF2651CE77B3F0032F6AA /* SpaceWar */,
 				844CF2841CE789A90032F6AA /* Game-OSX */,
+				84A767A41D5BBF3200A8D808 /* SpaceWarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -948,6 +1003,13 @@
 				84BF04971D50B8EF00F49792 /* museosansrounded-300-webfont.ttf in Resources */,
 				84C0115F1D46433400EC7080 /* explosion3.wav in Resources */,
 				848FD6CE1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A767A31D5BBF3200A8D808 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,7 +1182,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		84A767A11D5BBF3200A8D808 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84A767A81D5BBF3200A8D808 /* SpaceWarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84A767AB1D5BBF3200A8D808 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844CF2651CE77B3F0032F6AA /* SpaceWar */;
+			targetProxy = 84A767AA1D5BBF3200A8D808 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		844CF2701CE77B400032F6AA /* Main.storyboard */ = {
@@ -1373,6 +1451,34 @@
 			};
 			name = Release;
 		};
+		84A767AC1D5BBF3200A8D808 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = SpaceWarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PabloHenri91.SpaceWarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpaceWar.app/SpaceWar";
+			};
+			name = Debug;
+		};
+		84A767AD1D5BBF3200A8D808 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = SpaceWarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PabloHenri91.SpaceWarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpaceWar.app/SpaceWar";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1402,6 +1508,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		84A767AE1D5BBF3200A8D808 /* Build configuration list for PBXNativeTarget "SpaceWarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A767AC1D5BBF3200A8D808 /* Debug */,
+				84A767AD1D5BBF3200A8D808 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
