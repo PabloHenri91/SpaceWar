@@ -88,7 +88,7 @@ class MissionScene: GameScene {
         
         if self.playerData.missionSpaceships.count < 4 {
             
-            self.buttonBuy = Button(textureName: "buttonBuyMinnerSpaceship", x: 278, y: 85, xAlign: .left, top: 10, bottom: 10, left: 10, right: 10)
+            self.buttonBuy = Button(textureName: "buttonBuyMinnerSpaceship", x: 278, y: 85, xAlign: .center, top: 10, bottom: 10, left: 10, right: 10)
             self.addChild(self.buttonBuy!)
             
         }
