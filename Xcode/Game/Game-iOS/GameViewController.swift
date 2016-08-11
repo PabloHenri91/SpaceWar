@@ -83,17 +83,19 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         
         let localPlayer = GKLocalPlayer.localPlayer()
         
-        localPlayer.authenticateHandler = {(viewController, error) -> Void in
-            
+        localPlayer.authenticateHandler = {(viewController, error) in
             if (viewController != nil) {
                 self.presentViewController(viewController!, animated: true, completion: nil)
-            }
-                
-            else {
+            } else {
                 print((GKLocalPlayer.localPlayer().authenticated))
             }
+            
+            if localPlayer.authenticated {
+                if let name = localPlayer.alias {
+                    MemoryCard.sharedInstance.playerData.name = name
+                }
+            }
         }
-        
     }
     
     
