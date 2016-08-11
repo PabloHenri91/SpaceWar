@@ -54,7 +54,7 @@ class MissionSpaceshipCard: Control {
             
             if (time > 0) {
                 
-                self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 11, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEED UP", fontSize: 11, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonSpeedUp!)
                 
                 self.timeBar = TimeBar(x: 97, y: 50)
@@ -188,7 +188,7 @@ class MissionSpaceshipCard: Control {
                         self.buttonBegin = nil
                         self.buttonUpgrade = nil
     
-                        self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEEDUP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                        self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEED UP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                         self.addChild(self.buttonSpeedUp!)
                         
                         self.timeBar = TimeBar(x: 97, y: 50)

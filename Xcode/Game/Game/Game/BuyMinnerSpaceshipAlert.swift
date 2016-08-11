@@ -42,7 +42,7 @@ class BuyMinnerSpaceshipAlert:Box {
         self.buttonBuy = Button(textureName: "buttonGreenFragments", text: "2000", fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonBuy)
         
-        let minnerSpaceship = Control(textureName: "minnerSpaceshipToBuy", x: -128, y: 9)
+        let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)
         self.addChild(minnerSpaceship)
         
         for i in 0..<self.playerData.missionSpaceships.count {

@@ -380,7 +380,7 @@ class MissionScene: GameScene {
                                         
                                         if let buttonSpeedUp = card.buttonSpeedUp {
                                             if(buttonSpeedUp.containsPoint(touch.locationInNode(card))) {
-                                                print("SpeedUP")
+                                                self.addChild(SpeedUpMinningAlert(missionSpaceship: card.missionSpaceship))
                                                 return
                                             }
                                         }
