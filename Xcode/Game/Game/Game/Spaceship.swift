@@ -92,7 +92,19 @@ class Spaceship: Control {
             "shieldPower: " + shieldPower.description  + "\n" +
             "shieldRecharge: " + shieldRecharge.description  + "\n"
     }
-
+    
+    static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
+        //TODO: displayName
+        var name = Spaceship.types[type].name// + " with " + Weapon.types[weaponType].name
+        if level > 0 {
+            name += " Level: " + level.description
+        }
+        return name
+    }
+    
+    func displayName() -> String {
+        return Spaceship.displayName(self.type.index, level: self.level, weaponType: self.weapon!.type.index)
+    }
     
     override init() {
         fatalError("NÃO IMPLEMENTADO")

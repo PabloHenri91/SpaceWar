@@ -20,7 +20,7 @@ class MultiLineLabel: Control {
     init( text:String , maxWidth: Int = 200, x:Int = 0, y:Int = 0, color:SKColor = GameColors.black, fontName:String = GameFonts.fontName.museo500, fontSize:CGFloat = 16 , xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode  = .Center ) {
         
         super.init()
-        self.text = NSLocalizedString(text, tableName: nil, comment:"")
+        self.text = text.translation()
         self.labelMaxWidth = maxWidth
         
         self.words = text.componentsSeparatedByString(" ")

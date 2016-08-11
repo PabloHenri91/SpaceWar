@@ -30,7 +30,7 @@ class Label: Control {
         self.resetPosition()
         
         self.labelNode = SKLabelNode(fontNamed: fontName)
-        self.labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
+        self.labelNode.text = text.translation()
         self.labelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
         self.labelNode.fontColor = color
         self.labelNode.verticalAlignmentMode = verticalAlignmentMode
@@ -59,13 +59,13 @@ class Label: Control {
     }
     
     func setText(text:String) {
-        self.labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
+        self.labelNode.text = text.translation()
         self.shadowLabelNode.text = self.labelNode.text
     }
     
     func setText(text:String, color:SKColor) {
         self.labelNode.fontColor = color
-        self.labelNode.text = NSLocalizedString(text, tableName: nil, comment:"")
+        self.labelNode.text = text.translation()
         self.shadowLabelNode.text = self.labelNode.text
     }
 }

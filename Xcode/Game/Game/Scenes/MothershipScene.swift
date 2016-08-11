@@ -31,7 +31,6 @@ class MothershipScene: GameScene {
     
     var playerData:PlayerData!
     
-    var buttonRanking:Button!
     var buttonSocial:Button!
     
     var buttonBattle:Button!
@@ -77,10 +76,6 @@ class MothershipScene: GameScene {
         
         self.batteryControl = BatteryControl(x: 75, y: 231, xAlign: .center, yAlign: .center)
         self.addChild(self.batteryControl)
-        
-        self.buttonRanking = Button(textureName: "button", text: "Ranking", x: 96, y: 200, xAlign: .center, yAlign: .center)
-        self.addChild(self.buttonRanking)
-        self.buttonRanking.hidden = true
         
         self.buttonSocial = Button(textureName: "button", text: "Social", x: 96, y: 250, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonSocial)
@@ -269,15 +264,6 @@ class MothershipScene: GameScene {
                 case .mothership:
                     
                     if self.playerDataCard.statistics.isOpen {
-                        return
-                    }
-                    
-                    if(self.buttonRanking.containsPoint(touch.locationInNode(self))) {
-                        #if os(iOS)
-                            if let vc = self.view?.window?.rootViewController as? GameViewController {
-                                vc.showLeader()
-                            }
-                        #endif
                         return
                     }
                     

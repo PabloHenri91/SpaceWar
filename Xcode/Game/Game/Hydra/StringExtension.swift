@@ -24,6 +24,10 @@ extension String {
         }
     }
     
+    func translation() -> String {
+        return NSLocalizedString(self, comment: self)
+    }
+    
     static func winEmoji() -> String {
         return winEmojis[Int.random(winEmojis.count)]
     }
