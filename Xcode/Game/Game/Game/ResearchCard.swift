@@ -37,7 +37,7 @@ class ResearchCard: Control {
         if (self.research.researchData?.startDate != nil) {
             
     
-            let time = GameMath.researchFinishTime(self.research.researchData!.startDate! , researchTime: researchType.duration)
+            let time = GameMath.researchTimeLeft(startDate: self.research.researchData!.startDate! , researchDuration: researchType.duration)
             
             if (time > 0) {
                 
@@ -87,7 +87,7 @@ class ResearchCard: Control {
             if (self.needUpdate) {
                 if (self.research.researchData?.startDate != nil) {
                     
-                    let time = GameMath.researchFinishTime(self.research.researchData!.startDate! , researchTime: self.research.researchType.duration)
+                    let time = GameMath.researchTimeLeft(startDate: self.research.researchData!.startDate! , researchDuration: self.research.researchType.duration)
                     
                     if (time > 0) {
                         self.labelDescription.setText("Remaining Time: " + GameMath.timeFormated(time))

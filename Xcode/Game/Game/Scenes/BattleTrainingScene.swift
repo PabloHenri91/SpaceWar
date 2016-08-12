@@ -232,7 +232,7 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .battleEndInterval:
-                if currentTime - battleEndTime >= 3 {
+                if currentTime - battleEndTime > 2 {
                     self.nextState = states.showBattleResult
                 }
                 break

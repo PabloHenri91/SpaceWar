@@ -50,14 +50,14 @@ class MissionSpaceshipCard: Control {
             
             
             let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-            let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
+            let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
             
             if (time > 0) {
                 
                 self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEED UP", fontSize: 11, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonSpeedUp!)
                 
-                self.timeBar = TimeBar(x: 97, y: 50)
+                self.timeBar = TimeBar(x: 97, y: 50, type: TimeBar.types.missionSpaceshipTimer)
                 self.addChild(self.timeBar!.cropNode)
                 
                 
@@ -66,7 +66,7 @@ class MissionSpaceshipCard: Control {
                 self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonColect!)
                 
-                self.timeBar = TimeBar(x: 97, y: 50)
+                self.timeBar = TimeBar(x: 97, y: 50, type: TimeBar.types.missionSpaceshipTimer)
                 self.addChild(self.timeBar!.cropNode)
             }
             
@@ -146,7 +146,7 @@ class MissionSpaceshipCard: Control {
                 if (self.missionSpaceship.missionspaceshipData?.missionType.intValue >= 0) {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-                    let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
+                    let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
                     
                     
                     if (time > 0) {
@@ -176,7 +176,7 @@ class MissionSpaceshipCard: Control {
                 if (self.missionSpaceship.missionspaceshipData!.missionType.intValue >= 0) {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-                    let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: mission.duration)
+                    let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
                     
                     if (time > 0) {
                         
@@ -191,7 +191,7 @@ class MissionSpaceshipCard: Control {
                         self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEED UP", fontSize: 10, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                         self.addChild(self.buttonSpeedUp!)
                         
-                        self.timeBar = TimeBar(x: 97, y: 50)
+                        self.timeBar = TimeBar(x: 97, y: 50, type: TimeBar.types.missionSpaceshipTimer)
                         self.addChild(self.timeBar!.cropNode)
                         
                         if let timer = self.timeBar {
