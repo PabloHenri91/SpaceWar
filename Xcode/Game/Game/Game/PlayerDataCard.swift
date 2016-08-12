@@ -333,6 +333,8 @@ class PlayerDataCardStatistics: Control {
             self.addChild(Label(color: fontColor, text: "Connected to the Game Center", fontSize: 10, x: 124, y: 97, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         }
         
+        self.addChild(Control(textureName: "statisticsIcons", x: 81, y: 190))
+        
         // winCount
         let winCountLabel = Label(color: fontColor, text: "Victories: ", fontSize: 11, x: 110, y: 207, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
         
@@ -400,12 +402,11 @@ class PlayerDataCardStatistics: Control {
         let labelPointsSumValue = Label(color: fontColor, text: playerData.pointsSum.integerValue.description, fontSize: 11, x: 110 + labelPointsSumXOffset, y: 291, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
         
         let iconFragmentsXOffset = labelPointsSumXOffset + Int(labelPointsSumValue.calculateAccumulatedFrame().size.width) + 2
-        let iconFragments = Control(textureName: "fragIcon", x: 110 + iconFragmentsXOffset, y: 291 - 12)
-        
+        let labelFragments =  Label(color: fontColor, text: " fragments.", fontSize: 11, x: 110 + iconFragmentsXOffset, y: 291, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
         
         self.addChild(labelPointsSumLabel)
         self.addChild(labelPointsSumValue)
-        self.addChild(iconFragments)
+        self.addChild(labelFragments)
         // pointsSum
         
         

@@ -28,7 +28,7 @@ extension MemoryCard {
     func newResearchData() -> ResearchData {
         
         let researchData = NSEntityDescription.insertNewObjectForEntityForName("ResearchData", inManagedObjectContext: self.managedObjectContext) as! ResearchData
-        researchData.done = 0
+        researchData.done = false
         researchData.startDate = nil
         
         return researchData

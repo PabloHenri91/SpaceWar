@@ -246,9 +246,12 @@ class Spaceship: Control {
         
         self.increaseTouchArea()
         
-        self.labelLevel = Label(color: SKColor(red: 0, green: 0, blue: 0, alpha: 0.5), text: self.level.description, fontSize: 16, x: 0, y: 0)
-        self.labelLevel.zPosition = zPositions.levelDetail.rawValue
-        self.addChild(self.labelLevel)
+        if self.level > 0 {
+            self.labelLevel = Label(color: SKColor(red: 0, green: 0, blue: 0, alpha: 0.5), text: self.level.description, fontSize: 16, x: 0, y: 0)
+            self.labelLevel.zPosition = zPositions.levelDetail.rawValue
+            self.addChild(self.labelLevel)
+        }
+        
         
         Spaceship.spaceshipList.insert(self)
     }

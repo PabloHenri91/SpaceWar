@@ -40,6 +40,8 @@ class MothershipScene: GameScene {
     var playerDataCard:PlayerDataCard!
     var gameTabBar:GameTabBar!
     
+    var nextEvents:NextEvents!
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -70,7 +72,8 @@ class MothershipScene: GameScene {
         
         self.playerData = MemoryCard.sharedInstance.playerData
         
-        self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
+        //TODO: mothershipBackground
+        //self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
         
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "BATTLESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
@@ -102,6 +105,9 @@ class MothershipScene: GameScene {
             }
             i += 1
         }
+        
+        self.nextEvents = NextEvents()
+        self.addChild(nextEvents)
         
         switch GameTabBar.lastState {
         case .research, .mission:
@@ -153,6 +159,7 @@ class MothershipScene: GameScene {
             default:
                 self.batteryControl.update()
                 self.playerDataCard.update()
+                self.nextEvents.update()
                 break
             }
         } else {

@@ -67,7 +67,7 @@ class SpeedUpMinningAlert:Box {
         let spaceshipImage = Control(textureName: "minnerSpaceshipTiny", x: -127, y: -62)
         self.addChild(spaceshipImage)
         
-        self.timeBar = TimeBar(textureName: "timeBarSmall", x: 40, y: -53)
+        self.timeBar = TimeBar(textureName: "timeBarSmall", x: 40, y: -53, type: TimeBar.types.missionSpaceshipTimer)
         self.addChild(self.timeBar.cropNode)
         
         self.timeBar.update(self.missionSpaceship)

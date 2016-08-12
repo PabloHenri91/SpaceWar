@@ -172,14 +172,10 @@ class GameMath {
                 } else {
                     return (hours.description + "h ")
                 }
-                
-                
             }
         } else {
             return "0seconds"
         }
-        
-        
     }
     
     static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceshipType) -> Int {
@@ -281,20 +277,15 @@ class GameMath {
     
     //Mission Spaceship
     
-    static func missionFinishTime(fromDate: NSDate, missionTime: Int) -> Int {
-        
-        let date = NSDate(timeInterval: NSTimeInterval(missionTime), sinceDate: fromDate)
+    static func missionTimeLeft(startDate startDate: NSDate, missionDuration: Int) -> Int {
+        let date = NSDate(timeInterval: NSTimeInterval(missionDuration), sinceDate: startDate)
         return Int(date.timeIntervalSinceNow)
-        
-        
     }
     
     
-    static func researchFinishTime(beginDate: NSDate, researchTime: Int) -> Int {
-        
-        let date = NSDate(timeInterval: NSTimeInterval(researchTime), sinceDate: beginDate)
+    static func researchTimeLeft(startDate startDate: NSDate, researchDuration: Int) -> Int {
+        let date = NSDate(timeInterval: NSTimeInterval(researchDuration), sinceDate: startDate)
         return Int(date.timeIntervalSinceNow)
-        
     }
     
     
