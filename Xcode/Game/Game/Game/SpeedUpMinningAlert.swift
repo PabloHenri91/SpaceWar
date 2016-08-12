@@ -12,13 +12,21 @@ class SpeedUpMinningAlert:Box {
     
     var buttonCancel:Button!
     var missionSpaceship:MissionSpaceship!
+    var missionType:MissionType!
+    
     var timeBar: TimeBar!
     var buttonWatch:Button!
-    var buttonSocial:Button!
+//    var buttonSocial:Button!
     var buttonFinish:Button!
+    
+    var playerData:PlayerData!
+    
+    var lastUpdate:NSTimeInterval = 0
     
     
     init(missionSpaceship:MissionSpaceship) {
+        
+        self.playerData = MemoryCard.sharedInstance.playerData
         
         let spriteNode = SKSpriteNode(imageNamed: "speedupMinningAlert")
         super.init(spriteNode: spriteNode)
@@ -36,7 +44,7 @@ class SpeedUpMinningAlert:Box {
         self.addChild(labelTitle)
         
         self.missionSpaceship = missionSpaceship
-        let missionType = MissionSpaceship.types[Int(missionSpaceship.missionspaceshipData!.missionType.intValue)]
+        self.missionType = MissionSpaceship.types[Int(missionSpaceship.missionspaceshipData!.missionType.intValue)]
         
         let labelName = Label(text: "LITTLE ASTEROID" , fontSize: 12, x: -127, y: -82 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelName)
@@ -47,13 +55,13 @@ class SpeedUpMinningAlert:Box {
         let iconXP = Control(textureName: "xpIcon", x: -78, y: -36)
         self.addChild(iconXP)
         
-        let labelXP = Label(text: missionType.xpBonus.description , fontSize: 10, x: -60, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
+        let labelXP = Label(text: self.missionType.xpBonus.description , fontSize: 10, x: -60, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(labelXP)
         
         let iconFragments = Control(textureName: "fragIcon", x: -22, y: -36)
         self.addChild(iconFragments)
         
-        let labelFragments = Label(text: missionType.pointsBonus.description , fontSize: 10, x: -10, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
+        let labelFragments = Label(text: self.missionType.pointsBonus.description , fontSize: 10, x: -10, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(labelFragments)
         
         let spaceshipImage = Control(textureName: "minnerSpaceshipTiny", x: -127, y: -62)
@@ -70,32 +78,68 @@ class SpeedUpMinningAlert:Box {
         let labelDiamond = Label(text: "FINISH" , fontSize: 11, x: 20, y: 27 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelDiamond)
         
-        let labelSocial = Label(text: "DECREASE 3H" , fontSize: 11, x: -111, y: 87 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
-        self.addChild(labelSocial)
+//        let labelSocial = Label(text: "DECREASE 3H" , fontSize: 11, x: -111, y: 87 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
+//        self.addChild(labelSocial)
         
         self.buttonWatch = Button(textureName: "buttonWatch", text: "WATCH", fontSize: 13, x: -111, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonWatch)
         
-        self.buttonFinish = Button(textureName: "buttonDiamonds", text: "20", fontSize: 13, x: 20, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
+        let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: self.missionType.duration)
+        var diamonds = Int(round(Double(time) / 3600))
+        
+        if diamonds < 1 {
+            diamonds = 1
+        }
+        
+        self.buttonFinish = Button(textureName: "buttonDiamonds", text: diamonds.description, fontSize: 13, x: 20, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonFinish)
         
-        self.buttonSocial = Button(textureName: "buttonSocial", text: "ASK HELP", fontSize: 13, x: -111, y: 100, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
-        self.addChild(self.buttonSocial)
+//        self.buttonSocial = Button(textureName: "buttonSocial", text: "ASK HELP", fontSize: 13, x: -111, y: 100, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
+//        self.addChild(self.buttonSocial)
+//        
+//        for i in 0..<3 {
+//            let x = -5 + 40 * i
+//            let facebookPlacehold = Control(textureName: "facebookFriendPlaceholder", x: x, y: 87)
+//            self.addChild(facebookPlacehold)
+//        }
         
-        for i in 0..<3 {
-            let x = -5 + 40 * i
-            let facebookPlacehold = Control(textureName: "facebookFriendPlaceholder", x: x, y: 87)
-            self.addChild(facebookPlacehold)
-        }
+ 
         
         self.setScale(0)
         
         self.runAction(SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)]))
     }
     
-    func update() {
+    func update(currentTime: NSTimeInterval) {
+        
+        if ((currentTime - self.lastUpdate) > 1) {
+            self.lastUpdate = currentTime
+            self.timeBar.update(self.missionSpaceship)
+        }
         
     }
+    
+    func finish() -> Bool {
+        
+        let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: self.missionType.duration)
+        
+        var diamonds = Int(round(Double(time) / 3600))
+        if diamonds < 1 {
+            diamonds = 1
+        }
+        
+        if self.playerData.premiumPoints.integerValue >= diamonds {
+            
+            self.playerData.premiumPoints = NSNumber(integer: self.playerData.premiumPoints.integerValue - diamonds)
+            self.missionSpaceship.speedUp(NSTimeInterval(time))
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
