@@ -32,6 +32,11 @@ class MissionSpaceship: Control {
         }
     }
     
+    func speedUp(seconds:NSTimeInterval) {
+        let date = NSDate(timeInterval: seconds * -1, sinceDate: self.missionspaceshipData!.startMissionDate!)
+        self.missionspaceshipData!.startMissionDate! = date
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

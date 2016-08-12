@@ -28,6 +28,7 @@ class MissionScene: GameScene {
     
     var chooseAsteroidAlert: ChooseAsteroidAlert?
     var buyMinnerSpaceshipAlert: BuyMinnerSpaceshipAlert?
+    var speedUpAlert: SpeedUpMinningAlert?
     
     enum states : String {
         
@@ -39,6 +40,7 @@ class MissionScene: GameScene {
         
         case chooseMission
         case buySpaceship
+        case speedUp
     }
     
     //Estados iniciais
@@ -176,7 +178,6 @@ class MissionScene: GameScene {
             //Estado atual
             switch (self.state) {
             case .mission:
-                
                 self.playerDataCard.update()
                 
                 for item in self.scrollNode.cells {
@@ -184,7 +185,19 @@ class MissionScene: GameScene {
                         card.update(currentTime)
                     }
                 }
+                break
                 
+            case .speedUp:
+                if let speedUpAlertSafe = self.speedUpAlert {
+                    let time = GameMath.missionFinishTime(speedUpAlertSafe.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: speedUpAlertSafe.missionType.duration)
+                    
+                    if time > 0 {
+                        speedUpAlertSafe.update(currentTime)
+                    } else {
+                        speedUpAlertSafe.removeFromParent()
+                        self.nextState = .mission
+                    }
+                }
                 break
                 
             default:
@@ -209,6 +222,7 @@ class MissionScene: GameScene {
                 self.chooseAsteroidAlert?.scrollNode?.removeFromParent()
                 self.chooseAsteroidAlert?.removeFromParent()
                 self.buyMinnerSpaceshipAlert?.removeFromParent()
+                self.speedUpAlert?.removeFromParent()
                 break
                 
             case .mothership:
@@ -234,7 +248,6 @@ class MissionScene: GameScene {
                 
             case .chooseMission:
                 if let spaceship = self.selectedSpaceship {
-                    //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
                     self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
                     self.chooseAsteroidAlert = ChooseAsteroidAlert(minerSpaceship: spaceship)
@@ -259,6 +272,24 @@ class MissionScene: GameScene {
                 self.buyMinnerSpaceshipAlert!.buttonCancel.addHandler({ self.nextState = .mission
                 })
                 self.addChild(self.buyMinnerSpaceshipAlert!)
+                break
+                
+            case .speedUp:
+                if let spaceship = self.selectedSpaceship {
+                    //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
+                    self.blackSpriteNode.hidden = false
+                    self.blackSpriteNode.zPosition = 10000
+                    self.speedUpAlert = SpeedUpMinningAlert(missionSpaceship: spaceship)
+                    self.speedUpAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                    self.scrollNode.canScroll = false
+                    self.speedUpAlert!.buttonCancel.addHandler({ self.nextState = .mission
+                    })
+                    self.addChild(self.speedUpAlert!)
+                } else {
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                }
                 break
                 
             default:
@@ -380,7 +411,8 @@ class MissionScene: GameScene {
                                         
                                         if let buttonSpeedUp = card.buttonSpeedUp {
                                             if(buttonSpeedUp.containsPoint(touch.locationInNode(card))) {
-                                                self.addChild(SpeedUpMinningAlert(missionSpaceship: card.missionSpaceship))
+                                                self.selectedSpaceship = card.missionSpaceship
+                                                self.nextState = .speedUp
                                                 return
                                             }
                                         }
@@ -450,6 +482,27 @@ class MissionScene: GameScene {
                             } else {
                                 self.updateScrollNode()
                                 self.playerDataCard.updatePoints()
+                                self.nextState = .mission
+                            }
+                        }
+                    }
+                    
+                    break
+                
+                case .speedUp:
+                    if let speedUpAlertSafe = self.speedUpAlert {
+                        
+                        if speedUpAlertSafe.buttonFinish.containsPoint(touch.locationInNode(speedUpAlertSafe)) {
+                            if speedUpAlertSafe.finish() == false {
+                                
+                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
+                                alertBox.buttonOK.addHandler({self.nextState = .mission
+                                })
+                                self.addChild(alertBox)
+                                
+                            } else {
+
+                                self.playerDataCard.updatePremiumPoints()
                                 self.nextState = .mission
                             }
                         }
