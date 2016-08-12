@@ -267,6 +267,8 @@ class MothershipScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
+                let point = touch.locationInNode(self)
+                
                 switch (self.state) {
                 case .mothership:
                     
@@ -274,7 +276,25 @@ class MothershipScene: GameScene {
                         return
                     }
                     
-                    if self.buttonBattle.containsPoint(touch.locationInNode(self)) {
+                    if self.nextEvents.containsPoint(point) {
+                        let point = touch.locationInNode(self.nextEvents)
+                        for event in self.nextEvents.upcomingEvents {
+                            if event.containsPoint(point) {
+                                switch event.type {
+                                case .missionSpaceshipEvent:
+                                    self.nextState = .mission
+                                    return
+                                case .researchEvent:
+                                    self.nextState = .research
+                                    return
+                                default:
+                                    return
+                                }
+                            }
+                        }
+                    }
+                    
+                    if self.buttonBattle.containsPoint(point) {
                         
                         if (self.playerData.motherShip.spaceships.count != 4) {
                             let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .OK)
