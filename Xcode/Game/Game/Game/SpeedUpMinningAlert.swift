@@ -84,7 +84,7 @@ class SpeedUpMinningAlert:Box {
         self.buttonWatch = Button(textureName: "buttonWatch", text: "WATCH", fontSize: 13, x: -111, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonWatch)
         
-        let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: self.missionType.duration)
+        let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
         var diamonds = Int(round(Double(time) / 3600))
         
         if diamonds < 1 {
@@ -121,7 +121,7 @@ class SpeedUpMinningAlert:Box {
     
     func finish() -> Bool {
         
-        let time = GameMath.missionFinishTime(self.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: self.missionType.duration)
+        let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
         
         var diamonds = Int(round(Double(time) / 3600))
         if diamonds < 1 {

@@ -189,7 +189,7 @@ class MissionScene: GameScene {
                 
             case .speedUp:
                 if let speedUpAlertSafe = self.speedUpAlert {
-                    let time = GameMath.missionFinishTime(speedUpAlertSafe.missionSpaceship.missionspaceshipData!.startMissionDate! , missionTime: speedUpAlertSafe.missionType.duration)
+                    let time = GameMath.missionTimeLeft(startDate: speedUpAlertSafe.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: speedUpAlertSafe.missionType.duration)
                     
                     if time > 0 {
                         speedUpAlertSafe.update(currentTime)
