@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        //Configure AdColony once on app launch
+        AdColony.configureWithAppID("app76bbb0183d2d4e109b", zoneIDs: ["vz9bdb0a31cbae4a37b0"], delegate: nil, logging: true)
+        
         //App launch code
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         //Optionally add to ensure your credentials are valid:

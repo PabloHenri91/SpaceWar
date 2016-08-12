@@ -492,7 +492,9 @@ class MissionScene: GameScene {
                 case .speedUp:
                     if let speedUpAlertSafe = self.speedUpAlert {
                         
-                        if speedUpAlertSafe.buttonFinish.containsPoint(touch.locationInNode(speedUpAlertSafe)) {
+                        let point = touch.locationInNode(speedUpAlertSafe)
+                        
+                        if speedUpAlertSafe.buttonFinish.containsPoint(point) {
                             if speedUpAlertSafe.finish() == false {
                                 
                                 let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
@@ -505,6 +507,10 @@ class MissionScene: GameScene {
                                 self.playerDataCard.updatePremiumPoints()
                                 self.nextState = .mission
                             }
+                        }
+                        
+                        if speedUpAlertSafe.buttonWatch.containsPoint(point) {
+                            AdColony.playVideoAdForZone("vz9bdb0a31cbae4a37b0", withDelegate: nil)
                         }
                     }
                     

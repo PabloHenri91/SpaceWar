@@ -284,7 +284,7 @@ class PlayerDataCardStatistics: Control {
         
         let playerData = MemoryCard.sharedInstance.playerData
         
-        var spriteNode = SKSpriteNode(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 1, height: 1))
+        let spriteNode = SKSpriteNode(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 1, height: 1))
         
         super.init(spriteNode: spriteNode, size: CGSize(width: self.spriteNodeWidth, height: self.playerDataCardBackground2PositionY), x: 0, y: 0)
         Control.controlList.remove(self)
