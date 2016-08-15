@@ -495,23 +495,23 @@ class MissionScene: GameScene {
                         let point = touch.locationInNode(speedUpAlertSafe)
                         
                         if speedUpAlertSafe.buttonFinish.containsPoint(point) {
-                            if speedUpAlertSafe.finish() == false {
-                                
+                            if speedUpAlertSafe.finishWithPremiumPoints() == false {
                                 let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({self.nextState = .mission
                                 })
                                 self.addChild(alertBox)
-                                
                             } else {
-
                                 self.playerDataCard.updatePremiumPoints()
                                 self.nextState = .mission
                             }
                         }
                         
-                        if speedUpAlertSafe.buttonWatch.containsPoint(point) {
-                            AdColony.playVideoAdForZone("vz9bdb0a31cbae4a37b0", withDelegate: nil)
-                        }
+                        #if os(iOS)
+                            if speedUpAlertSafe.buttonWatch.containsPoint(point) {
+                                self.playVideoAd()
+                                return
+                            }
+                        #endif
                     }
                     
                     break
@@ -521,7 +521,29 @@ class MissionScene: GameScene {
                 }
             }
         }
-        
     }
     
+    #if os(iOS)
+    override func videoAdAttemptFinished(shown: Bool) {
+        if shown {
+            if let speedUpAlert = self.speedUpAlert {
+                speedUpAlert.speedUpWithVideoAd()
+            }
+        }
+    }
+    
+    override func zoneLoading() {
+        if let speedUpAlert = self.speedUpAlert {
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
+        }
+    }
+    
+    override func zoneReady() {
+        if let speedUpAlert = self.speedUpAlert {
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+        }
+    }
+    #endif
 }

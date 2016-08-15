@@ -101,24 +101,24 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     
     func saveLevel(level:Int) {
         
-        //check if user is signed in
-        if GKLocalPlayer.localPlayer().authenticated {
+        if Metrics.canSendEvents() {
             
-            let scoreReporter = GKScore(leaderboardIdentifier: "com.Spacewar.Rank") //leaderboard id here
-            
-            scoreReporter.value = Int64(level) //score variable here (same as above)
-            
-            let scoreArray: [GKScore] = [scoreReporter]
-            
-            GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -> Void in
-                if error != nil {
-                    print("error")
-                }
-            })
-            
+            //check if user is signed in
+            if GKLocalPlayer.localPlayer().authenticated {
+                
+                let scoreReporter = GKScore(leaderboardIdentifier: "com.Spacewar.Rank") //leaderboard id here
+                
+                scoreReporter.value = Int64(level) //score variable here (same as above)
+                
+                let scoreArray: [GKScore] = [scoreReporter]
+                
+                GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -> Void in
+                    if error != nil {
+                        print("error")
+                    }
+                })
+            }
         }
-        
     }
-
     
 }

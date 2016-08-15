@@ -6,7 +6,9 @@
 //  Copyright © 2016 PabloHenri91. All rights reserved.
 //
 
-import GameAnalytics
+#if os(iOS)
+    import GameAnalytics
+#endif
 
 class Metrics {
     
@@ -85,3 +87,9 @@ class Metrics {
         #endif
     }
 }
+
+#if !os(iOS)
+    class GameAnalytics {
+        static func addDesignEventWithEventId(string: String, value: AnyObject? = nil) { }
+    }
+#endif

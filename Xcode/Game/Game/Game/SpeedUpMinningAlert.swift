@@ -16,6 +16,7 @@ class SpeedUpMinningAlert:Box {
     
     var timeBar: TimeBar!
     var buttonWatch:Button!
+    var labelWatch:Label!
 //    var buttonSocial:Button!
     var buttonFinish:Button!
     
@@ -72,17 +73,27 @@ class SpeedUpMinningAlert:Box {
         
         self.timeBar.update(self.missionSpaceship)
         
-        let labelWatch = Label(text: "DECREASE 1H" , fontSize: 11, x: -111, y: 27 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
-        self.addChild(labelWatch)
-        
         let labelDiamond = Label(text: "FINISH" , fontSize: 11, x: 20, y: 27 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelDiamond)
         
 //        let labelSocial = Label(text: "DECREASE 3H" , fontSize: 11, x: -111, y: 87 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
 //        self.addChild(labelSocial)
         
+        self.labelWatch = Label(text: "DECREASE 1H" , fontSize: 11, x: -111, y: 27 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
+        self.addChild(self.labelWatch)
+        
         self.buttonWatch = Button(textureName: "buttonWatch", text: "WATCH", fontSize: 13, x: -111, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonWatch)
+        
+        #if os(iOS)
+            if !GameAdManager.sharedInstance.zoneIsReady {
+                self.buttonWatch.alpha = 0
+                self.labelWatch.alpha = 0
+            }
+        #else
+            self.buttonWatch.alpha = 0
+            self.labelWatch.alpha = 0
+        #endif
         
         let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
         var diamonds = Int(round(Double(time) / 3600))
@@ -119,7 +130,7 @@ class SpeedUpMinningAlert:Box {
         
     }
     
-    func finish() -> Bool {
+    func finishWithPremiumPoints() -> Bool {
         
         let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
         
@@ -137,6 +148,10 @@ class SpeedUpMinningAlert:Box {
         }
         
         return false
+    }
+    
+    func speedUpWithVideoAd() {
+        self.missionSpaceship.speedUp(NSTimeInterval(3600))
     }
     
     

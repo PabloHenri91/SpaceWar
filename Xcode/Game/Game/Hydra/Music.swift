@@ -69,7 +69,7 @@ class Music {
             self.audioPlayer.numberOfLoops = -1
             self.audioPlayer.prepareToPlay()
             self.play()
-            print("Music: " + name)
+            //print("Music: " + name)
         } catch {
             #if DEBUG
                 fatalError()
@@ -79,6 +79,10 @@ class Music {
     
     func play() {
         self.audioPlayer.play()
+    }
+    
+    func pause() {
+        self.audioPlayer.pause()
     }
     
     func stop() {
