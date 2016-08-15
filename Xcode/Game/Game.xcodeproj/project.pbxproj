@@ -170,7 +170,6 @@
 		848545881D5E65BD001BF44A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848545811D5E65BD001BF44A /* StoreKit.framework */; };
 		848545891D5E65BD001BF44A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848545821D5E65BD001BF44A /* SystemConfiguration.framework */; };
 		8485458A1D5E65BD001BF44A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848545831D5E65BD001BF44A /* WebKit.framework */; };
-		8485458C1D5E65C4001BF44A /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8485458B1D5E65C4001BF44A /* libz.1.2.5.tbd */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D381D40034500AC72F1 /* ALIterativeMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */; };
@@ -191,6 +190,7 @@
 		849162A41D5DF9CF0064958C /* NextEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849162A21D5DF9CF0064958C /* NextEvents.swift */; };
 		8495A35D1D4686BF00A4205F /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4871D4678E9000E09DD /* spark.sks */; };
 		8495A35E1D4686BF00A4205F /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8478D4881D4678E9000E09DD /* spark.png */; };
+		849E36021D623DBC0079C1A3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E36011D623DBC0079C1A3 /* libz.1.tbd */; };
 		84A6C8311D141788006717B9 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
 		84A767A81D5BBF3200A8D808 /* SpaceWarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A767A71D5BBF3200A8D808 /* SpaceWarTests.swift */; };
 		84AF821A1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
@@ -438,7 +438,6 @@
 		848545811D5E65BD001BF44A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = StoreKit.framework; sourceTree = "<group>"; };
 		848545821D5E65BD001BF44A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
 		848545831D5E65BD001BF44A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebKit.framework; sourceTree = "<group>"; };
-		8485458B1D5E65C4001BF44A /* libz.1.2.5.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libz.1.2.5.tbd; sourceTree = "<group>"; };
 		848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryData.swift; sourceTree = "<group>"; };
 		848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpaceWar-Bridging-Header.h"; sourceTree = "<group>"; };
 		848A7D351D40034500AC72F1 /* Game-OSX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game-OSX-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -451,6 +450,7 @@
 		848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_space-life.mp3"; sourceTree = "<group>"; };
 		848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pandamindset_pandamindset---space-sleepers.mp3"; sourceTree = "<group>"; };
 		849162A21D5DF9CF0064958C /* NextEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextEvents.swift; sourceTree = "<group>"; };
+		849E36011D623DBC0079C1A3 /* libz.1.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libz.1.tbd; sourceTree = "<group>"; };
 		84A767A51D5BBF3200A8D808 /* SpaceWarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceWarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A767A71D5BBF3200A8D808 /* SpaceWarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceWarTests.swift; sourceTree = "<group>"; };
 		84A767A91D5BBF3200A8D808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -505,6 +505,7 @@
 				3AA0C9841CFDB3B5008EE628 /* FBSDKCoreKit.framework in Frameworks */,
 				848545761D5E65B5001BF44A /* AudioToolbox.framework in Frameworks */,
 				848545781D5E65B5001BF44A /* CoreGraphics.framework in Frameworks */,
+				849E36021D623DBC0079C1A3 /* libz.1.tbd in Frameworks */,
 				3AA0C9821CFDB3B5008EE628 /* FBAudienceNetwork.framework in Frameworks */,
 				848545841D5E65BD001BF44A /* MediaPlayer.framework in Frameworks */,
 				847C6BB01D4BC14300C2E36E /* GameKit.framework in Frameworks */,
@@ -525,7 +526,6 @@
 				8485457B1D5E65B5001BF44A /* EventKit.framework in Frameworks */,
 				3AA0C9831CFDB3B5008EE628 /* FBNotifications.framework in Frameworks */,
 				848545851D5E65BD001BF44A /* MessageUI.framework in Frameworks */,
-				8485458C1D5E65C4001BF44A /* libz.1.2.5.tbd in Frameworks */,
 				3AA0C9861CFDB3B5008EE628 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				848545751D5E65B5001BF44A /* AdSupport.framework in Frameworks */,
 			);
@@ -563,14 +563,7 @@
 		3AA0C8791CFDB158008EE628 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8485458B1D5E65C4001BF44A /* libz.1.2.5.tbd */,
-				8485457D1D5E65BD001BF44A /* MediaPlayer.framework */,
-				8485457E1D5E65BD001BF44A /* MessageUI.framework */,
-				8485457F1D5E65BD001BF44A /* QuartzCore.framework */,
-				848545801D5E65BD001BF44A /* Social.framework */,
-				848545811D5E65BD001BF44A /* StoreKit.framework */,
-				848545821D5E65BD001BF44A /* SystemConfiguration.framework */,
-				848545831D5E65BD001BF44A /* WebKit.framework */,
+				849E36011D623DBC0079C1A3 /* libz.1.tbd */,
 				8485456B1D5E65B5001BF44A /* AdColony.framework */,
 				8485456C1D5E65B5001BF44A /* AdSupport.framework */,
 				8485456D1D5E65B5001BF44A /* AudioToolbox.framework */,
@@ -578,11 +571,18 @@
 				8485456F1D5E65B5001BF44A /* CoreGraphics.framework */,
 				848545701D5E65B5001BF44A /* CoreMedia.framework */,
 				848545711D5E65B5001BF44A /* CoreTelephony.framework */,
+				3A0F318A1D410E4400FDFBFE /* Crashlytics.framework */,
 				848545721D5E65B5001BF44A /* EventKit.framework */,
 				848545731D5E65B5001BF44A /* EventKitUI.framework */,
-				3A0F318A1D410E4400FDFBFE /* Crashlytics.framework */,
 				3A0F31891D410E4400FDFBFE /* Fabric.framework */,
 				3A0F318D1D410EBA00FDFBFE /* GameAnalytics.framework */,
+				8485457D1D5E65BD001BF44A /* MediaPlayer.framework */,
+				8485457E1D5E65BD001BF44A /* MessageUI.framework */,
+				8485457F1D5E65BD001BF44A /* QuartzCore.framework */,
+				848545801D5E65BD001BF44A /* Social.framework */,
+				848545811D5E65BD001BF44A /* StoreKit.framework */,
+				848545821D5E65BD001BF44A /* SystemConfiguration.framework */,
+				848545831D5E65BD001BF44A /* WebKit.framework */,
 				3AA0C87A1CFDB3B4008EE628 /* FacebookSDKs-iOS-4 */,
 			);
 			name = Frameworks;
