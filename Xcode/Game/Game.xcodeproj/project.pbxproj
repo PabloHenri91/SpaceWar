@@ -78,22 +78,22 @@
 		842640EC1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		842FB0591D624A9F007EAD9C /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0491D624A9F007EAD9C /* AdColony.framework */; };
-		842FB05A1D624A9F007EAD9C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04A1D624A9F007EAD9C /* AdSupport.framework */; };
-		842FB05B1D624A9F007EAD9C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04B1D624A9F007EAD9C /* AudioToolbox.framework */; };
-		842FB05C1D624A9F007EAD9C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04C1D624A9F007EAD9C /* AVFoundation.framework */; };
-		842FB05D1D624A9F007EAD9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04D1D624A9F007EAD9C /* CoreGraphics.framework */; };
-		842FB05E1D624A9F007EAD9C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04E1D624A9F007EAD9C /* CoreMedia.framework */; };
-		842FB05F1D624A9F007EAD9C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB04F1D624A9F007EAD9C /* CoreTelephony.framework */; };
-		842FB0601D624A9F007EAD9C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0501D624A9F007EAD9C /* EventKit.framework */; };
-		842FB0611D624A9F007EAD9C /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0511D624A9F007EAD9C /* EventKitUI.framework */; };
-		842FB0621D624A9F007EAD9C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0521D624A9F007EAD9C /* MediaPlayer.framework */; };
-		842FB0631D624A9F007EAD9C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0531D624A9F007EAD9C /* MessageUI.framework */; };
-		842FB0641D624A9F007EAD9C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0541D624A9F007EAD9C /* QuartzCore.framework */; };
-		842FB0651D624A9F007EAD9C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0551D624A9F007EAD9C /* Social.framework */; };
-		842FB0661D624A9F007EAD9C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0561D624A9F007EAD9C /* StoreKit.framework */; };
-		842FB0671D624A9F007EAD9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0571D624A9F007EAD9C /* SystemConfiguration.framework */; };
-		842FB0681D624A9F007EAD9C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0581D624A9F007EAD9C /* WebKit.framework */; };
 		842FB06C1D624BA2007EAD9C /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */; };
+		842FB0701D625AD5007EAD9C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB06F1D625AD5007EAD9C /* AdSupport.framework */; };
+		842FB0721D625ADD007EAD9C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0711D625ADD007EAD9C /* AudioToolbox.framework */; };
+		842FB0741D625AE5007EAD9C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0731D625AE5007EAD9C /* AVFoundation.framework */; };
+		842FB0761D625AF1007EAD9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0751D625AF1007EAD9C /* CoreGraphics.framework */; };
+		842FB0781D625AF9007EAD9C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0771D625AF9007EAD9C /* CoreMedia.framework */; };
+		842FB07A1D625B02007EAD9C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0791D625B02007EAD9C /* CoreTelephony.framework */; };
+		842FB07C1D625B09007EAD9C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB07B1D625B09007EAD9C /* EventKit.framework */; };
+		842FB07E1D625B11007EAD9C /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB07D1D625B11007EAD9C /* EventKitUI.framework */; };
+		842FB0801D625B19007EAD9C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB07F1D625B19007EAD9C /* MediaPlayer.framework */; };
+		842FB0821D625B2E007EAD9C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0811D625B2E007EAD9C /* MessageUI.framework */; };
+		842FB0841D625B33007EAD9C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0831D625B33007EAD9C /* QuartzCore.framework */; };
+		842FB0861D625B3D007EAD9C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0851D625B3D007EAD9C /* Social.framework */; };
+		842FB0881D625B48007EAD9C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0871D625B48007EAD9C /* StoreKit.framework */; };
+		842FB08A1D625B4D007EAD9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */; };
+		842FB08C1D625B55007EAD9C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB08B1D625B55007EAD9C /* WebKit.framework */; };
 		8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */; };
 		8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */; };
 		843620601CEB77400082A9D7 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204B1CEB77400082A9D7 /* Box.swift */; };
@@ -329,22 +329,22 @@
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
 		842FB0491D624A9F007EAD9C /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
-		842FB04A1D624A9F007EAD9C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdSupport.framework; sourceTree = "<group>"; };
-		842FB04B1D624A9F007EAD9C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioToolbox.framework; sourceTree = "<group>"; };
-		842FB04C1D624A9F007EAD9C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVFoundation.framework; sourceTree = "<group>"; };
-		842FB04D1D624A9F007EAD9C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreGraphics.framework; sourceTree = "<group>"; };
-		842FB04E1D624A9F007EAD9C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreMedia.framework; sourceTree = "<group>"; };
-		842FB04F1D624A9F007EAD9C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreTelephony.framework; sourceTree = "<group>"; };
-		842FB0501D624A9F007EAD9C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EventKit.framework; sourceTree = "<group>"; };
-		842FB0511D624A9F007EAD9C /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EventKitUI.framework; sourceTree = "<group>"; };
-		842FB0521D624A9F007EAD9C /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MediaPlayer.framework; sourceTree = "<group>"; };
-		842FB0531D624A9F007EAD9C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MessageUI.framework; sourceTree = "<group>"; };
-		842FB0541D624A9F007EAD9C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QuartzCore.framework; sourceTree = "<group>"; };
-		842FB0551D624A9F007EAD9C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Social.framework; sourceTree = "<group>"; };
-		842FB0561D624A9F007EAD9C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = StoreKit.framework; sourceTree = "<group>"; };
-		842FB0571D624A9F007EAD9C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
-		842FB0581D624A9F007EAD9C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebKit.framework; sourceTree = "<group>"; };
 		842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		842FB06F1D625AD5007EAD9C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		842FB0711D625ADD007EAD9C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		842FB0731D625AE5007EAD9C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		842FB0751D625AF1007EAD9C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		842FB0771D625AF9007EAD9C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		842FB0791D625B02007EAD9C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		842FB07B1D625B09007EAD9C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		842FB07D1D625B11007EAD9C /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		842FB07F1D625B19007EAD9C /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		842FB0811D625B2E007EAD9C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		842FB0831D625B33007EAD9C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		842FB0851D625B3D007EAD9C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		842FB0871D625B48007EAD9C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		842FB08B1D625B55007EAD9C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackSpriteNode.swift; sourceTree = "<group>"; };
 		8436204B1CEB77400082A9D7 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		8436204C1CEB77400082A9D7 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -495,35 +495,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842FB08C1D625B55007EAD9C /* WebKit.framework in Frameworks */,
+				842FB08A1D625B4D007EAD9C /* SystemConfiguration.framework in Frameworks */,
+				842FB0881D625B48007EAD9C /* StoreKit.framework in Frameworks */,
+				842FB0861D625B3D007EAD9C /* Social.framework in Frameworks */,
+				842FB0841D625B33007EAD9C /* QuartzCore.framework in Frameworks */,
+				842FB0821D625B2E007EAD9C /* MessageUI.framework in Frameworks */,
+				842FB0801D625B19007EAD9C /* MediaPlayer.framework in Frameworks */,
+				842FB07E1D625B11007EAD9C /* EventKitUI.framework in Frameworks */,
+				842FB07C1D625B09007EAD9C /* EventKit.framework in Frameworks */,
+				842FB07A1D625B02007EAD9C /* CoreTelephony.framework in Frameworks */,
+				842FB0781D625AF9007EAD9C /* CoreMedia.framework in Frameworks */,
+				842FB0761D625AF1007EAD9C /* CoreGraphics.framework in Frameworks */,
+				842FB0741D625AE5007EAD9C /* AVFoundation.framework in Frameworks */,
+				842FB0721D625ADD007EAD9C /* AudioToolbox.framework in Frameworks */,
+				842FB0701D625AD5007EAD9C /* AdSupport.framework in Frameworks */,
 				842FB06C1D624BA2007EAD9C /* libz.1.2.5.tbd in Frameworks */,
-				842FB05C1D624A9F007EAD9C /* AVFoundation.framework in Frameworks */,
-				842FB0651D624A9F007EAD9C /* Social.framework in Frameworks */,
 				3AA0C9871CFDB3B5008EE628 /* FBSDKShareKit.framework in Frameworks */,
 				3AA0C9841CFDB3B5008EE628 /* FBSDKCoreKit.framework in Frameworks */,
-				842FB05B1D624A9F007EAD9C /* AudioToolbox.framework in Frameworks */,
-				842FB05D1D624A9F007EAD9C /* CoreGraphics.framework in Frameworks */,
 				3AA0C9821CFDB3B5008EE628 /* FBAudienceNetwork.framework in Frameworks */,
-				842FB0621D624A9F007EAD9C /* MediaPlayer.framework in Frameworks */,
 				847C6BB01D4BC14300C2E36E /* GameKit.framework in Frameworks */,
-				842FB0641D624A9F007EAD9C /* QuartzCore.framework in Frameworks */,
-				842FB0671D624A9F007EAD9C /* SystemConfiguration.framework in Frameworks */,
-				842FB0611D624A9F007EAD9C /* EventKitUI.framework in Frameworks */,
-				842FB0661D624A9F007EAD9C /* StoreKit.framework in Frameworks */,
 				3AA0C9851CFDB3B5008EE628 /* FBSDKLoginKit.framework in Frameworks */,
-				842FB0681D624A9F007EAD9C /* WebKit.framework in Frameworks */,
 				3A0F318E1D410EBA00FDFBFE /* GameAnalytics.framework in Frameworks */,
-				842FB05F1D624A9F007EAD9C /* CoreTelephony.framework in Frameworks */,
 				3AA0C97A1CFDB3B5008EE628 /* AccountKit.framework in Frameworks */,
 				3A0F318B1D410E4400FDFBFE /* Fabric.framework in Frameworks */,
 				3A0F318C1D410E4400FDFBFE /* Crashlytics.framework in Frameworks */,
-				842FB05E1D624A9F007EAD9C /* CoreMedia.framework in Frameworks */,
 				3AA0C97C1CFDB3B5008EE628 /* Bolts.framework in Frameworks */,
 				842FB0591D624A9F007EAD9C /* AdColony.framework in Frameworks */,
-				842FB0601D624A9F007EAD9C /* EventKit.framework in Frameworks */,
 				3AA0C9831CFDB3B5008EE628 /* FBNotifications.framework in Frameworks */,
-				842FB0631D624A9F007EAD9C /* MessageUI.framework in Frameworks */,
 				3AA0C9861CFDB3B5008EE628 /* FBSDKMessengerShareKit.framework in Frameworks */,
-				842FB05A1D624A9F007EAD9C /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,7 +559,22 @@
 		3AA0C8791CFDB158008EE628 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				842FB0481D624A8A007EAD9C /* AdColony */,
+				842FB08B1D625B55007EAD9C /* WebKit.framework */,
+				842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */,
+				842FB0871D625B48007EAD9C /* StoreKit.framework */,
+				842FB0851D625B3D007EAD9C /* Social.framework */,
+				842FB0831D625B33007EAD9C /* QuartzCore.framework */,
+				842FB0811D625B2E007EAD9C /* MessageUI.framework */,
+				842FB07F1D625B19007EAD9C /* MediaPlayer.framework */,
+				842FB07D1D625B11007EAD9C /* EventKitUI.framework */,
+				842FB07B1D625B09007EAD9C /* EventKit.framework */,
+				842FB0791D625B02007EAD9C /* CoreTelephony.framework */,
+				842FB0771D625AF9007EAD9C /* CoreMedia.framework */,
+				842FB0751D625AF1007EAD9C /* CoreGraphics.framework */,
+				842FB0731D625AE5007EAD9C /* AVFoundation.framework */,
+				842FB0711D625ADD007EAD9C /* AudioToolbox.framework */,
+				842FB06F1D625AD5007EAD9C /* AdSupport.framework */,
+				842FB0491D624A9F007EAD9C /* AdColony.framework */,
 				3A0F318A1D410E4400FDFBFE /* Crashlytics.framework */,
 				3A0F31891D410E4400FDFBFE /* Fabric.framework */,
 				3A0F318D1D410EBA00FDFBFE /* GameAnalytics.framework */,
@@ -609,29 +624,6 @@
 				3ABECDC11D5BBAD000661C0D /* SpeedUpMinningAlert.swift */,
 			);
 			name = Minner;
-			sourceTree = "<group>";
-		};
-		842FB0481D624A8A007EAD9C /* AdColony */ = {
-			isa = PBXGroup;
-			children = (
-				842FB0491D624A9F007EAD9C /* AdColony.framework */,
-				842FB04A1D624A9F007EAD9C /* AdSupport.framework */,
-				842FB04B1D624A9F007EAD9C /* AudioToolbox.framework */,
-				842FB04C1D624A9F007EAD9C /* AVFoundation.framework */,
-				842FB04D1D624A9F007EAD9C /* CoreGraphics.framework */,
-				842FB04E1D624A9F007EAD9C /* CoreMedia.framework */,
-				842FB04F1D624A9F007EAD9C /* CoreTelephony.framework */,
-				842FB0501D624A9F007EAD9C /* EventKit.framework */,
-				842FB0511D624A9F007EAD9C /* EventKitUI.framework */,
-				842FB0521D624A9F007EAD9C /* MediaPlayer.framework */,
-				842FB0531D624A9F007EAD9C /* MessageUI.framework */,
-				842FB0541D624A9F007EAD9C /* QuartzCore.framework */,
-				842FB0551D624A9F007EAD9C /* Social.framework */,
-				842FB0561D624A9F007EAD9C /* StoreKit.framework */,
-				842FB0571D624A9F007EAD9C /* SystemConfiguration.framework */,
-				842FB0581D624A9F007EAD9C /* WebKit.framework */,
-			);
-			name = AdColony;
 			sourceTree = "<group>";
 		};
 		84399E281D10303400C05670 /* Fonts */ = {
