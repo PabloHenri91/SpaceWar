@@ -12,7 +12,7 @@ import CoreData
 
 class FriendData: NSManagedObject {
 
-    @NSManaged var friendId: String
+    @NSManaged var id: String
     @NSManaged var name: String?
     @NSManaged var photoURL: String?
     @NSManaged var acceptedInvite: NSNumber
@@ -24,11 +24,11 @@ class FriendData: NSManagedObject {
 
 extension MemoryCard {
     
-    func newFriendData(friendId friendId:String) -> FriendData {
+    func newFriendData(id id:String) -> FriendData {
         
         let friendData = NSEntityDescription.insertNewObjectForEntityForName("FriendData", inManagedObjectContext: self.managedObjectContext) as! FriendData
         
-        friendData.friendId = friendId
+        friendData.id = id
         friendData.acceptedInvite = NSNumber(bool: false)
 
         return friendData

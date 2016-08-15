@@ -325,6 +325,7 @@
 		3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseMissionScene.swift; sourceTree = "<group>"; };
 		3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionTypeCard.swift; sourceTree = "<group>"; };
 		84029D821CF49D68001853FF /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
+		840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 5.xcdatamodel"; sourceTree = "<group>"; };
 		84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipSlot.swift; sourceTree = "<group>"; };
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
@@ -1644,6 +1645,7 @@
 		842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */,
 				843FD0A91D5B886F009D6504 /* SpaceWar 4.xcdatamodel */,
 				3AA631731D47EEAA00BC6E50 /* SpaceWar 3.xcdatamodel */,
 				84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */,

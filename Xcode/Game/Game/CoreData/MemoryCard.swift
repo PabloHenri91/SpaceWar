@@ -161,6 +161,7 @@ class MemoryCard {
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         } catch {
+            try! NSFileManager.defaultManager().removeItemAtURL(url)
             fatalError()
         }
         

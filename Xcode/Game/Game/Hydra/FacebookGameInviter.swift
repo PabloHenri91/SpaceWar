@@ -50,14 +50,14 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         
         for friend in inviteds {
             for item in self.friends {
-                if (item.friendId == friend) {
+                if (item.id == friend) {
                     needAdd = false
                     break
                 }
             }
             
             if needAdd {
-                playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(friendId: friend))
+                playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
             }
             
         }
@@ -134,15 +134,15 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             FacebookClient.sharedInstance.listGameFriends({ (meFriends, error) in
                 if ((meFriends.count > 0)) {
                     for item in meFriends {
-                        let friendId = item.objectForKey("id") as! String
+                        let id = item.objectForKey("id") as! String
                         for friend in self.friends {
-                            if (friendId == friend.friendId) {
+                            if (id == friend.id) {
                                 //print(item)
                                 let name = item.objectForKey("name") as! String
                                 let picture = item.objectForKey("picture")
                                 let data = picture?.objectForKey("data")
                                 let photoURL = data?.objectForKey("url") as! String
-                                self.playerData.updateInvitedFriend(friendId: friendId, name: name, photoURL: photoURL, accepted: true)
+                                self.playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
                                 //print("I invited you and update")
                                 //print(MemoryCard.sharedInstance.playerData.invitedFriends)
                                 return
