@@ -490,12 +490,12 @@ class MissionScene: GameScene {
                     break
                 
                 case .speedUp:
-                    if let speedUpAlertSafe = self.speedUpAlert {
+                    if let speedUpAlert = self.speedUpAlert {
                         
-                        let point = touch.locationInNode(speedUpAlertSafe)
+                        let point = touch.locationInNode(speedUpAlert)
                         
-                        if speedUpAlertSafe.buttonFinish.containsPoint(point) {
-                            if speedUpAlertSafe.finishWithPremiumPoints() == false {
+                        if speedUpAlert.buttonFinish.containsPoint(point) {
+                            if speedUpAlert.finishWithPremiumPoints() == false {
                                 let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({self.nextState = .mission
                                 })
@@ -503,13 +503,17 @@ class MissionScene: GameScene {
                             } else {
                                 self.playerDataCard.updatePremiumPoints()
                                 self.nextState = .mission
+                                return
                             }
                         }
                         
                         #if os(iOS)
-                            if speedUpAlertSafe.buttonWatch.containsPoint(point) {
-                                self.playVideoAd()
-                                return
+                            if GameAdManager.sharedInstance.zoneIsReady {
+                                if speedUpAlert.buttonWatch.containsPoint(point) {
+                                    self.playVideoAd()
+                                    self.nextState = .mission
+                                    return
+                                }
                             }
                         #endif
                     }
