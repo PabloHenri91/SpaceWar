@@ -45,7 +45,7 @@ class SpeedUpMinningAlert:Box {
         self.addChild(labelTitle)
         
         self.missionSpaceship = missionSpaceship
-        self.missionType = MissionSpaceship.types[Int(missionSpaceship.missionspaceshipData!.missionType.intValue)]
+        self.missionType = MissionSpaceship.types[Int(missionSpaceship.missionspaceshipData!.missionType.intValue)]//TODO: fatal error: Index out of range
         
         let labelName = Label(text: "LITTLE ASTEROID" , fontSize: 12, x: -127, y: -82 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelName)

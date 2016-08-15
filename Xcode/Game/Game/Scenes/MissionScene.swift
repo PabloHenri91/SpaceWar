@@ -279,7 +279,7 @@ class MissionScene: GameScene {
                     //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
                     self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
-                    self.speedUpAlert = SpeedUpMinningAlert(missionSpaceship: spaceship)
+                    self.speedUpAlert = SpeedUpMinningAlert(missionSpaceship: spaceship)//TODO: fatal error: Index out of range
                     self.speedUpAlert!.zPosition = self.blackSpriteNode.zPosition + 1
                     self.scrollNode.canScroll = false
                     self.speedUpAlert!.buttonCancel.addHandler({ self.nextState = .mission
