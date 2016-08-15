@@ -670,6 +670,7 @@
 		843CB4971CDD131A00674F48 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */,
 				844CF2991CE78BFB0032F6AA /* Media.xcassets */,
 				84F855D41CECCD4B00FB63D2 /* CoreData */,
 				84D621201D258E39005D550C /* Effects */,
@@ -898,7 +899,6 @@
 				84F855E91CECCE5C00FB63D2 /* ResearchData.swift */,
 				84F855E51CECCE5C00FB63D2 /* SpaceshipData.swift */,
 				84F855E11CECCE5C00FB63D2 /* WeaponData.swift */,
-				848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */,
 				848A7D351D40034500AC72F1 /* Game-OSX-Bridging-Header.h */,
 			);
 			path = CoreData;
@@ -1504,7 +1504,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Game/CoreData/SpaceWar-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Game/SpaceWar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1531,7 +1531,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.PabloHenri91.GameIV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Game/CoreData/SpaceWar-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Game/SpaceWar-Bridging-Header.h";
 			};
 			name = Release;
 		};
