@@ -559,26 +559,27 @@
 		3AA0C8791CFDB158008EE628 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				842FB08B1D625B55007EAD9C /* WebKit.framework */,
-				842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */,
-				842FB0871D625B48007EAD9C /* StoreKit.framework */,
-				842FB0851D625B3D007EAD9C /* Social.framework */,
-				842FB0831D625B33007EAD9C /* QuartzCore.framework */,
-				842FB0811D625B2E007EAD9C /* MessageUI.framework */,
-				842FB07F1D625B19007EAD9C /* MediaPlayer.framework */,
-				842FB07D1D625B11007EAD9C /* EventKitUI.framework */,
-				842FB07B1D625B09007EAD9C /* EventKit.framework */,
-				842FB0791D625B02007EAD9C /* CoreTelephony.framework */,
-				842FB0771D625AF9007EAD9C /* CoreMedia.framework */,
-				842FB0751D625AF1007EAD9C /* CoreGraphics.framework */,
-				842FB0731D625AE5007EAD9C /* AVFoundation.framework */,
-				842FB0711D625ADD007EAD9C /* AudioToolbox.framework */,
-				842FB06F1D625AD5007EAD9C /* AdSupport.framework */,
 				842FB0491D624A9F007EAD9C /* AdColony.framework */,
+				842FB06F1D625AD5007EAD9C /* AdSupport.framework */,
+				842FB0711D625ADD007EAD9C /* AudioToolbox.framework */,
+				842FB0731D625AE5007EAD9C /* AVFoundation.framework */,
+				842FB0751D625AF1007EAD9C /* CoreGraphics.framework */,
+				842FB0771D625AF9007EAD9C /* CoreMedia.framework */,
+				842FB0791D625B02007EAD9C /* CoreTelephony.framework */,
 				3A0F318A1D410E4400FDFBFE /* Crashlytics.framework */,
+				842FB07B1D625B09007EAD9C /* EventKit.framework */,
+				842FB07D1D625B11007EAD9C /* EventKitUI.framework */,
 				3A0F31891D410E4400FDFBFE /* Fabric.framework */,
 				3A0F318D1D410EBA00FDFBFE /* GameAnalytics.framework */,
 				847C6BAF1D4BC14300C2E36E /* GameKit.framework */,
+				842FB07F1D625B19007EAD9C /* MediaPlayer.framework */,
+				842FB0811D625B2E007EAD9C /* MessageUI.framework */,
+				842FB0831D625B33007EAD9C /* QuartzCore.framework */,
+				842FB0851D625B3D007EAD9C /* Social.framework */,
+				842FB0871D625B48007EAD9C /* StoreKit.framework */,
+				842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */,
+				842FB08B1D625B55007EAD9C /* WebKit.framework */,
+				842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */,
 				3AA0C87A1CFDB3B4008EE628 /* FacebookSDKs-iOS-4 */,
 			);
 			name = Frameworks;
@@ -642,7 +643,6 @@
 		843CB48C1CDD131A00674F48 = {
 			isa = PBXGroup;
 			children = (
-				842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */,
 				844CF27C1CE77BE80032F6AA /* Game */,
 				84A767A61D5BBF3200A8D808 /* SpaceWarTests */,
 				843CB4961CDD131A00674F48 /* Products */,
