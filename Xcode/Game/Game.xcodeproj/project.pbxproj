@@ -122,7 +122,6 @@
 		843803D51CEF45D1007152BC /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D31CEF45D1007152BC /* GameMath.swift */; };
 		84399E2D1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
 		84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
-		844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF2681CE77B400032F6AA /* AppDelegate.swift */; };
 		844CF26F1CE77B400032F6AA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF26E1CE77B400032F6AA /* GameViewController.swift */; };
 		844CF2721CE77B400032F6AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2701CE77B400032F6AA /* Main.storyboard */; };
 		844CF2741CE77B400032F6AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2731CE77B400032F6AA /* Assets.xcassets */; };
@@ -249,6 +248,7 @@
 		84C14B211D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
 		84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
 		84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
+		84C8E7931D6206DB00B7605F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF2681CE77B400032F6AA /* AppDelegate.swift */; };
 		84D621231D258EC4005D550C /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84D621211D258EC4005D550C /* explosion.sks */; };
 		84D621241D258EC4005D550C /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84D621211D258EC4005D550C /* explosion.sks */; };
 		84D6212B1D259021005D550C /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D6212A1D259021005D550C /* explosion.png */; };
@@ -1190,6 +1190,7 @@
 				848F8B791D0602BE00434FFB /* Shot.swift in Sources */,
 				84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */,
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
+				84C8E7931D6206DB00B7605F /* AppDelegate.swift in Sources */,
 				3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
 				3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620681CEB77400082A9D7 /* CropBox.swift in Sources */,
@@ -1206,7 +1207,6 @@
 				3A4065F71D2D71E500B886DB /* ResearchDetailsScene.swift in Sources */,
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
-				844CF2691CE77B400032F6AA /* AppDelegate.swift in Sources */,
 				3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */,
 				3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				843620641CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,

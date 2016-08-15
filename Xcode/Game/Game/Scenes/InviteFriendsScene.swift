@@ -51,8 +51,6 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
         self.addChild(self.buttonBack)
         
         //print(FacebookGameInviter.sharedInstance.countInvitesAccept())
-  
-
     }
     
 

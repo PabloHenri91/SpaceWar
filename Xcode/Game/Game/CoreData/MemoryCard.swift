@@ -98,11 +98,6 @@ class MemoryCard {
                     spaceshipData
                     self.playerData.unlockSpaceshipData(spaceshipData)
                     
-                    
-                    print(weaponData.type.intValue)
-                    print(spaceshipData.type.intValue)
-                    print()
-                    
                     self.playerData.unlockSpaceshipData(spaceshipData)
                     
                     for research in researchs {
