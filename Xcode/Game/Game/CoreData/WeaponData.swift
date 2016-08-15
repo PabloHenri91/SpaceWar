@@ -6,7 +6,6 @@
 //  Copyright © 2016 PabloHenri91. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 @objc(WeaponData)
