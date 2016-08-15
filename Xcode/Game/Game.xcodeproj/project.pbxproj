@@ -173,8 +173,6 @@
 		8481A2791D5BC460006DD7DD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
-		848A7D381D40034500AC72F1 /* ALIterativeMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */; };
-		848A7D391D40034500AC72F1 /* ALIterativeMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */; };
 		848F8B791D0602BE00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
 		848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
 		848FD6C91D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */; };
@@ -442,8 +440,6 @@
 		848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryData.swift; sourceTree = "<group>"; };
 		848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpaceWar-Bridging-Header.h"; sourceTree = "<group>"; };
 		848A7D351D40034500AC72F1 /* Game-OSX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game-OSX-Bridging-Header.h"; sourceTree = "<group>"; };
-		848A7D361D40034500AC72F1 /* ALIterativeMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIterativeMigrator.h; sourceTree = "<group>"; };
-		848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIterativeMigrator.m; sourceTree = "<group>"; };
 		848F8B771D06022500434FFB /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bus-blanchie_bright-stars.mp3"; sourceTree = "<group>"; };
 		848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jredd_magma-crystal-falls.mp3"; sourceTree = "<group>"; };
@@ -893,8 +889,6 @@
 		84F855D41CECCD4B00FB63D2 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				848A7D361D40034500AC72F1 /* ALIterativeMigrator.h */,
-				848A7D371D40034500AC72F1 /* ALIterativeMigrator.m */,
 				848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */,
 				3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */,
 				84F855D81CECCE1100FB63D2 /* MemoryCard.swift */,
@@ -1164,7 +1158,6 @@
 				3A7E60CC1D14239F00D00590 /* HangarScene.swift in Sources */,
 				843620621CEB77400082A9D7 /* Button.swift in Sources */,
 				844CF26F1CE77B400032F6AA /* GameViewController.swift in Sources */,
-				848A7D381D40034500AC72F1 /* ALIterativeMigrator.m in Sources */,
 				3AD261981D2562A000189671 /* FactorySpaceshipCard.swift in Sources */,
 				84110C151D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */,
 				843620741CEB77400082A9D7 /* GameScene.swift in Sources */,
@@ -1284,7 +1277,6 @@
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,
 				3A7E60D31D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */,
 				3ABECDC31D5BBAD000661C0D /* SpeedUpMinningAlert.swift in Sources */,
-				848A7D391D40034500AC72F1 /* ALIterativeMigrator.m in Sources */,
 				848021071D0ADB220078320A /* HealthBar.swift in Sources */,
 				843620811CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
 				84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */,
