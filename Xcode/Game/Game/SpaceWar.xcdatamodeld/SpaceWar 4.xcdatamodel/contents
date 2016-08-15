@@ -7,7 +7,7 @@
     </entity>
     <entity name="FriendData" representedClassName="FriendData" syncable="YES">
         <attribute name="acceptedInvite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="friendId" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="invitedFriends" inverseEntity="PlayerData" syncable="YES"/>

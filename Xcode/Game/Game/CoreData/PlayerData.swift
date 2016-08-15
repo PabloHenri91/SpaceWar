@@ -125,7 +125,7 @@ extension MemoryCard {
         
         //list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
-        playerData.addFriendData(self.newFriendData(id: "1312123213231"))
+        playerData.addFriendData(self.newFriendData(friendId: "1312123213231"))
         
         playerData.startDate = NSDate()
         
@@ -190,10 +190,10 @@ extension PlayerData {
         items.removeObject(value)
     }
     
-    func updateInvitedFriend(id id:String, name: String, photoURL: String, accepted: Bool) {
+    func updateInvitedFriend(friendId friendId:String, name: String, photoURL: String, accepted: Bool) {
         for item in self.invitedFriends {
             if let friend = item as? FriendData {
-                if friend.id == id {
+                if friend.friendId == friendId {
                     friend.name = name
                     friend.photoURL = photoURL
                     friend.acceptedInvite = NSNumber(bool: accepted)
