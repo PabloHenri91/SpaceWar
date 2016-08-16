@@ -279,6 +279,24 @@ class GameMath {
         }
     }
     
+    static func getRandomResearch() {
+        let winSpaceship = Int(arc4random_uniform(101) + 1)
+        
+        if (winSpaceship > 90) {
+            
+            let diceRoll = Int(arc4random_uniform(101) + 1)
+            if (diceRoll <= 85) {
+                print("commom")
+            } else if (diceRoll <= 95) {
+                print("rare")
+            } else if (diceRoll <= 99) {
+                print("epic")
+            } else {
+                print("legendary")
+            }
+        }
+    }
+    
     //Mission Spaceship
     
     static func missionFinishTime(fromDate: NSDate, missionTime: Int) -> Int {

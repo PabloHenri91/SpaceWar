@@ -81,7 +81,7 @@ class MissionSpaceshipCard: Control {
             
             
             if self.missionSpaceship.level < 4 {
-                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonUpgrade = Button(textureName: "buttonGraySmall", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
             
@@ -129,7 +129,7 @@ class MissionSpaceshipCard: Control {
             
             
             if self.missionSpaceship.level < 4 {
-                self.buttonUpgrade = Button(textureName: "buttonGray", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonUpgrade = Button(textureName: "buttonGraySmall", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
         }
@@ -158,6 +158,7 @@ class MissionSpaceshipCard: Control {
                         self.needUpdate = false
                         if let _ = self.missionSpaceship.missionspaceshipData {
                             self.buttonSpeedUp?.removeFromParent()
+                            self.buttonSpeedUp = nil
                             self.buttonColect?.removeFromParent()
                           
                             self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)

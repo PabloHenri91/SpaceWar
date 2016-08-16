@@ -11,110 +11,59 @@ import SpriteKit
 class HangarSpaceshipCard: Control {
     
     var spaceship: Spaceship!
-    var spaceshipImage: Spaceship!
-    var buttonDetalis: Button!
-    var buttonSelect: Button?
-    var buttonFix: Button?
-    var buttonUpgrade: Button?
+    var buttonUpgrade: Button!
+    var buttonChange: Button!
     var labelLevel: Label!
     var labelName: Label!
-    var labelDescription: Label!
-    var selected: Bool
-    var crashed = false
-    
     var playerData = MemoryCard.sharedInstance.playerData
     
-    init(spaceship: Spaceship, selected: Bool) {
-        
-        self.selected = selected
-        super.init()
+    init(spaceship:Spaceship, x:Int, y:Int) {
         
         
-        if let spaceshipData = spaceship.spaceshipData {
-         
-            if (GameMath.spaceshipFixTime(spaceshipData.crashDate) > 0) {
-                self.crashed = true
-            }
-        }
-        
-        
-        self.addChild(Control(textureName: "hangarShipCardSelected"))
-       
         self.spaceship = spaceship
-        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        self.spaceshipImage.loadAllyDetails()
-        self.addChild(self.spaceshipImage)
-        self.spaceshipImage.screenPosition = CGPoint(x: 21+16, y: 41+16)
-        self.spaceshipImage.resetPosition()
         
-        self.buttonDetalis = Button(textureName: "shipDetailButton", text: "", x: 0, y: 0)
-        self.addChild(self.buttonDetalis)
+        var imageName = ""
         
-        if self.crashed {
-            
-            self.buttonFix = Button(textureName: "buttonSmall", text: "Fix",  x: 86, y: 85)
-            self.addChild(self.buttonFix!)
-            
-        } else {
-            if self.selected {
-                self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
-                self.addChild(self.buttonSelect!)
-            } else {
-                self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
-                self.addChild(self.buttonSelect!)
-            }
-            
-            self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
-            self.addChild(self.buttonUpgrade!)
+        switch self.spaceship.type.rarity {
+        case .commom:
+            imageName = "commomHangarSpaceshipCard"
+            break
+        case .rare:
+            imageName = "rareHangarSpaceshipCard"
+            break
+        case .epic:
+            imageName = "epicHangarSpaceshipCard"
+            break
+        case .legendary:
+            imageName = "legendaryHangarSpaceshipCard"
+            break
         }
-        
-        
+
+        super.init(textureName: imageName, x: x, y: y)
+       
+
+        let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        spaceshipImage.loadAllyDetails()
+        self.addChild(spaceshipImage)
+        spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
+        spaceshipImage.resetPosition()
         
 
-        
-        self.labelLevel = Label(text: String(self.spaceship.level) , fontSize: 15, x: 262, y: 14)
+            
+        self.buttonUpgrade = Button(textureName: "hangarButtonGray", text: "UPGRADE", fontSize: 13 ,  x: 31, y: 120, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(self.buttonUpgrade)
+
+        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level " + self.spaceship.level.description , fontSize: 13 ,  x: 75, y: 100, shadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
-        self.labelName = Label(color:SKColor.whiteColor() ,text: self.spaceship.type.name , x: 137, y: 23)
+        
+        self.labelName = Label(color: SKColor.whiteColor(), text: self.spaceship.type.name.uppercaseString , fontSize: 13 ,  x: 76, y: 14, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelName)
         
-        if self.crashed {
-            if let spaceshipData = self.spaceship.spaceshipData {
-                self.labelDescription = Label(text: GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)) , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
-            }
-        } else {
-            //self.labelDescription = Label(text: self.spaceship.type.spaceshipDescription, fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
-            self.labelDescription = Label(text: "Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description , fontSize: 11 , x: 62, y: 58, horizontalAlignmentMode: .Left)
-        }
+        self.buttonChange = Button(textureName: "hangarButtonGreen", text: "CHANGE", fontSize: 13 ,  x: 31, y: 150, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(self.buttonChange)
+
         
-      
-        self.addChild(self.labelDescription)
-        
-    }
-    
-    
-    func update() {
-        if self.crashed {
-            if let spaceshipData = spaceship.spaceshipData {
-                if (GameMath.spaceshipFixTime(spaceshipData.crashDate) > 0) {
-                    self.labelDescription.setText(GameMath.timeFormated(GameMath.spaceshipFixTime(spaceshipData.crashDate)))
-                } else {
-                    self.crashed = false
-                    self.buttonFix?.removeFromParent()
-                    
-                    if self.selected {
-                        self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
-                        self.addChild(self.buttonSelect!)
-                    } else {
-                        self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
-                        self.addChild(self.buttonSelect!)
-                    }
-                    self.buttonUpgrade = Button(textureName: "buttonSmall", text: "Upgrade",  x: 144, y: 85)
-                    self.addChild(self.buttonUpgrade!)
-                }
-            }
-            
-        }
     }
     
     
@@ -122,20 +71,6 @@ class HangarSpaceshipCard: Control {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
-    func removeSpaceship() {
-        self.buttonSelect!.removeFromParent()
-        self.buttonSelect = Button(textureName: "buttonSmall", text: "Select",  x: 29, y: 85)
-        self.addChild(self.buttonSelect!)
-        self.selected = !selected
-    }
-    
-    func addSpaceship() {
-        self.buttonSelect!.removeFromParent()
-        self.buttonSelect = Button(textureName: "buttonSmall", text: "Remove",  x: 29, y: 85)
-        self.addChild(self.buttonSelect!)
-        self.selected = !selected
-    }
     
     func upgradeSpaceship(cost: Int) {
         let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceship.level, type: self.spaceship.type)
@@ -146,9 +81,8 @@ class HangarSpaceshipCard: Control {
     }
     
     func reloadCard() {
-      
+        
         self.labelLevel.setText(self.spaceship.level.description)
-        self.labelDescription.setText("Upgrade cost " + GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description)
     }
     
 }

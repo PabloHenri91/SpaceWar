@@ -64,6 +64,8 @@
 		3AD2619F1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */; };
 		3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261A01D26B61D00189671 /* MissionSpaceship.swift */; };
 		3AD261A21D26B61D00189671 /* MissionSpaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD261A01D26B61D00189671 /* MissionSpaceship.swift */; };
+		3AF476221D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */; };
+		3AF476231D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */; };
 		3AFD26791D2A839400A83323 /* MissionSpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */; };
 		3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
 		3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
@@ -303,6 +305,7 @@
 		3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactorySpaceshipCard.swift; sourceTree = "<group>"; };
 		3AD2619B1D26B0BC00189671 /* MissionSpaceshipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipData.swift; sourceTree = "<group>"; };
 		3AD261A01D26B61D00189671 /* MissionSpaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceship.swift; sourceTree = "<group>"; };
+		3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarSpaceshipDetails.swift; sourceTree = "<group>"; };
 		3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipCard.swift; sourceTree = "<group>"; };
 		3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseMissionScene.swift; sourceTree = "<group>"; };
 		3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionTypeCard.swift; sourceTree = "<group>"; };
@@ -557,6 +560,15 @@
 			name = Minner;
 			sourceTree = "<group>";
 		};
+		3AF476251D638F0900839BBC /* Hangar */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E60D11D14878F00D00590 /* HangarSpaceshipCard.swift */,
+				3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */,
+			);
+			name = Hangar;
+			sourceTree = "<group>";
+		};
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,7 +695,7 @@
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
-				3A7E60D11D14878F00D00590 /* HangarSpaceshipCard.swift */,
+				3AF476251D638F0900839BBC /* Hangar */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
@@ -1090,6 +1102,7 @@
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				3AD1E5E01D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift in Sources */,
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
+				3AF476221D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
 				3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */,
 				3A4138821D469EA80026B47E /* SocialScene.swift in Sources */,
@@ -1166,6 +1179,7 @@
 				84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				8436206F1CEB77400082A9D7 /* GameCamera.swift in Sources */,
+				3AF476231D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */,
 				84029D841CF49D68001853FF /* BattleScene.swift in Sources */,
 				84A6C8311D141788006717B9 /* FriendData.swift in Sources */,
 				843620671CEB77400082A9D7 /* Control.swift in Sources */,
