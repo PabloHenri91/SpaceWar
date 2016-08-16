@@ -898,7 +898,7 @@ public enum TargetType:Int {
 
 class SpaceshipType {
     
-    enum rarityTypes {
+    enum rarityTypes:String {
         case commom
         case rare
         case epic
