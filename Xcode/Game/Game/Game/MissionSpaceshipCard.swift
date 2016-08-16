@@ -205,8 +205,6 @@ class MissionSpaceshipCard: Control {
         }
     }
     
-
-    
     func upgrade() -> Bool {
         
         if self.playerData.points.integerValue >= 2000 {
@@ -230,13 +228,4 @@ class MissionSpaceshipCard: Control {
         
         return false
     }
-    
-    override func removeFromParent() {
-        self.buttonBegin?.removeFromParent()
-        self.buttonSpeedUp?.removeFromParent()
-        self.buttonColect?.removeFromParent()
-        self.buttonUpgrade?.removeFromParent()
-        super.removeFromParent()
-    }
-    
 }

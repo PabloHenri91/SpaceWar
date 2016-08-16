@@ -885,8 +885,6 @@ class Spaceship: Control {
     }
     
     override func removeFromParent() {
-        self.healthBar?.removeFromParent()
-        self.weaponSpriteNode?.removeFromParent()
         Spaceship.spaceshipList.remove(self)
         super.removeFromParent()
     }

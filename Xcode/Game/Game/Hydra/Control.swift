@@ -115,6 +115,9 @@ class Control: SKNode {
     }
     
     override func removeFromParent() {
+        for node in self.children {
+            node.removeFromParent()
+        }
         Control.controlList.remove(self)
         super.removeFromParent()
     }

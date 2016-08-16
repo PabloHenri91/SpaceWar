@@ -86,7 +86,7 @@ class GameTextField: Control, UITextFieldDelegate {
     
     override func removeFromParent() {
         GameTextField.textFieldList.remove(self)
-        super.removeFromParent()
         self.textField.removeFromSuperview()
+        super.removeFromParent()
     }
 }
