@@ -6,6 +6,7 @@
 //  Copyright © 2016 Pablo Henrique Bertaco. All rights reserved.
 //
 
+import Foundation
 
 extension String {
     

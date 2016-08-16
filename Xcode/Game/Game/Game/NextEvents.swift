@@ -101,7 +101,7 @@ class NextEvents: Control {
 
 class EventCard: Control {
     
-    enum types {
+    enum types: String {
         case none
         case missionSpaceshipEvent
         case researchEvent
@@ -260,11 +260,8 @@ class EventCard: Control {
         
         switch self.type {
             
-        case .missionSpaceshipEvent:
-            return GameMath.missionTimeLeft(startDate: self.startDate()!, missionDuration: self.duration)
-            
-        case .researchEvent:
-            return GameMath.researchTimeLeft(startDate: self.startDate()!, researchDuration: self.duration)
+        case .missionSpaceshipEvent, .researchEvent:
+            return GameMath.timeLeft(startDate: self.startDate()!, duration: self.duration)
             
         default:
             return 0

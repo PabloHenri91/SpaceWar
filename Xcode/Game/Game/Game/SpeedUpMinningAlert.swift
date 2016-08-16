@@ -95,7 +95,7 @@ class SpeedUpMinningAlert:Box {
             self.labelWatch.alpha = 0
         #endif
         
-        let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
+        let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: self.missionType.duration)
         var diamonds = Int(round(Double(time) / 3600))
         
         if diamonds < 1 {
@@ -132,7 +132,7 @@ class SpeedUpMinningAlert:Box {
     
     func finishWithPremiumPoints() -> Bool {
         
-        let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: self.missionType.duration)
+        let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: self.missionType.duration)
         
         var diamonds = Int(round(Double(time) / 3600))
         if diamonds < 1 {

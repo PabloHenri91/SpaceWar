@@ -10,7 +10,7 @@ import SpriteKit
 
 class BatteryControl: Control {
     
-    var maxCharge = GameMath.maxCharge
+    var maxCharge = GameMath.batteryMaxCharge
     var charge = 0
     var lastCharge:NSDate!
     
@@ -68,7 +68,7 @@ class BatteryControl: Control {
         }
         
         if let battery = MemoryCard.sharedInstance.playerData.battery {
-            if battery.charge.integerValue == GameMath.maxCharge {
+            if battery.charge.integerValue == GameMath.batteryMaxCharge {
                 battery.lastCharge = NSDate()
             }
             battery.charge = battery.charge.integerValue - 1
@@ -94,7 +94,7 @@ class BatteryControl: Control {
                 
                 while self.charge < self.maxCharge {
                     
-                    if GameMath.batteryChargeTime(self.lastCharge) <= 0 {
+                    if GameMath.batteryNextChargeTimeLeft(self.lastCharge) <= 0 {
                         self.lastCharge = NSDate(timeInterval: GameMath.batteryChargeInterval, sinceDate: self.lastCharge)
                         battery.lastCharge = self.lastCharge
                         
@@ -111,7 +111,7 @@ class BatteryControl: Control {
                 
                 var text = ""
                 if self.charge < self.maxCharge {
-                    text = GameMath.timeFormated(GameMath.batteryChargeTime(self.lastCharge))
+                    text = GameMath.timeFormated(GameMath.batteryNextChargeTimeLeft(self.lastCharge))
                 }
                 
                 var i = 0

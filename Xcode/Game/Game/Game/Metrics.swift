@@ -8,6 +8,8 @@
 
 #if os(iOS)
     import GameAnalytics
+#else
+    import Foundation
 #endif
 
 class Metrics {

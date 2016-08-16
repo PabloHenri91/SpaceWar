@@ -251,6 +251,7 @@
 		84D621241D258EC4005D550C /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84D621211D258EC4005D550C /* explosion.sks */; };
 		84D6212B1D259021005D550C /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D6212A1D259021005D550C /* explosion.png */; };
 		84D6212C1D259021005D550C /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D6212A1D259021005D550C /* explosion.png */; };
+		84EE51021D638A9500943D84 /* ABNScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE51011D638A9500943D84 /* ABNScheduler.swift */; };
 		84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855D81CECCE1100FB63D2 /* MemoryCard.swift */; };
 		84F855DA1CECCE1100FB63D2 /* MemoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855D81CECCE1100FB63D2 /* MemoryCard.swift */; };
 		84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */; };
@@ -480,6 +481,7 @@
 		84C8D5561CF4C233007C1ED6 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		84D621211D258EC4005D550C /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
 		84D6212A1D259021005D550C /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		84EE51011D638A9500943D84 /* ABNScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABNScheduler.swift; sourceTree = "<group>"; };
 		84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 2.xcdatamodel"; sourceTree = "<group>"; };
 		84F855D81CECCE1100FB63D2 /* MemoryCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCard.swift; sourceTree = "<group>"; };
 		84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScene.swift; sourceTree = "<group>"; };
@@ -718,6 +720,7 @@
 			isa = PBXGroup;
 			children = (
 				8436205D1CEB77400082A9D7 /* DefaultNameList */,
+				84EE51011D638A9500943D84 /* ABNScheduler.swift */,
 				8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */,
 				8436204B1CEB77400082A9D7 /* Box.swift */,
 				8436204C1CEB77400082A9D7 /* Button.swift */,
@@ -1172,6 +1175,7 @@
 				84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */,
 				84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */,
+				84EE51021D638A9500943D84 /* ABNScheduler.swift in Sources */,
 				3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */,
 				849162A31D5DF9CF0064958C /* NextEvents.swift in Sources */,
 				8436206C1CEB77400082A9D7 /* Event.swift in Sources */,

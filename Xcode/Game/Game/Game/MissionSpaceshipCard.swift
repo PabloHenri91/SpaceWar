@@ -50,7 +50,7 @@ class MissionSpaceshipCard: Control {
             
             
             let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-            let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
+            let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
             
             if (time > 0) {
                 
@@ -146,7 +146,7 @@ class MissionSpaceshipCard: Control {
                 if (self.missionSpaceship.missionspaceshipData?.missionType.intValue >= 0) {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-                    let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
+                    let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
                     
                     
                     if (time > 0) {
@@ -176,7 +176,7 @@ class MissionSpaceshipCard: Control {
                 if (self.missionSpaceship.missionspaceshipData!.missionType.intValue >= 0) {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
-                    let time = GameMath.missionTimeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, missionDuration: mission.duration)
+                    let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
                     
                     if (time > 0) {
                         

@@ -85,7 +85,7 @@ class ResearchDetailsScene: GameScene {
         
             if (researchData.startDate != nil) {
                 
-                let time = GameMath.researchTimeLeft(startDate: researchData.startDate! , researchDuration: self.research.researchType.duration)
+                let time = GameMath.timeLeft(startDate: researchData.startDate! , duration: self.research.researchType.duration)
                 
                 if (time > 0) {
                     
@@ -159,7 +159,7 @@ class ResearchDetailsScene: GameScene {
                     if (self.needUpdate) {
                         if (self.research.researchData?.startDate != nil) {
                             
-                            let time = GameMath.researchTimeLeft(startDate: self.research.researchData!.startDate!, researchDuration: self.research.researchType.duration)
+                            let time = GameMath.timeLeft(startDate: self.research.researchData!.startDate!, duration: self.research.researchType.duration)
                             
                             if (time > 0) {
                                 self.labelTime.setText(GameMath.timeFormated(time))

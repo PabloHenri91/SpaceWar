@@ -83,9 +83,7 @@ class MemoryCard {
                 self.playerData.addResearchData(newResearch)
             }
             
-            
             let researchs = self.playerData.researches
-            
             
             for weapon in weapons {
                 for spaceship in spaceships {

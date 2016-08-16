@@ -10,6 +10,8 @@ import SpriteKit
 
 class LoadScene: GameScene {
     
+    static var nextScene:String?
+    
     enum states : String {
         //Estado principal
         case load
@@ -47,7 +49,23 @@ class LoadScene: GameScene {
                 if MemoryCard.sharedInstance.playerData.needBattleTraining.boolValue {
                     self.view?.presentScene(BattleTrainingScene())
                 } else {
-                    self.view?.presentScene(MothershipScene())
+                    if let nextScene = LoadScene.nextScene {
+                        switch nextScene {
+                        case EventCard.types.researchEvent.rawValue:
+                            GameTabBar.lastState = .research
+                            self.view?.presentScene(ResearchScene())
+                            break
+                        case EventCard.types.missionSpaceshipEvent.rawValue:
+                            GameTabBar.lastState = .mission
+                            self.view?.presentScene(MissionScene())
+                            break
+                        default:
+                            self.view?.presentScene(MothershipScene())
+                            break
+                        }
+                    } else {
+                        self.view?.presentScene(MothershipScene())
+                    }
                 }
                 
                 break
