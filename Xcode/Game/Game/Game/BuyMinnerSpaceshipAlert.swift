@@ -27,10 +27,10 @@ class BuyMinnerSpaceshipAlert:Box {
             self?.removeFromParent()
         })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: "BUY MINNING SPACESHIP" , fontSize: 13, x: -127, y: -48, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: "BUY MINING SPACESHIP" , fontSize: 13, x: -127, y: -48, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        let labelLevel = Label(text: "MINNING SPACESHIP LEVEL 1" , fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
+        let labelLevel = Label(text: "MINING SPACESHIP LEVEL 1" , fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelLevel)
         
         let labelAmount = Label(text: "YOU HAVE " + self.playerData.missionSpaceships.count.description + "/4" , fontSize: 11, x: -78, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left)
@@ -64,7 +64,7 @@ class BuyMinnerSpaceshipAlert:Box {
         
     }
     
-    func buyMinningSpaceship() -> Bool {
+    func buyMiningSpaceship() -> Bool {
         
         if self.playerData.points.integerValue >= 2000 {
             let missionSpaceshipData = MemoryCard.sharedInstance.newMissionSpaceshipData()

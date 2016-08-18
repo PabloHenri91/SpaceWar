@@ -71,7 +71,7 @@ class ScrollNode: Control {
                 
                 control.resetPosition()
                 
-                control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
+                //control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
                 control.physicsBody?.affectedByGravity = false
                 control.physicsBody?.categoryBitMask = 0
                 control.physicsBody?.collisionBitMask = 0
@@ -141,16 +141,18 @@ class ScrollNode: Control {
                         
                         if(!outOfBounds && !containsPoins) {
                             
-                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dx)!) < scrollNode.maxVelocity) {
-                                
-                                let i = round((scrollNode.firstCellPositionX - scrollNode.cells[0].position.x) / CGFloat(scrollNode.width + scrollNode.spacing/Int(Display.screenScale)))
-                                
-                                var auxMove:CGFloat = 0
-                                
-                                auxMove = scrollNode.firstCellPositionX - scrollNode.cells[Int(i)].position.x
-                                
-                                for cell in scrollNode.cells {
-                                    cell.physicsBody?.applyForce(CGVector(dx: auxMove, dy: 0))
+                            if let dx = scrollNode.cells[0].physicsBody?.velocity.dx {
+                                if abs(dx) < scrollNode.maxVelocity {
+                                    
+                                    let i = round((scrollNode.firstCellPositionX - scrollNode.cells[0].position.x) / CGFloat(scrollNode.width + scrollNode.spacing/Int(Display.screenScale)))
+                                    
+                                    var auxMove:CGFloat = 0
+                                    
+                                    auxMove = scrollNode.firstCellPositionX - scrollNode.cells[Int(i)].position.x
+                                    
+                                    for cell in scrollNode.cells {
+                                        cell.physicsBody?.applyForce(CGVector(dx: auxMove, dy: 0))
+                                    }
                                 }
                             }
                         }
@@ -177,15 +179,16 @@ class ScrollNode: Control {
                         }
                         
                         if(!outOfBounds && !containsPoins) {
-                            
-                            if(abs((scrollNode.cells[0].physicsBody?.velocity.dy)!) < scrollNode.maxVelocity) {
-                                
-                                let i = round((scrollNode.cells[0].position.y - scrollNode.firstCellPositionY) / CGFloat(scrollNode.height + scrollNode.spacing/Int(Display.screenScale)))
-                                
-                                let auxMove = scrollNode.firstCellPositionY - scrollNode.cells[Int(i)].position.y
-                                
-                                for cell in scrollNode.cells {
-                                    cell.physicsBody?.applyForce(CGVector(dx: 0, dy: auxMove))
+                            if let dy = scrollNode.cells[0].physicsBody?.velocity.dy {
+                                if abs(dy) < scrollNode.maxVelocity {
+                                    
+                                    let i = round((scrollNode.cells[0].position.y - scrollNode.firstCellPositionY) / CGFloat(scrollNode.height + scrollNode.spacing/Int(Display.screenScale)))
+                                    
+                                    let auxMove = scrollNode.firstCellPositionY - scrollNode.cells[Int(i)].position.y
+                                    
+                                    for cell in scrollNode.cells {
+                                        cell.physicsBody?.applyForce(CGVector(dx: 0, dy: auxMove))
+                                    }
                                 }
                             }
                         }

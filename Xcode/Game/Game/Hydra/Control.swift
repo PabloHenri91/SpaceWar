@@ -122,6 +122,10 @@ class Control: SKNode {
         super.removeFromParent()
     }
     
+    override func moveToParent(parent: SKNode) {
+        super.removeFromParent()
+        parent.addChild(self)
+    }
        
     //Input
     

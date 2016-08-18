@@ -352,6 +352,7 @@ public class ABNotification : NSObject, NSCoding, Comparable {
     init(alertBody: String) {
         self.alertBody = alertBody
         self.localNotification = UILocalNotification()
+        self.localNotification.applicationIconBadgeNumber = 1
         self.identifier = NSUUID().UUIDString
         self.userInfo = Dictionary<NSObject, AnyObject>()
         super.init()
@@ -360,6 +361,7 @@ public class ABNotification : NSObject, NSCoding, Comparable {
     init(alertBody: String, identifier: String) {
         self.alertBody = alertBody
         self.localNotification = UILocalNotification()
+        self.localNotification.applicationIconBadgeNumber = 1
         self.identifier = identifier
         self.userInfo = Dictionary<NSObject, AnyObject>()
         super.init()
@@ -387,6 +389,7 @@ public class ABNotification : NSObject, NSCoding, Comparable {
             return nil
         } else {
             self.localNotification = UILocalNotification()
+            self.localNotification.applicationIconBadgeNumber = 1
             self.localNotification.alertBody = self.alertBody
             self.localNotification.alertAction = self.alertAction
             self.localNotification.fireDate = date

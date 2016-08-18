@@ -21,14 +21,14 @@ class MissionScene: GameScene {
     
     var playerDataCard:PlayerDataCard!
     
-    var missionHeaderControl: Control!
-    
     var scrollNode:ScrollNode!
     var controlArray:Array<MissionSpaceshipCard>!
     
     var chooseAsteroidAlert: ChooseAsteroidAlert?
     var buyMinnerSpaceshipAlert: BuyMinnerSpaceshipAlert?
-    var speedUpAlert: SpeedUpMinningAlert?
+    var speedUpAlert: SpeedUpMiningAlert?
+    
+    var headerControl:Control!
     
     enum states : String {
         
@@ -59,18 +59,18 @@ class MissionScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
+            
         case .mission:
             break
+            
         case .mothership, .factory, .hangar:
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
         }
@@ -84,20 +84,21 @@ class MissionScene: GameScene {
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 20, y: 130, xAlign: .center, spacing: 16 , scrollDirection: .vertical)
         self.addChild(self.scrollNode)
         
-        
-        self.missionHeaderControl = Control(textureName: "missionSceneHeader", x:0, y:63, xAlign: .center, yAlign: .center)
-        self.addChild(self.missionHeaderControl)
+        self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+                                      y: 67, size: CGSize(width: self.size.width,
+                                        height: 56))
+        self.addChild(self.headerControl)
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MINING SPACESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         if self.playerData.missionSpaceships.count < 4 {
-            
             self.buttonBuy = Button(textureName: "buttonBuyMinnerSpaceship", x: 278, y: 85, xAlign: .center, top: 10, bottom: 10, left: 10, right: 10)
             self.addChild(self.buttonBuy!)
-            
         }
-        
-        
-        let labelTitle = Label(text: "MINING SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelTitle)
         
         
         switch GameTabBar.lastState {
@@ -213,6 +214,7 @@ class MissionScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(ResearchScene())
                 break
                 
@@ -229,6 +231,7 @@ class MissionScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MothershipScene())
                 break
                 
@@ -236,6 +239,7 @@ class MissionScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(FactoryScene())
                 break
                 
@@ -243,6 +247,7 @@ class MissionScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(HangarScene())
                 break
                 
@@ -279,7 +284,7 @@ class MissionScene: GameScene {
                     //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
                     self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
-                    self.speedUpAlert = SpeedUpMinningAlert(missionSpaceship: spaceship)//TODO: fatal error: Index out of range
+                    self.speedUpAlert = SpeedUpMiningAlert(missionSpaceship: spaceship)//TODO: fatal error: Index out of range
                     self.speedUpAlert!.zPosition = self.blackSpriteNode.zPosition + 1
                     self.scrollNode.canScroll = false
                     self.speedUpAlert!.buttonCancel.addHandler({ self.nextState = .mission
@@ -351,6 +356,17 @@ class MissionScene: GameScene {
                         return
                     }
                     
+                    if let safeButtonBuy = self.buttonBuy {
+                        if (safeButtonBuy.containsPoint(touch.locationInNode(self))){
+                            self.nextState = .buySpaceship
+                            return
+                        }
+                    }
+                    
+                    if (self.headerControl.containsPoint(touch.locationInNode(self))){
+                        return
+                    }
+                    
                     if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.research
                         return
@@ -368,17 +384,6 @@ class MissionScene: GameScene {
                     
                     if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
                         self.nextState = states.hangar
-                        return
-                    }
-                    
-                    if let safeButtonBuy = self.buttonBuy {
-                        if (safeButtonBuy.containsPoint(touch.locationInNode(self))){
-                            self.nextState = .buySpaceship
-                        }
-                    }
-                    
-                    
-                    if (self.missionHeaderControl.containsPoint(touch.locationInNode(self))){
                         return
                     }
                     
@@ -437,12 +442,10 @@ class MissionScene: GameScene {
                                                 return
                                             }
                                         }
-                                    
                                     return
                                 }
                             }
                         }
-                        
                     }
                     
                     break
@@ -472,7 +475,7 @@ class MissionScene: GameScene {
                 case .buySpaceship:
                     if let buyAlert = self.buyMinnerSpaceshipAlert {
                         if buyAlert.buttonBuy.containsPoint(touch.locationInNode(buyAlert)){
-                            if buyAlert.buyMinningSpaceship() == false {
+                            if buyAlert.buyMiningSpaceship() == false {
                                 
                                 let alertBox = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({ self.nextState = .mission

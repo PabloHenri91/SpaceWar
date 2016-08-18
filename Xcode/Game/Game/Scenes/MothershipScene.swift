@@ -52,18 +52,18 @@ class MothershipScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
+            
         case .mothership:
             break
+            
         case .factory, .hangar:
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
         }
@@ -75,6 +75,14 @@ class MothershipScene: GameScene {
         //TODO: mothershipBackground
         //self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
         
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+            y: 67, size: CGSize(width: self.size.width,
+                height: 56)))
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "BATTLESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         self.batteryControl = BatteryControl(x: 75, y: 231, xAlign: .center, yAlign: .center)
@@ -172,6 +180,7 @@ class MothershipScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(ResearchScene())
                 break
                 
@@ -179,6 +188,7 @@ class MothershipScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MissionScene())
                 break
                 
@@ -190,6 +200,7 @@ class MothershipScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(FactoryScene())
                 break
                 
@@ -197,6 +208,7 @@ class MothershipScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(HangarScene())
                 break
                 

@@ -46,8 +46,7 @@ class HangarScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
         case .hangar:
@@ -164,6 +163,7 @@ class HangarScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(ResearchScene())
                 break
                 
@@ -171,6 +171,7 @@ class HangarScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MissionScene())
                 break
                 
@@ -178,6 +179,7 @@ class HangarScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MothershipScene())
                 break
                 
@@ -185,6 +187,7 @@ class HangarScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(FactoryScene())
                 break
                 

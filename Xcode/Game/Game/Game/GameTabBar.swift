@@ -31,6 +31,7 @@ class GameTabBar: Control {
     
     init(state:states) {
         super.init(textureName: "tabBarBackground", x: -54, y: 513, xAlign: .center, yAlign: .up)
+        self.zPosition = 100
         
         let top = 9
         let bottom = 9
