@@ -24,6 +24,7 @@ class SpeedUpMiningAlert:Box {
     
     var lastUpdate:NSTimeInterval = 0
     
+    var headerControl:Control!
     
     init(missionSpaceship:MissionSpaceship) {
         

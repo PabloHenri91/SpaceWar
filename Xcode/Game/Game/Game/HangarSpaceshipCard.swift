@@ -39,7 +39,7 @@ class HangarSpaceshipCard: Control {
             break
         }
 
-        super.init(textureName: imageName, x: x, y: y)
+        super.init(textureName: imageName, x: x, y: y, xAlign: .center, yAlign: .center)
        
 
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)

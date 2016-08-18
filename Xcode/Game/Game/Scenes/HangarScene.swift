@@ -36,6 +36,8 @@ class HangarScene: GameScene {
     var playerDataCard:PlayerDataCard!
     var gameTabBar:GameTabBar!
     
+    var headerControl:Control!
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -53,12 +55,16 @@ class HangarScene: GameScene {
             break
         }
         
-        
-        let hangarHeaderControl = Control(textureName: "missionSceneHeader", x:0, y:63, xAlign: .center, yAlign: .center)
-        self.addChild(hangarHeaderControl)
-        
-        let labelTitle = Label(text: "SELECT SPACESHIPS" , fontSize: 14, x: 160, y: 99, xAlign: .center , shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelTitle)
+        self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+                                      y: 67, size: CGSize(width: self.size.width,
+                                        height: 56))
+        self.addChild(self.headerControl)
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "SELECT SPACESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
        
         self.hangarCardsArray = Array<HangarSpaceshipCard>()
