@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //TODO: remover daqui notificationSettings
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        application.registerUserNotificationSettings(notificationSettings)
         
         ABNScheduler.cancelAllNotifications()
         
@@ -192,6 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKAppEvents.activateApp()
         Metrics.openTheGame()
         ABNScheduler.cancelAllNotifications()
+        application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(application: UIApplication) {

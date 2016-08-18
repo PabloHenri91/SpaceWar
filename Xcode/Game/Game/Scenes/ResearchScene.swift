@@ -48,14 +48,15 @@ class ResearchScene: GameScene {
         let actionDuration = 0.25
         
         switch GameTabBar.lastState {
+            
         case .research:
             break
+            
         case .mission, .mothership, .factory, .hangar:
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.removeFromParent()
-                self.addChild(node)
+                node.moveToParent(self)
             }
             break
         }
@@ -137,6 +138,7 @@ class ResearchScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MissionScene())
                 break
                 
@@ -144,6 +146,7 @@ class ResearchScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(MothershipScene())
                 break
                 
@@ -151,6 +154,7 @@ class ResearchScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(FactoryScene())
                 break
                 
@@ -158,6 +162,7 @@ class ResearchScene: GameScene {
                 self.playerDataCard.removeFromParent()
                 self.gameTabBar.removeFromParent()
                 GameScene.lastChildren = self.children
+                
                 self.view?.presentScene(HangarScene())
                 break
                 

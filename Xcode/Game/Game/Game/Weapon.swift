@@ -145,7 +145,7 @@ extension Weapon {
                 "weaponBAShot"
             ]
             
-            weaponType.name = "Super Pistol"
+            weaponType.name = "Pistol"
             weaponType.initSoundFileName = "laser5.mp3"
             weaponType.weaponDescription = "A normal weapon."
             weaponType.index = 0
@@ -161,7 +161,7 @@ extension Weapon {
             weaponType.shotSkins = [
                 "weaponAAShot"
             ]
-            weaponType.name = "Super Machine Gun"
+            weaponType.name = "Machine Gun"
             weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
             weaponType.index = 1
@@ -178,7 +178,7 @@ extension Weapon {
                 "weaponCAShot"
             ]
             
-            weaponType.name = "Super Shotgun"
+            weaponType.name = "Shotgun"
             weaponType.initSoundFileName = "laser1.mp3"
             weaponType.weaponDescription = "Close death."
             weaponType.index = 2
@@ -195,7 +195,7 @@ extension Weapon {
                 "weaponDAShot"
             ]
             
-            weaponType.name = "Super Sniper"
+            weaponType.name = "Sniper"
             weaponType.initSoundFileName = "laser9.mp3"
             weaponType.weaponDescription = "Kill enemies from other side of the universe."
             weaponType.index = 3

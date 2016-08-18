@@ -95,7 +95,7 @@ class Spaceship: Control {
     
     static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
         //TODO: displayName
-        var name = Spaceship.types[type].name// + " with " + Weapon.types[weaponType].name
+        var name = Spaceship.types[type].name + " + " + Weapon.types[weaponType].name
         if level > 0 {
             name += " Level: " + level.description
         }
@@ -104,6 +104,10 @@ class Spaceship: Control {
     
     func displayName() -> String {
         return Spaceship.displayName(self.type.index, level: self.level, weaponType: self.weapon!.type.index)
+    }
+    
+    func factoryDisplayName() -> String {
+        return Spaceship.displayName(self.type.index, weaponType: self.weapon!.type.index)
     }
     
     override init() {
@@ -148,6 +152,7 @@ class Spaceship: Control {
             self.weaponRangeSprite.fillColor = SKColor.clearColor()
             self.weaponRangeSprite.position = self.position
             self.weaponRangeSprite.alpha = 0
+            
             gameWorld.addChild(self.weaponRangeSprite)
         }
     }
@@ -357,10 +362,10 @@ class Spaceship: Control {
         self.healthBar.update(position: self.position)
         
         //TODO: exportar para função
-        if let _ = self.weaponRangeSprite {
-            self.weaponRangeSprite.position = self.position
-            if self.weaponRangeSprite.alpha > 0 {
-                self.weaponRangeSprite.alpha -= 0.01666666667
+        if let weaponRangeSprite = self.weaponRangeSprite {
+            weaponRangeSprite.position = self.position
+            if weaponRangeSprite.alpha > 0 {
+                weaponRangeSprite.alpha -= 0.01666666667
             }
         }
         //

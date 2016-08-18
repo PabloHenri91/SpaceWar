@@ -74,6 +74,8 @@
 		84029D841CF49D68001853FF /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84029D821CF49D68001853FF /* BattleScene.swift */; };
 		84110C151D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */; };
 		84110C161D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */; };
+		84126A8F1D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */; };
+		84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */; };
 		842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842640EC1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
@@ -328,6 +330,7 @@
 		84029D821CF49D68001853FF /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
 		840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 5.xcdatamodel"; sourceTree = "<group>"; };
 		84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipSlot.swift; sourceTree = "<group>"; };
+		84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuySpaceshipAlert.swift; sourceTree = "<group>"; };
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
 		842FB0491D624A9F007EAD9C /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
@@ -754,6 +757,7 @@
 			children = (
 				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
+				84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */,
 				3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
@@ -1164,6 +1168,7 @@
 				3AD1E5E01D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift in Sources */,
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
+				84126A8F1D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */,
 				3AD261A11D26B61D00189671 /* MissionSpaceship.swift in Sources */,
 				3A4138821D469EA80026B47E /* SocialScene.swift in Sources */,
 				3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */,
@@ -1257,6 +1262,7 @@
 				844CF2881CE789AA0032F6AA /* AppDelegate.swift in Sources */,
 				3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
+				84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */,
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				84BF0FC71D4A758F00145F5B /* GameTabBar.swift in Sources */,

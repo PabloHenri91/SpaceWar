@@ -1,5 +1,5 @@
 //
-//  SpeedUpMinningAlert.swift
+//  SpeedUpMiningAlert.swift
 //  Game
 //
 //  Created by Paulo Henrique dos Santos on 10/08/16.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class SpeedUpMinningAlert:Box {
+class SpeedUpMiningAlert:Box {
     
     var buttonCancel:Button!
     var missionSpaceship:MissionSpaceship!
@@ -41,7 +41,7 @@ class SpeedUpMinningAlert:Box {
             self?.removeFromParent()
         })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: "SPEED UP MINNING" , fontSize: 13, x: -127, y: -117, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: "SPEED UP MINING" , fontSize: 13, x: -127, y: -117, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
         self.missionSpaceship = missionSpaceship
