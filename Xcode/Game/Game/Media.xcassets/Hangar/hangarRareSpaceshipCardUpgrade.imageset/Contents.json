@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "xpIcon.png",
+      "filename" : "hangarRareSpaceshipCardUpgrade.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "xpIcon@2x.png",
+      "filename" : "hangarRareSpaceshipCardUpgrade@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "xpIcon@3x.png",
+      "filename" : "hangarRareSpaceshipCardUpgrade@3x.png",
       "scale" : "3x"
     }
   ],
