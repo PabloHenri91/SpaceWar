@@ -14,6 +14,8 @@ class HangarScene: GameScene {
     var playerData = MemoryCard.sharedInstance.playerData
     let spaceshipsData = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
     var spaceships = [Spaceship]()
+    var selectedSpaceship: Spaceship?
+    var detailsAlert: HangarSpaceshipDetails?
     
     var hangarCardsArray:Array<HangarSpaceshipCard>!
     
@@ -27,6 +29,8 @@ class HangarScene: GameScene {
         case mothership
         case factory
         case hangar
+        
+        case details
     }
     
     //Estados iniciais
@@ -201,6 +205,22 @@ class HangarScene: GameScene {
                 self.blackSpriteNode.hidden = true
                 break
                 
+            case .details:
+                if let spaceship = self.selectedSpaceship {
+                    self.blackSpriteNode.hidden = false
+                    self.blackSpriteNode.zPosition = 10000
+                    self.detailsAlert = HangarSpaceshipDetails(spaceship: spaceship)
+                    self.detailsAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                  
+                    self.detailsAlert!.buttonCancel.addHandler({ self.nextState = .hangar
+                    })
+                    self.addChild(self.detailsAlert!)
+                } else {
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                }
+                
             case .alert:
                 break
                 
@@ -282,24 +302,19 @@ class HangarScene: GameScene {
                         self.nextState = states.factory
                         return
                     }
+                    
+                    for hangarCard in hangarCardsArray {
+                        if hangarCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarCard)){
+                            self.selectedSpaceship = hangarCard.spaceship
+                            self.nextState = .details
+                        }
+                    }
 
                     
                     break
-//                    let cost = GameMath.spaceshipUpgradeCost(level: card.spaceship.level, type: card.spaceship.type)
-//                    if (cost <= self.playerData.points.integerValue) {
-//                        card.upgradeSpaceship(cost)
-//                        self.playerDataCard.updatePoints()
-//                        self.playerDataCard.updateXP()
-//                        
-//                    } else {
-//                        let alertBox = AlertBox(title: "Alert!", text: "Insuficient points.", type: .OK)
-//                        self.addChild(alertBox)
-//                        alertBox.buttonOK.addHandler {
-//                            self.nextState = .hangar
-//                        }
-//                        self.nextState = .alert
-//                    }
-
+                    
+                case .details:
+                    break
                     
                 default:
                     break
