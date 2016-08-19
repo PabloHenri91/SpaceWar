@@ -47,7 +47,7 @@ class Button: Control {
         let texture = SKTexture(imageNamed: textureName)
         texture.filteringMode = Display.filteringMode
         
-        if (top != 0 || bottom != 0 || left != 0 || right != 0) {
+        if top != 0 || bottom != 0 || left != 0 || right != 0 {
             let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clearColor(), size: CGSize(
                 width: Int(texture.size().width) + left + right,
                 height: Int(texture.size().height) + top + bottom))
@@ -70,7 +70,7 @@ class Button: Control {
         self.button.anchorPoint = CGPoint(x: 0, y: 1)
         self.addChild(self.button)
         
-        if (icon != "") {
+        if icon != "" {
             let iconTexture = SKTexture(imageNamed: icon)
             iconTexture.filteringMode = Display.filteringMode
             
@@ -87,7 +87,7 @@ class Button: Control {
             icon.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
         }
         
-        if (text != "") {
+        if text != "" {
             let labelNode = SKLabelNode(fontNamed: fontName)
             labelNode.text = text.translation()
             labelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
@@ -124,7 +124,7 @@ class Button: Control {
         self.buttonPressed.hidden = true
         self.addChild(self.buttonPressed)
         
-        if (icon != "") {
+        if icon != "" {
             let iconTexturePressed = SKTexture(imageNamed: icon)
             iconTexturePressed.filteringMode = Display.filteringMode
             let xScale = (self.buttonPressed.size.width - 10) / iconTexturePressed.size().width
@@ -140,7 +140,7 @@ class Button: Control {
             iconPressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2 - 2)
         }
         
-        if (text != "") {
+        if text != "" {
             let labelNodePressed = SKLabelNode(fontNamed: fontName)
             labelNodePressed.text = text.translation()
             labelNodePressed.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize

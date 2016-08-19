@@ -78,7 +78,7 @@ class Music {
     }
     
     func play() {
-        self.audioPlayer.play()
+        //self.audioPlayer.play()
     }
     
     func pause() {

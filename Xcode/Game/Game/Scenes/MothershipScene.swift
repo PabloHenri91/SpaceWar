@@ -72,9 +72,6 @@ class MothershipScene: GameScene {
         
         self.playerData = MemoryCard.sharedInstance.playerData
         
-        //TODO: mothershipBackground
-        //self.addChild(Control(textureName: "mothershipBackground", x: -54, y: 0, xAlign: .center, yAlign: .center))
-        
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
             y: 67, size: CGSize(width: self.size.width,
@@ -308,7 +305,7 @@ class MothershipScene: GameScene {
                     
                     if self.buttonBattle.containsPoint(point) {
                         
-                        if (self.playerData.motherShip.spaceships.count != 4) {
+                        if self.playerData.motherShip.spaceships.count != 4 {
                             let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .OK)
                             self.addChild(alertBox)
                             alertBox.buttonOK.addHandler {

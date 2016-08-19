@@ -88,7 +88,7 @@ class NextEvents: Control {
     }
     
     func update() {
-        if ((GameScene.currentTime - self.lastUpdate) > 1) {
+        if GameScene.currentTime - self.lastUpdate > 1 {
             self.lastUpdate = GameScene.currentTime
             
             for event in self.upcomingEvents {

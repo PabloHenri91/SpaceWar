@@ -774,7 +774,6 @@
 				843803D31CEF45D1007152BC /* GameMath.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
-				3AF476251D638F0900839BBC /* Hangar */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
@@ -787,6 +786,7 @@
 				84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */,
 				3A5984511D4B6CB6009FDA6D /* TimeBar.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
+				3AF476251D638F0900839BBC /* Hangar */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
 			);
 			path = Game;

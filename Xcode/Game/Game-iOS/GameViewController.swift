@@ -84,7 +84,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         let localPlayer = GKLocalPlayer.localPlayer()
         
         localPlayer.authenticateHandler = {(viewController, error) in
-            if (viewController != nil) {
+            if viewController != nil {
                 self.presentViewController(viewController!, animated: true, completion: nil)
             } else {
                 print("GKLocalPlayer.authenticated: " + GKLocalPlayer.localPlayer().authenticated.description)

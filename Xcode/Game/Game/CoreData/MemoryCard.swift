@@ -101,7 +101,7 @@ class MemoryCard {
                         let researchData = research as! ResearchData
                         let researchType = Research.types[Int(researchData.type.intValue)]
                         
-                        if ((researchType.weaponUnlocked == Int(weaponData.type.intValue)) && (researchType.spaceshipUnlocked == Int(spaceshipData.type.intValue))) {
+                        if researchType.weaponUnlocked == weaponData.type.integerValue && researchType.spaceshipUnlocked == spaceshipData.type.integerValue {
                             researchData.done = 1
                         }
                     }
@@ -207,7 +207,7 @@ class MemoryCard {
         
         for item in missionShips {
             if let missionShip = item as? MissionSpaceshipData {
-                if (missionShip.missionType.intValue >= 0) {
+                if missionShip.missionType.intValue >= 0 {
                     missionShip.startMissionDate = NSDate()
                 }
             }

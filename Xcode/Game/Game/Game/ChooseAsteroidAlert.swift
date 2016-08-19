@@ -69,7 +69,7 @@ class ChooseAsteroidAlert:Box {
             self.scrollNode = ScrollNode(name: "scroll", cells: self.controlArray, x: 0 , y: 0, spacing: 0 , scrollDirection: .vertical)
         
             
-            if (self.minerSpaceship.level < 4) {
+            if self.minerSpaceship.level < 4 {
                 self.scrollNode!.canScroll = false
             }
             

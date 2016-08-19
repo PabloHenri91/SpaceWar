@@ -25,8 +25,8 @@ class HangarSpaceshipCard: Control {
         var imageName = ""
         
         switch self.spaceship.type.rarity {
-        case .commom:
-            imageName = "commomHangarSpaceshipCard"
+        case .common:
+            imageName = "commonHangarSpaceshipCard"
             break
         case .rare:
             imageName = "rareHangarSpaceshipCard"

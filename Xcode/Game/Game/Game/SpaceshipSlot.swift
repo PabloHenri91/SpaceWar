@@ -55,8 +55,8 @@ class SpaceshipSlot: Control {
         var imageName = ""
         let lableLevelShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100)
         switch spaceship.type.rarity {
-        case .commom:
-            imageName = "rarityIndicatorCommom"
+        case .common:
+            imageName = "rarityIndicatorCommon"
             break
         case .rare:
             imageName = "rarityIndicatorRare"

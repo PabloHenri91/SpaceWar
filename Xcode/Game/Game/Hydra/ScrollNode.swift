@@ -115,7 +115,7 @@ class ScrollNode: Control {
                     }
                 }
                 
-                if (scrollNode.canScroll == true) {
+                if scrollNode.canScroll == true {
                     
                     switch scrollNode.scrollDirection {
                         
@@ -204,7 +204,7 @@ class ScrollNode: Control {
         
         for scrollNode in ScrollNode.scrollNodeList {
             
-            if (scrollNode.canScroll == true) {
+            if scrollNode.canScroll == true {
 
                 switch scrollNode.scrollDirection {
                     
@@ -277,7 +277,7 @@ class ScrollNode: Control {
         
         for scrollNode in ScrollNode.scrollNodeList {
             
-            if (scrollNode.canScroll == true) {
+            if scrollNode.canScroll == true {
                 
                 switch scrollNode.scrollDirection {
                     

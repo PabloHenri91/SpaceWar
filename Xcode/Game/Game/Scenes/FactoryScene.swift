@@ -274,7 +274,7 @@ class FactoryScene: GameScene {
                         return
                     }
                     
-                    if (self.headerControl.containsPoint(touch.locationInNode(self))){
+                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
@@ -302,13 +302,13 @@ class FactoryScene: GameScene {
                         
                         for cell in self.scrollNode.cells {
                             
-                            if (cell.containsPoint(touch.locationInNode(self.scrollNode))) {
+                            if cell.containsPoint(touch.locationInNode(self.scrollNode)) {
                                 
                                 if let factorySpaceshipCard = cell as? FactorySpaceshipCard {
                                     
-                                    if (factorySpaceshipCard.buttonBuy.containsPoint(touch.locationInNode(factorySpaceshipCard))) {
+                                    if factorySpaceshipCard.buttonBuy.containsPoint(touch.locationInNode(factorySpaceshipCard)) {
                                         
-                                        if (self.playerData.points.integerValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type)) {
+                                        if self.playerData.points.integerValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type) {
                                             
                                             self.buySpaceshipAlert = BuySpaceshipAlert(spaceship: factorySpaceshipCard.spaceship, count: factorySpaceshipCard.typeCount)
                                             self.buySpaceshipAlert?.buttonBuy.addHandler({

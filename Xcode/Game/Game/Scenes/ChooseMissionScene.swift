@@ -113,12 +113,12 @@ class ChooseMissionScene: GameScene {
                     }
                     
                     
-                    if (self.scrollNode.containsPoint(touch.locationInNode(self))) {
+                    if self.scrollNode.containsPoint(touch.locationInNode(self)) {
                         for item in self.scrollNode.cells {
-                            if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
+                            if item.containsPoint(touch.locationInNode(self.scrollNode)) {
                                 if let card = item as? MissionTypeCard {
                                     
-                                    if (card.buttonSelect.containsPoint(touch.locationInNode(card))) {
+                                    if card.buttonSelect.containsPoint(touch.locationInNode(card)) {
                                         card.selectMission()
                                         self.nextState = .missionScene
                                     }
