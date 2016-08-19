@@ -11,8 +11,8 @@ import SpriteKit
 class FactorySpaceshipCard: Control {
     
     var spaceship: Spaceship!
-    var buttonBuy: Button!
     
+    var buttonBuy: Button!
     var labelTypeCount:Label!
     var typeCount = 0
     
@@ -43,9 +43,9 @@ class FactorySpaceshipCard: Control {
         var textColor = SKColor.blackColor()
         
         switch spaceship.type.rarity {
-        case .commom:
-            textureName = "factorySpaceshipCardCommom"
-            textRarity = "Commom"
+        case .common:
+            textureName = "factorySpaceshipCardCommon"
+            textRarity = "Common"
             textColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
             break
         case .rare:

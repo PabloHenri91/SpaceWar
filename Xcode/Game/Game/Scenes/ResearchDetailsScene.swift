@@ -20,7 +20,7 @@ class ResearchDetailsScene: GameScene {
     var buttonBack:Button!
     var buttonBegin:Button?
     var buttonSpeedUp: Button?
-    var buttonColect: Button?
+    var buttonCollect: Button?
     var labelTime:Label!
     var needUpdate = true
     var lastUpdate: NSTimeInterval = 0
@@ -80,14 +80,12 @@ class ResearchDetailsScene: GameScene {
         self.box.addChild(labelRequiriments)
         
         if let researchData = self.research.researchData {
-            
         
-        
-            if (researchData.startDate != nil) {
+            if researchData.startDate != nil {
                 
                 let time = GameMath.timeLeft(startDate: researchData.startDate! , duration: self.research.researchType.duration)
                 
-                if (time > 0) {
+                if time > 0 {
                     
                     //TODO: descomentar
                     //                self.buttonSpeedUp = Button(textureName: "buttonSmall", text: "SpeedUp", x: 90, y: 411, xAlign: .center, yAlign: .center)
@@ -101,8 +99,8 @@ class ResearchDetailsScene: GameScene {
                     
                     
                     
-                    self.buttonColect = Button(textureName: "buttonSmall", text: "Colect", x: 90, y: 411, xAlign: .center, yAlign: .center)
-                    self.box.addChild(self.buttonColect!)
+                    self.buttonCollect = Button(textureName: "buttonSmall", text: "Collect", x: 90, y: 411, xAlign: .center, yAlign: .center)
+                    self.box.addChild(self.buttonCollect!)
                     
                     self.labelTime = Label(text: "Finished", fontSize: 16, x: 60, y: 207, horizontalAlignmentMode: .Left)
                     self.box.addChild(self.labelTime)
@@ -153,27 +151,27 @@ class ResearchDetailsScene: GameScene {
             switch (self.state) {
             case .normal:
                 
-                if ((currentTime - self.lastUpdate) > 1) {
+                if currentTime - self.lastUpdate > 1 {
                     self.lastUpdate = currentTime
                     
-                    if (self.needUpdate) {
-                        if (self.research.researchData?.startDate != nil) {
+                    if self.needUpdate {
+                        if self.research.researchData?.startDate != nil {
                             
                             let time = GameMath.timeLeft(startDate: self.research.researchData!.startDate!, duration: self.research.researchType.duration)
                             
-                            if (time > 0) {
+                            if time > 0 {
                                 self.labelTime.setText(GameMath.timeFormated(time))
-                            } else  {
+                            } else {
                                 self.needUpdate = false
                                 
                                 self.buttonSpeedUp?.removeFromParent()
                                 
-                                if let buttonColect = self.buttonColect {
-                                    buttonColect.removeFromParent()
+                                if let buttonCollect = self.buttonCollect {
+                                    buttonCollect.removeFromParent()
                                 }
                                 
-                                self.buttonColect = Button(textureName: "buttonSmall", text: "Colect",  x: 86, y: 85)
-                                self.addChild(self.buttonColect!)
+                                self.buttonCollect = Button(textureName: "buttonSmall", text: "Collect",  x: 86, y: 85)
+                                self.addChild(self.buttonCollect!)
                                 self.labelTime.setText("Finished")
                             }
                             
@@ -229,9 +227,9 @@ class ResearchDetailsScene: GameScene {
                     
                     if let buttonBegin = self.buttonBegin {
                         
-                        if (buttonBegin.containsPoint(touch.locationInNode(self.box))){
+                        if buttonBegin.containsPoint(touch.locationInNode(self.box)) {
                             
-                            if (self.playerData.points.integerValue >= self.research.researchType.cost) {
+                            if self.playerData.points.integerValue >= self.research.researchType.cost {
                                 if self.research.start() {
                                     self.playerData.points = self.playerData.points.integerValue - self.research.researchType.cost
                                     //TODO: self.playerDataCard.updatePoits()

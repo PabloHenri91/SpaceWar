@@ -14,7 +14,7 @@ class MissionSpaceshipCard: Control {
     var spaceshipImage: Control!
     var buttonBegin: Button?
     var buttonSpeedUp: Button?
-    var buttonColect: Button?
+    var buttonCollect: Button?
     var buttonUpgrade: Button?
     var labelLevel: Label!
     var labelName: Label!
@@ -45,14 +45,14 @@ class MissionSpaceshipCard: Control {
         self.addChild(self.labelName)
         
         
-        if (Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue) >= 0) {
+        if self.missionSpaceship.missionspaceshipData!.missionType.integerValue >= 0 {
             
             
             
             let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
             let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
             
-            if (time > 0) {
+            if time > 0 {
                 
                 self.buttonSpeedUp = Button(textureName: "buttonGreen", text: "SPEED UP", fontSize: 11, x: 97, y: 88, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonSpeedUp!)
@@ -63,8 +63,8 @@ class MissionSpaceshipCard: Control {
                 
             } else {
                 
-                self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-                self.addChild(self.buttonColect!)
+                self.buttonCollect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.buttonCollect!)
                 
                 self.timeBar = TimeBar(x: 97, y: 50, type: TimeBar.types.missionSpaceshipTimer)
                 self.addChild(self.timeBar!.cropNode)
@@ -97,7 +97,7 @@ class MissionSpaceshipCard: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func colect() {
+    func collect() {
         
         if let missionspaceshipData = self.missionSpaceship.missionspaceshipData {
             
@@ -114,8 +114,8 @@ class MissionSpaceshipCard: Control {
             self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + mission.xpBonus)
 
             
-            self.buttonColect!.removeFromParent()
-            self.buttonColect = nil
+            self.buttonCollect!.removeFromParent()
+            self.buttonCollect = nil
             
             self.timeBar?.cropNode.removeFromParent()
             
@@ -138,18 +138,18 @@ class MissionSpaceshipCard: Control {
     
     func update(currentTime: NSTimeInterval) {
         
-        if ((currentTime - self.lastUpdate) > 1) {
+        if currentTime - self.lastUpdate > 1 {
             self.lastUpdate = currentTime
             
             
-            if (self.needUpdate) {
-                if (self.missionSpaceship.missionspaceshipData?.missionType.intValue >= 0) {
+            if self.needUpdate {
+                if self.missionSpaceship.missionspaceshipData?.missionType.intValue >= 0 {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
                     let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
                     
                     
-                    if (time > 0) {
+                    if time > 0 {
                         if let timer = self.timeBar {
                             timer.update(self.missionSpaceship)
                         }
@@ -159,10 +159,10 @@ class MissionSpaceshipCard: Control {
                         if let _ = self.missionSpaceship.missionspaceshipData {
                             self.buttonSpeedUp?.removeFromParent()
                             self.buttonSpeedUp = nil
-                            self.buttonColect?.removeFromParent()
+                            self.buttonCollect?.removeFromParent()
                           
-                            self.buttonColect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-                            self.addChild(self.buttonColect!)
+                            self.buttonCollect = Button(textureName: "buttonGreen", text: "COLLECT", fontSize: 11, x: 97, y: 88 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                            self.addChild(self.buttonCollect!)
                             if let timer = self.timeBar {
                                 timer.update(self.missionSpaceship)
                             }
@@ -174,12 +174,12 @@ class MissionSpaceshipCard: Control {
                 }
    
             } else {
-                if (self.missionSpaceship.missionspaceshipData!.missionType.intValue >= 0) {
+                if self.missionSpaceship.missionspaceshipData!.missionType.integerValue >= 0 {
                     
                     let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
                     let time = GameMath.timeLeft(startDate: self.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: mission.duration)
                     
-                    if (time > 0) {
+                    if time > 0 {
                         
                         self.needUpdate = true
                         

@@ -95,12 +95,12 @@ class FacebookClient {
             let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: params as [NSObject : AnyObject], HTTPMethod: "GET")
             
             request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
-                if (result != nil && error == nil){
+                if result != nil && error == nil {
                     //print(result)
                     friendArray = result.objectForKey("data") as! Array<NSDictionary>
                     returnFunction(friendArray, nil)
                     
-                } else if (error != nil) {
+                } else if error != nil {
                     returnFunction(friendArray, error)
                 }
                 
@@ -120,13 +120,13 @@ class FacebookClient {
             let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/invitable_friends?limit=1000", parameters: params as [NSObject : AnyObject], HTTPMethod: "GET")
             
             request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
-                if (result != nil && error == nil){
+                if result != nil && error == nil {
                     
                     //print(result)
                     friendArray = result.objectForKey("data") as! Array<NSDictionary>
                     returnFunction(friendArray, nil)
                     
-                } else if (error != nil) {
+                } else if error != nil {
                     returnFunction(friendArray, error)
                 }
                 

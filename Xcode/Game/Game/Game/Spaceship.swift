@@ -604,7 +604,7 @@ class Spaceship: Control {
                 }
             }
             
-            if (self.needToMove) {
+            if self.needToMove {
 
                 if CGPoint.distanceSquared(self.position, self.destination) < 1024 {
                
@@ -904,13 +904,13 @@ public enum TargetType:Int {
 class SpaceshipType {
     
     enum rarityTypes:String {
-        case commom
+        case common
         case rare
         case epic
         case legendary
     }
     
-    var rarity:rarityTypes = .commom
+    var rarity:rarityTypes = .common
     
     var skins = [String]()
     
@@ -989,7 +989,7 @@ extension Spaceship {
             ]
             spaceshipType.name = "Spaceship"
             spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
-            spaceshipType.rarity = .commom
+            spaceshipType.rarity = .common
             spaceshipType.index = 0
             return spaceshipType
         }(),
@@ -1003,7 +1003,7 @@ extension Spaceship {
             ]
             spaceshipType.name = "Space Tanker"
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
-            spaceshipType.rarity = .commom
+            spaceshipType.rarity = .common
             spaceshipType.index = 1
             return spaceshipType
         }(),
@@ -1018,7 +1018,7 @@ extension Spaceship {
             
             spaceshipType.name = "Space Speeder"
             spaceshipType.spaceshipDescription = "Flies at the speed of light."
-            spaceshipType.rarity = .commom
+            spaceshipType.rarity = .common
             spaceshipType.index = 2
             return spaceshipType
         }()

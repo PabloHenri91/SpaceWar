@@ -25,7 +25,7 @@ class GameMath {
         
         for i in 1..<(level+2) {
             batalhas = batalhas + (i - 1)
-            if (i>2) {
+            if i > 2 {
                 missoes = missoes + (i - 2)
 
             }
@@ -85,7 +85,7 @@ class GameMath {
         
         for i in 1..<(playerData.motherShip.level.integerValue) {
             batalhas = batalhas + (i - 1)
-            if (i>2) {
+            if i > 2 {
                 missoes = missoes + (i - 2)
             }
             resultado = resultado + ((batalhas * 100) * (i - 1)) + (missoes * 50)
@@ -109,7 +109,7 @@ class GameMath {
     // Spaceship upgrade
     static func spaceshipUpgradeCost(level level:Int, type:SpaceshipType) -> Int {
         switch type.rarity {
-        case .commom:
+        case .common:
             return Int(100 * pow(1.3, Double(level)))
         case .rare:
             return Int(200 * pow(1.3, Double(level)))
@@ -128,7 +128,7 @@ class GameMath {
     
     static func spaceshipPrice(type:SpaceshipType) -> Int {
         switch type.rarity {
-        case .commom:
+        case .common:
             return 1000
         case .rare:
             return 2000
@@ -158,7 +158,7 @@ class GameMath {
             } else if time < 3600 {
                 let minutes = Int(time / 60)
                 let seconds = time % 60
-                if (seconds > 0) {
+                if seconds > 0 {
                     return (minutes.description + "m " + seconds.description + "s" )
                 } else {
                     return (minutes.description + "m ")
@@ -167,7 +167,7 @@ class GameMath {
             } else {
                 let hours = Int(time/3600)
                 let minutes = Int((time % 3600) / 60)
-                if (minutes > 0) {
+                if minutes > 0 {
                     return (hours.description + "h " + minutes.description + "m" )
                 } else {
                     return (hours.description + "h ")
@@ -180,7 +180,7 @@ class GameMath {
     
     static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceshipType) -> Int {
         switch type.rarity {
-        case .commom:
+        case .common:
             return Int(10 * pow(1.1, Double(level)))
         case .rare:
             return Int(20 * pow(1.1, Double(level)))
@@ -231,7 +231,7 @@ class GameMath {
     static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
         // win
         if mothership.health > 0 {
-            if ((enemyMothership.level - mothership.level) > 0) {
+            if enemyMothership.level - mothership.level > 0 {
                 let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
                 return xp
             } else {
@@ -241,7 +241,7 @@ class GameMath {
             
         } else {
             //loose
-            if ((enemyMothership.level - mothership.level) > 0) {
+            if enemyMothership.level - mothership.level > 0 {
                 let xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
                 return xp
             } else {
@@ -255,7 +255,7 @@ class GameMath {
 
         // win
         if mothership.health > 0 {
-            if ((enemyMothership.level - mothership.level) > 0) {
+            if enemyMothership.level - mothership.level > 0 {
                 let points = mothership.level * 200 + ((enemyMothership.level - mothership.level) * (mothership.level * 20))
                 return points
             } else {
@@ -265,7 +265,7 @@ class GameMath {
             
         } else {
             //loose
-            if ((enemyMothership.level - mothership.level) > 0) {
+            if enemyMothership.level - mothership.level > 0 {
                 let points = mothership.level * 20 + ((enemyMothership.level - mothership.level) * (mothership.level * 2))
                 return points
             } else {

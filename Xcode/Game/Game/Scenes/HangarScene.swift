@@ -286,7 +286,7 @@ class HangarScene: GameScene {
                     
                     break
 //                    let cost = GameMath.spaceshipUpgradeCost(level: card.spaceship.level, type: card.spaceship.type)
-//                    if (cost <= self.playerData.points.integerValue) {
+//                    if cost <= self.playerData.points.integerValue {
 //                        card.upgradeSpaceship(cost)
 //                        self.playerDataCard.updatePoints()
 //                        self.playerDataCard.updateXP()

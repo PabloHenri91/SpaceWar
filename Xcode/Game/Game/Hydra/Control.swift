@@ -226,7 +226,7 @@ class Control: SKNode {
             Button.update(taps)
             
             #if os(iOS)
-                if (taps.count > 0) {
+                if taps.count > 0 {
                     responder.touchesEnded(taps: taps)
                 }
             #endif

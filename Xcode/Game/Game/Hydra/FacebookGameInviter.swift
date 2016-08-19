@@ -50,7 +50,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         
         for friend in inviteds {
             for item in self.friends {
-                if (item.id == friend) {
+                if item.id == friend {
                     needAdd = false
                     break
                 }
@@ -67,7 +67,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         
         self.inviteNow.removeAll()
         self.sliceFriendList()
-        if (self.inviteNow.count > 0) {
+        if self.inviteNow.count > 0 {
             self.invite(self.inviteNow)
         } else {
             self.gameInviterDelegate.inviteFinished()
@@ -132,11 +132,11 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     func updateInvitedFriends() {
         if FBSDKAccessToken.currentAccessToken() != nil {
             FacebookClient.sharedInstance.listGameFriends({ (meFriends, error) in
-                if ((meFriends.count > 0)) {
+                if meFriends.count > 0 {
                     for item in meFriends {
                         let id = item.objectForKey("id") as! String
                         for friend in self.friends {
-                            if (id == friend.id) {
+                            if id == friend.id {
                                 //print(item)
                                 let name = item.objectForKey("name") as! String
                                 let picture = item.objectForKey("picture")
@@ -158,7 +158,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     func countInvitesAccept() -> Int {
         var count = 0
         for friend in self.friends {
-            if (friend.acceptedInvite == true) {
+            if friend.acceptedInvite == true {
                 count = count + 1
             }
         }

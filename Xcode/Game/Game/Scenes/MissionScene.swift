@@ -357,13 +357,13 @@ class MissionScene: GameScene {
                     }
                     
                     if let safeButtonBuy = self.buttonBuy {
-                        if (safeButtonBuy.containsPoint(touch.locationInNode(self))){
+                        if safeButtonBuy.containsPoint(touch.locationInNode(self)) {
                             self.nextState = .buySpaceship
                             return
                         }
                     }
                     
-                    if (self.headerControl.containsPoint(touch.locationInNode(self))){
+                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
@@ -387,16 +387,16 @@ class MissionScene: GameScene {
                         return
                     }
                     
-                    if (self.playerDataCard.containsPoint(touch.locationInNode(self))) {
+                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
-                    if (self.scrollNode.containsPoint(touch.locationInNode(self))) {
+                    if self.scrollNode.containsPoint(touch.locationInNode(self)) {
                         for item in self.scrollNode.cells {
-                            if (item.containsPoint(touch.locationInNode(self.scrollNode))) {
+                            if item.containsPoint(touch.locationInNode(self.scrollNode)) {
                                 if let card = item as? MissionSpaceshipCard {
-                                        if let buttonBegin = card.buttonBegin{
-                                            if (buttonBegin.containsPoint(touch.locationInNode(card))) {
+                                        if let buttonBegin = card.buttonBegin {
+                                            if buttonBegin.containsPoint(touch.locationInNode(card)) {
                                                 self.nextState = .chooseMission
                                                 self.selectedSpaceship = card.missionSpaceship
                                                 self.selectedCard = card
@@ -404,9 +404,9 @@ class MissionScene: GameScene {
                                             }
                                         }
                                         
-                                        if let buttonColect = card.buttonColect {
-                                            if(buttonColect.containsPoint(touch.locationInNode(card))) {
-                                                card.colect()
+                                        if let buttonCollect = card.buttonCollect {
+                                            if(buttonCollect.containsPoint(touch.locationInNode(card))) {
+                                                card.collect()
                                                 self.playerDataCard.updatePoints()
                                                 self.playerDataCard.updateXP()
                                                 
@@ -456,7 +456,7 @@ class MissionScene: GameScene {
                         
                         if scroll.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.cropBox.cropNode)) {
                             for item in scroll.cells {
-                                if (item.containsPoint(touch.locationInNode(scroll))) {
+                                if item.containsPoint(touch.locationInNode(scroll)) {
                                     if let missionTypeCard = item as? MissionTypeCard {
                                         if missionTypeCard.buttonSelect.containsPoint(touch.locationInNode(missionTypeCard)){
                                             missionTypeCard.selectMission()

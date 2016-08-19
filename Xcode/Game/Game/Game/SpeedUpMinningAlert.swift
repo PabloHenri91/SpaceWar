@@ -124,7 +124,7 @@ class SpeedUpMiningAlert:Box {
     
     func update(currentTime: NSTimeInterval) {
         
-        if ((currentTime - self.lastUpdate) > 1) {
+        if currentTime - self.lastUpdate > 1 {
             self.lastUpdate = currentTime
             self.timeBar.update(self.missionSpaceship)
         }
