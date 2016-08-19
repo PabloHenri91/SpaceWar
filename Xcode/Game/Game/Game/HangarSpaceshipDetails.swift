@@ -24,7 +24,7 @@ class HangarSpaceshipDetails:Box {
         var rarityColor:SKColor
         
         switch self.spaceship.type.rarity {
-        case .commom:
+        case .common:
             imageName = "hangarCommomSpaceshipCardUpgrade"
             rarityColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
             break
