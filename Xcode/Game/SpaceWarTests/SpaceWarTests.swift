@@ -82,12 +82,6 @@ class SpaceWarTests: XCTestCase {
         scene.update(GameScene.currentTime)
     }
     
-    func testResearchDetailsScene() {
-        let scene = ResearchDetailsScene(research: Research(type: Int.random(Research.types.count)))
-        Control.gameScene.view?.presentScene(scene)
-        scene.update(GameScene.currentTime)
-    }
-    
     func testSocialScene() {
         let scene = SocialScene()
         Control.gameScene.view?.presentScene(scene)

@@ -61,7 +61,7 @@ class Music {
     private func play(musicNamed name:String) {
         var auxName:[String] = name.componentsSeparatedByString(".")
         
-        let backgroundMusicURL = NSBundle.mainBundle().URLForResource(auxName[0], withExtension: auxName[1])// TODO: remover auxName[i]
+        let backgroundMusicURL = NSBundle.mainBundle().URLForResource(auxName[0], withExtension: auxName[1])//TODO: remover auxName[i]
         
         do {
             try self.audioPlayer = AVAudioPlayer(contentsOfURL: backgroundMusicURL!)

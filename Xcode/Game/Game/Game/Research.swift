@@ -76,8 +76,6 @@ class Research: Control {
         if let researchData = self.researchData {
             researchData.done = true
             
-            
-            
             if let spaceship = self.researchType.spaceshipUnlocked {
                 
                 if let weapon = self.researchType.weaponUnlocked {

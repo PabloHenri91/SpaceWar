@@ -26,8 +26,6 @@ class LoadScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        
-        Research.cheatDuration()
     }
     
     override func update(currentTime: NSTimeInterval) {

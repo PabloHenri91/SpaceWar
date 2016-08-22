@@ -15,13 +15,14 @@ class ResearchScene: GameScene {
     
     var scrollNode:ScrollNode?
     
-    var labelAvailableResearches:Label?
+    var currentResearchCard:ResearchCard?
     
-    var research:Research?
+    var header0 = [Control]()
+    var label0:Label!
+    var header1 = [Control]()
+    var label1:Label!
     
     enum states : String {
-        
-        case researchDetails
         
         //Estados de saida da scene
         
@@ -58,15 +59,39 @@ class ResearchScene: GameScene {
             break
         }
         
-        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
+        self.header0.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
             y: 67, size: CGSize(width: self.size.width,
                 height: 56)))
-        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+        self.header0.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
             y: 123, size: CGSize(width: self.size.width,
                 height: 3)))
-        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "RESEARCH LAB", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        self.label0 = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "label0", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        
+        self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 226, size: CGSize(width: self.size.width,
+                height: 3)))
+        self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+            y: 229, size: CGSize(width: self.size.width,
+                height: 56)))
+        self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 285, size: CGSize(width: self.size.width,
+                height: 3)))
+        self.label1 = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "label1", fontSize: 14, x: 160, y: 257, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        
+        for control in self.header0 {
+            self.addChild(control)
+        }
+        self.addChild(self.label0)
+        
+        for control in self.header1 {
+            self.addChild(control)
+        }
+        self.addChild(self.label1)
         
         self.updateResearchs()
         
@@ -114,12 +139,8 @@ class ResearchScene: GameScene {
                 
                 self.playerDataCard.update()
                 
-                if let scrollNode = self.scrollNode {
-                    for item in scrollNode.cells {
-                        if let researchCard = item as? ResearchCard {
-                            researchCard.update(currentTime)
-                        }
-                    }
+                if let researchCard = self.currentResearchCard {
+                    researchCard.update(currentTime)
                 }
                 
                 break
@@ -168,10 +189,6 @@ class ResearchScene: GameScene {
                 self.view?.presentScene(HangarScene())
                 break
                 
-            case .researchDetails:
-                self.view?.presentScene(ResearchDetailsScene(research: self.research!))
-                break
-                
             default:
                 #if DEBUG
                     fatalError()
@@ -182,6 +199,9 @@ class ResearchScene: GameScene {
     }
     
     func updateResearchs() {
+        
+        self.currentResearchCard?.removeFromParent()
+        self.currentResearchCard = nil
 
         var researchCards = Array<ResearchCard>()
         
@@ -192,10 +212,50 @@ class ResearchScene: GameScene {
                 if research.isUnlocked() {
                     if researchData.done == false {
                         if let researchCard = ResearchCard(research: research) {
-                            researchCards.append(researchCard)
+                            if researchData.startDate == nil {
+                                researchCards.append(researchCard)
+                            } else {
+                                researchCard.screenPosition = CGPoint(x: 20, y: 143)
+                                researchCard.xAlign = .center
+                                researchCard.resetPosition()
+                                self.addChild(researchCard)
+                                self.currentResearchCard = researchCard
+                            }
                         }
                     }
                 }
+            }
+        }
+        
+        if self.currentResearchCard != nil {
+            
+            for control in self.header1 {
+                control.hidden = false
+            }
+            self.label1.hidden = false
+            
+            self.label0.setText("RESEARCH IN PROGRESS")
+            
+            if researchCards.count > 0 {
+                self.label1.setText("AVAILABLE RESEARCHES")
+            } else {
+                for control in self.header1 {
+                    control.hidden = true
+                }
+                self.label1.hidden = true
+            }
+            
+        } else {
+            
+            for control in self.header1 {
+                control.hidden = true
+            }
+            self.label1.hidden = true
+            
+            if researchCards.count > 0 {
+                self.label0.setText("AVAILABLE RESEARCHES")
+            } else {
+                self.label0.setText("NO AVAILABLE RESEARCHES")
             }
         }
         
@@ -205,18 +265,21 @@ class ResearchScene: GameScene {
                 scrollNode.removeFromParent()
             }
             
-            if let labelAvailableResearches = self.labelAvailableResearches {
-                labelAvailableResearches.removeFromParent()
+            var x = 0
+            var y = 0
+            if self.currentResearchCard != nil {
+                x = 20
+                y = 301
+            } else {
+                x = 20
+                y = 143
             }
 
-            self.scrollNode = ScrollNode(cells: researchCards, x: 20, y: 143, xAlign: .center, yAlign: .center, spacing: 10, scrollDirection: .vertical)
+            self.scrollNode = ScrollNode(cells: researchCards, x: x, y: y, xAlign: .center, yAlign: .center, spacing: 10, scrollDirection: .vertical)
             self.addChild(self.scrollNode!)
             
         } else {
             self.scrollNode?.removeFromParent()
-            //TODO:
-            //self.labelNoResearchs = Label(text: "No researchs", fontSize: 24 , x: 160, y: 268)
-            //self.addChild(self.labelNoResearchs!)
         }
         
     }
@@ -291,6 +354,24 @@ class ResearchScene: GameScene {
                         return
                     }
                     
+                    if let researchCard = self.currentResearchCard {
+                        if let buttonSpeedup = researchCard.buttonSpeedUp {
+                            if(buttonSpeedup.containsPoint(touch.locationInNode(researchCard))) {
+                                // TODO:buttonSpeedup.containsPoint
+                                return
+                            }
+                        }
+                        
+                        if let buttonCollect = researchCard.buttonCollect {
+                            if(buttonCollect.containsPoint(touch.locationInNode(researchCard))) {
+                                researchCard.research.collect()
+                                self.playerDataCard.updateXP()
+                                self.updateResearchs()
+                                return
+                            }
+                        }
+                    }
+                    
                     if let scrollNode = self.scrollNode {
                         
                         if scrollNode.containsPoint(touch.locationInNode(self)) {
@@ -303,23 +384,7 @@ class ResearchScene: GameScene {
                                         
                                         if let buttonBegin = researchCard.buttonBegin {
                                             if(buttonBegin.containsPoint(touch.locationInNode(researchCard))) {
-                                                self.research = researchCard.research
-                                                self.nextState = .researchDetails
-                                                return
-                                            }
-                                        }
-                                        
-                                        if let buttonSpeedup = researchCard.buttonSpeedUp {
-                                            if(buttonSpeedup.containsPoint(touch.locationInNode(researchCard))) {
-                                                //self.nextState = .researchDetails
-                                                return
-                                            }
-                                        }
-                                        
-                                        if let buttonCollect = researchCard.buttonCollect {
-                                            if(buttonCollect.containsPoint(touch.locationInNode(researchCard))) {
-                                                researchCard.research.collect()
-                                                self.playerDataCard.updateXP()
+                                                researchCard.research.start()
                                                 self.updateResearchs()
                                                 return
                                             }
