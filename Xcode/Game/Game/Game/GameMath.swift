@@ -66,14 +66,14 @@ class GameMath {
         return CGFloat(maxVelocity * maxVelocity)
     }
     
-    static func spaceshipSkinImageName(level level:Int, type:SpaceshipType) -> String {
-        let level = Float(level)
-        let maxLevel = Float(type.maxLevel)
-        
-        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
-        
-        return type.skins[Int(skinIndex)]
-    }
+//    static func spaceshipSkinImageName(level level:Int, type:SpaceshipType) -> String {
+//        let level = Float(level)
+//        let maxLevel = Float(type.maxLevel)
+//        
+//        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
+//        
+//        return type.skins[Int(skinIndex)]
+//    }
     
     static func spaceshipBotSpaceshipLevel() -> Int {
         
@@ -201,14 +201,14 @@ class GameMath {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     
-    static func weaponSkinImageName(level level:Int, type:WeaponType) -> String {
-        let level = Float(level)
-        let maxLevel = Float(type.maxLevel)
-        
-        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
-        
-        return type.skins[Int(skinIndex)]
-    }
+//    static func weaponSkinImageName(level level:Int, type:WeaponType) -> String {
+//        let level = Float(level)
+//        let maxLevel = Float(type.maxLevel)
+//        
+//        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
+//        
+//        return type.skins[Int(skinIndex)]
+//    }
     
     // Mothership
     static let mothershipHealthPointsPerLevel = 8

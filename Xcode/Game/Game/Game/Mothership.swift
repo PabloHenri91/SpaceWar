@@ -120,12 +120,10 @@ class Mothership: Control {
         spaceship.startingZPosition = spaceship.zRotation
         
         if isAlly {
-            spaceship.loadAllyDetails()
             spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
             spaceship.healthBar.update(position: spaceship.position)
             
         } else {
-            spaceship.loadEnemyDetails()
             spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
             spaceship.healthBar.barPosition = .down
             spaceship.healthBar.update(position: spaceship.position)

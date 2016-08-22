@@ -44,7 +44,6 @@ class SpaceshipSlot: Control {
         self.playerData.motherShip.addSpaceshipData(spaceshipData)
         
         let spaceship = Spaceship(spaceshipData: spaceshipData)
-        spaceship.loadAllyDetails()
         self.addChild(spaceship)
         
         self.spaceship = spaceship

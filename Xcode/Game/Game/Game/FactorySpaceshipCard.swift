@@ -70,7 +70,6 @@ class FactorySpaceshipCard: Control {
         self.addChild(Control(textureName: "factorySpaceshipCardSpaceshipBackground", x: 11, y: 43))
         spaceship.screenPosition = CGPoint(x: 49, y: 86)
         spaceship.resetPosition()
-        spaceship.loadAllyDetails()
         self.addChild(spaceship)
         
         

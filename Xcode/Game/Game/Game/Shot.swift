@@ -20,6 +20,8 @@ class Shot: Control {
     
     var shooter:SKNode!
     
+    var spriteNode:SKSpriteNode!
+    
     init(shooter:SKNode, damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
@@ -37,10 +39,10 @@ class Shot: Control {
             #endif
         }
         
-        let spriteNode = SKSpriteNode(texture: texture)
-        spriteNode.texture?.filteringMode = Display.filteringMode
+        self.spriteNode = SKSpriteNode(texture: texture)
+        self.spriteNode.texture?.filteringMode = Display.filteringMode
         
-        self.addChild(spriteNode)
+        self.addChild(self.spriteNode)
         
         self.physicsBody = SKPhysicsBody(rectangleOfSize: spriteNode.size)
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceshipShot.rawValue

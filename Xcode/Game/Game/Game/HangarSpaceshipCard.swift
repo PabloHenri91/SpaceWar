@@ -43,7 +43,6 @@ class HangarSpaceshipCard: Control {
        
 
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        spaceshipImage.loadAllyDetails()
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
         spaceshipImage.resetPosition()

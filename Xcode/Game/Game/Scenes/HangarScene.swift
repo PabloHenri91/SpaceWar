@@ -76,7 +76,6 @@ class HangarScene: GameScene {
         var index = 0
         for spaceshipData in spaceshipsData {
             let spaceship = Spaceship(spaceshipData: spaceshipData)
-            spaceship.loadAllyDetails()
             
             var x = 0
             var y = 0

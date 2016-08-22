@@ -69,7 +69,7 @@ class ABNScheduler {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         ABNQueue.queue.clear()
         saveQueue()
-        print("All notifications have been cancelled")
+        //print("All notifications have been cancelled")
     }
     
     ///- returns: ABNotification of the farthest UILocalNotification (last to be fired).

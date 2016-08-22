@@ -63,13 +63,8 @@ class Weapon: Control {
         
         self.rangeInPoints = CGFloat(self.type.range)
         
-        if let imageName = self.type.shotSkins.first {
-            self.weaponShotTexture = SKTexture(imageNamed: imageName)
-        } else {
-            #if DEBUG
-               fatalError("Não conseguiu carregar weaponShotTexture")
-            #endif
-        }
+        let imageName = self.type.shotSkin
+        self.weaponShotTexture = SKTexture(imageNamed: imageName)
         
         self.loadSoundEffects()
     }
@@ -89,6 +84,8 @@ class Weapon: Control {
                             
                             let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
                             parentSpaceshipParent.addChild(shot)
+                            shot.spriteNode.color = self.type.color
+                            shot.spriteNode.colorBlendFactor = 1
                             self.initShotSoundEffect.play()
                         }
                     }
@@ -104,8 +101,8 @@ class Weapon: Control {
 
 class WeaponType {
     
-    var shotSkins = [String]()
-    var skins = [String]()
+    var color = SKColor.whiteColor()
+    var shotSkin = ""
     
     var maxLevel:Int
     
@@ -138,12 +135,8 @@ extension Weapon {
         {
             let weaponType = WeaponType(maxLevel: 2,
                 damage: 10, range: 100, fireRate: 1)
-            weaponType.skins = [
-                "weaponBA"
-            ]
-            weaponType.shotSkins = [
-                "weaponBAShot"
-            ]
+            weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
+            weaponType.shotSkin = "shotBA"
             
             weaponType.name = "Pistol"
             weaponType.initSoundFileName = "laser5.mp3"
@@ -155,12 +148,9 @@ extension Weapon {
         {
             let weaponType = WeaponType(maxLevel: 2,
                 damage: 2, range: 150, fireRate: 0.25)
-            weaponType.skins = [
-                "weaponAA"
-            ]
-            weaponType.shotSkins = [
-                "weaponAAShot"
-            ]
+            weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
+            weaponType.shotSkin = "shotCA"
+            
             weaponType.name = "Machine Gun"
             weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
@@ -171,12 +161,8 @@ extension Weapon {
         {
             let weaponType = WeaponType(maxLevel: 2,
                 damage: 40, range: 50, fireRate: 2)
-            weaponType.skins = [
-                "weaponCA"
-            ]
-            weaponType.shotSkins = [
-                "weaponCAShot"
-            ]
+            weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
+            weaponType.shotSkin = "shotAA"
             
             weaponType.name = "Shotgun"
             weaponType.initSoundFileName = "laser1.mp3"
@@ -188,12 +174,8 @@ extension Weapon {
         {
             let weaponType = WeaponType(maxLevel: 2,
                 damage: 15, range: 300, fireRate: 4)
-            weaponType.skins = [
-                "weaponDA"
-            ]
-            weaponType.shotSkins = [
-                "weaponDAShot"
-            ]
+            weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
+            weaponType.shotSkin = "shotDA"
             
             weaponType.name = "Sniper"
             weaponType.initSoundFileName = "laser9.mp3"

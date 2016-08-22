@@ -69,7 +69,6 @@ class HangarSpaceshipDetails:Box {
         self.addChild(damageUpgradeBackground)
         
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        spaceshipImage.loadAllyDetails()
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 49, y: 78)
         spaceshipImage.resetPosition()

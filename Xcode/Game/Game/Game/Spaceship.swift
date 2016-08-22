@@ -16,9 +16,7 @@ class Spaceship: Control {
     
     enum zPositions: CGFloat {
         case skin
-        case teamDetail
-        case weaponDetail
-        case levelDetail
+        case glassSkin
         case selectedDetail
         case touchAreaEffect
     }
@@ -43,7 +41,6 @@ class Spaceship: Control {
     var spaceshipData:SpaceshipData?
     
     var spriteNode:SKSpriteNode!
-    var weaponSpriteNode:SKSpriteNode?
     var selectedSpriteNode:SKSpriteNode!
     
     var targetNode:SKNode?
@@ -78,8 +75,6 @@ class Spaceship: Control {
     var isAlly = true
 
     var explosionSoundEffect:SoundEffect!
-    
-    var labelLevel:Label!
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -164,32 +159,10 @@ class Spaceship: Control {
     }
     
     func loadWeaponDetail() {
-        if let weaponSpriteNode = self.weaponSpriteNode {
-            weaponSpriteNode.removeFromParent()
-        }
-        
         if let weapon = self.weapon {
-            self.weaponSpriteNode = SKSpriteNode(imageNamed: GameMath.weaponSkinImageName(level: weapon.level, type: weapon.type))
-            self.weaponSpriteNode?.texture?.filteringMode = Display.filteringMode
-            self.weaponSpriteNode?.zPosition = zPositions.weaponDetail.rawValue
-            self.addChild(self.weaponSpriteNode!)
+            self.spriteNode.color = weapon.type.color
+            self.spriteNode.colorBlendFactor = 1
         }
-    }
-    
-    func loadAllyDetails() {
-        self.isAlly = true
-        let spriteNode = SKSpriteNode(imageNamed: "spaceshipAlly")
-        spriteNode.texture?.filteringMode = Display.filteringMode
-        spriteNode.zPosition = zPositions.teamDetail.rawValue
-        self.addChild(spriteNode)
-    }
-    
-    func loadEnemyDetails() {
-        self.isAlly = false
-        let spriteNode = SKSpriteNode(imageNamed: "spaceshipEnemy")
-        spriteNode.texture?.filteringMode = Display.filteringMode
-        spriteNode.zPosition = zPositions.teamDetail.rawValue
-        self.spriteNode.addChild(spriteNode)
     }
     
     func increaseTouchArea() {
@@ -233,12 +206,27 @@ class Spaceship: Control {
         self.maxEnergyShield = energyShield
         
         //Gráfico
-        self.spriteNode = SKSpriteNode(imageNamed: GameMath.spaceshipSkinImageName(level: self.level, type: self.type))
+        self.spriteNode = SKSpriteNode(imageNamed: self.type.skin)
+        self.spriteNode.setScale(self.type.scale)
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.zPosition = zPositions.skin.rawValue
         self.addChild(self.spriteNode)
         
-        self.selectedSpriteNode = SKSpriteNode(color: SKColor(red: 1, green: 1, blue: 1, alpha: 0.5), size: self.spriteNode.size)
+        if self.type.glassSkin != "" {
+            let spriteNode = SKSpriteNode(imageNamed: self.type.glassSkin)
+            spriteNode.setScale(self.type.scale)
+            spriteNode.texture?.filteringMode = Display.filteringMode
+            spriteNode.zPosition = zPositions.glassSkin.rawValue
+            spriteNode.color = self.type.glassColor
+            spriteNode.colorBlendFactor = 1
+            spriteNode.position = self.type.glassPosition
+            self.addChild(spriteNode)
+        }
+        
+        self.selectedSpriteNode = SKSpriteNode(imageNamed: self.type.skin + "Mask")
+        self.selectedSpriteNode.setScale(self.type.scale)
+        self.selectedSpriteNode.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+        self.selectedSpriteNode.colorBlendFactor = 1
         self.selectedSpriteNode.hidden = true
         self.selectedSpriteNode.zPosition = zPositions.selectedDetail.rawValue
         self.addChild(self.selectedSpriteNode)
@@ -251,13 +239,6 @@ class Spaceship: Control {
         
         self.increaseTouchArea()
         
-        if self.level > 0 {
-            self.labelLevel = Label(color: SKColor(red: 0, green: 0, blue: 0, alpha: 0.5), text: self.level.description, fontSize: 16, x: 0, y: 0)
-            self.labelLevel.zPosition = zPositions.levelDetail.rawValue
-            self.addChild(self.labelLevel)
-        }
-        
-        
         Spaceship.spaceshipList.insert(self)
     }
     
@@ -266,6 +247,7 @@ class Spaceship: Control {
         self.zPosition = GameWorld.zPositions.spaceship.rawValue
         
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody?.mass = 0.0455111116170883
         self.physicsBody?.dynamic = false
         
         self.setBitMasksToMothershipSpaceship()
@@ -912,7 +894,11 @@ class SpaceshipType {
     
     var rarity:rarityTypes = .common
     
-    var skins = [String]()
+    var skin = ""
+    var glassSkin = ""
+    var glassColor = SKColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+    var glassPosition = CGPoint.zero
+    var scale:CGFloat = 1.0
     
     var maxLevel:Int
     
@@ -927,8 +913,6 @@ class SpaceshipType {
     var shieldRechargeBonus:Int
     
     var index:Int!
-
-
     
     init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
         
@@ -965,9 +949,7 @@ extension Spaceship {
         {
             let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
                 speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
-            spaceshipType.skins = [
-                "tutorialMeteor"
-            ]
+            spaceshipType.skin = "tutorialMeteor"
             spaceshipType.index = 0
             return spaceshipType
         }()
@@ -983,10 +965,11 @@ extension Spaceship {
         {
             let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
                 speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skins = [
-                "spaceshipCA",
-                "spaceshipCB"
-            ]
+            spaceshipType.skin = "spaceshipAA"
+            spaceshipType.glassSkin = "spaceshipAAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
+            
             spaceshipType.name = "Spaceship"
             spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
             spaceshipType.rarity = .common
@@ -997,10 +980,11 @@ extension Spaceship {
         {
             let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
             speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skins = [
-                "spaceshipAA",
-                "spaceshipAB"
-            ]
+            spaceshipType.skin = "spaceshipBA"
+            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
+            
             spaceshipType.name = "Space Tanker"
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceshipType.rarity = .common
@@ -1011,10 +995,10 @@ extension Spaceship {
         {
             let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
             speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceshipType.skins = [
-                "spaceshipBA",
-                "spaceshipBB"
-            ]
+            spaceshipType.skin = "spaceshipCA"
+            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
             spaceshipType.name = "Space Speeder"
             spaceshipType.spaceshipDescription = "Flies at the speed of light."
