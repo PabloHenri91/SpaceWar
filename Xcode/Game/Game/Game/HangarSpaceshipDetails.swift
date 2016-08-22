@@ -12,6 +12,12 @@ class HangarSpaceshipDetails:Box {
     
     var spaceship: Spaceship
     var buttonCancel: Button!
+    var buttonUpgrade: Button!
+    
+    var labelLifeValue:Label!
+    var labelDamageValue:Label!
+    var labelLifeUpgrade:Label!
+    var labelDamageUpgrade:Label!
     
     var labelLevel:Label!
     
@@ -55,7 +61,6 @@ class HangarSpaceshipDetails:Box {
         self.addChild(labelTitle)
         
         
-        print(rarityColor)
         let labelRarity = Label(color:rarityColor ,text: self.spaceship.type.rarity.rawValue.uppercaseString , fontSize: 11, x: 50, y: 22, horizontalAlignmentMode: .Center, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelRarity)
         
@@ -76,6 +81,9 @@ class HangarSpaceshipDetails:Box {
         
         self.labelLevel = Label(color:SKColor.whiteColor() ,text: "Level " + self.spaceship.level.description , fontSize: 13, x: 49, y: 113, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
+        
+        let labelDescription = MultiLineLabel(text: "This is a battleship. Do upgrades to makes it stronger and defeat your enemies.", maxWidth: 168, x: 180, y: 73, fontSize: 11)
+        self.addChild(labelDescription)
         
         let labelAtributte = Label(text: "ATTRIBUTES" , fontSize: 14, x: 14, y: 169, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelAtributte)
@@ -121,13 +129,13 @@ class HangarSpaceshipDetails:Box {
         
         
         let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
-        let labelLifeValue = Label(text: life.description , fontSize: 11, x: Int(labelLife.position.x + labelLife.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
-        self.addChild(labelLifeValue)
+        self.labelLifeValue = Label(text: life.description , fontSize: 11, x: Int(labelLife.position.x + labelLife.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.addChild(self.labelLifeValue)
         
-        let labelDamageValue = Label(text: self.spaceship.weapon!.damage.description , fontSize: 11, x: Int(labelDamage.position.x + labelDamage.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
-        self.addChild(labelDamageValue)
+        self.labelDamageValue = Label(text: self.spaceship.weapon!.damage.description , fontSize: 11, x: Int(labelDamage.position.x + labelDamage.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.addChild(self.labelDamageValue)
         
-        let labelRespawnValue = Label(text: "15s" , fontSize: 11, x: Int(labelRespawn.position.x + labelRespawn.calculateAccumulatedFrame().width), y: 240, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        let labelRespawnValue = Label(text: "5s" , fontSize: 11, x: Int(labelRespawn.position.x + labelRespawn.calculateAccumulatedFrame().width), y: 240, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(labelRespawnValue)
         
         let fireRate = 1 / self.spaceship.weapon!.fireInterval
@@ -142,14 +150,28 @@ class HangarSpaceshipDetails:Box {
         
         
         let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
-        let labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelLifeUpgrade)
+        self.labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(self.labelLifeUpgrade)
         
         let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
-        let labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelDamageUpgrade)
+        self.labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(self.labelDamageUpgrade)
         
-
+        
+        let labelUpgrade = Label(text: "UPGRADE" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.addChild(labelUpgrade)
+        
+        
+        let fontColor = SKColor.whiteColor()
+        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+        let fontShadowOffset = CGPoint(x: 0, y: -1)
+        let fontName = GameFonts.fontName.museo1000
+        let textOffset = CGPoint(x: 8, y: 0)
+        self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+        self.addChild(self.buttonUpgrade)
+        
+        self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        
         
         self.setScale(0)
         self.position = CGPoint(x: Display.sceneSize.width/2, y: -Display.sceneSize.height/2)
@@ -176,6 +198,37 @@ class HangarSpaceshipDetails:Box {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func reload() {
+        self.labelLevel.setText("Level " + self.spaceship.level.description)
+        
+        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
+        self.labelLifeValue.setText(life.description)
+        
+        let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
+        self.labelDamageValue.setText(damage.description)
+        
+        let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
+        self.labelLifeUpgrade.setText("+ " + lifeUpgrade.description)
+        self.labelLifeUpgrade.position.x = labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width
+        
+        let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - damage
+        self.labelDamageUpgrade.setText("+ " + damageUpgrade.description)
+        self.labelDamageUpgrade.position.x = labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width
+        
+        self.buttonUpgrade.removeFromParent()
+        
+        let fontColor = SKColor.whiteColor()
+        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+        let fontShadowOffset = CGPoint(x: 0, y: -1)
+        let fontName = GameFonts.fontName.museo1000
+        let textOffset = CGPoint(x: 8, y: 0)
+        self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+        self.addChild(self.buttonUpgrade)
+        
+        self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        
     }
 
 }

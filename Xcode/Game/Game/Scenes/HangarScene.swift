@@ -15,7 +15,9 @@ class HangarScene: GameScene {
     let spaceshipsData = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
     var spaceships = [Spaceship]()
     var selectedSpaceship: Spaceship?
+    var selectedCard: HangarSpaceshipCard?
     var detailsAlert: HangarSpaceshipDetails?
+    var changeAlert: HangarSpaceshipChange?
     
     var hangarCardsArray:Array<HangarSpaceshipCard>!
     
@@ -31,6 +33,7 @@ class HangarScene: GameScene {
         case hangar
         
         case details
+        case change
     }
     
     //Estados iniciais
@@ -221,6 +224,22 @@ class HangarScene: GameScene {
                     #endif
                 }
                 
+            case .change:
+                if let spaceship = self.selectedSpaceship {
+                    self.blackSpriteNode.hidden = false
+                    self.blackSpriteNode.zPosition = 10000
+                    self.changeAlert = HangarSpaceshipChange(spaceship: spaceship)
+                    self.changeAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                    
+                    self.changeAlert!.buttonCancel.addHandler({ self.nextState = .hangar
+                    })
+                    self.addChild(self.changeAlert!)
+                } else {
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                }
+                
             case .alert:
                 break
                 
@@ -306,7 +325,14 @@ class HangarScene: GameScene {
                     for hangarCard in hangarCardsArray {
                         if hangarCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarCard)){
                             self.selectedSpaceship = hangarCard.spaceship
+                            self.selectedCard = hangarCard
                             self.nextState = .details
+                        }
+                        
+                        if hangarCard.buttonChange.containsPoint(touch.locationInNode(hangarCard)){
+                            self.selectedSpaceship = hangarCard.spaceship
+                            self.selectedCard = hangarCard
+                            self.nextState = .change
                         }
                     }
 
@@ -314,7 +340,51 @@ class HangarScene: GameScene {
                     break
                     
                 case .details:
+                    
+                    if let alert = self.detailsAlert {
+                        if alert.buttonUpgrade.containsPoint(touch.locationInNode(alert)) {
+                            let upgradeCost = GameMath.spaceshipUpgradeCost(level: self.selectedSpaceship!.level, type: self.selectedSpaceship!.type)
+                            
+                            if self.playerData.points.integerValue > upgradeCost {
+                                self.playerData.points = self.playerData.points.integerValue - upgradeCost
+                                self.selectedSpaceship!.upgrade()
+                                self.selectedCard?.reloadCard()
+                                self.playerDataCard.updatePoints()
+                                alert.reload()
+                                
+                            } else {
+                                
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
+                                alertBox.buttonOK.addHandler({ self.nextState = .mission
+                                })
+                                self.addChild(alertBox)
+                                
+                            }
+                        }
+                    }
+                    
                     break
+                    
+                    
+                case .change:
+                    
+                    if let alert = self.changeAlert {
+                        if alert.scrollNode!.containsPoint(touch.locationInNode(alert.cropBox.cropNode)){
+                            for item in alert.scrollNode!.cells {
+                                if (item.containsPoint(touch.locationInNode(alert.scrollNode!))) {
+                                    if let cell = item as? HangarSpaceshipsCell {
+                                        for subItem in cell.spaceshipsSubCells {
+                                            if subItem.containsPoint(touch.locationInNode(item)){
+                                                if let subCell = subItem as? HangarSpaceshipSubCell {
+                                                    subItem.setScale(1.3)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     
                 default:
                     break
