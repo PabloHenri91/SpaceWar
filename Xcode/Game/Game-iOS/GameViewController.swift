@@ -46,11 +46,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     }
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return  UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.Portrait.rawValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)
-        } else {
-            return .All
-        }
     }
 
     override func didReceiveMemoryWarning() {
