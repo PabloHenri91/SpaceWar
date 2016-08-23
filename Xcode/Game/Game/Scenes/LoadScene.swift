@@ -26,6 +26,8 @@ class LoadScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        MemoryCard.sharedInstance.playerData.points = 1000000
+        Spaceship.cheatUnlockAll()
     }
     
     override func update(currentTime: NSTimeInterval) {

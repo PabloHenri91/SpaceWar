@@ -15,7 +15,7 @@ class MothershipData: NSManagedObject {
     @NSManaged var level: NSNumber
     @NSManaged var xp: NSNumber
     
-    @NSManaged var spaceships: NSSet
+    @NSManaged var spaceships: NSOrderedSet
 
 }
 
@@ -28,7 +28,7 @@ extension MemoryCard {
         mothershipData.level = 1
         mothershipData.xp = 0
         
-        mothershipData.spaceships = NSSet()
+        mothershipData.spaceships = NSOrderedSet()
         
         return mothershipData
     }
@@ -37,12 +37,12 @@ extension MemoryCard {
 extension MothershipData {
     
     func addSpaceshipData(value: SpaceshipData) {
-        let items = self.mutableSetValueForKey("spaceships")
+        let items = self.mutableOrderedSetValueForKey("spaceships")
         items.addObject(value)
     }
     
     func removeSpaceshipData(value: SpaceshipData) {
-        let items = self.mutableSetValueForKey("spaceships")
+        let items = self.mutableOrderedSetValueForKey("spaceships")
         items.removeObject(value)
     }
     
