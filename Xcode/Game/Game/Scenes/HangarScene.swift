@@ -206,6 +206,8 @@ class HangarScene: GameScene {
                 
             case .hangar:
                 self.blackSpriteNode.hidden = true
+                self.changeAlert?.removeFromParent()
+                self.detailsAlert?.removeFromParent()
                 break
                 
             case .details:
@@ -355,7 +357,7 @@ class HangarScene: GameScene {
                             } else {
                                 
                                 let alertBox = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
-                                alertBox.buttonOK.addHandler({ self.nextState = .mission
+                                alertBox.buttonOK.addHandler({ self.nextState = .hangar
                                 })
                                 self.addChild(alertBox)
                                 
@@ -369,18 +371,41 @@ class HangarScene: GameScene {
                 case .change:
                     
                     if let alert = self.changeAlert {
-                        if alert.scrollNode!.containsPoint(touch.locationInNode(alert.cropBox.cropNode)){
-                            for item in alert.scrollNode!.cells {
-                                if (item.containsPoint(touch.locationInNode(alert.scrollNode!))) {
-                                    if let cell = item as? HangarSpaceshipsCell {
-                                        for subItem in cell.spaceshipsSubCells {
-                                            if subItem.containsPoint(touch.locationInNode(item)){
-                                                if let subCell = subItem as? HangarSpaceshipSubCell {
-                                                    subItem.setScale(1.3)
+                        if let scrollNode = alert.scrollNode{
+                            
+                            if let buttonChoose = alert.buttonChoose {
+                                if buttonChoose.containsPoint(touch.locationInNode(alert)){
+                                    alert.choose()
+                                    self.selectedCard?.spaceship = alert.selectedCell?.spaceship
+                                    self.selectedCard?.reloadCard()
+                                    self.nextState = .hangar
+                                    return
+                                }
+                            }
+                            
+                            if scrollNode.containsPoint(touch.locationInNode(alert.cropBox.cropNode)){
+                                for item in scrollNode.cells {
+                                    if (item.containsPoint(touch.locationInNode(scrollNode))) {
+                                        if let cell = item as? HangarSpaceshipsCell {
+                                            if ((cell.position.y < 40.0) && (cell.position.y > -220.0)) {
+                                                for subItem in cell.spaceshipsSubCells {
+                                                    if subItem.containsPoint(touch.locationInNode(item)){
+                                                        alert.selectSpaceship(subItem)
+                                                        return
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                }
+                            }
+                            
+                            
+                            
+                        } else {
+                            if let buttonFactory = alert.buttonFactory {
+                                if buttonFactory.containsPoint(touch.locationInNode(alert)){
+                                    self.nextState = .factory
                                 }
                             }
                         }
