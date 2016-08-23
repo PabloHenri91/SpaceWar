@@ -22,7 +22,11 @@ class ResearchScene: GameScene {
     var header1 = [Control]()
     var label1:Label!
     
+    var auxHeader:Control!
+    
     enum states : String {
+        
+        case alert
         
         //Estados de saida da scene
         
@@ -82,6 +86,15 @@ class ResearchScene: GameScene {
             y: 285, size: CGSize(width: self.size.width,
                 height: 3)))
         self.label1 = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "label1", fontSize: 14, x: 160, y: 257, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        
+        self.auxHeader = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 201/255, green: 207/255, blue: 213/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+                                  y: 123, size: CGSize(width: self.size.width,
+                                    height: 162))
+        self.addChild(self.auxHeader)
+        self.auxHeader.zPosition = -1
+        self.auxHeader.hidden = true
+        
         
         for control in self.header0 {
             self.addChild(control)
@@ -155,6 +168,7 @@ class ResearchScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
+                self.blackSpriteNode.hidden = true
                 break
                 
             case .mission:
@@ -187,6 +201,9 @@ class ResearchScene: GameScene {
                 GameScene.lastChildren = self.children
                 
                 self.view?.presentScene(HangarScene())
+                break
+                
+            case .alert:
                 break
                 
             default:
@@ -245,6 +262,8 @@ class ResearchScene: GameScene {
                 self.label1.hidden = true
             }
             
+            self.auxHeader.hidden = false
+            
         } else {
             
             for control in self.header1 {
@@ -257,6 +276,8 @@ class ResearchScene: GameScene {
             } else {
                 self.label0.setText("NO AVAILABLE RESEARCHES")
             }
+            
+            self.auxHeader.hidden = true
         }
         
         if researchCards.count > 0 {
@@ -277,6 +298,7 @@ class ResearchScene: GameScene {
 
             self.scrollNode = ScrollNode(cells: researchCards, x: x, y: y, xAlign: .center, yAlign: .center, spacing: 10, scrollDirection: .vertical)
             self.addChild(self.scrollNode!)
+            self.scrollNode?.zPosition = -2
             
         } else {
             self.scrollNode?.removeFromParent()
@@ -367,6 +389,28 @@ class ResearchScene: GameScene {
                                 researchCard.research.collect()
                                 self.playerDataCard.updateXP()
                                 self.updateResearchs()
+                                
+                                if let spaceship = researchCard.spaceship {
+                                    self.blackSpriteNode.hidden = false
+                                    self.blackSpriteNode.zPosition = 10000
+                                    let detailsAlert = HangarSpaceshipDetails(spaceship: spaceship, showUpgrade: false)
+                                    detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
+                                    
+                                    detailsAlert.loadButtonGoToFactory()
+                                    detailsAlert.buttonGoToFactory.event = nil
+                                    detailsAlert.buttonGoToFactory.addHandler({ [weak self] in
+                                        self?.nextState = .factory
+                                        detailsAlert.removeFromParent()
+                                    })
+                                    
+                                    detailsAlert.buttonCancel.addHandler({ [weak self] in
+                                        self?.nextState = .research
+                                    })
+                                    
+                                    self.addChild(detailsAlert)
+                                    self.nextState = .alert
+                                }
+                                
                                 return
                             }
                         }

@@ -123,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     notification.schedule(fireDate: fireDate)
                 }
             } else {
-                print("Battery Full")
+                //print("Battery Full")
             }
         }
         

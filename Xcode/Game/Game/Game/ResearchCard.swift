@@ -20,10 +20,13 @@ class ResearchCard: Control {
     var buttonSpeedUp: Button?
     var buttonCollect: Button?
     
+    var spaceship:Spaceship?
+    
+    var timeBar:TimeBar!
+    
     init?(research:Research) {
         
         var textureName = ""
-        var spaceship:Spaceship?
         
         if let spaceshipUnlocked = research.researchType.spaceshipUnlocked {
             
@@ -45,16 +48,16 @@ class ResearchCard: Control {
             }
             
             if let weaponUnlocked = research.researchType.weaponUnlocked {
-                spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
+                self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
                 let weapon = Weapon(type: weaponUnlocked, level: 1)
-                spaceship?.addWeapon(weapon)
-                spaceship?.position = CGPoint(x:33, y: -33)
+                self.spaceship?.addWeapon(weapon)
+                self.spaceship?.position = CGPoint(x:33, y: -33)
             }
         }
         
         super.init(textureName: textureName)
         
-        if let spaceship = spaceship {
+        if let spaceship = self.spaceship {
             self.addChild(spaceship)
         }
     
@@ -69,8 +72,16 @@ class ResearchCard: Control {
         
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: researchType.name, fontSize: 12, x: 76, y: 22, fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
+        self.timeBar = TimeBar(textureName: "timeBarResearchCard", x: 78, y: 31, loadLabel: false, type: TimeBar.types.researchTimer, loadBorder: false)
+        self.addChild(self.timeBar!.cropNode)
+        self.addChild(Control(textureName: "timeBarResearchCardBorder", x: 77, y: 30))
         
-        if self.research.researchData?.startDate != nil {
+        self.labelTimeLeft = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "???", fontSize: 11, x: 126, y: 44, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset: CGPoint(x: 0, y: -1))
+        self.addChild(self.labelTimeLeft)
+        
+        if let startDate = self.research.researchData?.startDate {
+            
+            self.timeBar.update(startDate: startDate, duration: self.research.researchType.duration)
             
             let timeLeft = GameMath.timeLeft(startDate: self.research.researchData!.startDate!, duration: researchType.duration)
             
@@ -79,13 +90,11 @@ class ResearchCard: Control {
                 self.self.buttonSpeedUp = Button(textureName: "buttonGreen89x22", text: "SPEED UP", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
                 self.addChild(self.self.buttonSpeedUp!)
                 
-                self.labelTimeLeft = Label(text: GameMath.timeFormated(timeLeft), fontSize: 12 , x: 125, y: 46)
-                self.addChild(self.labelTimeLeft)
+                self.labelTimeLeft.setText(GameMath.timeFormated(timeLeft))
                 
             } else {
                 
-                self.labelTimeLeft = Label(text: "FINISHED", fontSize: 12 , x: 125, y: 46)
-                self.addChild(self.labelTimeLeft)
+                self.labelTimeLeft.setText("FINISHED")
                 
                 self.buttonCollect = Button(textureName: "buttonGreen89x22", text: "COLLECT", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
                 self.addChild(self.buttonCollect!)
@@ -95,9 +104,9 @@ class ResearchCard: Control {
             self.buttonBegin = Button(textureName: "buttonGray89x22", text: "BEGIN", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
             self.addChild(self.buttonBegin!)
 
-            self.labelTimeLeft = Label(text: GameMath.timeFormated(self.research.researchType.duration), fontSize: 12 , x: 125, y: 46)
-            self.addChild(self.labelTimeLeft)
+            self.labelTimeLeft.setText(GameMath.timeFormated(self.research.researchType.duration))
         }
+        
     }
     
     
@@ -115,6 +124,8 @@ class ResearchCard: Control {
                 if self.research.researchData?.startDate != nil {
                     
                     let time = GameMath.timeLeft(startDate: self.research.researchData!.startDate! , duration: self.research.researchType.duration)
+                    
+                    self.timeBar.update(startDate: self.research.researchData!.startDate!, duration: self.research.researchType.duration)
                     
                     if time > 0 {
                         self.labelTimeLeft.setText(GameMath.timeFormated(time))

@@ -8,15 +8,16 @@
 
 import SpriteKit
 
-class HangarSpaceshipDetails:Box {
+class HangarSpaceshipDetails: Box {
     
     var spaceship: Spaceship
     var buttonCancel: Button!
     
     var labelLevel:Label!
     
-    init(spaceship:Spaceship) {
-        
+    var buttonGoToFactory:Button!
+    
+    init(spaceship:Spaceship, showUpgrade: Bool = true) {
         
         self.spaceship = spaceship
         
@@ -55,20 +56,30 @@ class HangarSpaceshipDetails:Box {
         self.addChild(labelTitle)
         
         
-        print(rarityColor)
         let labelRarity = Label(color:rarityColor ,text: self.spaceship.type.rarity.rawValue.uppercaseString , fontSize: 11, x: 50, y: 22, horizontalAlignmentMode: .Center, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelRarity)
         
         let hangarSpaceshipBackground = Control(textureName: "hangarSpaceshipBackground", x: 14, y: 52)
         self.addChild(hangarSpaceshipBackground)
         
-        let lifeUpgradeBackground = Control(textureName: "betterAttribute", x: 11, y: 192)
-        self.addChild(lifeUpgradeBackground)
+        if showUpgrade {
+            let lifeUpgradeBackground = Control(textureName: "betterAttribute", x: 11, y: 192)
+            self.addChild(lifeUpgradeBackground)
+            
+            let damageUpgradeBackground = Control(textureName: "betterAttribute", x: 136, y: 192)
+            self.addChild(damageUpgradeBackground)
+        }
         
-        let damageUpgradeBackground = Control(textureName: "betterAttribute", x: 136, y: 192)
-        self.addChild(damageUpgradeBackground)
+        var spaceshipImage:Spaceship!
         
-        let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        if let spaceshipData = spaceship.spaceshipData {
+            spaceshipImage = Spaceship(spaceshipData: spaceshipData, loadPhysics: false)
+        } else {
+            spaceshipImage = Spaceship(type: spaceship.type.index, level: spaceship.level)
+            if let weapon = spaceship.weapon {
+                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level))
+            }
+        }
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 49, y: 78)
         spaceshipImage.resetPosition()
@@ -139,16 +150,15 @@ class HangarSpaceshipDetails:Box {
         let labelRangeValue = Label(text: self.spaceship.weaponRangeBonus.description , fontSize: 11, x: Int(labelRange.position.x + labelRange.calculateAccumulatedFrame().width), y: 273, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(labelRangeValue)
         
-        
-        let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
-        let labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelLifeUpgrade)
-        
-        let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
-        let labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelDamageUpgrade)
-        
-
+        if showUpgrade {
+            let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
+            let labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.addChild(labelLifeUpgrade)
+            
+            let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
+            let labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.addChild(labelDamageUpgrade)
+        }
         
         self.setScale(0)
         self.position = CGPoint(x: Display.sceneSize.width/2, y: -Display.sceneSize.height/2)
@@ -171,6 +181,16 @@ class HangarSpaceshipDetails:Box {
         
         self.runAction(SKAction.sequence([action1, action2]))
         
+    }
+    
+    func loadButtonGoToFactory() {
+        
+        let fontShadowColor = SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 1)
+        let fontShadowOffset = CGPoint(x: 0, y: -2)
+        let fontName = GameFonts.fontName.museo1000
+        
+        self.buttonGoToFactory = Button(textureName: "buttonDarkBlue131x30", text: "GO TO FACTORY", fontSize: 11, x: 77, y: 316, fontColor: SKColor.whiteColor(), fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+        self.addChild(self.buttonGoToFactory)
     }
     
     required init?(coder aDecoder: NSCoder) {

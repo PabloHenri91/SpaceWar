@@ -26,8 +26,8 @@ class ScrollNode: Control {
     var firstCellPositionX:CGFloat = 0
     var firstCellPositionY:CGFloat = 0
     
-    let force = 2
-    var maxVelocity = CGFloat(30)
+    var force = 0
+    var maxVelocity:CGFloat = 0
     var width = 0
     var height = 0
     
@@ -71,12 +71,15 @@ class ScrollNode: Control {
                 
                 control.resetPosition()
                 
-                //control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
+                control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
                 control.physicsBody?.affectedByGravity = false
                 control.physicsBody?.categoryBitMask = 0
                 control.physicsBody?.collisionBitMask = 0
                 control.physicsBody?.contactTestBitMask = 0
                 control.physicsBody?.linearDamping = 8
+                
+                self.force = 1
+                self.maxVelocity = 60
                 
                 self.addChild(control)
                 
