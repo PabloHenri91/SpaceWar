@@ -298,7 +298,7 @@ class ResearchScene: GameScene {
 
             self.scrollNode = ScrollNode(cells: researchCards, x: x, y: y, xAlign: .center, yAlign: .center, spacing: 10, scrollDirection: .vertical)
             self.addChild(self.scrollNode!)
-            self.scrollNode?.zPosition = -2
+            self.scrollNode?.zPosition = -20
             
         } else {
             self.scrollNode?.removeFromParent()
@@ -439,8 +439,12 @@ class ResearchScene: GameScene {
                                         
                                         if let buttonBegin = researchCard.buttonBegin {
                                             if(buttonBegin.containsPoint(touch.locationInNode(researchCard))) {
-                                                researchCard.research.start()
-                                                self.updateResearchs()
+                                                if researchCard.research.start() {
+                                                    self.updateResearchs()
+                                                } else {
+                                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                                    self.addChild(alertBox)
+                                                }
                                                 return
                                             }
                                         }
