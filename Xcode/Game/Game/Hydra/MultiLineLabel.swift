@@ -43,7 +43,7 @@ class MultiLineLabel: Control {
                     labelIndex += 1
                     label.setText(oldText)
                     
-                    let newLabel = Label(color: color, text: item, fontSize: fontSize, x: x, y: Int(y + ( labelHeight  * labelIndex)), xAlign: xAlign, yAlign: yAlign, verticalAlignmentMode: verticalAlignmentMode, horizontalAlignmentMode: horizontalAlignmentMode)
+                    let newLabel = Label(color: color, text: item, fontSize: fontSize, x: x, y: Int(y + ( labelHeight  * labelIndex)), xAlign: xAlign, yAlign: yAlign, verticalAlignmentMode: verticalAlignmentMode, horizontalAlignmentMode: horizontalAlignmentMode, fontName: fontName)
 
                     self.labels.append(newLabel)
                     

@@ -16,6 +16,7 @@ class HangarSpaceshipCard: Control {
     var labelLevel: Label!
     var labelName: Label!
     var playerData = MemoryCard.sharedInstance.playerData
+    var spaceshipImage: Spaceship!
     
     init(spaceship:Spaceship, x:Int, y:Int) {
         
@@ -56,7 +57,7 @@ class HangarSpaceshipCard: Control {
         self.addChild(self.labelLevel)
         
         
-        self.labelName = Label(color: SKColor.whiteColor(), text: self.spaceship.type.name.uppercaseString , fontSize: 13 ,  x: 76, y: 14, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.labelName = Label(color: SKColor.whiteColor(), text: (self.spaceship.factoryDisplayName()).uppercaseString , fontSize: 12 ,  x: 76, y: 14, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelName)
         
         self.buttonChange = Button(textureName: "hangarButtonGreen", text: "CHANGE", fontSize: 13 ,  x: 31, y: 150, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
@@ -71,17 +72,18 @@ class HangarSpaceshipCard: Control {
     }
 
     
-    func upgradeSpaceship(cost: Int) {
-        let xp = GameMath.spaceshipUpgradeXPBonus(level: self.spaceship.level, type: self.spaceship.type)
-        self.spaceship.upgrade()
-        self.playerData.points = self.playerData.points.integerValue - cost
-        self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xp)
-        self.reloadCard()
-    }
-    
     func reloadCard() {
         
-        self.labelLevel.setText(self.spaceship.level.description)
+        self.labelLevel.setText("Level " + self.spaceship.level.description)
+        self.labelName.setText((self.spaceship.factoryDisplayName()).uppercaseString)
+        
+        self.spaceshipImage.removeFromParent()
+        
+        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        self.spaceshipImage.loadAllyDetails()
+        self.addChild(self.spaceshipImage)
+        self.spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
+        self.spaceshipImage.resetPosition()
     }
     
 }
