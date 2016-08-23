@@ -42,6 +42,8 @@ class MothershipScene: GameScene {
     
     var nextEvents:NextEvents!
     
+    var spaceshipSlots = [SpaceshipSlot]()
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -92,7 +94,7 @@ class MothershipScene: GameScene {
         self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 289, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
         self.addChild(self.buttonBattle)
         
-        var spaceshipSlots = [SpaceshipSlot]()
+        
         for i in 0..<4 {
             let spaceshipSlot = SpaceshipSlot(spaceship: nil)
             spaceshipSlot.xAlign = .center
@@ -285,6 +287,44 @@ class MothershipScene: GameScene {
                         return
                     }
                     
+//                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
+//                        return
+//                    }
+                    
+                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
+                        return
+                    }
+                    
+                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.mission
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.hangar
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.research
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.factory
+                            return
+                        }
+                        return
+                    }
+                    
+                    for spaceshipSlot in self.spaceshipSlots {
+                        if spaceshipSlot.containsPoint(touch.locationInNode(self)) {
+                            self.nextState = states.hangar
+                        }
+                    }
+                    
+                    
                     if self.nextEvents.containsPoint(point) {
                         let point = touch.locationInNode(self.nextEvents)
                         for event in self.nextEvents.upcomingEvents {
@@ -330,26 +370,6 @@ class MothershipScene: GameScene {
                         }
                         
                         self.nextState = states.battle
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                            self.nextState = states.mission
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.hangar
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.research
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.factory
                         return
                     }
                     

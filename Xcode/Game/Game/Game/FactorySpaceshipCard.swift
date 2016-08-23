@@ -45,22 +45,22 @@ class FactorySpaceshipCard: Control {
         switch spaceship.type.rarity {
         case .common:
             textureName = "factorySpaceshipCardCommon"
-            textRarity = "Common"
+            textRarity = "Common".uppercaseString
             textColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
             break
         case .rare:
             textureName = "factorySpaceshipCardRare"
-            textRarity = "Rare"
+            textRarity = "Rare".uppercaseString
             textColor = SKColor(red: 164/255, green: 69/255, blue: 48/255, alpha: 1)
             break
         case .epic:
             textureName = "factorySpaceshipCardEpic"
-            textRarity = "Epic"
+            textRarity = "Epic".uppercaseString
             textColor = SKColor(red: 63/255, green: 68/255, blue: 119/255, alpha: 1)
             break
         case .legendary:
             textureName = "factorySpaceshipCardLegendary"
-            textRarity = "Legendary"
+            textRarity = "Legendary".uppercaseString
             textColor = SKColor(red: 76/255, green: 60/255, blue: 77/255, alpha: 1)
             break
         }
@@ -85,7 +85,7 @@ class FactorySpaceshipCard: Control {
         
         self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName(), fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         let textTypeCount = self.typeCount.description + "/4"
         fontColor = SKColor(red: 96/255, green: 96/255, blue: 96/255, alpha: 1)
@@ -94,22 +94,48 @@ class FactorySpaceshipCard: Control {
         self.addChild(self.labelTypeCount)
         
         
-        let labelSpeedText = "Speed " + spaceship.speedAtribute.description
-        self.addChild(Label(color: fontColor, text: labelSpeedText, fontSize: 11, x: 97, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        let speedIcon = Control(textureName: "speedIcon", x: 97, y: 54 - 11)
+        speedIcon.setScale(min(11/speedIcon.size.width, 11/speedIcon.size.height))
+        self.addChild(speedIcon)
         
-        let labelArmorText = "Armor " + spaceship.maxHealth.description
-        self.addChild(Label(color: fontColor, text: labelArmorText, fontSize: 11, x: 97, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        let labelSpeedLabel = Label(color: fontColor, text: "Speed: ", fontSize: 11, x: 97 + 15, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.addChild(labelSpeedLabel)
+        self.addChild(Label(color: fontColor, text: spaceship.speedAtribute.description, fontSize: 11, x: 97 + 15 + Int(labelSpeedLabel.calculateAccumulatedFrame().size.width), y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        
+        
+        let lifeIcon = Control(textureName: "lifeIcon", x: 97, y: 68 - 11)
+        lifeIcon.setScale(min(11/lifeIcon.size.width, 11/lifeIcon.size.height))
+        self.addChild(lifeIcon)
+        
+        let labelAlrmorLabel = Label(color: fontColor, text: "Armor: ", fontSize: 11, x: 97 + 15, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.addChild(labelAlrmorLabel)
+        self.addChild(Label(color: fontColor, text: spaceship.maxHealth.description, fontSize: 11, x: 97 + 15 + Int(labelAlrmorLabel.calculateAccumulatedFrame().size.width), y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         if let weapon = spaceship.weapon {
             
-            let labelDamageText = "Damage " + weapon.damage.description
-            self.addChild(Label(color: fontColor, text: labelDamageText, fontSize: 11, x: 191, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            let damageIcon = Control(textureName: "damageIcon", x: 191, y: 54 - 11)
+            damageIcon.setScale(min(11/damageIcon.size.width, 11/damageIcon.size.height))
+            self.addChild(damageIcon)
             
-            let labelRangeText = "Range " + weapon.range.description
-            self.addChild(Label(color: fontColor, text: labelRangeText, fontSize: 11, x: 191, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            let labelDamageLabel = Label(color: fontColor, text: "Damage: ", fontSize: 11, x: 191 + 15, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            self.addChild(labelDamageLabel)
+            self.addChild(Label(color: fontColor, text: weapon.damage.description, fontSize: 11, x: 191 + 15 + Int(labelDamageLabel.calculateAccumulatedFrame().size.width), y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
             
-            let labelFireRateText = "Fire Rate " + (1/weapon.fireInterval).description
-            self.addChild(Label(color: fontColor, text: labelFireRateText, fontSize: 11, x: 191, y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            let rangeIcon = Control(textureName: "rangeIcon", x: 191, y: 68 - 11)
+            rangeIcon.setScale(min(11/rangeIcon.size.width, 11/rangeIcon.size.height))
+            self.addChild(rangeIcon)
+            
+            let labelRangeLabel = Label(color: fontColor, text: "Range: ", fontSize: 11, x: 191 + 15, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            self.addChild(labelRangeLabel)
+            self.addChild(Label(color: fontColor, text: weapon.range.description, fontSize: 11, x: 191 + 15 + Int(labelRangeLabel.calculateAccumulatedFrame().size.width), y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            
+            let fireRateIcon = Control(textureName: "fireRateIcon", x: 191, y: 82 - 11)
+            fireRateIcon.setScale(min(11/fireRateIcon.size.width, 11/fireRateIcon.size.height))
+            self.addChild(fireRateIcon)
+            
+            let labelFireRateLabel = Label(color: fontColor, text: "Fire Rate: ", fontSize: 11, x: 191 + 15, y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            self.addChild(labelFireRateLabel)
+            self.addChild(Label(color: fontColor, text: (1/weapon.fireInterval).description, fontSize: 11, x: 191 + 15 + Int(labelFireRateLabel.calculateAccumulatedFrame().size.width), y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         }
         
     }

@@ -356,8 +356,8 @@ class MissionScene: GameScene {
                         return
                     }
                     
-                    if let safeButtonBuy = self.buttonBuy {
-                        if safeButtonBuy.containsPoint(touch.locationInNode(self)) {
+                    if let buttonBuy = self.buttonBuy {
+                        if buttonBuy.containsPoint(touch.locationInNode(self)) {
                             self.nextState = .buySpaceship
                             return
                         }
@@ -367,27 +367,30 @@ class MissionScene: GameScene {
                         return
                     }
                     
-                    if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.research
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.mothership
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.factory
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.hangar
-                        return
-                    }
-                    
                     if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
+                        return
+                    }
+                    
+                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.research
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.mothership
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.factory
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.hangar
+                            return
+                        }
                         return
                     }
                     

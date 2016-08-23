@@ -87,8 +87,9 @@ class ResearchCard: Control {
             
             if timeLeft > 0 {
                 
-                self.self.buttonSpeedUp = Button(textureName: "buttonGreen89x22", text: "SPEED UP", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
-                self.addChild(self.self.buttonSpeedUp!)
+                self.buttonSpeedUp = Button(textureName: "buttonGreen89x22", text: "SPEED UP", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+                self.addChild(self.buttonSpeedUp!)
+                self.buttonSpeedUp?.hidden = true
                 
                 self.labelTimeLeft.setText(GameMath.timeFormated(timeLeft))
                 

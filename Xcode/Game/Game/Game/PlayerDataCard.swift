@@ -300,6 +300,7 @@ class PlayerDataCardStatistics: Control {
         self.addChild(control)
         
         self.buttonConfig = Button(textureName: "buttonConfig", x: 341, y: 75, touchArea:CGSize(width: 32,height: 32))
+        self.buttonConfig.hidden = true//TODO: 
         self.addChild(self.buttonConfig)
         
         let fontColor = SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1)
@@ -448,10 +449,10 @@ class PlayerDataCardStatistics: Control {
     func update() {
         if self.touchIsMooving {
             let lastPosition = self.position
-            var y:CGFloat = lastPosition.y + Control.dy
-            if y < 0 { y = 0 }
-            if Int(y) > self.playerDataCardBackground2PositionY { y = CGFloat(self.playerDataCardBackground2PositionY) }
-            self.position = CGPoint(x: lastPosition.x, y: y)
+            let y:CGFloat = lastPosition.y + Control.dy
+            if y > 0 {
+                self.runAction(SKAction.moveBy(CGVector(dx: 0, dy: Control.dy), duration: 2/60))
+            }
             
             Control.gameScene.blackSpriteNode.alpha = 1 - self.position.y/CGFloat(self.playerDataCardBackground2PositionY)
             Control.gameScene.blackSpriteNode.zPosition = 25

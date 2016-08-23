@@ -79,7 +79,7 @@ class ScrollNode: Control {
                 control.physicsBody?.linearDamping = 8
                 
                 self.force = 1
-                self.maxVelocity = 60
+                self.maxVelocity = 100
                 
                 self.addChild(control)
                 

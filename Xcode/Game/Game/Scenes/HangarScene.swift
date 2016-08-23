@@ -282,23 +282,34 @@ class HangarScene: GameScene {
                         return
                     }
                     
-                    if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.research
+                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
-                    if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.mission
+                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
-                    if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.mothership
-                        return
-                    }
-                    
-                    if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
-                        self.nextState = states.factory
+                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.research
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.mission
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.mothership
+                            return
+                        }
+                        
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                            self.nextState = states.factory
+                            return
+                        }
                         return
                     }
                     
@@ -306,9 +317,9 @@ class HangarScene: GameScene {
                         if hangarCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarCard)){
                             self.selectedSpaceship = hangarCard.spaceship
                             self.nextState = .details
+                            return
                         }
                     }
-
                     
                     break
                     

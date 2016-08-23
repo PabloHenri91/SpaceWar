@@ -40,7 +40,6 @@ class Spaceship: Control {
     
     var spaceshipData:SpaceshipData?
     
-    var spriteNode:SKSpriteNode!
     var selectedSpriteNode:SKSpriteNode!
     
     var targetNode:SKNode?
@@ -240,6 +239,8 @@ class Spaceship: Control {
         self.increaseTouchArea()
         
         Spaceship.spaceshipList.insert(self)
+        
+        self.size = self.spriteNode.size
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {

@@ -22,8 +22,6 @@ class Mothership: Control {
     
     var spaceships = [Spaceship]()
     
-    var spriteNode:SKSpriteNode!
-    
     var healthBar:HealthBar!
     
     var explosionSoundEffect:SoundEffect!

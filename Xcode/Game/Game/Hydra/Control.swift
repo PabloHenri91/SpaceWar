@@ -51,6 +51,8 @@ class Control: SKNode {
     
     var screenPosition:CGPoint = CGPointZero
     
+    var spriteNode:SKSpriteNode!
+    
     override init() {
         super.init()
     }
@@ -83,6 +85,7 @@ class Control: SKNode {
             spriteNode.size = size
         }
         self.size = spriteNode.size
+        self.spriteNode = spriteNode
         spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
         spriteNode.name = name
         self.addChild(spriteNode)

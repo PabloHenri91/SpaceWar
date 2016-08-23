@@ -20,8 +20,6 @@ class Shot: Control {
     
     var shooter:SKNode!
     
-    var spriteNode:SKSpriteNode!
-    
     init(shooter:SKNode, damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody) {
         super.init()
         
