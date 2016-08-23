@@ -282,7 +282,7 @@ class GameMath {
             
             let diceRoll = Int(arc4random_uniform(101) + 1)
             if (diceRoll <= 85) {
-                print("commom")
+                print("common")
             } else if (diceRoll <= 95) {
                 print("rare")
             } else if (diceRoll <= 99) {

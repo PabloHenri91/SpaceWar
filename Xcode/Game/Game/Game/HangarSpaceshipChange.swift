@@ -54,7 +54,7 @@ class HangarSpaceshipChange:Box {
         var rarityColor:SKColor
         
         switch self.spaceship.type.rarity {
-        case .commom:
+        case .common:
             imageName = "hangarCommomSpaceshipCardChange"
             rarityColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
             break
@@ -89,7 +89,6 @@ class HangarSpaceshipChange:Box {
         self.addChild(labelRarity)
         
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        spaceshipImage.loadAllyDetails()
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 46, y: 78)
         spaceshipImage.resetPosition()
@@ -163,61 +162,65 @@ class HangarSpaceshipChange:Box {
             SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
             ])
         
-        self.runAction(SKAction.sequence([action1, action2]))
+        
+        self.runAction(SKAction.sequence([action1, action2])) {
+        
+            let spaceships = MemoryCard.sharedInstance.playerData.spaceships
+            
+            if spaceships.count > 4 {
+                
+                self.cropBox = CropBox(textureName: "hangarChangeSpaceshipCropbox", x: 1, y: 146, xAlign: .left, yAlign: .up)
+                self.addChild(self.cropBox.cropNode)
+                
+                
+                var spaceshipList = Array<Spaceship>()
+                var controlArray = Array<Control>()
+                
+                for spaceshipData in spaceships {
+                    
+                    var canSelect = true
+                    
+                    for selectedSpaceship in self.selectedSpaceships {
+                        if selectedSpaceship as! SpaceshipData == spaceshipData as! SpaceshipData {
+                            canSelect = false
+                        }
+                    }
+                    
+                    if canSelect {
+                        spaceshipList.append(Spaceship(spaceshipData: spaceshipData as! SpaceshipData))
+                        if spaceshipList.count == 3 {
+                            let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
+                            controlArray.append(cell)
+                            spaceshipList.removeAll()
+                        }
+                    }
+                    
+                    
+                }
+                
+                if spaceshipList.count > 0 {
+                    let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
+                    controlArray.append(cell)
+                    spaceshipList.removeAll()
+                }
+                
+                self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: 13, scrollDirection: .vertical)
+                self.cropBox.addChild(self.scrollNode!)
+                
+            } else {
+                
+                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12, xAlign: .center)
+                
+                self.addChild(empityLabel)
+                
+                self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.buttonFactory!)
+                
+            }
+        }
        
         
-        let spaceships = MemoryCard.sharedInstance.playerData.spaceships
         
-        if spaceships.count > 4 {
-            
-            self.cropBox = CropBox(textureName: "hangarChangeSpaceshipCropbox", x: 1, y: 146, xAlign: .left, yAlign: .up)
-            self.addChild(self.cropBox.cropNode)
-            
-            
-            var spaceshipList = Array<Spaceship>()
-            var controlArray = Array<Control>()
-            
-            for spaceshipData in spaceships {
-                
-                var canSelect = true
-                
-                for selectedSpaceship in self.selectedSpaceships {
-                    if selectedSpaceship as! SpaceshipData == spaceshipData as! SpaceshipData {
-                        canSelect = false
-                    }
-                }
-                
-                if canSelect {
-                    spaceshipList.append(Spaceship(spaceshipData: spaceshipData as! SpaceshipData))
-                    if spaceshipList.count == 3 {
-                        let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
-                        controlArray.append(cell)
-                        spaceshipList.removeAll()
-                    }
-                }
-                
-                
-            }
-            
-            if spaceshipList.count > 0 {
-                let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
-                controlArray.append(cell)
-                spaceshipList.removeAll()
-            }
-            
-            self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: 13, scrollDirection: .vertical)
-            self.cropBox.addChild(self.scrollNode!)
-            
-        } else {
-            
-            let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12, xAlign: .center)
-            
-            self.addChild(empityLabel)
-            
-            self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-            self.addChild(self.buttonFactory!)
-            
-        }
         
         
         
@@ -420,7 +423,6 @@ class HangarSpaceshipChange:Box {
         for selectedSpaceship in self.selectedSpaceships {
             if selectedSpaceship as! SpaceshipData == self.spaceship.spaceshipData {
                 self.playerData.motherShip.removeSpaceshipData(selectedSpaceship as! SpaceshipData)
-                print("removi")
                 
                 self.playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!)
             }

@@ -43,10 +43,10 @@ class HangarSpaceshipCard: Control {
         super.init(textureName: imageName, x: x, y: y, xAlign: .center, yAlign: .center)
        
 
-        let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        self.addChild(spaceshipImage)
-        spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
-        spaceshipImage.resetPosition()
+        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        self.addChild(self.spaceshipImage)
+        self.spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
+        self.spaceshipImage.resetPosition()
         
 
             
@@ -80,7 +80,6 @@ class HangarSpaceshipCard: Control {
         self.spaceshipImage.removeFromParent()
         
         self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        self.spaceshipImage.loadAllyDetails()
         self.addChild(self.spaceshipImage)
         self.spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
         self.spaceshipImage.resetPosition()

@@ -27,8 +27,8 @@ class MultiLineLabel: Control {
         var labelIndex = 0
         
         for item in words {
-            if labels.count == 0 {
-                let label = Label(color: color, text: item, fontSize: fontSize, x: x, y: y, xAlign: xAlign, yAlign: yAlign, verticalAlignmentMode: verticalAlignmentMode, horizontalAlignmentMode: horizontalAlignmentMode)
+            if (labels.count == 0) {
+                let label = Label(color: color, text: item, fontSize: fontSize, x: x, y: y, xAlign: xAlign, yAlign: yAlign, verticalAlignmentMode: verticalAlignmentMode, horizontalAlignmentMode: horizontalAlignmentMode, fontName: fontName)
                 self.labelHeight = Int(label.calculateAccumulatedFrame().size.height)
                 self.labels.append(label)
             } else {

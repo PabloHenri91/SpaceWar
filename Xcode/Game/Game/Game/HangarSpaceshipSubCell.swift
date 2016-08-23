@@ -19,7 +19,7 @@ class HangarSpaceshipSubCell: Control {
         var imageName = ""
         
         switch self.spaceship.type.rarity {
-        case .commom:
+        case .common:
             imageName = "hangarCommomSelectCard"
             break
         case .rare:
@@ -41,7 +41,6 @@ class HangarSpaceshipSubCell: Control {
      
         
         let spaceshipImage = Spaceship(spaceshipData: self.spaceship.spaceshipData!)
-        spaceshipImage.loadAllyDetails()
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 0, y: -10)
         spaceshipImage.resetPosition()
