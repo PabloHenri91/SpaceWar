@@ -146,7 +146,7 @@ class Spaceship: Control {
             background.colorBlendFactor = 1
             
             self.healthBar = HealthBar(background: background, backColor: backColor, fillColor: fillColor)
-            self.healthBar.positionOffset = CGPoint(x: 0, y: -32)
+            self.healthBar.positionOffset = CGPoint(x: 0, y: -30)
         } else {
             fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
             backColor = SKColor(red: 105/255, green: 31/255, blue: 17/255, alpha: 1)
@@ -154,7 +154,7 @@ class Spaceship: Control {
             background.colorBlendFactor = 1
             
             self.healthBar = HealthBar(background: background, backColor: backColor, fillColor: fillColor)
-            self.healthBar.positionOffset = CGPoint(x: 0, y: 32)
+            self.healthBar.positionOffset = CGPoint(x: 0, y: 30)
         }
         
         self.healthBar.zPosition = GameWorld.zPositions.spaceshipHealthBar.rawValue
@@ -165,6 +165,28 @@ class Spaceship: Control {
         border.color = backColor
         border.colorBlendFactor = 1
         self.healthBar.addChild(border)
+        
+        let spaceshipLevelBackground = SKSpriteNode(imageNamed: "spaceshipLevelBackground")
+        spaceshipLevelBackground.texture?.filteringMode = Display.filteringMode
+        
+        if blueTeam {
+            spaceshipLevelBackground.color = SKColor(red: 214/255, green: 247/255, blue: 255/255, alpha: 1)
+        } else {
+            spaceshipLevelBackground.color = SKColor(red: 255/255, green: 231/255, blue: 231/255, alpha: 1)
+        }
+        spaceshipLevelBackground.colorBlendFactor = 1
+        spaceshipLevelBackground.position = CGPoint(x: -(spaceshipLevelBackground.size.width + self.healthBar.fillMaxWidth)/2, y: 0)
+        self.healthBar.positionOffset = CGPoint(x: spaceshipLevelBackground.size.width/2, y: self.healthBar.positionOffset.y)
+        
+        spaceshipLevelBackground.addChild(Label(color: backColor, text: self.level.description, fontSize: 11, fontName: GameFonts.fontName.museo1000))
+        
+        let spaceshipLevelBorder = SKSpriteNode(imageNamed: "spaceshipLevelBorder")
+        spaceshipLevelBorder.texture?.filteringMode = Display.filteringMode
+        spaceshipLevelBorder.color = backColor
+        spaceshipLevelBorder.colorBlendFactor = 1
+        
+        self.healthBar.addChild(spaceshipLevelBackground)
+        spaceshipLevelBackground.addChild(spaceshipLevelBorder)
         
         self.updateHealthBarPosition()
         self.updateHealthBarValue()

@@ -73,12 +73,12 @@ class BattleScene: GameScene {
         // Mothership
         self.mothership = Mothership(mothershipData: self.playerData.motherShip)
         self.gameWorld.addChild(self.mothership)
-        self.mothership.position = CGPoint(x: 0, y: -242)
+        self.mothership.position = CGPoint(x: 0, y: -243)
         
         // BotMothership
         self.botMothership = Mothership(level: self.mothership.level)
         self.botMothership.zRotation = CGFloat(M_PI)
-        self.botMothership.position = CGPoint(x: 0, y: 242)
+        self.botMothership.position = CGPoint(x: 0, y: 243)
         self.gameWorld.addChild(self.botMothership)
         
         // BotSpaceships

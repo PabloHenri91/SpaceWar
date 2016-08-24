@@ -153,16 +153,16 @@ class Mothership: Control {
         
         switch i {
         case 0:
-            spaceship.position = self.convertPoint(CGPoint(x: -103, y: -7), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -103, y: -5), toNode: gameWorld)
             break
         case 1:
-            spaceship.position = self.convertPoint(CGPoint(x: -34, y: -7), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -34, y: -5), toNode: gameWorld)
             break
         case 2:
-            spaceship.position = self.convertPoint(CGPoint(x: 34, y: -7), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 34, y: -5), toNode: gameWorld)
             break
         case 3:
-            spaceship.position = self.convertPoint(CGPoint(x: 103, y: -7), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 103, y: -5), toNode: gameWorld)
             break
         default:
             break

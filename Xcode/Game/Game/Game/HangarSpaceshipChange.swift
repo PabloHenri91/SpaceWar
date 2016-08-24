@@ -209,7 +209,7 @@ class HangarSpaceshipChange:Box {
                 
             } else {
                 
-                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12, xAlign: .center)
+                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12)
                 
                 self.addChild(empityLabel)
                 
