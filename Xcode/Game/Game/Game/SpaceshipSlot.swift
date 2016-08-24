@@ -30,18 +30,10 @@ class SpaceshipSlot: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func remove() {
-        if let spaceship = self.spaceship {
-            spaceship.removeFromParent()
-            if let spaceshipData = spaceship.spaceshipData {
-                self.playerData.motherShip.removeSpaceshipData(spaceshipData)
-            }
-            self.spaceship = nil
-        }
-    }
+
     
     func update(spaceshipData: SpaceshipData) {
-        self.playerData.motherShip.addSpaceshipData(spaceshipData)
+        //self.playerData.motherShip.addSpaceshipData(spaceshipData, index: spaceshipData.index)
         
         let spaceship = Spaceship(spaceshipData: spaceshipData)
         self.addChild(spaceship)

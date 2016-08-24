@@ -12,7 +12,6 @@ class HangarScene: GameScene {
     
    
     var playerData = MemoryCard.sharedInstance.playerData
-    let spaceshipsData = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
     var spaceships = [Spaceship]()
     var selectedSpaceship: Spaceship?
     var selectedCard: HangarSpaceshipCard?
@@ -77,8 +76,8 @@ class HangarScene: GameScene {
         self.hangarCardsArray = Array<HangarSpaceshipCard>()
         
         var index = 0
-        for spaceshipData in spaceshipsData {
-            let spaceship = Spaceship(spaceshipData: spaceshipData)
+        for spaceshipData in self.playerData.motherShip.spaceships  {
+            let spaceship = Spaceship(spaceshipData: spaceshipData as! SpaceshipData)
             
             var x = 0
             var y = 0

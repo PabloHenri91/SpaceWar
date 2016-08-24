@@ -12,7 +12,7 @@ class Research: Control {
     
     var researchType:ResearchType!
     var researchData:ResearchData?
-    var researches = MemoryCard.sharedInstance.playerData.researches
+    var playerData = MemoryCard.sharedInstance.playerData
     
     
     init(type:Int) {
@@ -38,7 +38,7 @@ class Research: Control {
     func isUnlocked() -> Bool {
         
         for item in self.researchType.researchsNeeded {
-            for subItem in self.researches {
+            for subItem in self.playerData.researches {
                 if let researchData = subItem as? ResearchData {
                     if researchData.type == item {
                         if researchData.done == 0 {
@@ -55,7 +55,7 @@ class Research: Control {
     func start() -> Bool {
         
         
-        for research in MemoryCard.sharedInstance.playerData.researches {
+        for research in self.playerData.researches {
             let researchData = research as! ResearchData
             if researchData.startDate != nil && researchData.done == false {
                 return false
@@ -76,19 +76,28 @@ class Research: Control {
         if let researchData = self.researchData {
             researchData.done = true
             
-            if let spaceship = self.researchType.spaceshipUnlocked {
+            // se o level da nave for 0 ta liberando, se nao aumentando o level maximo
+            
+            researchData.spaceshipLevel = NSNumber(integer: researchData.spaceshipLevel.integerValue + 10)
+            
+            if researchData.spaceshipLevel.integerValue == 10 {
                 
-                if let weapon = self.researchType.weaponUnlocked {
-                    let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
+                if let spaceship = self.researchType.spaceshipUnlocked {
                     
-                    let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
-                    spaceshipData.addWeaponData(weaponData)
-                    spaceshipData
-                    MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
+                    if let weapon = self.researchType.weaponUnlocked {
+                        let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
+                        
+                        let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
+                        spaceshipData.addWeaponData(weaponData)
+                        spaceshipData
+                        self.playerData.unlockSpaceshipData(spaceshipData)
+                    }
                 }
             }
             
-            MemoryCard.sharedInstance.playerData.motherShip.xp = NSNumber(integer: MemoryCard.sharedInstance.playerData.motherShip.xp.integerValue + Int(self.researchType.cost / 2))
+            
+            
+
         }
     }
 
@@ -135,7 +144,31 @@ extension Research {
         }
     }
     
+    static func cheatUnlockAll() {
+        
+        MemoryCard.sharedInstance.playerData.researches = NSSet()
+        
+        for researchType in Research.types {
+            let newResearch = MemoryCard.sharedInstance.newResearchData()
+            newResearch.type = researchType.index
+            newResearch.spaceshipLevel = 0
+            newResearch.spaceshipMaxLevel = 1000
+            MemoryCard.sharedInstance.playerData.addResearchData(newResearch)
+        }
+    }
+    
     static var types:[ResearchType] = [
+        
+        {
+            let research = ResearchType(index:11, name:"Spaceship + Pistol", duration:28800, cost:0, lineType: .general)
+            research.researchDescription = ""
+            research.weaponUnlocked = 0
+            research.spaceshipUnlocked = 0
+            research.researchsNeeded = [99]
+            research.requisites = []
+            return research
+        }(),
+        
         {
             let research = ResearchType(index:0, name:"Spaceship + Machine Gun", duration:28800, cost:0, lineType: .general)
             research.researchDescription = "A common spaceship with a fast Machine Gun."

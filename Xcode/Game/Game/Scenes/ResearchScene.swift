@@ -226,8 +226,7 @@ class ResearchScene: GameScene {
             if let researchData = item as? ResearchData {
                 let research = Research(researchData: researchData)
                 
-                if research.isUnlocked() {
-                    if researchData.done == false {
+                    if researchData.spaceshipLevel != researchData.spaceshipMaxLevel {
                         if let researchCard = ResearchCard(research: research) {
                             if researchData.startDate == nil {
                                 researchCards.append(researchCard)
@@ -240,7 +239,7 @@ class ResearchScene: GameScene {
                             }
                         }
                     }
-                }
+                
             }
         }
         
@@ -397,6 +396,8 @@ class ResearchScene: GameScene {
                         
                         if let buttonCollect = researchCard.buttonCollect {
                             if(buttonCollect.containsPoint(touch.locationInNode(researchCard))) {
+                                
+                                
                                 researchCard.research.collect()
                                 self.playerDataCard.updateXP()
                                 self.updateResearchs()
@@ -404,22 +405,42 @@ class ResearchScene: GameScene {
                                 if let spaceship = researchCard.spaceship {
                                     self.blackSpriteNode.hidden = false
                                     self.blackSpriteNode.zPosition = 10000
-                                    let detailsAlert = HangarSpaceshipDetails(spaceship: spaceship, showUpgrade: false)
-                                    detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
                                     
-                                    detailsAlert.loadButtonGoToFactory()
-                                    detailsAlert.buttonGoToFactory.event = nil
-                                    detailsAlert.buttonGoToFactory.addHandler({ [weak self] in
-                                        self?.nextState = .factory
-                                        detailsAlert.removeFromParent()
-                                    })
+                                    print(researchCard.research.researchData!)
                                     
-                                    detailsAlert.buttonCancel.addHandler({ [weak self] in
-                                        self?.nextState = .research
-                                    })
-                                    
-                                    self.addChild(detailsAlert)
-                                    self.nextState = .alert
+                                    if researchCard.research.researchData!.spaceshipLevel.integerValue > 10 {
+                                        
+                                        let detailsAlert = ResearchUpgradeSpaceshipAlert(spaceship: spaceship)
+                                        detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
+                                        
+                                        detailsAlert.buttonCancel.addHandler({ [weak self] in
+                                            self?.nextState = .research
+                                            })
+                                        
+                                        self.addChild(detailsAlert)
+                                        self.nextState = .alert
+                                        
+                                    } else {
+                                        
+                                        let detailsAlert = HangarSpaceshipDetails(spaceship: spaceship, showUpgrade: false)
+                                        detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
+                                        
+                                        detailsAlert.loadButtonGoToFactory()
+                                        detailsAlert.buttonGoToFactory.event = nil
+                                        detailsAlert.buttonGoToFactory.addHandler({ [weak self] in
+                                            self?.nextState = .factory
+                                            detailsAlert.removeFromParent()
+                                            })
+                                        
+                                        detailsAlert.buttonCancel.addHandler({ [weak self] in
+                                            self?.nextState = .research
+                                            })
+                                        
+                                        self.addChild(detailsAlert)
+                                        self.nextState = .alert
+                                        
+                                    }
+                                
                                 }
                                 
                                 return

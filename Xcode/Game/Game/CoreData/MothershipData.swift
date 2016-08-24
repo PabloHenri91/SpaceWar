@@ -36,9 +36,10 @@ extension MemoryCard {
 
 extension MothershipData {
     
-    func addSpaceshipData(value: SpaceshipData) {
+    func addSpaceshipData(value: SpaceshipData, index: Int) {
         let items = self.mutableOrderedSetValueForKey("spaceships")
-        items.addObject(value)
+        //items.addObject(value)
+        items.insertObject(value, atIndex: index)
     }
     
     func removeSpaceshipData(value: SpaceshipData) {

@@ -15,6 +15,8 @@ class ResearchData: NSManagedObject {
     @NSManaged var done: NSNumber
     @NSManaged var startDate: NSDate?
     @NSManaged var type: NSNumber
+    @NSManaged var spaceshipLevel: NSNumber
+    @NSManaged var spaceshipMaxLevel: NSNumber
 
 }
 

@@ -420,12 +420,18 @@ class HangarSpaceshipChange:Box {
     }
     
     func choose() {
+        
+        var index = 0
         for selectedSpaceship in self.selectedSpaceships {
             if selectedSpaceship as! SpaceshipData == self.spaceship.spaceshipData {
+                
+                print(selectedSpaceship)
                 self.playerData.motherShip.removeSpaceshipData(selectedSpaceship as! SpaceshipData)
                 
-                self.playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!)
+                self.playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!, index: index)
+                return
             }
+            index += 1
         }
     }
     
