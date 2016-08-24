@@ -23,7 +23,11 @@ class HangarSpaceshipDetails: Box {
     
     var buttonGoToFactory:Button!
     
+    var showUpgrade: Bool = true
+    
     init(spaceship:Spaceship, showUpgrade: Bool = true) {
+        
+        self.showUpgrade = showUpgrade
         
         self.spaceship = spaceship
         
@@ -93,8 +97,13 @@ class HangarSpaceshipDetails: Box {
         self.labelLevel = Label(color:SKColor.whiteColor() ,text: "Level " + self.spaceship.level.description , fontSize: 13, x: 49, y: 113, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
-        let labelDescription = MultiLineLabel(text: "This is a battleship. Do upgrades to makes it stronger and defeat your enemies.", maxWidth: 168, x: 180, y: 73, fontSize: 11)
-        self.addChild(labelDescription)
+        if showUpgrade {
+            let labelDescription = MultiLineLabel(text: "This is a battleship. Do upgrades to makes it stronger and defeat your enemies.", maxWidth: 168, x: 180, y: 73, fontSize: 11)
+            self.addChild(labelDescription)
+        } else {
+            let labelDescription = MultiLineLabel(text: "Now this Battleship is available for construction at the Factory.", maxWidth: 168, x: 180, y: 73, fontSize: 11)
+            self.addChild(labelDescription)
+        }
         
         let labelAtributte = Label(text: "ATTRIBUTES" , fontSize: 14, x: 14, y: 169, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelAtributte)
@@ -178,19 +187,22 @@ class HangarSpaceshipDetails: Box {
         self.addChild(self.labelDamageUpgrade)
         
         
-        let labelUpgrade = Label(text: "UPGRADE" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(labelUpgrade)
+        if showUpgrade {
+            let labelUpgrade = Label(text: "UPGRADE" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.addChild(labelUpgrade)
+        }
         
-        
-        let fontColor = SKColor.whiteColor()
-        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
-        let fontShadowOffset = CGPoint(x: 0, y: -1)
-        let fontName = GameFonts.fontName.museo1000
-        let textOffset = CGPoint(x: 8, y: 0)
-        self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
-        self.addChild(self.buttonUpgrade)
-        
-        self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        if showUpgrade {
+            let fontColor = SKColor.whiteColor()
+            let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+            let fontShadowOffset = CGPoint(x: 0, y: -1)
+            let fontName = GameFonts.fontName.museo1000
+            let textOffset = CGPoint(x: 8, y: 0)
+            self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+            self.addChild(self.buttonUpgrade)
+            
+            self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        }
         
         
         self.setScale(0)
@@ -249,15 +261,17 @@ class HangarSpaceshipDetails: Box {
         
         self.buttonUpgrade.removeFromParent()
         
-        let fontColor = SKColor.whiteColor()
-        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
-        let fontShadowOffset = CGPoint(x: 0, y: -1)
-        let fontName = GameFonts.fontName.museo1000
-        let textOffset = CGPoint(x: 8, y: 0)
-        self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
-        self.addChild(self.buttonUpgrade)
-        
-        self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        if self.showUpgrade {
+            let fontColor = SKColor.whiteColor()
+            let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+            let fontShadowOffset = CGPoint(x: 0, y: -1)
+            let fontName = GameFonts.fontName.museo1000
+            let textOffset = CGPoint(x: 8, y: 0)
+            self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+            self.addChild(self.buttonUpgrade)
+            
+            self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+        }
         
     }
 

@@ -59,7 +59,7 @@ class Spaceship: Control {
     
     var isInsideAMothership = true
     
-    var healthBar:HealthBar!
+    private var healthBar:HealthBar!
     var weaponRangeSprite:SKShapeNode!
     
     //Respawn
@@ -133,10 +133,41 @@ class Spaceship: Control {
         }
     }
     
-    func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
-        let size = self.calculateAccumulatedFrame().size
-        self.healthBar = HealthBar(size: size, borderColor: borderColor)
+    func loadHealthBar(gameWorld:GameWorld, blueTeam:Bool) {
+        
+        var fillColor:SKColor!
+        var backColor:SKColor!
+        let background = SKSpriteNode(imageNamed: "spaceshipHealthBarBackground")
+        
+        if blueTeam {
+            fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
+            backColor = SKColor(red: 0/255, green: 84/255, blue: 143/255, alpha: 1)
+            background.color = backColor
+            background.colorBlendFactor = 1
+            
+            self.healthBar = HealthBar(background: background, backColor: backColor, fillColor: fillColor)
+            self.healthBar.positionOffset = CGPoint(x: 0, y: -32)
+        } else {
+            fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
+            backColor = SKColor(red: 105/255, green: 31/255, blue: 17/255, alpha: 1)
+            background.color = backColor
+            background.colorBlendFactor = 1
+            
+            self.healthBar = HealthBar(background: background, backColor: backColor, fillColor: fillColor)
+            self.healthBar.positionOffset = CGPoint(x: 0, y: 32)
+        }
+        
+        self.healthBar.zPosition = GameWorld.zPositions.spaceshipHealthBar.rawValue
         gameWorld.addChild(self.healthBar)
+        
+        let border = SKSpriteNode(imageNamed: "spaceshipHealthBarBorder")
+        border.texture?.filteringMode = Display.filteringMode
+        border.color = backColor
+        border.colorBlendFactor = 1
+        self.healthBar.addChild(border)
+        
+        self.updateHealthBarPosition()
+        self.updateHealthBarValue()
     }
     
     func loadWeaponRangeSprite(gameWorld:GameWorld) {
@@ -206,6 +237,7 @@ class Spaceship: Control {
         
         //Gráfico
         self.spriteNode = SKSpriteNode(imageNamed: self.type.skin)
+        self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.setScale(self.type.scale)
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.zPosition = zPositions.skin.rawValue
@@ -213,6 +245,7 @@ class Spaceship: Control {
         
         if self.type.glassSkin != "" {
             let spriteNode = SKSpriteNode(imageNamed: self.type.glassSkin)
+            spriteNode.texture?.filteringMode = Display.filteringMode
             spriteNode.setScale(self.type.scale)
             spriteNode.texture?.filteringMode = Display.filteringMode
             spriteNode.zPosition = zPositions.glassSkin.rawValue
@@ -223,6 +256,7 @@ class Spaceship: Control {
         }
         
         self.selectedSpriteNode = SKSpriteNode(imageNamed: self.type.skin + "Mask")
+        self.selectedSpriteNode.texture?.filteringMode = Display.filteringMode
         self.selectedSpriteNode.setScale(self.type.scale)
         self.selectedSpriteNode.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         self.selectedSpriteNode.colorBlendFactor = 1
@@ -268,6 +302,7 @@ class Spaceship: Control {
     
     func setMoveArrowToDestination() {
         let spriteNode = SKSpriteNode(imageNamed: "moveArrows")
+        spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.position = self.destination
         self.parent?.addChild(spriteNode)
         
@@ -342,7 +377,7 @@ class Spaceship: Control {
         
         self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
-        self.healthBar.update(position: self.position)
+        self.updateHealthBarPosition()
         
         //TODO: exportar para função
         if let weaponRangeSprite = self.weaponRangeSprite {
@@ -521,7 +556,7 @@ class Spaceship: Control {
         
         self.health = self.maxHealth
         self.healthBar.update(1, maxHealth: 1)
-        self.healthBar.update(position: self.position)
+        self.updateHealthBarPosition()
         self.healthBar.hidden = false
     }
     
@@ -562,6 +597,14 @@ class Spaceship: Control {
             }
             self.healthBar.update(self.health, maxHealth: self.maxHealth)
         }
+    }
+    
+    func updateHealthBarPosition() {
+        self.healthBar.update(position: self.position)
+    }
+    
+    func updateHealthBarValue() {
+        self.healthBar.update(self.health, maxHealth: self.maxHealth)
     }
     
     func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {

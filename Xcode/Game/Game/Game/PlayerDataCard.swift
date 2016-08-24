@@ -143,12 +143,14 @@ class PlayerDataCard: Control {
         if width > height/2 {
             let anchorPoint = CGPoint(x: 1, y: 1)
             self.xpBarSpriteNode = SKSpriteNode(texture: nil, color: color, size: CGSize(width: width - (height/2), height: height))
+            self.xpBarSpriteNode!.texture?.filteringMode = Display.filteringMode
             self.xpBarSpriteNode!.anchorPoint = anchorPoint
             self.xpBarSpriteNode!.position = CGPoint(x: positionX, y: positionY)
             self.addChild(self.xpBarSpriteNode!)
         } else {
             let anchorPoint = CGPoint(x: 1, y: 1)
             self.xpBarSpriteNode = SKSpriteNode(texture: nil, color: color, size: CGSize(width: 1, height: height))
+            self.xpBarSpriteNode!.texture?.filteringMode = Display.filteringMode
             self.xpBarSpriteNode!.anchorPoint = anchorPoint
             self.xpBarSpriteNode!.position = CGPoint(x: positionX + 1, y: positionY)
             self.addChild(self.xpBarSpriteNode!)

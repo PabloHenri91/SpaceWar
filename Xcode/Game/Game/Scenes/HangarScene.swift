@@ -12,7 +12,7 @@ class HangarScene: GameScene {
     
    
     var playerData = MemoryCard.sharedInstance.playerData
-    let spaceshipsData = MemoryCard.sharedInstance.playerData.motherShip.spaceships as! Set<SpaceshipData>
+    
     var spaceships = [Spaceship]()
     var selectedSpaceship: Spaceship?
     var selectedCard: HangarSpaceshipCard?
@@ -77,45 +77,47 @@ class HangarScene: GameScene {
         self.hangarCardsArray = Array<HangarSpaceshipCard>()
         
         var index = 0
-        for spaceshipData in spaceshipsData {
-            let spaceship = Spaceship(spaceshipData: spaceshipData)
+        for item in self.playerData.motherShip.spaceships {
             
-            var x = 0
-            var y = 0
-            
-            switch index {
-            case 0:
-                x = 3
-                y = 131
-                break
+            if let spaceshipData = item as? SpaceshipData {
                 
-            case 1:
-                x = 165
-                y = 131
-                break
+                let spaceship = Spaceship(spaceshipData: spaceshipData)
                 
-            case 2:
-                x = 3
-                y = 323
-                break
+                var x = 0
+                var y = 0
                 
-            case 3:
-                x = 165
-                y = 323
-                break
+                switch index {
+                case 0:
+                    x = 3
+                    y = 131
+                    break
+                    
+                case 1:
+                    x = 165
+                    y = 131
+                    break
+                    
+                case 2:
+                    x = 3
+                    y = 323
+                    break
+                    
+                case 3:
+                    x = 165
+                    y = 323
+                    break
+                    
+                default:
+                    break
+                }
                 
-            default:
-                break
+                let card = HangarSpaceshipCard(spaceship: spaceship, x: x, y: y)
+                self.addChild(card)
+                
+                self.hangarCardsArray.append(card)
+                index += 1
             }
-            
-            let card = HangarSpaceshipCard(spaceship: spaceship, x: x, y: y)
-            self.addChild(card)
-            
-            self.hangarCardsArray.append(card)
-            index += 1
         }
-
-
         
         switch GameTabBar.lastState {
         case .research, .mission, .mothership, .factory:

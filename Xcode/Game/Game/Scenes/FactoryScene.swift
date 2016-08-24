@@ -81,6 +81,7 @@ class FactoryScene: GameScene {
         self.scrollNode = ScrollNode(cells: cells, x: 17, y: 143, xAlign: .center, yAlign: .up, spacing: 10 , scrollDirection: .vertical)
         self.scrollNode.zPosition = -50
         self.addChild(self.scrollNode)
+        self.scrollNode.canScroll = self.scrollNode.cells.count > 2
         
         
         self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
@@ -182,7 +183,7 @@ class FactoryScene: GameScene {
                 
             case .factory:
                 self.blackSpriteNode.hidden = true
-                self.scrollNode.canScroll = true
+                self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.buySpaceshipAlert?.removeFromParent()
                 break
                 

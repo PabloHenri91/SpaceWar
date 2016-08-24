@@ -10,36 +10,29 @@ import SpriteKit
 
 class HealthBar: Control {
     
-    var greenBar:SKSpriteNode!
-    var greenBarMaxWidth:CGFloat = 1
+    var spriteNodeFill:SKSpriteNode!
+    var fillMaxWidth:CGFloat = 1
     
-    var biggerSide:CGFloat = 0
-    
-    var barPosition:yAlignments = .up
+    var positionOffset = CGPoint(x: 0, y: 0)
 
-    init(size:CGSize, borderColor:SKColor) {
+    init(background:SKSpriteNode? = nil, size:CGSize = CGSize(width: 37, height: 6), backColor: SKColor = SKColor.clearColor(), fillColor: SKColor = SKColor.greenColor()) {
         super.init()
         
-        self.zPosition = GameWorld.zPositions.spaceshipHealthBar.rawValue
+        let spriteNodeBack = SKSpriteNode(texture: nil, color: backColor, size: size)
+        spriteNodeBack.texture?.filteringMode = Display.filteringMode
         
-        self.biggerSide = size.width > size.height ? size.width : size.height
+        self.fillMaxWidth = spriteNodeBack.size.width
         
-        let spriteNodeBorder = SKSpriteNode(texture: nil, color: borderColor, size: CGSize(width: biggerSide, height: 4))
-        spriteNodeBorder.texture?.filteringMode = Display.filteringMode
+        self.spriteNodeFill = SKSpriteNode(texture: nil, color: fillColor, size: size)
+        self.spriteNodeFill.texture?.filteringMode = Display.filteringMode
         
-        
-        self.greenBarMaxWidth = spriteNodeBorder.size.width - 2
-        
-        let back = SKSpriteNode(texture: nil, color: SKColor.blackColor(), size: CGSize(width: self.greenBarMaxWidth, height: 4 - 2))
-        back.texture?.filteringMode = Display.filteringMode
-        
-        self.greenBar = SKSpriteNode(texture: nil, color: SKColor.greenColor(), size: CGSize(width: self.greenBarMaxWidth, height: 4 - 2))
-        self.greenBar.texture?.filteringMode = Display.filteringMode
-        
-        
-        self.addChild(spriteNodeBorder)
-        self.addChild(back)
-        self.addChild(self.greenBar)
+        if let background = background {
+            background.color = backColor
+            background.colorBlendFactor = 1
+            self.addChild(background)
+        }
+        self.addChild(spriteNodeBack)
+        self.addChild(self.spriteNodeFill)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,37 +40,24 @@ class HealthBar: Control {
     }
     
     func update(position position:CGPoint) {
-        
-        switch self.barPosition {
-        case .up:
-            let x = position.x
-            let y = position.y + (self.biggerSide/2 + 4)
-            self.position = CGPoint(x: x, y: y)
-            break
-        case .down:
-            let x = position.x
-            let y = position.y - (self.biggerSide/2 + 4)
-            self.position = CGPoint(x: x, y: y)
-            break
-        default:
-            fatalError()
-            break
-        }
+        let x = position.x + self.positionOffset.x
+        let y = position.y + self.positionOffset.y
+        self.position = CGPoint(x: x, y: y)
     }
     
     func update(health:Int, maxHealth:Int) {
         
-        var width = Int((CGFloat(health) / CGFloat(maxHealth)) * self.greenBarMaxWidth)
-        let height = Int(self.greenBar.size.height)
+        var width = Int((CGFloat(health) / CGFloat(maxHealth)) * self.fillMaxWidth)
+        let height = Int(self.spriteNodeFill.size.height)
         
         if width < 0 {
             width = 0
         }
         
-        self.greenBar.size = CGSize(width: width, height: height)
+        self.spriteNodeFill.size = CGSize(width: width, height: height)
         
-        let x = -Int(self.greenBarMaxWidth)/2 + width/2
+        let x = -Int(self.fillMaxWidth)/2 + width/2
         let y = 0
-        self.greenBar.position = CGPoint(x: x, y: y)
+        self.spriteNodeFill.position = CGPoint(x: x, y: y)
     }
 }

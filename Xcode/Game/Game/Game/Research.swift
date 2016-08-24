@@ -135,6 +135,12 @@ extension Research {
         }
     }
     
+    static func chearUnlockAll() {
+        for researchType in Research.types {
+            researchType.researchsNeeded = []
+        }
+    }
+    
     static var types:[ResearchType] = [
         {
             let research = ResearchType(index:0, name:"Spaceship + Machine Gun", duration:28800, cost:0, lineType: .general)

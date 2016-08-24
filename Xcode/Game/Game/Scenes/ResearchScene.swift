@@ -300,6 +300,14 @@ class ResearchScene: GameScene {
             self.addChild(self.scrollNode!)
             self.scrollNode?.zPosition = -20
             
+            if let scrollNode = self.scrollNode {
+                if self.currentResearchCard != nil {
+                    scrollNode.canScroll = scrollNode.cells.count > 2
+                } else {
+                    scrollNode.canScroll = scrollNode.cells.count > 4
+                }
+            }
+            
         } else {
             self.scrollNode?.removeFromParent()
         }

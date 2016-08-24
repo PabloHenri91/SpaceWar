@@ -83,6 +83,7 @@ class MissionScene: GameScene {
         
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 20, y: 130, xAlign: .center, spacing: 16 , scrollDirection: .vertical)
         self.addChild(self.scrollNode)
+        self.scrollNode.canScroll = self.scrollNode.cells.count > 2
         
         self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
@@ -159,6 +160,7 @@ class MissionScene: GameScene {
         self.scrollNode.removeFromParent()
         
         self.scrollNode = ScrollNode(name: "scroll", cells: controlArray, x: 20, y: 130, xAlign: .center, spacing: 16 , scrollDirection: .vertical)
+        self.scrollNode.canScroll = self.scrollNode.cells.count > 2
         
         self.scrollNode.zPosition = -1000
         
@@ -220,7 +222,7 @@ class MissionScene: GameScene {
                 
             case .mission:
                 self.blackSpriteNode.hidden = true
-                self.scrollNode.canScroll = true
+                self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.chooseAsteroidAlert?.scrollNode?.removeFromParent()
                 self.chooseAsteroidAlert?.removeFromParent()
                 self.buyMinnerSpaceshipAlert?.removeFromParent()

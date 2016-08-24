@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "mothership.png",
+      "filename" : "mothershipRed.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "mothership@2x.png",
+      "filename" : "mothershipRed@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "mothership@3x.png",
+      "filename" : "mothershipRed@3x.png",
       "scale" : "3x"
     }
   ],

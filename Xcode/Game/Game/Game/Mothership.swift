@@ -22,9 +22,12 @@ class Mothership: Control {
     
     var spaceships = [Spaceship]()
     
-    var healthBar:HealthBar!
+    private var healthBar:HealthBar!
+    var labelHealth:Label!
     
     var explosionSoundEffect:SoundEffect!
+    
+    var cropNode:SKCropNode!
     
     override var description: String {
         return "\nMothership\n" +
@@ -43,13 +46,13 @@ class Mothership: Control {
     
     init(level:Int) {
         super.init()
-        self.load(level: level)
+        self.load(level: level, blueTeam: false)
     }
     
     init(mothershipData:MothershipData) {
         super.init()
         self.mothershipData = mothershipData
-        self.load(level: mothershipData.level.integerValue)
+        self.load(level: mothershipData.level.integerValue, blueTeam: true)
         
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
@@ -58,16 +61,41 @@ class Mothership: Control {
         }
     }
     
-    private func load(level level:Int) {
+    private func load(level level:Int, blueTeam: Bool) {
         self.level = level
         
         self.health = 1
         self.maxHealth = health
         
         //Gráfico
-        self.spriteNode = SKSpriteNode(imageNamed: "mothership")
+        if blueTeam {
+            self.spriteNode = SKSpriteNode(imageNamed: "mothershipBlue")
+        } else {
+            self.spriteNode = SKSpriteNode(imageNamed: "mothershipRed")
+        }
         self.spriteNode.texture?.filteringMode = Display.filteringMode
+        
+        
         self.addChild(self.spriteNode)
+        
+        let mothershipHealthBarMask = SKSpriteNode(imageNamed: "mothershipHealthBarMask")
+        mothershipHealthBarMask.texture?.filteringMode = Display.filteringMode
+        if blueTeam {
+            mothershipHealthBarMask.color = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
+        } else {
+            mothershipHealthBarMask.color = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
+        }
+        mothershipHealthBarMask.colorBlendFactor = 1
+        
+        self.cropNode = SKCropNode()
+        self.cropNode.maskNode = mothershipHealthBarMask
+        self.addChild(self.cropNode)
+        
+        
+        let mothershipWhiteShape = SKSpriteNode(imageNamed: "mothershipWhiteShape")
+        mothershipWhiteShape.position = CGPoint(x: 0, y: -6)
+        mothershipWhiteShape.texture?.filteringMode = Display.filteringMode
+        self.addChild(mothershipWhiteShape)
         
         self.loadPhysics(rectangleOfSize: self.spriteNode.size)
         
@@ -89,28 +117,71 @@ class Mothership: Control {
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
     
-    func loadHealthBar(gameWorld:GameWorld, borderColor:SKColor) {
-        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, borderColor: borderColor)
-        gameWorld.addChild(self.healthBar)
+    func loadHealthBar(blueTeam blueTeam:Bool = true) {
+        
+        var fillColor = SKColor.greenColor()
+        
+        if blueTeam {
+            fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
+        } else {
+            fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
+        }
+        
+        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, fillColor: fillColor)
+        if !blueTeam {
+            self.healthBar.zRotation = self.zRotation
+        }
+        self.cropNode.addChild(self.healthBar)
+        
+        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+        let fontShadowOffset = CGPoint(x: 0, y: -1)
+        let fontName = GameFonts.fontName.museo1000
+        
+        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: -39, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.labelHealth.zRotation = self.zRotation
+        
+        self.addChild(self.labelHealth)
+        
+        self.updateHealthBarValue()
     }
     
     func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
+        
+        let mothershipSpaceshipSlot = SKSpriteNode(imageNamed: "mothershipSpaceshipSlot")
+        mothershipSpaceshipSlot.texture?.filteringMode = Display.filteringMode
+        self.addChild(mothershipSpaceshipSlot)
+        
         switch i {
         case 0:
-            spaceship.position = self.convertPoint(CGPoint(x: -103, y: 78), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -103, y: -7), toNode: gameWorld)
             break
         case 1:
-            spaceship.position = self.convertPoint(CGPoint(x: -34, y: 78), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -34, y: -7), toNode: gameWorld)
             break
         case 2:
-            spaceship.position = self.convertPoint(CGPoint(x: 34, y: 78), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 34, y: -7), toNode: gameWorld)
             break
         case 3:
-            spaceship.position = self.convertPoint(CGPoint(x: 103, y: 78), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 103, y: -7), toNode: gameWorld)
             break
         default:
             break
         }
+        mothershipSpaceshipSlot.position = gameWorld.convertPoint(spaceship.position, toNode: self)
+        
+        if let weapon = spaceship.weapon {
+            mothershipSpaceshipSlot.color = weapon.type.color
+            mothershipSpaceshipSlot.colorBlendFactor = 1
+        }
+        
+        let spaceshipShadow = SKSpriteNode(imageNamed: spaceship.type.skin + "Mask")
+        spaceshipShadow.texture?.filteringMode = Display.filteringMode
+        spaceshipShadow.setScale(spaceship.type.scale)
+        spaceshipShadow.color = SKColor(red: 0, green: 0, blue: 0, alpha: 12/100)
+        spaceshipShadow.colorBlendFactor = 1
+        spaceshipShadow.position = gameWorld.convertPoint(CGPoint(x: spaceship.position.x, y: spaceship.position.y - (5 * cos(self.zRotation))), toNode: self)
+        self.addChild(spaceshipShadow)
+        
         spaceship.startingPosition = spaceship.position
         spaceship.destination = spaceship.position
         
@@ -118,13 +189,10 @@ class Mothership: Control {
         spaceship.startingZPosition = spaceship.zRotation
         
         if isAlly {
-            spaceship.loadHealthBar(gameWorld, borderColor: SKColor.blueColor())
-            spaceship.healthBar.update(position: spaceship.position)
+            spaceship.loadHealthBar(gameWorld, blueTeam: true)
             
         } else {
-            spaceship.loadHealthBar(gameWorld, borderColor: SKColor.redColor())
-            spaceship.healthBar.barPosition = .down
-            spaceship.healthBar.update(position: spaceship.position)
+            spaceship.loadHealthBar(gameWorld, blueTeam: false)
         }
         spaceship.loadWeaponRangeSprite(gameWorld)
         spaceship.loadWeaponDetail()
@@ -139,6 +207,11 @@ class Mothership: Control {
             self.loadSpaceship(spaceship, gameWorld: gameWorld, isAlly: isAlly, i: i)
             i += 1
         }
+    }
+    
+    func updateHealthBarValue() {
+        self.healthBar.update(self.health, maxHealth: self.maxHealth)
+        self.labelHealth.setText(self.health.description + "/" + self.maxHealth.description)
     }
     
     func canBeTarget(spaceship:Spaceship) -> Bool {
@@ -180,7 +253,7 @@ class Mothership: Control {
             shot.damage = 0
             shot.removeFromParent()
             
-            self.healthBar?.update(self.health, maxHealth: self.maxHealth)
+            self.updateHealthBarValue()
         }
     }
     

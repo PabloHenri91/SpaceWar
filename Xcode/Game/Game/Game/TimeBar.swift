@@ -37,13 +37,14 @@ class TimeBar: CropBox {
         }
         
         self.greenBar = SKSpriteNode(texture: nil, color: color, size: CGSize(width: 1, height: texture.size().height + 2))
-        self.greenBar.anchorPoint = CGPoint(x: 0, y: 1)
         self.greenBar.texture?.filteringMode = Display.filteringMode
+        self.greenBar.anchorPoint = CGPoint(x: 0, y: 1)
 
         self.addChild(self.greenBar)
         
         if loadBorder {
             let border = SKSpriteNode(imageNamed: textureName + borderTextureName)
+            border.texture?.filteringMode = Display.filteringMode
             border.anchorPoint = CGPoint(x: 0, y: 1)
             self.addChild(border)
         }

@@ -69,6 +69,7 @@ class SpaceshipSlot: Control {
         }
         
         let spriteNode = SKSpriteNode(imageNamed: imageName)
+        spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.position = CGPoint(x: 0, y: -30)
         spaceship.addChild(spriteNode)
         

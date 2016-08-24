@@ -82,6 +82,7 @@ class BuySpaceshipAlert: Box {
             self.addChild(minnerSpaceship)
             
             let minnerSpaceshipTinySpaceship = SKSpriteNode(imageNamed: spaceship.type.skin + "Mask")
+            minnerSpaceshipTinySpaceship.texture?.filteringMode = Display.filteringMode
             minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
             minnerSpaceshipTinySpaceship.color = SKColor(red: 0, green: 0, blue: 0, alpha: 0.75)
             minnerSpaceshipTinySpaceship.colorBlendFactor = 1

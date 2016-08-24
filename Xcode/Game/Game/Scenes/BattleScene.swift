@@ -73,12 +73,12 @@ class BattleScene: GameScene {
         // Mothership
         self.mothership = Mothership(mothershipData: self.playerData.motherShip)
         self.gameWorld.addChild(self.mothership)
-        self.mothership.position = CGPoint(x: 0, y: -330)
+        self.mothership.position = CGPoint(x: 0, y: -242)
         
         // BotMothership
         self.botMothership = Mothership(level: self.mothership.level)
         self.botMothership.zRotation = CGFloat(M_PI)
-        self.botMothership.position = CGPoint(x: 0, y: 330)
+        self.botMothership.position = CGPoint(x: 0, y: 242)
         self.gameWorld.addChild(self.botMothership)
         
         // BotSpaceships
@@ -98,15 +98,12 @@ class BattleScene: GameScene {
         self.mothership.health = GameMath.mothershipMaxHealth(self.mothership, enemyMothership: self.botMothership)
         self.mothership.maxHealth = self.mothership.health
         
-        self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
-        self.mothership.healthBar.update(position: self.mothership.position)
+        self.mothership.loadHealthBar()
         
         self.botMothership.health = self.mothership.health
         self.botMothership.maxHealth = self.mothership.health
         
-        self.botMothership.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
-        self.botMothership.healthBar.barPosition = .down
-        self.botMothership.healthBar.update(position: self.botMothership.position)
+        self.botMothership.loadHealthBar(blueTeam: false)
         
         self.mothership.loadSpaceships(self.gameWorld)
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
@@ -129,7 +126,7 @@ class BattleScene: GameScene {
                 }
                 if enemyHealth <= 0 {
                     self.botMothership.health = self.botMothership.health - Int(1 + Int(self.botMothership.level / 10))
-                    self.botMothership.healthBar.update(self.botMothership.health, maxHealth: self.botMothership.maxHealth)
+                    self.botMothership.updateHealthBarValue()
                     if self.botMothership.health <= 0 {
                         self.botMothership.die()
                         self.nextState = .battleEnd
@@ -142,7 +139,7 @@ class BattleScene: GameScene {
                 }
                 if myHealth <= 0 {
                     self.mothership.health = self.mothership.health - Int(1 + Int(self.mothership.level / 10))
-                    self.mothership.healthBar.update(self.mothership.health, maxHealth: self.mothership.maxHealth)
+                    self.mothership.updateHealthBarValue()
                     if self.mothership.health <= 0 {
                         self.mothership.die()
                         self.nextState = .battleEnd

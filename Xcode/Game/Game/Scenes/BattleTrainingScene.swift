@@ -83,10 +83,9 @@ class BattleTrainingScene: GameScene {
         
         
         self.gameWorld.addChild(self.mothership)
-        self.mothership.position = CGPoint(x: 0, y: -330)
+        self.mothership.position = CGPoint(x: 0, y: -242)
         
-        self.mothership.loadHealthBar(self.gameWorld, borderColor: SKColor.blueColor())
-        self.mothership.healthBar.update(position: self.mothership.position)
+        self.mothership.loadHealthBar()
         
         // Spaceships
         let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
@@ -150,7 +149,7 @@ class BattleTrainingScene: GameScene {
                 }
                 var meteorHealth = 0
                 for meteor in self.enemySpaceships {
-                    meteor.healthBar.update(position: meteor.position)
+                    meteor.updateHealthBarPosition()
                     meteorHealth += meteor.health
                 }
                 if meteorHealth <= 0 {
@@ -173,7 +172,7 @@ class BattleTrainingScene: GameScene {
                 self.mothership.update(enemySpaceships: self.enemySpaceships)
                 var meteorHealth = 0
                 for meteor in self.enemySpaceships {
-                    meteor.healthBar.update(position: meteor.position)
+                    meteor.updateHealthBarPosition()
                     meteorHealth += meteor.health
                 }
                 if meteorHealth <= 0 {
@@ -357,9 +356,9 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
-                meteor.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
+                meteor.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor.position = CGPoint(x: 0, y: 200)
-                meteor.healthBar.update(position: meteor.position)
+                meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
                 meteor.isInsideAMothership = false
                 
@@ -418,10 +417,9 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
-                meteor.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
+                meteor.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor.position = CGPoint(x: -100, y: -116)
-                meteor.healthBar.barPosition = .up
-                meteor.healthBar.update(position: meteor.position)
+                meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
                 meteor.isInsideAMothership = false
                 self.gameWorld.addChild(meteor)
@@ -429,10 +427,9 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor2 = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor2.setBitMasksToSpaceship()
-                meteor2.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
+                meteor2.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor2.position = CGPoint(x: 100, y: -116)
-                meteor2.healthBar.barPosition = .up
-                meteor2.healthBar.update(position: meteor2.position)
+                meteor2.updateHealthBarPosition()
                 meteor2.physicsBody?.dynamic = true
                 meteor2.isInsideAMothership = false
                 self.gameWorld.addChild(meteor2)
@@ -495,11 +492,9 @@ class BattleTrainingScene: GameScene {
                 self.botMothership!.maxHealth = 150
                 if let botMothership = self.botMothership {
                     botMothership.zRotation = CGFloat(M_PI)
-                    botMothership.position = CGPoint(x: 0, y: 330)
+                    botMothership.position = CGPoint(x: 0, y: 242)
                     
-                    botMothership.loadHealthBar(self.gameWorld, borderColor: SKColor.redColor())
-                    botMothership.healthBar.barPosition = .down
-                    botMothership.healthBar.update(position: botMothership.position)
+                    botMothership.loadHealthBar(blueTeam: false)
                     
                     for _ in 0 ..< 4 {
                         botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true))

@@ -173,7 +173,7 @@ extension Weapon {
         
         {
             let weaponType = WeaponType(maxLevel: 2,
-                damage: 15, range: 300, fireRate: 4)
+                damage: 15, range: 200, fireRate: 4)
             weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
             weaponType.shotSkin = "shotDA"
             
