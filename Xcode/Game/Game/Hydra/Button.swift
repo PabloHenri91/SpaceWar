@@ -418,7 +418,7 @@ class Button: Control {
         if let scene = self.scene {
             return self.convertPoint(self.position, toNode: scene)
         }
-        print("button.scene == nil! Algo saiu errado")
+        //print("button.scene == nil! Algo saiu errado")
         return CGPoint.zero
     }
 }

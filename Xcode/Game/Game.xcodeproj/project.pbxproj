@@ -102,6 +102,7 @@
 		842FB0881D625B48007EAD9C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0871D625B48007EAD9C /* StoreKit.framework */; };
 		842FB08A1D625B4D007EAD9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */; };
 		842FB08C1D625B55007EAD9C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB08B1D625B55007EAD9C /* WebKit.framework */; };
+		84314BFF1D707C5A00B7E7C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8461B4F91D47CAF900BB6B27 /* Localizable.strings */; };
 		8436205E1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */; };
 		8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204A1CEB77400082A9D7 /* BlackSpriteNode.swift */; };
 		843620601CEB77400082A9D7 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436204B1CEB77400082A9D7 /* Box.swift */; };
@@ -1108,6 +1109,7 @@
 				84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				84C0118C1D4659B800EC7080 /* laser4.mp3 in Resources */,
 				843620851CEB77400082A9D7 /* DefaultNameList in Resources */,
+				84314BFF1D707C5A00B7E7C7 /* Localizable.strings in Resources */,
 				844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */,
 				848FD6D01D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */,
 				84BF049B1D50B8EF00F49792 /* museosansrounded-900-webfont.ttf in Resources */,

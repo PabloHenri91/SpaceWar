@@ -21,7 +21,7 @@ class MemoryCard {
     }
     
     func newGame() {
-        print("Creating new game...")
+        //print("Creating new game...")
         
         self.playerData = self.newPlayerData()
         
@@ -32,7 +32,7 @@ class MemoryCard {
     func saveGame() {
         if(self.autoSave) {
             self.autoSave = false
-            print("Saving game...")
+            //print("Saving game...")
             self.saveContext()
             self.autoSave = true
         }
@@ -40,12 +40,12 @@ class MemoryCard {
     
     func loadGame() {
         if let _ = self.playerData {
-            print("Game already loaded.")
+            //print("Game already loaded.")
         } else {
             let fetchRequestData:NSArray = self.fetchRequest()
             
             if(fetchRequestData.count > 0) {
-                print("Loading game...")
+                //print("Loading game...")
                 self.playerData = (fetchRequestData.lastObject as! PlayerData)
                 self.updateModelVersion()
                 self.autoSave = true
@@ -111,7 +111,7 @@ class MemoryCard {
     }
     
     func reset() {
-        print("MemoryCard.reset()")
+        //print("MemoryCard.reset()")
         
         let fetchRequestData:NSArray = fetchRequest()
         

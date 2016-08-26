@@ -53,7 +53,7 @@ class HangarSpaceshipCard: Control {
         self.buttonUpgrade = Button(textureName: "hangarButtonGray", text: "UPGRADE", fontSize: 13 ,  x: 31, y: 120, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonUpgrade)
 
-        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level " + self.spaceship.level.description , fontSize: 13 ,  x: 75, y: 100, shadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level ".translation() + self.spaceship.level.description , fontSize: 13 ,  x: 75, y: 100, shadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
         
@@ -74,7 +74,7 @@ class HangarSpaceshipCard: Control {
     
     func reloadCard() {
         
-        self.labelLevel.setText("Level " + self.spaceship.level.description)
+        self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
         self.labelName.setText((self.spaceship.factoryDisplayName()).uppercaseString)
         
         self.spaceshipImage.removeFromParent()

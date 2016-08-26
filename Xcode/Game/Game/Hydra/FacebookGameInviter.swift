@@ -99,7 +99,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             }
             
         }) { (error) in
-            print(error)
+            //print(error)
         }
     }
     

@@ -362,7 +362,7 @@ class PlayerDataCardStatistics: Control {
                 if spaceshipData.killCount.integerValue > bestSspaceshipKillCount {
                     if let weaponData = (spaceshipData.weapons.anyObject() as? WeaponData) {
                         bestSspaceshipKillCount = spaceshipData.killCount.integerValue
-                        bestSpaceshipName = Spaceship.displayName(spaceshipData.type.integerValue, weaponType: weaponData.type.integerValue) + ". Killed "
+                        bestSpaceshipName = Spaceship.displayName(spaceshipData.type.integerValue, weaponType: weaponData.type.integerValue) + ". Killed ".translation()
                     }
                 }
             }

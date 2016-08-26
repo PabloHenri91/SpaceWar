@@ -1,7 +1,76 @@
-/* 
-  Localizable.strings
-  Game
+/*
+ Localizable.strings
+ Game
+ 
+ Created by Pablo Henrique Bertaco on 7/26/16.
+ Copyright © 2016 PabloHenri91. All rights reserved.
+ */
 
-  Created by Pablo Henrique Bertaco on 7/26/16.
-  Copyright © 2016 PabloHenri91. All rights reserved.
-*/
+
+
+"Ranking" = "";
+"Available Updates" = "";
+"General Statistics" = "";
+"Name" = "";
+"Victories: " = "";
+"MVP: " = "";
+". Killed " = "";
+"enemies." = "";
+"Best Winning Streak: " = "";
+"Collected a total of " = "";
+" fragments." = "";
+
+
+
+//MothershipScene
+
+"BATTLESHIPS" = "";
+"Next charge: " = "";
+"Full" = "";
+"Social" = "";
+"BATTLE" = "";
+"Level" = "";
+"Battle" = "";
+
+//ResearchScene
+
+"BEGIN" = "";
+"AVAILABLE RESEARCHES" = "";
+"RESEARCH IN PROGRESS" = "";
+"NO AVAILABLE RESEARCHES" = "";
+"Researches" = "";
+
+
+
+// MissionScene
+
+ "MINING SPACESHIP" = "";
+ "No mining now." = "";
+ "BEGIN" = "";
+ "UPGRADE" = "";
+ "Miners" = "";
+
+
+
+// FactoryScene
+
+"COMMON" = "";
+"Speed: " = "";
+"Armor: " = "";
+"Damage: " = "";
+"Range: " = "";
+"Fire Rate: " = "";
+"FACTORY" = "";
+"Factory" = "";
+
+
+
+// HangarScene
+
+"SELECT SPACESHIPS" = "";
+"UPGRADE" = "";
+"CHANGE" = "";
+"UPGRADE" = "";
+"Hangar" = "";
+
+

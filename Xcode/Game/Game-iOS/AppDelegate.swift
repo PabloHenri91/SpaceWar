@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //TODO: applicationSignificantTimeChange
         //http://stackoverflow.com/questions/13741585/notify-app-when-ipad-date-time-settings-changed
         //http://stackoverflow.com/questions/12221528/nsdate-get-precise-time-independent-of-device-clock
-        print("treta na hora")
+        //print("treta na hora")
         MemoryCard.sharedInstance.resetTimers()
         Metrics.tryCheat()
     }
@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 let spaceshipName = Spaceship.types[spaceshipUnlocked].name
                                 let weaponName = Weapon.types[weaponUnlocked].name
                                 
-                                let alertBody = "Reseach completed. " + spaceshipName + " with " + weaponName + " is available for construction at the Factory."
+                                let alertBody = "Research completed. " + spaceshipName + " with " + weaponName + " is available for construction at the Factory."
                                 let fireDate = GameMath.finishDate(timeLeft: timeLeft)
                                 
                                 let notification = ABNotification(alertBody: alertBody)

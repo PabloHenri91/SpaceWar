@@ -94,7 +94,7 @@ class HangarSpaceshipDetails: Box {
         spaceshipImage.screenPosition = CGPoint(x: 49, y: 78)
         spaceshipImage.resetPosition()
         
-        self.labelLevel = Label(color:SKColor.whiteColor() ,text: "Level " + self.spaceship.level.description , fontSize: 13, x: 49, y: 113, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        self.labelLevel = Label(color:SKColor.whiteColor() ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 49, y: 113, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
         if showUpgrade {
@@ -243,7 +243,7 @@ class HangarSpaceshipDetails: Box {
     }
     
     func reload() {
-        self.labelLevel.setText("Level " + self.spaceship.level.description)
+        self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
         
         let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
         self.labelLifeValue.setText(life.description)

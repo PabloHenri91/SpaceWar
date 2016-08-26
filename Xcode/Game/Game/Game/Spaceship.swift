@@ -543,11 +543,9 @@ class Spaceship: Control {
             if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
                 if let spaceship = shot.shooter as? Spaceship {
-                    if spaceship.isAlly {
-                        if let spaceshipData = spaceship.spaceshipData {
-                            spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
-                            Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
-                        }
+                    if let spaceshipData = spaceship.spaceshipData {
+                        spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
+                        Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
                     }
                 }
             }

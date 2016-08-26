@@ -73,7 +73,7 @@ class SpaceshipSlot: Control {
         spriteNode.position = CGPoint(x: 0, y: -30)
         spaceship.addChild(spriteNode)
         
-        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level " + spaceship.level.description, fontSize: 13, fontName: GameFonts.fontName.museo1000, shadowColor: lableLevelShadowColor, shadowOffset: CGPoint(x: 0, y: -1))
+        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level ".translation() + spaceship.level.description, fontSize: 13, fontName: GameFonts.fontName.museo1000, shadowColor: lableLevelShadowColor, shadowOffset: CGPoint(x: 0, y: -1))
         spriteNode.addChild(self.labelLevel!)
     }
     
@@ -81,7 +81,7 @@ class SpaceshipSlot: Control {
         if let spaceship = self.spaceship {
             if let labelLevel = self.labelLevel {
                 if let spaceshipData = spaceship.spaceshipData {
-                    let text = "Level " + spaceshipData.level.description
+                    let text = "Level ".translation() + spaceshipData.level.description
                     
                     labelLevel.setText(text)
                     

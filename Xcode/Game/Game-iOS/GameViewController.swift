@@ -83,7 +83,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             if viewController != nil {
                 self.presentViewController(viewController!, animated: true, completion: nil)
             } else {
-                print("GKLocalPlayer.authenticated: " + GKLocalPlayer.localPlayer().authenticated.description)
+                //print("GKLocalPlayer.authenticated: " + GKLocalPlayer.localPlayer().authenticated.description)
             }
             
             if localPlayer.authenticated {
@@ -110,7 +110,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
                 
                 GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -> Void in
                     if error != nil {
-                        print("error")
+                        //print("error")
                     }
                 })
             }

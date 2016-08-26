@@ -1,15 +1,7 @@
-/* 
-  Localizable.strings
-  Game
-
-  Created by Pablo Henrique Bertaco on 7/26/16.
-  Copyright © 2016 PabloHenri91. All rights reserved.
-*/
-
-//GameTabBar
-"Researches" = "Researches";
-"Miners" = "Miners";
-"Battle" = "Battle";
-"Factory" = "Factory";
-"Hangar" = "Hangar";
-
+/*
+ Localizable.strings
+ Game
+ 
+ Created by Pablo Henrique Bertaco on 7/26/16.
+ Copyright © 2016 PabloHenri91. All rights reserved.
+ */

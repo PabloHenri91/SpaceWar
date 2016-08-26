@@ -164,7 +164,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         default:
             #if DEBUG
-                print("didBeginContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
+                //print("didBeginContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
             #endif
             break
         }
@@ -283,7 +283,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             
         default:
             #if DEBUG
-                print("didEndContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
+                //print("didEndContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
             #endif
             break
         }

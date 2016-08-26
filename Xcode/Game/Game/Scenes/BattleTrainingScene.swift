@@ -241,7 +241,7 @@ class BattleTrainingScene: GameScene {
                 
             default:
                 #if DEBUG
-                    print(self.state)
+                    //print(self.state)
                     fatalError()
                 #endif
                 break
@@ -595,7 +595,7 @@ class BattleTrainingScene: GameScene {
                 
             default:
                 #if DEBUG
-                    print(self.state)
+                    //print(self.state)
                     fatalError()
                 #endif
                 break
@@ -710,7 +710,7 @@ class BattleTrainingScene: GameScene {
                     
                 default:
                     #if DEBUG
-                        print(self.state)
+                        //print(self.state)
                         fatalError()
                     #endif
                     break
@@ -797,7 +797,7 @@ class BattleTrainingScene: GameScene {
                     
                 default:
                     #if DEBUG
-                        print(self.state)
+                        //print(self.state)
                         fatalError()
                     #endif
                     break
@@ -901,7 +901,7 @@ class BattleTrainingScene: GameScene {
                     
                 default:
                     #if DEBUG
-                        print(self.state)
+                        //print(self.state)
                         fatalError()
                     #endif
                     break

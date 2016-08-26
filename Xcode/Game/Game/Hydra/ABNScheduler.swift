@@ -202,27 +202,27 @@ class ABNScheduler {
         let notificationQueue = ABNQueue.queue.notificationsQueue()
         
         if notifs?.count == 0 && notificationQueue.count == 0 {
-            print("There are no scheduled notifications")
+            //print("There are no scheduled notifications")
             return
         }
         
-        print("SCHEDLUED")
+        //print("SCHEDLUED")
         
         var i = 1
         for note in notifs! {
             let id = note.userInfo![identifierKey] as! String
-            print("\(i) Alert body: \(note.alertBody!) - Fire date: \(note.fireDate!) - Repeats: \(ABNotification.calendarUnitToRepeats(calendarUnit: note.repeatInterval)) - Identifier: \(id)")
+            //print("\(i) Alert body: \(note.alertBody!) - Fire date: \(note.fireDate!) - Repeats: \(ABNotification.calendarUnitToRepeats(calendarUnit: note.repeatInterval)) - Identifier: \(id)")
             i += 1
         }
         
-        print("QUEUED")
+        //print("QUEUED")
         
         for note in notificationQueue {
-            print("\(i) Alert body: \(note.alertBody) - Fire date: \(note.fireDate!) - Repeats: \(note.repeatInterval) - Identifier: \(note.identifier)")
+            //print("\(i) Alert body: \(note.alertBody) - Fire date: \(note.fireDate!) - Repeats: \(note.repeatInterval) - Identifier: \(note.identifier)")
             i += 1
         }
         
-        print("")
+        //print("")
     }
 }
 

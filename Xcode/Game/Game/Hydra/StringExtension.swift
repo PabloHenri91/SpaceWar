@@ -26,7 +26,11 @@ extension String {
     }
     
     func translation() -> String {
-        return NSLocalizedString(self, comment: self)
+        let translated = NSLocalizedString(self, comment: self)
+//        if translated == self {
+//            print(self)
+//        }
+        return translated
     }
     
     static func winEmoji() -> String {

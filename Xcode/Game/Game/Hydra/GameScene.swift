@@ -212,7 +212,7 @@ class GameScene: SKScene {
         func printTree(name:String = "root") {
             for node in self.children {
                 let nodeName = node.className.componentsSeparatedByString(".").last!
-                print(name + " " + nodeName + " " + node.zPosition.description)
+                //print(name + " " + nodeName + " " + node.zPosition.description)
                 node.printTree(name + " " + nodeName)
             }
         }

@@ -182,7 +182,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                     FacebookGameInviter.sharedInstance.inviteAllFriends(self,idFriendArray: idFriendArray)
                     
                 } else {
-                    print(error)
+                    //print(error)
                     self.nextState = .normal
                 }
             }
@@ -196,7 +196,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     
     
     func alertError(error: String) {
-        print(error)
+        //print(error)
         self.nextState = .normal
     }
     
