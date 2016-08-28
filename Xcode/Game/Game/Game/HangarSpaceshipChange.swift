@@ -164,8 +164,16 @@ class HangarSpaceshipChange:Box {
         
         
         self.runAction(SKAction.sequence([action1, action2])) {
-        
-            let spaceships = MemoryCard.sharedInstance.playerData.spaceships
+            
+            let spaceships = self.playerData.spaceships.sort({ (item0, item1) -> Bool in
+                if let spaceshipData0 = item0 as? SpaceshipData {
+                    if let spaceshipData1 = item1 as? SpaceshipData {
+                        return spaceshipData0.level.integerValue > spaceshipData1.level.integerValue
+                    }
+                }
+                return false
+            })
+
             
             if spaceships.count > 4 {
                 

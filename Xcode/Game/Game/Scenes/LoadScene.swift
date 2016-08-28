@@ -26,6 +26,10 @@ class LoadScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
+        #if DEBUG
+            MemoryCard.sharedInstance.playerData.points = 1000000
+            Research.cheatDuration()
+        #endif
     }
     
     override func update(currentTime: NSTimeInterval) {
