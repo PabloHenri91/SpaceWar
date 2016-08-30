@@ -11,14 +11,14 @@ import SpriteKit
 class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     enum zPositions: CGFloat {
-        case battleArea = 0
-        case mothership = 10
-        case shot = 20
-        case spaceship = 30
-        case sparks = 40
-        case explosion = 50
-        case spaceshipHealthBar = 60
-        case damageEffect = 70
+        case battleArea = -20
+        case mothership = -10
+        case shot = 0
+        case spaceship = 10
+        case sparks = 20
+        case explosion = 30
+        case spaceshipHealthBar = 40
+        case damageEffect = 50
     }
     
     var physicsWorld:SKPhysicsWorld!
@@ -29,8 +29,13 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
-        self.addChild(SKSpriteNode(imageNamed: "battleBackground"))
-        self.addChild(SKSpriteNode(imageNamed: "battleArea"))
+        var spriteNode = SKSpriteNode(imageNamed: "battleBackground")
+        spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue
+        self.addChild(spriteNode)
+        
+        spriteNode = SKSpriteNode(imageNamed: "battleArea")
+        spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
+        self.addChild(spriteNode)
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity

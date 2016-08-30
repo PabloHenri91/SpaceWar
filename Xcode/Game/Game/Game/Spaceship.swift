@@ -10,6 +10,9 @@ import SpriteKit
 
 class Spaceship: Control {
     
+    var emitterNode:SKEmitterNode!
+    var emitterNodeParticleBirthRate:CGFloat = 0
+    
     static var spaceshipList = Set<Spaceship>()
     
     static var selectedSpaceship:Spaceship?
@@ -133,6 +136,19 @@ class Spaceship: Control {
         }
     }
     
+    func loadJetEffect(gameWorld:GameWorld, color: SKColor) {
+        self.emitterNode = SKEmitterNode(fileNamed: "Jet.sks")!
+        self.emitterNode.particleColorSequence = nil
+        self.emitterNode.particleColorBlendFactor = 1
+        self.emitterNode.particleColor = color
+        self.emitterNode.particleBirthRate = 0
+        self.emitterNode.zPosition = self.zPosition + 1
+        self.emitterNode.particleSize = CGSize(width: 10, height: 10)
+        
+        self.emitterNode.targetNode = self.parent
+        self.parent!.addChild(self.emitterNode)
+    }
+    
     func loadHealthBar(gameWorld:GameWorld, blueTeam:Bool) {
         
         var fillColor:SKColor!
@@ -190,6 +206,8 @@ class Spaceship: Control {
         
         self.updateHealthBarPosition()
         self.updateHealthBarValue()
+        
+        self.loadJetEffect(gameWorld, color: backColor)
     }
     
     func loadWeaponRangeSprite(gameWorld:GameWorld) {
@@ -397,18 +415,36 @@ class Spaceship: Control {
     
     func update(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
+        self.emitterNodeParticleBirthRate = 0
+        
+        
         self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
         self.updateHealthBarPosition()
         
-        //TODO: exportar para função
+        self.updateWeaponRangeSprite()
+        
+        self.emitterNode.particleBirthRate = self.emitterNodeParticleBirthRate
+        self.emitterNode.particleSpeed = self.emitterNodeParticleBirthRate
+        self.emitterNode.particleSpeedRange = self.emitterNodeParticleBirthRate/2
+        self.emitterNode.position = self.position
+        self.emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
+    }
+    
+    func updateWeaponRangeSprite() {
         if let weaponRangeSprite = self.weaponRangeSprite {
             weaponRangeSprite.position = self.position
-            if weaponRangeSprite.alpha > 0 {
-                weaponRangeSprite.alpha -= 0.01666666667
+            
+            if self.health <= 0 {
+                weaponRangeSprite.alpha = 0
+            } else {
+                if self != Spaceship.selectedSpaceship {
+                    if weaponRangeSprite.alpha > 0 {
+                        weaponRangeSprite.alpha -= 0.01666666667
+                    }
+                }
             }
         }
-        //
     }
     
     func setBitMasksToMothershipSpaceship() {
@@ -646,6 +682,7 @@ class Spaceship: Control {
                         if velocitySquared < self.maxVelocitySquared {
                             self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                         }
+                        self.emitterNodeParticleBirthRate = CGFloat(self.speedAtribute * 20)
                     }
                 }
             }
@@ -676,6 +713,7 @@ class Spaceship: Control {
                             if velocitySquared < self.maxVelocitySquared {
                                 self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                             }
+                            self.emitterNodeParticleBirthRate = CGFloat(self.speedAtribute * 20)
                         }
                     }
                 }

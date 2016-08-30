@@ -135,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let timeLeft = GameMath.timeLeft(startDate: missionSpaceshipData.startMissionDate!, duration: missionType.duration)
                     if timeLeft > 1 {
                         
-                        let alertBody = "Mission Spaceship finished mining the " + missionType.name
+                        let alertBody = "Mining Spaceship found " + missionType.pointsBonus.description + " fragments at the " + missionType.name
                         let fireDate = GameMath.finishDate(timeLeft: timeLeft)
                         
                         let notification = ABNotification(alertBody: alertBody)

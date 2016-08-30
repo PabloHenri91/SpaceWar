@@ -84,6 +84,8 @@
 		84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */; };
 		842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842640EC1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
+		842AD41E1D74CDA3002C4AFE /* Jet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 842AD41D1D74CDA3002C4AFE /* Jet.sks */; };
+		842AD41F1D74CDA3002C4AFE /* Jet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 842AD41D1D74CDA3002C4AFE /* Jet.sks */; };
 		842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		842FB0591D624A9F007EAD9C /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB0491D624A9F007EAD9C /* AdColony.framework */; };
 		842FB06C1D624BA2007EAD9C /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */; };
@@ -342,6 +344,7 @@
 		84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipSlot.swift; sourceTree = "<group>"; };
 		84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuySpaceshipAlert.swift; sourceTree = "<group>"; };
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
+		842AD41D1D74CDA3002C4AFE /* Jet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Jet.sks; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
 		842FB0491D624A9F007EAD9C /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
 		842FB06B1D624BA2007EAD9C /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
@@ -656,6 +659,14 @@
 			name = Hangar;
 			sourceTree = "<group>";
 		};
+		842AD4201D74CDFC002C4AFE /* Jet */ = {
+			isa = PBXGroup;
+			children = (
+				842AD41D1D74CDA3002C4AFE /* Jet.sks */,
+			);
+			name = Jet;
+			sourceTree = "<group>";
+		};
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -903,6 +914,7 @@
 		84D621201D258E39005D550C /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				842AD4201D74CDFC002C4AFE /* Jet */,
 				8495A35C1D4684F400A4205F /* Spark */,
 				848742351D25925500A8082D /* Explosion */,
 			);
@@ -1085,6 +1097,7 @@
 				848FD6CF1D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */,
 				848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */,
 				84C0118F1D4659B800EC7080 /* laser6.mp3 in Resources */,
+				842AD41E1D74CDA3002C4AFE /* Jet.sks in Resources */,
 				844CF2721CE77B400032F6AA /* Main.storyboard in Resources */,
 				843620841CEB77400082A9D7 /* DefaultNameList in Resources */,
 				84C011911D4659B800EC7080 /* laser7.mp3 in Resources */,
@@ -1124,6 +1137,7 @@
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
 				84C011941D4659B800EC7080 /* laser8.mp3 in Resources */,
 				84C0115B1D46433400EC7080 /* explosion1.wav in Resources */,
+				842AD41F1D74CDA3002C4AFE /* Jet.sks in Resources */,
 				84C011671D46433400EC7080 /* explosion7.wav in Resources */,
 				84C0118A1D4659B800EC7080 /* laser3.mp3 in Resources */,
 				848FD6CC1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */,

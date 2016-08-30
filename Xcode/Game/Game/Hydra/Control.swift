@@ -74,6 +74,7 @@ class Control: SKNode {
     }
     
     func load(name:String, spriteNode:SKSpriteNode, size:CGSize, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments) {
+        
         self.name = name
         self.screenPosition = CGPoint(x: x, y: y)
         self.yAlign = yAlign

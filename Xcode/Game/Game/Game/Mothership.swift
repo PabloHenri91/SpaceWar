@@ -62,6 +62,8 @@ class Mothership: Control {
     }
     
     private func load(level level:Int, blueTeam: Bool) {
+        self.zPosition = GameWorld.zPositions.mothership.rawValue
+        
         self.level = level
         
         self.health = 1
@@ -143,6 +145,7 @@ class Mothership: Control {
         self.addChild(self.labelHealth)
         
         self.updateHealthBarValue()
+        
     }
     
     func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
@@ -188,6 +191,8 @@ class Mothership: Control {
         spaceship.zRotation = self.zRotation
         spaceship.startingZPosition = spaceship.zRotation
         
+        gameWorld.addChild(spaceship)
+        
         if isAlly {
             spaceship.loadHealthBar(gameWorld, blueTeam: true)
             
@@ -197,7 +202,7 @@ class Mothership: Control {
         spaceship.loadWeaponRangeSprite(gameWorld)
         spaceship.loadWeaponDetail()
         
-        gameWorld.addChild(spaceship)
+        
     }
 
     func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
