@@ -10,8 +10,15 @@ import SpriteKit
 
 class Spaceship: Control {
     
-    var emitterNode:SKEmitterNode!
+    var emitterNode:SKEmitterNode?
     var emitterNodeParticleBirthRate:CGFloat = 0
+    var defaultEmitterNodeParticleBirthRate:CGFloat = 0
+    
+    var emitterNodeLeft:SKEmitterNode?
+    var emitterNodeLeftParticleBirthRate:CGFloat = 0
+    
+    var emitterNodeRight:SKEmitterNode?
+    var emitterNodeRightParticleBirthRate:CGFloat = 0
     
     static var spaceshipList = Set<Spaceship>()
     
@@ -136,17 +143,42 @@ class Spaceship: Control {
         }
     }
     
-    func loadJetEffect(gameWorld:GameWorld, color: SKColor) {
-        self.emitterNode = SKEmitterNode(fileNamed: "Jet.sks")!
-        self.emitterNode.particleColorSequence = nil
-        self.emitterNode.particleColorBlendFactor = 1
-        self.emitterNode.particleColor = color
-        self.emitterNode.particleBirthRate = 0
-        self.emitterNode.zPosition = self.zPosition + 1
-        self.emitterNode.particleSize = CGSize(width: 10, height: 10)
+    func loadJetEffect(color: SKColor) {
         
-        self.emitterNode.targetNode = self.parent
-        self.parent!.addChild(self.emitterNode)
+        self.defaultEmitterNodeParticleBirthRate  = CGFloat(self.speedAtribute * 20)
+        
+        var emitterNodes = [SKEmitterNode]()
+        
+        if self.type.centerJet {
+            self.emitterNode = SKEmitterNode(fileNamed: "Jet.sks")
+            if let emitterNode = self.emitterNode {
+                emitterNodes.append(emitterNode)
+            }
+        }
+        if self.type.leftJet {
+            self.emitterNodeLeft = SKEmitterNode(fileNamed: "Jet.sks")
+            if let emitterNode = self.emitterNodeLeft {
+                emitterNodes.append(emitterNode)
+            }
+        }
+        if self.type.rightJet {
+            self.emitterNodeRight = SKEmitterNode(fileNamed: "Jet.sks")
+            if let emitterNode = self.emitterNodeRight {
+                emitterNodes.append(emitterNode)
+            }
+        }
+        
+        for emitterNode in emitterNodes {
+            emitterNode.particleColorSequence = nil
+            emitterNode.particleColorBlendFactor = 1
+            emitterNode.particleColor = color
+            emitterNode.particleBirthRate = 0
+            emitterNode.zPosition = self.zPosition + 1
+            emitterNode.particleSize = CGSize(width: 10, height: 10)
+            
+            emitterNode.targetNode = self.parent
+            self.parent?.addChild(emitterNode)
+        }
     }
     
     func loadHealthBar(gameWorld:GameWorld, blueTeam:Bool) {
@@ -207,7 +239,7 @@ class Spaceship: Control {
         self.updateHealthBarPosition()
         self.updateHealthBarValue()
         
-        self.loadJetEffect(gameWorld, color: backColor)
+        self.loadJetEffect(backColor)
     }
     
     func loadWeaponRangeSprite(gameWorld:GameWorld) {
@@ -416,7 +448,8 @@ class Spaceship: Control {
     func update(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
         self.emitterNodeParticleBirthRate = 0
-        
+        self.emitterNodeLeftParticleBirthRate = 0
+        self.emitterNodeRightParticleBirthRate = 0
         
         self.move(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships:allySpaceships)
         
@@ -424,11 +457,48 @@ class Spaceship: Control {
         
         self.updateWeaponRangeSprite()
         
-        self.emitterNode.particleBirthRate = self.emitterNodeParticleBirthRate
-        self.emitterNode.particleSpeed = self.emitterNodeParticleBirthRate
-        self.emitterNode.particleSpeedRange = self.emitterNodeParticleBirthRate/2
-        self.emitterNode.position = self.position
-        self.emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
+        self.updateEmitters()
+        
+    }
+    
+    func updateEmitters() {
+        
+        if let emitterNode = self.emitterNode {
+            emitterNode.particleBirthRate = self.emitterNodeParticleBirthRate
+            emitterNode.particleSpeed = self.emitterNodeParticleBirthRate
+            emitterNode.particleSpeedRange = self.emitterNodeParticleBirthRate/2
+            emitterNode.position = self.position
+            emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
+        } else {
+            self.emitterNodeLeftParticleBirthRate = max(self.emitterNodeParticleBirthRate, self.emitterNodeLeftParticleBirthRate)
+            self.emitterNodeRightParticleBirthRate = max(self.emitterNodeParticleBirthRate, self.emitterNodeRightParticleBirthRate)
+        }
+        
+        if let emitterNode = self.emitterNodeLeft {
+            emitterNode.particleBirthRate = self.emitterNodeLeftParticleBirthRate
+            emitterNode.particleSpeed = self.emitterNodeLeftParticleBirthRate
+            emitterNode.particleSpeedRange = self.emitterNodeLeftParticleBirthRate/2
+            
+            let auxX = -sin(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            let auxY = cos(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            emitterNode.position = CGPoint( x: self.position.x + auxX, y: self.position.y + auxY)
+            
+            emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
+        }
+        
+        if let emitterNode = self.emitterNodeRight {
+            emitterNode.particleBirthRate = self.emitterNodeRightParticleBirthRate
+            emitterNode.particleSpeed = self.emitterNodeRightParticleBirthRate
+            emitterNode.particleSpeedRange = self.emitterNodeRightParticleBirthRate/2
+            
+            let auxX = -sin(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            let auxY = cos(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            emitterNode.position = CGPoint( x: self.position.x + auxX, y: self.position.y + auxY)
+            
+            emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
+        }
+        
+        
     }
     
     func updateWeaponRangeSprite() {
@@ -682,7 +752,7 @@ class Spaceship: Control {
                         if velocitySquared < self.maxVelocitySquared {
                             self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                         }
-                        self.emitterNodeParticleBirthRate = CGFloat(self.speedAtribute * 20)
+                        self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
                     }
                 }
             }
@@ -713,7 +783,7 @@ class Spaceship: Control {
                             if velocitySquared < self.maxVelocitySquared {
                                 self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
                             }
-                            self.emitterNodeParticleBirthRate = CGFloat(self.speedAtribute * 20)
+                            self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
                         }
                     }
                 }
@@ -788,6 +858,16 @@ class Spaceship: Control {
                 while(self.totalRotationToDestination >  CGFloat(M_PI)) { self.totalRotationToDestination -= CGFloat(M_PI * 2) }
                 
                 physicsBody.applyAngularImpulse(self.totalRotationToDestination * self.angularImpulse)
+            }
+            
+            let absTotalRotationToDestination = abs(self.totalRotationToDestination)
+            
+            if abs(self.totalRotationToDestination) >= 0.2 {
+                if self.totalRotationToDestination > 0 {
+                    self.emitterNodeRightParticleBirthRate = min(absTotalRotationToDestination, 1) * self.defaultEmitterNodeParticleBirthRate
+                } else {
+                    self.emitterNodeLeftParticleBirthRate = min(absTotalRotationToDestination, 1) * self.defaultEmitterNodeParticleBirthRate
+                }
             }
         }
     }
@@ -1016,6 +1096,11 @@ class SpaceshipType {
     
     var index:Int!
     
+    var centerJet = false
+    var leftJet = false
+    var rightJet = false
+    var jetBorderOffset:CGFloat = 0
+    
     init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
         
         self.maxLevel = maxLevel
@@ -1076,6 +1161,7 @@ extension Spaceship {
             spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
             spaceshipType.rarity = .common
             spaceshipType.index = 0
+            spaceshipType.centerJet = true
             return spaceshipType
         }(),
         
@@ -1091,6 +1177,9 @@ extension Spaceship {
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceshipType.rarity = .common
             spaceshipType.index = 1
+            spaceshipType.leftJet = true
+            spaceshipType.rightJet = true
+            spaceshipType.jetBorderOffset = -5
             return spaceshipType
         }(),
         
@@ -1106,6 +1195,7 @@ extension Spaceship {
             spaceshipType.spaceshipDescription = "Flies at the speed of light."
             spaceshipType.rarity = .common
             spaceshipType.index = 2
+            spaceshipType.centerJet = true
             return spaceshipType
         }()
     ]
