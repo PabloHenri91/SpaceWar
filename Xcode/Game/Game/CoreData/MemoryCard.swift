@@ -139,6 +139,11 @@ class MemoryCard {
         return urls[urls.count-1]
     }()
     
+    lazy var applicationDocumentDirectory: NSURL = {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }()
+    
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("SpaceWar", withExtension: "momd")!
@@ -148,8 +153,13 @@ class MemoryCard {
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
-        var coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+        
+        let fileManager = NSFileManager.defaultManager()
+        
+        var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        
+        let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+        
         var failureReason = "There was an error creating or loading the application's saved data."
         
         let options = Dictionary(dictionaryLiteral:
@@ -157,9 +167,24 @@ class MemoryCard {
             (NSInferMappingModelAutomaticallyOption , true))
         
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            if fileManager.fileExistsAtPath(self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
+                
+                let cachesUrl = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                
+                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: cachesUrl, options: options)
+                
+                for persistentStore in coordinator.persistentStores {
+                    try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                }
+                try! fileManager.removeItemAtURL(cachesUrl)
+            } else {
+                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            }
+            
         } catch {
-            try! NSFileManager.defaultManager().removeItemAtURL(url)
+            #if DEBUG
+                //try! NSFileManager.defaultManager().removeItemAtURL(url)
+            #endif
             fatalError()
         }
         
