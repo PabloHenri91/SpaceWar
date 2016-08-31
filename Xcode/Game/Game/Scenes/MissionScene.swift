@@ -435,7 +435,7 @@ class MissionScene: GameScene {
                                                 alertBox.buttonOK.addHandler(
                                                     {
                                                         if card.upgrade() == false {
-                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
+                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
                                                             self.addChild(alertBox2)
                                                         } else {
                                                             self.playerDataCard.updatePoints()
@@ -482,7 +482,7 @@ class MissionScene: GameScene {
                         if buyAlert.buttonBuy.containsPoint(touch.locationInNode(buyAlert)){
                             if buyAlert.buyMiningSpaceship() == false {
                                 
-                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro. 😢😢", type: AlertBox.messageType.OK)
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({ self.nextState = .mission
                                 })
                                 self.addChild(alertBox)

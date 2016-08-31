@@ -23,7 +23,7 @@ class MultiLineLabel: Control {
         self.text = text.translation()
         self.labelMaxWidth = maxWidth
         
-        self.words = text.componentsSeparatedByString(" ")
+        self.words = self.text.componentsSeparatedByString(" ")
         var labelIndex = 0
         
         for item in words {

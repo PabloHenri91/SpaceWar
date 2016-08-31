@@ -44,7 +44,11 @@ class SpaceshipSlot: Control {
         self.playerData.motherShip.addSpaceshipData(spaceshipData)
         
         let spaceship = Spaceship(spaceshipData: spaceshipData)
+        spaceship.zPosition = spaceship.zPosition + 1
         self.addChild(spaceship)
+        spaceship.loadJetEffect(nil, color: SKColor(red: 0/255, green: 84/255, blue: 143/255, alpha: 1))
+        spaceship.emitterNodeParticleBirthRate = spaceship.defaultEmitterNodeParticleBirthRate
+        spaceship.updateEmitters()
         
         self.spaceship = spaceship
     }

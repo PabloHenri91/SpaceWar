@@ -5,10 +5,11 @@
  Created by Pablo Henrique Bertaco on 7/26/16.
  Copyright © 2016 PabloHenri91. All rights reserved.
  */
+
 /*
 
- 
- 
+// PlayerDataCard
+
 "Ranking" = "";
 "Available Updates" = "";
 "General Statistics" = "";
@@ -21,6 +22,9 @@
 "Collected a total of " = "";
 " fragments." = "";
 
+"Connected to the Game Center" = "";
+"Unavailable" = "";
+
 
 
 //MothershipScene
@@ -30,8 +34,10 @@
 "Full" = "";
 "Social" = "";
 "BATTLE" = "";
-"Level" = "";
+"Level " = "";
 "Battle" = "";
+"Alert!" = "";
+"Battery Critically Low." = "";
 
 //ResearchScene
 
@@ -40,18 +46,57 @@
 "RESEARCH IN PROGRESS" = "";
 "NO AVAILABLE RESEARCHES" = "";
 "Researches" = "";
+"COLLECT" = "";
+"FINISHED" = "";
+
+"Now this Battleship is available for construction at the Factory." = "";
+"ATTRIBUTES" = "";
+"LIFE: " = "";
+"DAMAGE: " = "";
+"RESPAWN: " = "";
+"FIRE RATE: " = "";
+"SPEED: " = "";
+"RANGE: " = "";
+"GO TO FACTORY" = "";
+"SPEED UP" = "";
+"You have a research doing, wait it finish" = "";
+
 
 
 
 // MissionScene
 
- "MINING SPACESHIP" = "";
- "No mining now." = "";
- "BEGIN" = "";
- "UPGRADE" = "";
- "Miners" = "";
+"MINING SPACESHIPS" = "";
+"MINING SPACESHIP" = "";
+"No mining now." = "";
+"BEGIN" = "";
+"UPGRADE" = "";
+"Miners" = "";
 
-
+"BUY MINING SPACESHIP" = "";
+"MINING SPACESHIP LEVEL 1" = "";
+"YOU HAVE " = ""; //"YOU HAVE 1/4"
+"BUY" = "";
+"Price" = "";
+"It will cost 2000 frags." = "";
+"Ok" = "";
+"Cancel" = "";
+"CHOOSE ASTEROID" = "";
+"Mining spaceships are designed to extract precious metals from asteroids. Increase your level to be able to mine bigger asteroids!" = "";
+"START MINING" = "";
+"TINY ASTEROID" = "";
+"LITTLE ASTEROID" = "";
+"MEDIUM ASTEROID" = "";
+"BIG ASTEROID" = "";
+"HUGE ASTEROID" = "";
+"GIANT ASTEROID" = "";
+"IMMENSE ASTEROID" = "";
+"COLOSSAL ASTEROID" = "";
+"SPEED UP MINING" = "";
+"REWARD:" = "";
+"FINISH" = "";
+"DECREASE 1H" = "";
+"WATCH" = "";
 
 // FactoryScene
 
@@ -63,6 +108,7 @@
 "Fire Rate: " = "";
 "FACTORY" = "";
 "Factory" = "";
+"BUY SPACESHIP" = "";
 
 
 
@@ -73,7 +119,25 @@
 "CHANGE" = "";
 "UPGRADE" = "";
 "Hangar" = "";
+"This is a battleship. Do upgrades to makes it stronger and defeat your enemies." = "";
+"CHOOSE" = ""; // CHOOSE Battleship
+
+
+//BattleScene
+"The Battle Ended" = "";
+"You Win! " = "";
+"You Lose. " = "";
+"Draw." = "";
+
+
+
+//
+"Level Up!" = "";
+"You are now on level " = "";
 
  
- 
- */
+*/
+
+
+
+

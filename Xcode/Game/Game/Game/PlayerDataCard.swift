@@ -43,7 +43,7 @@ class PlayerDataCard: Control {
             
             let scene = Control.gameScene
             
-            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level " + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
+            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
             alertBox.buttonOK.addHandler({
                 scene.setDefaultState()
             })
@@ -197,7 +197,7 @@ class PlayerDataCard: Control {
             
             let scene = Control.gameScene
             
-            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level " + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
+            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
             alertBox.buttonOK.addHandler({
                 scene.setDefaultState()
             })

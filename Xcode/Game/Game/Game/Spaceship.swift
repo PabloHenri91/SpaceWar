@@ -143,7 +143,7 @@ class Spaceship: Control {
         }
     }
     
-    func loadJetEffect(color: SKColor) {
+    func loadJetEffect(targetNode: SKNode?, color: SKColor) {
         
         self.defaultEmitterNodeParticleBirthRate  = CGFloat(self.speedAtribute * 20)
         
@@ -173,10 +173,11 @@ class Spaceship: Control {
             emitterNode.particleColorBlendFactor = 1
             emitterNode.particleColor = color
             emitterNode.particleBirthRate = 0
-            emitterNode.zPosition = self.zPosition + 1
+            emitterNode.zPosition = self.zPosition - 1
             emitterNode.particleSize = CGSize(width: 10, height: 10)
-            
-            emitterNode.targetNode = self.parent
+            if let targetNode = targetNode {
+                emitterNode.targetNode = self.parent
+            }
             self.parent?.addChild(emitterNode)
         }
     }
@@ -239,7 +240,7 @@ class Spaceship: Control {
         self.updateHealthBarPosition()
         self.updateHealthBarValue()
         
-        self.loadJetEffect(backColor)
+        self.loadJetEffect(gameWorld, color: backColor)
     }
     
     func loadWeaponRangeSprite(gameWorld:GameWorld) {

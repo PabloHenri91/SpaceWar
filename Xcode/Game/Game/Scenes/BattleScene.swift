@@ -253,7 +253,7 @@ class BattleScene: GameScene {
                 self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
-                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw. 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
                     alertBox.buttonOK.addHandler({
                         self.nextState = states.mothership
                     })
@@ -263,7 +263,7 @@ class BattleScene: GameScene {
                         
                         Metrics.win()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! " + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
                             
                             self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
@@ -280,7 +280,7 @@ class BattleScene: GameScene {
                         
                         Metrics.loose()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. " + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         alertBox.buttonOK.addHandler({
                             self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue + 1
                             self.playerData.winningStreakCurrent = 0
