@@ -117,6 +117,11 @@ extension MemoryCard {
         //researches
         playerData.researches = NSSet()
         
+        let newResearch = self.newResearchData()
+        newResearch.type = 11
+        newResearch.spaceshipLevel = 10
+        playerData.addResearchData(newResearch)
+        
         
         //list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
@@ -127,6 +132,8 @@ extension MemoryCard {
         playerData.winCount = 0
         playerData.winningStreakCurrent = 0
         playerData.winningStreakBest = 0
+        
+        playerData.datamodelVersion = 6
         
         return playerData
     }

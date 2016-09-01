@@ -356,23 +356,27 @@ class HangarScene: GameScene {
                 case .details:
                     
                     if let alert = self.detailsAlert {
-                        if alert.buttonUpgrade.containsPoint(touch.locationInNode(alert)) {
-                            let upgradeCost = GameMath.spaceshipUpgradeCost(level: self.selectedSpaceship!.level, type: self.selectedSpaceship!.type)
+                        
+                        if let buttonUpgrade = alert.buttonUpgrade {
                             
-                            if self.playerData.points.integerValue > upgradeCost {
-                                self.playerData.points = self.playerData.points.integerValue - upgradeCost
-                                self.selectedSpaceship!.upgrade()
-                                self.selectedCard?.reloadCard()
-                                self.playerDataCard.updatePoints()
-                                alert.reload()
+                            if buttonUpgrade.containsPoint(touch.locationInNode(alert)) {
+                                let upgradeCost = GameMath.spaceshipUpgradeCost(level: self.selectedSpaceship!.level, type: self.selectedSpaceship!.type)
                                 
-                            } else {
-                                
-                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
-                                alertBox.buttonOK.addHandler({ self.nextState = .hangar
-                                })
-                                self.addChild(alertBox)
-                                
+                                if self.playerData.points.integerValue > upgradeCost {
+                                    self.playerData.points = self.playerData.points.integerValue - upgradeCost
+                                    self.selectedSpaceship!.upgrade()
+                                    self.selectedCard?.reloadCard()
+                                    self.playerDataCard.updatePoints()
+                                    alert.reload()
+                                    
+                                } else {
+                                    
+                                    let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
+                                    alertBox.buttonOK.addHandler({ self.nextState = .hangar
+                                    })
+                                    self.addChild(alertBox)
+                                    
+                                }
                             }
                         }
                     }

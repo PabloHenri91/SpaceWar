@@ -11,13 +11,15 @@ import SpriteKit
 class HangarSpaceshipDetails: Box {
     
     var spaceship: Spaceship
+    var researchData: ResearchData!
     var buttonCancel: Button!
-    var buttonUpgrade: Button!
+    var buttonUpgrade: Button?
     
     var labelLifeValue:Label!
     var labelDamageValue:Label!
     var labelLifeUpgrade:Label!
     var labelDamageUpgrade:Label!
+    var labelUpgrade:Label?
     
     var labelLevel:Label!
     
@@ -30,6 +32,17 @@ class HangarSpaceshipDetails: Box {
         self.showUpgrade = showUpgrade
         
         self.spaceship = spaceship
+        
+        for item in MemoryCard.sharedInstance.playerData.researches {
+            if let researchData = item as? ResearchData {
+                let researchType = Research.types[researchData.type.integerValue]
+
+                if ((researchType.spaceshipUnlocked == spaceship.type.index) && (researchType.weaponUnlocked == spaceship.weapon!.type.index)) {
+                    self.researchData = researchData
+                }
+                
+            }
+        }
         
         var imageName = ""
         var rarityColor:SKColor
@@ -73,11 +86,13 @@ class HangarSpaceshipDetails: Box {
         self.addChild(hangarSpaceshipBackground)
         
         if showUpgrade {
-            let lifeUpgradeBackground = Control(textureName: "betterAttribute", x: 11, y: 192)
-            self.addChild(lifeUpgradeBackground)
-            
-            let damageUpgradeBackground = Control(textureName: "betterAttribute", x: 136, y: 192)
-            self.addChild(damageUpgradeBackground)
+            if self.spaceship.level < self.researchData.spaceshipLevel.integerValue {
+                let lifeUpgradeBackground = Control(textureName: "betterAttribute", x: 11, y: 192)
+                self.addChild(lifeUpgradeBackground)
+                
+                let damageUpgradeBackground = Control(textureName: "betterAttribute", x: 136, y: 192)
+                self.addChild(damageUpgradeBackground)
+            }
         }
         
         var spaceshipImage:Spaceship!
@@ -169,36 +184,40 @@ class HangarSpaceshipDetails: Box {
         self.addChild(labelRangeValue)
         
         if showUpgrade {
-            let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
-            self.labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-            self.addChild(self.labelLifeUpgrade)
             
-            let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
-            self.labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-            self.addChild(self.labelDamageUpgrade)
-        }
-        
-        
-        let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
-        self.labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-        self.addChild(self.labelDamageUpgrade)
-        
-        
-        if showUpgrade {
-            let labelUpgrade = Label(text: "UPGRADE" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-            self.addChild(labelUpgrade)
-        }
-        
-        if showUpgrade {
-            let fontColor = SKColor.whiteColor()
-            let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
-            let fontShadowOffset = CGPoint(x: 0, y: -1)
-            let fontName = GameFonts.fontName.museo1000
-            let textOffset = CGPoint(x: 8, y: 0)
-            self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
-            self.addChild(self.buttonUpgrade)
+            if self.spaceship.level < self.researchData.spaceshipLevel.integerValue {
+                
+                let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
+                self.labelLifeUpgrade = Label(text: "+ " + lifeUpgrade.description , fontSize: 11, x: Int(labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.labelLifeUpgrade)
+                
+                let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - self.spaceship.weapon!.damage
+                self.labelDamageUpgrade = Label(text: "+ " + damageUpgrade.description , fontSize: 11, x: Int(labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.labelDamageUpgrade)
+                
+                
+                self.labelUpgrade = Label(text: "UPGRADE" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(self.labelUpgrade!)
+                
+                let fontColor = SKColor.whiteColor()
+                let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+                let fontShadowOffset = CGPoint(x: 0, y: -1)
+                let fontName = GameFonts.fontName.museo1000
+                let textOffset = CGPoint(x: 8, y: 0)
+                self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+                self.addChild(self.buttonUpgrade!)
+                
+                
+                self.buttonUpgrade!.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+                
+            } else {
+                
+                let labelMaxLevel = Label(text: "Level max reached" , fontSize: 14, x: 141, y: 315, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.addChild(labelMaxLevel)
+                
+            }
+
             
-            self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
         }
         
         
@@ -256,18 +275,26 @@ class HangarSpaceshipDetails: Box {
         self.labelDamageUpgrade.setText("+ " + damageUpgrade.description)
         self.labelDamageUpgrade.position.x = labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width
         
-        self.buttonUpgrade.removeFromParent()
+        self.buttonUpgrade?.removeFromParent()
         
         if self.showUpgrade {
-            let fontColor = SKColor.whiteColor()
-            let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
-            let fontShadowOffset = CGPoint(x: 0, y: -1)
-            let fontName = GameFonts.fontName.museo1000
-            let textOffset = CGPoint(x: 8, y: 0)
-            self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
-            self.addChild(self.buttonUpgrade)
             
-            self.buttonUpgrade.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+            if self.spaceship.level < self.researchData.spaceshipLevel.integerValue {
+                let fontColor = SKColor.whiteColor()
+                let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
+                let fontShadowOffset = CGPoint(x: 0, y: -1)
+                let fontName = GameFonts.fontName.museo1000
+                let textOffset = CGPoint(x: 8, y: 0)
+                self.buttonUpgrade = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipUpgradeCost(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 13, x: 100, y: 337, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+                self.addChild(self.buttonUpgrade!)
+                
+                self.buttonUpgrade!.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
+            } else {
+                self.buttonUpgrade = nil
+                
+                self.labelUpgrade?.setText("Level max reached")
+            }
+            
         }
         
     }
