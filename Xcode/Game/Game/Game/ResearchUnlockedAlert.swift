@@ -42,6 +42,7 @@ class ResearchUnlockedAlert:Box {
         }
         
         super.init(textureName: "researchUnlockedCard")
+        self.zPosition = 10000000
         
         self.buttonCancel = Button(textureName: "cancelButtonGray", x: 246, y: 10,  top: 10, bottom: 10, left: 10, right: 10)
         self.addChild(self.buttonCancel)

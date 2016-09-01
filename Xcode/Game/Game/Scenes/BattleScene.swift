@@ -271,6 +271,14 @@ class BattleScene: GameScene {
                         Metrics.win()
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        
+                        self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
+                        self.playerData.winCount = self.playerData.winCount.integerValue + 1
+                        self.playerData.winningStreakCurrent = self.playerData.winningStreakCurrent.integerValue + 1
+                        if self.playerData.winningStreakCurrent.integerValue > self.playerData.winningStreakBest.integerValue {
+                            self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.integerValue
+                        }
+                        
                         alertBox.buttonOK.addHandler({
                             self.nextState = states.unlockResearch
                         })
@@ -296,6 +304,7 @@ class BattleScene: GameScene {
                 let research = Research.unlockRandomResearch()
                 if research != nil {
                     let researchUnlockedAlert = ResearchUnlockedAlert(researchData: research!)
+                    
                     self.addChild(researchUnlockedAlert)
                     
                     researchUnlockedAlert.buttonCancel.addHandler({

@@ -673,6 +673,18 @@
 			name = Jet;
 			sourceTree = "<group>";
 		};
+
+        3AF9D2001D786D9D0068E737 /* Research */ = {
+            isa = PBXGroup;
+            children = (
+                3A4065F31D2C616500B886DB /* ResearchCard.swift */,
+                3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */,
+                3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */,
+            );
+        name = Research;
+        sourceTree = "<group>";
+        };
+
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (

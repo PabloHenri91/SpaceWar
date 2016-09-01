@@ -77,8 +77,8 @@ class HangarScene: GameScene {
         self.hangarCardsArray = Array<HangarSpaceshipCard>()
         
         var index = 0
-        for item in self.playerData.motherShip.spaceships {
-            
+        for item in self.playerData.motherShip.spaceships  {
+                    
             if let spaceshipData = item as? SpaceshipData {
                 
                 let spaceship = Spaceship(spaceshipData: spaceshipData)

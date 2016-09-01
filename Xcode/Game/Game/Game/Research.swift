@@ -106,7 +106,7 @@ class Research: Control {
         let winSpaceship = Int.random(101)
         
         // Chance de ganhar uma pesquisa >=90 ( 10% de chance)
-        if (winSpaceship >= 85) {
+        if (winSpaceship >= 80) {
             
             let playerData = MemoryCard.sharedInstance.playerData
             var researchsType = Array<ResearchType>()
@@ -206,9 +206,16 @@ extension Research {
         }
     }
     
-    static func chearUnlockAll() {
+    static func cheatUnlockAll() {
+        
+        MemoryCard.sharedInstance.playerData.researches = NSSet()
+        
         for researchType in Research.types {
-            researchType.researchsNeeded = []
+            let newResearch = MemoryCard.sharedInstance.newResearchData()
+            newResearch.type = researchType.index
+            newResearch.spaceshipLevel = 0
+            newResearch.spaceshipMaxLevel = 1000
+            MemoryCard.sharedInstance.playerData.addResearchData(newResearch)
         }
     }
     
