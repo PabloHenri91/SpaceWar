@@ -11,30 +11,47 @@ import SpriteKit
 class ResearchUpgradeSpaceshipAlert:Box {
     
     var buttonCancel: Button!
+    var buttonGoToHangar: Button!
+    var playerdata = MemoryCard.sharedInstance.playerData
+    var spaceship: Spaceship!
     
-    init(spaceship:Spaceship) {
+    init(research:Research) {
    
         var imageName = ""
-        var rarityColor:SKColor
+        var rarityColor:SKColor!
         
-        switch spaceship.type.rarity {
-        case .common:
-            imageName = "researchUpgradeSpaceshipCommom"
-            rarityColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
-            break
-        case .rare:
-            imageName = "researchUpgradeSpaceshipRare"
-            rarityColor = SKColor(red: 164/255, green: 69/255, blue: 48/255, alpha: 1)
-            break
-        case .epic:
-            imageName = "researchUpgradeSpaceshipEpic"
-            rarityColor = SKColor(red: 65/255, green: 70/255, blue: 123/255, alpha: 1)
-            break
-        case .legendary:
-            imageName = "researchUpgradeSpaceshipLegendary"
-            rarityColor = SKColor(red: 76/255, green: 60/255, blue: 77/255, alpha: 1)
-            break
+        if let spaceshipUnlocked = research.researchType.spaceshipUnlocked {
+            
+            let spaceshipType = Spaceship.types[spaceshipUnlocked]
+            
+            switch spaceshipType.rarity {
+                case .common:
+                imageName = "researchUpgradeSpaceshipCommom"
+                rarityColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
+                break
+                case .rare:
+                imageName = "researchUpgradeSpaceshipRare"
+                rarityColor = SKColor(red: 164/255, green: 69/255, blue: 48/255, alpha: 1)
+                break
+                case .epic:
+                imageName = "researchUpgradeSpaceshipEpic"
+                rarityColor = SKColor(red: 65/255, green: 70/255, blue: 123/255, alpha: 1)
+                break
+                case .legendary:
+                imageName = "researchUpgradeSpaceshipLegendary"
+                rarityColor = SKColor(red: 76/255, green: 60/255, blue: 77/255, alpha: 1)
+                break
+                }
+            
+            if let weaponUnlocked = research.researchType.weaponUnlocked {
+                self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
+                let weapon = Weapon(type: weaponUnlocked, level: 1)
+                self.spaceship?.addWeapon(weapon)
+                self.spaceship?.position = CGPoint(x:33, y: -33)
+            }
         }
+        
+       
         
         super.init(textureName: imageName)
         
@@ -54,7 +71,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
         
         var spaceshipImage:Spaceship!
         
-        if let spaceshipData = spaceship.spaceshipData {
+        if let spaceshipData = self.spaceship.spaceshipData {
             spaceshipImage = Spaceship(spaceshipData: spaceshipData, loadPhysics: false)
         } else {
             spaceshipImage = Spaceship(type: spaceship.type.index, level: spaceship.level)
@@ -66,6 +83,38 @@ class ResearchUpgradeSpaceshipAlert:Box {
         spaceshipImage.screenPosition = CGPoint(x: 50, y: 90)
         spaceshipImage.resetPosition()
         spaceshipImage.setScale(1.8)
+        
+        let labelUnlocked = MultiLineLabel(text: "You unlocked more levels to upgrade your ship!", maxWidth: 165, x: 96, y: 68, fontName: GameFonts.fontName.museo1000, fontSize: 11, horizontalAlignmentMode: .Left)
+        self.addChild(labelUnlocked)
+        
+        let labelHangar = MultiLineLabel(text: "Go to hangar to upgrade this ship!", maxWidth: 165, x: 96, y: 97, fontName: GameFonts.fontName.museo500, fontSize: 11, horizontalAlignmentMode: .Left)
+        self.addChild(labelHangar)
+        
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "NEW MAX LEVEL", fontSize: 12, x: 15, y: 166, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        
+        
+        let levelUpIcon = Control(textureName: "levelUpIcon", x: 18, y: 184)
+        self.addChild(levelUpIcon)
+        
+        
+        let maxLevel = research.researchData!.spaceshipLevel.integerValue - 10
+        
+        let labelMaxLevel = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MAX LEVEL: " + maxLevel.description , fontSize: 12, x: 35, y: 190, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        
+        self.addChild(labelMaxLevel)
+        
+        let labelLevelUp = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 1), text: " + 10" , fontSize: 12, x: Int(labelMaxLevel.position.x + labelMaxLevel.calculateAccumulatedFrame().width) , y: 190, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        
+        self.addChild(labelLevelUp)
+        
+        
+        let fontShadowColor = SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 1)
+        let fontShadowOffset = CGPoint(x: 0, y: -2)
+        let fontName = GameFonts.fontName.museo1000
+        
+        self.buttonGoToHangar = Button(textureName: "buttonDarkBlue131x30", text: "GO TO HANGAR", fontSize: 11, x: 76, y: 246, fontColor: SKColor.whiteColor(), fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+        self.addChild(self.buttonGoToHangar)
+        
         
     }
     

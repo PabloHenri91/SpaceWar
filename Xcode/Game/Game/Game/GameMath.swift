@@ -275,23 +275,6 @@ class GameMath {
         }
     }
     
-    static func getRandomResearch() {
-        let winSpaceship = Int(arc4random_uniform(101) + 1)
-        
-        if (winSpaceship > 90) {
-            
-            let diceRoll = Int(arc4random_uniform(101) + 1)
-            if (diceRoll <= 85) {
-                print("common")
-            } else if (diceRoll <= 95) {
-                print("rare")
-            } else if (diceRoll <= 99) {
-                print("epic")
-            } else {
-                print("legendary")
-            }
-        }
-    }
     
     //Mission Spaceship        
     static func finishDate(timeLeft timeLeft: Int) -> NSDate {
@@ -306,7 +289,7 @@ class GameMath {
     //Battery
     static let batteryMaxCharge = 4
     #if DEBUG
-    static let batteryChargeInterval = 6.0 * 6.0
+    static let batteryChargeInterval = 2.0
     #else
     static let batteryChargeInterval = 6.0 * 60.0
     #endif

@@ -49,7 +49,7 @@
     <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
         <attribute name="done" attributeType="Boolean" syncable="YES"/>
         <attribute name="spaceshipLevel" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="spaceshipMaxLevel" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spaceshipMaxLevel" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>

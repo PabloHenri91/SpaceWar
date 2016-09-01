@@ -169,6 +169,7 @@ class ResearchScene: GameScene {
                 
             case .research:
                 self.blackSpriteNode.hidden = true
+                self.scrollNode?.canScroll = true
                 break
                 
             case .mission:
@@ -406,16 +407,21 @@ class ResearchScene: GameScene {
                                     self.blackSpriteNode.hidden = false
                                     self.blackSpriteNode.zPosition = 10000
                                     
-                                    print(researchCard.research.researchData!)
+                                    self.scrollNode?.canScroll = false
                                     
                                     if researchCard.research.researchData!.spaceshipLevel.integerValue > 10 {
                                         
-                                        let detailsAlert = ResearchUpgradeSpaceshipAlert(spaceship: spaceship)
+                                        let detailsAlert = ResearchUpgradeSpaceshipAlert(research: researchCard.research)
                                         detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
                                         
                                         detailsAlert.buttonCancel.addHandler({ [weak self] in
                                             self?.nextState = .research
                                             })
+                                        
+                                        detailsAlert.buttonGoToHangar.addHandler({ [weak self] in
+                                            self?.nextState = .hangar
+                                            })
+
                                         
                                         self.addChild(detailsAlert)
                                         self.nextState = .alert

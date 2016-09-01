@@ -89,10 +89,10 @@ class Spaceship: Control {
     
     static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
         //TODO: displayName
-        var name = Spaceship.types[type].name + " + " + Weapon.types[weaponType].name
-        if level > 0 {
-            name += " Level: " + level.description
-        }
+        var name = Spaceship.types[type].name + " " + Weapon.types[weaponType].name
+//        if level > 0 {
+//            name += " Level: " + level.description
+//        }
         return name
     }
     
@@ -971,7 +971,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
             
-            spaceshipType.name = "Spaceship"
+            spaceshipType.name = "Intrepid"
             spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
             spaceshipType.rarity = .common
             spaceshipType.index = 0
@@ -986,7 +986,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
             
-            spaceshipType.name = "Space Tanker"
+            spaceshipType.name = "Tanker"
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceshipType.rarity = .common
             spaceshipType.index = 1
@@ -1001,7 +1001,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
-            spaceshipType.name = "Space Speeder"
+            spaceshipType.name = "Speeder"
             spaceshipType.spaceshipDescription = "Flies at the speed of light."
             spaceshipType.rarity = .common
             spaceshipType.index = 2
