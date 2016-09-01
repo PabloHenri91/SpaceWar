@@ -30,6 +30,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var winCount: NSNumber
     @NSManaged var winningStreakBest: NSNumber
     @NSManaged var winningStreakCurrent: NSNumber
+    @NSManaged var datamodelVersion: NSNumber
 
 }
 
@@ -61,7 +62,7 @@ extension MemoryCard {
         
         //adicionei a nave 0 a nave mae
         var spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         var weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
@@ -70,7 +71,7 @@ extension MemoryCard {
         
         //adicionei a nave 1 a nave mae
         spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
@@ -79,7 +80,7 @@ extension MemoryCard {
         
         //adicionei a nave 2 na nave mae 2 vezes
         spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
@@ -88,7 +89,7 @@ extension MemoryCard {
         
         //adicionei a nave 3 na nave mae
         spaceshipData = self.newSpaceshipData(type: 0)
-        playerData.motherShip.addSpaceshipData(spaceshipData)
+        playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         weaponData = self.newWeaponData(type: 0)
         spaceshipData.addWeaponData(weaponData)
@@ -115,12 +116,6 @@ extension MemoryCard {
         
         //researches
         playerData.researches = NSSet()
-        
-        for research in Research.types {
-            let newResearch = self.newResearchData()
-            newResearch.type = research.index
-            playerData.addResearchData(newResearch)
-        }
         
         
         //list of facebook friends sent game invite

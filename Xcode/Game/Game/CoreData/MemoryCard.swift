@@ -92,8 +92,6 @@ class MemoryCard {
                     
                     let spaceshipData = self.newSpaceshipData(type: Int((spaceship as! SpaceshipData).type))
                     spaceshipData.addWeaponData(weaponData)
-                    spaceshipData
-                    self.playerData.unlockSpaceshipData(spaceshipData)
                     
                     self.playerData.unlockSpaceshipData(spaceshipData)
                     
@@ -108,6 +106,60 @@ class MemoryCard {
                 }
             }
         }
+        
+        // ALTERACAO DE PESQUISAS PARA VERSAO 6 DO DATA MODEL
+        
+        if self.playerData.datamodelVersion.integerValue < 6 {
+            
+            
+            self.playerData.datamodelVersion = 6
+            
+            let researchs = self.playerData.researches
+            self.playerData.researches = NSSet()
+            
+            for item in researchs {
+                if let researchData = item as? ResearchData {
+                    //let research = Research(researchData: researchData)
+                    
+                    
+                    var unlocked = true
+                    
+                    let researchType = Research.types[researchData.type.integerValue]
+                    
+                    for item in researchType.researchsNeeded {
+                        for subItem in researchs {
+                            if let researchData = subItem as? ResearchData {
+                                if researchData.type == item {
+                                    if researchData.done == 0 {
+                                        unlocked = false
+                                        print(researchType.researchDescription)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+
+                    if unlocked == true {
+                        
+                        if researchData.done == false {
+                            // PESQUISA LIBERADA
+                            researchData.spaceshipLevel = 0
+                            researchData.spaceshipMaxLevel = 10
+                            
+                        } else {
+                            // PESQUISA COMPLETA
+                            researchData.spaceshipLevel = 10
+                            researchData.spaceshipMaxLevel = 10
+                        }
+                        
+                        self.playerData.addResearchData(researchData)
+                    }
+                }
+            }
+            
+        }
+        
     }
     
     func reset() {

@@ -306,7 +306,7 @@ class GameMath {
     //Battery
     static let batteryMaxCharge = 4
     #if DEBUG
-    static let batteryChargeInterval = 6.0 * 6.0
+    static let batteryChargeInterval = 2.0
     #else
     static let batteryChargeInterval = 6.0 * 60.0
     #endif

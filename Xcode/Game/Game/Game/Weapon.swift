@@ -138,7 +138,7 @@ extension Weapon {
             weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
             weaponType.shotSkin = "shotBA"
             
-            weaponType.name = "Pistol"
+            weaponType.name = "Blaster"
             weaponType.initSoundFileName = "laser5.mp3"
             weaponType.weaponDescription = "A normal weapon."
             weaponType.index = 0
@@ -151,7 +151,7 @@ extension Weapon {
             weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
             weaponType.shotSkin = "shotCA"
             
-            weaponType.name = "Machine Gun"
+            weaponType.name = "Striker"
             weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
             weaponType.index = 1
@@ -164,7 +164,7 @@ extension Weapon {
             weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
             weaponType.shotSkin = "shotAA"
             
-            weaponType.name = "Shotgun"
+            weaponType.name = "Destroyer"
             weaponType.initSoundFileName = "laser1.mp3"
             weaponType.weaponDescription = "Close death."
             weaponType.index = 2
