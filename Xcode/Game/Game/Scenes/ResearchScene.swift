@@ -24,8 +24,11 @@ class ResearchScene: GameScene {
     
     var auxHeader:Control!
     
+    var gameStore: GameStore?
+    
     enum states : String {
         
+        //Estado de alertBox
         case alert
         
         //Estados de saida da scene
@@ -135,7 +138,7 @@ class ResearchScene: GameScene {
     }
     
     override func setAlertState() {
-        //TODO: self.nextState = .alert
+        self.nextState = .alert
     }
     
     override func setDefaultState() {
@@ -156,6 +159,10 @@ class ResearchScene: GameScene {
                     researchCard.update(currentTime)
                 }
                 
+                break
+                
+            case .alert:
+                self.gameStore?.update()
                 break
                 
             default:
@@ -205,12 +212,6 @@ class ResearchScene: GameScene {
                 break
                 
             case .alert:
-                break
-                
-            default:
-                #if DEBUG
-                    fatalError()
-                #endif
                 break
             }
         }
@@ -324,6 +325,11 @@ class ResearchScene: GameScene {
                 switch (self.state) {
                 case .research:
                     if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                            self.gameStore = GameStore()
+                            self.addChild(self.gameStore!)
+                            return
+                        }
                         self.playerDataCard.statistics.updateOnTouchesBegan()
                     }
                     break
@@ -357,6 +363,7 @@ class ResearchScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .research:
                     
@@ -364,15 +371,15 @@ class ResearchScene: GameScene {
                         return
                     }
                     
-//                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
+//                    if self.headerControl.containsPoint(point) {
 //                        return
 //                    }
                     
-                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
+                    if self.playerDataCard.containsPoint(point) {
                         return
                     }
                     
-                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                    if self.gameTabBar.containsPoint(point) {
                         if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mission
                             return
@@ -464,7 +471,7 @@ class ResearchScene: GameScene {
                     
                     if let scrollNode = self.scrollNode {
                         
-                        if scrollNode.containsPoint(touch.locationInNode(self)) {
+                        if scrollNode.containsPoint(point) {
                             
                             for item in scrollNode.cells {
                                 
@@ -490,6 +497,14 @@ class ResearchScene: GameScene {
                         }
                     }
                     
+                    break
+                    
+                case .alert:
+                    if let gameStore = self.gameStore {
+                        if gameStore.containsPoint(point) {
+                            gameStore.touchEnded(touch)
+                        }
+                    }
                     break
                     
                 default:

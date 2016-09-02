@@ -39,6 +39,8 @@ class FactoryScene: GameScene {
     
     var buySpaceshipAlert:BuySpaceshipAlert?
     
+    var gameStore: GameStore?
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -148,6 +150,10 @@ class FactoryScene: GameScene {
                 self.playerDataCard.update()
                 break
                 
+            case .alert:
+                self.gameStore?.update()
+                break
+                
             default:
                 break
             }
@@ -183,6 +189,7 @@ class FactoryScene: GameScene {
                 
             case .factory:
                 self.blackSpriteNode.hidden = true
+                self.gameStore?.removeFromParent()
                 self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.buySpaceshipAlert?.removeFromParent()
                 break
@@ -223,6 +230,11 @@ class FactoryScene: GameScene {
                 switch (self.state) {
                 case .factory:
                     if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                            self.gameStore = GameStore()
+                            self.addChild(self.gameStore!)
+                            return
+                        }
                         self.playerDataCard.statistics.updateOnTouchesBegan()
                     }
                     break
@@ -256,6 +268,7 @@ class FactoryScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                     
                 case .buySpaceship:
@@ -275,15 +288,15 @@ class FactoryScene: GameScene {
                         return
                     }
                     
-                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
+                    if self.headerControl.containsPoint(point) {
                         return
                     }
                     
-                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
+                    if self.playerDataCard.containsPoint(point) {
                         return
                     }
                     
-                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                    if self.gameTabBar.containsPoint(point) {
                         if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.research
                             return
@@ -306,7 +319,7 @@ class FactoryScene: GameScene {
                         return
                     }
                     
-                    if self.scrollNode.containsPoint(touch.locationInNode(self)) {
+                    if self.scrollNode.containsPoint(point) {
                         
                         for cell in self.scrollNode.cells {
                             
@@ -339,6 +352,14 @@ class FactoryScene: GameScene {
                         }
                     }
                     
+                    break
+                    
+                case .alert:
+                    if let gameStore = self.gameStore {
+                        if gameStore.containsPoint(point) {
+                            gameStore.touchEnded(touch)
+                        }
+                    }
                     break
                     
                 default:

@@ -30,7 +30,12 @@ class MissionScene: GameScene {
     
     var headerControl:Control!
     
+    var gameStore: GameStore?
+    
     enum states : String {
+        
+        //Estado de alertBox
+        case alert
         
         case research
         case mission
@@ -136,7 +141,7 @@ class MissionScene: GameScene {
     }
     
     override func setAlertState() {
-        //TODO: self.nextState = .alert
+        self.nextState = .alert
     }
     
     override func setDefaultState() {
@@ -203,6 +208,10 @@ class MissionScene: GameScene {
                 }
                 break
                 
+            case .alert:
+                self.gameStore?.update()
+                break
+                
             default:
                 break
             }
@@ -222,6 +231,7 @@ class MissionScene: GameScene {
                 
             case .mission:
                 self.blackSpriteNode.hidden = true
+                self.gameStore?.removeFromParent()
                 self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.chooseAsteroidAlert?.scrollNode?.removeFromParent()
                 self.chooseAsteroidAlert?.removeFromParent()
@@ -299,10 +309,7 @@ class MissionScene: GameScene {
                 }
                 break
                 
-            default:
-                #if DEBUG
-                    fatalError()
-                #endif
+            case .alert:
                 break
             }
         }
@@ -318,6 +325,11 @@ class MissionScene: GameScene {
                 switch (self.state) {
                 case .mission:
                     if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                            self.gameStore = GameStore()
+                            self.addChild(self.gameStore!)
+                            return
+                        }
                         self.playerDataCard.statistics.updateOnTouchesBegan()
                     }
                     break
@@ -351,6 +363,7 @@ class MissionScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .mission:
                     
@@ -359,21 +372,21 @@ class MissionScene: GameScene {
                     }
                     
                     if let buttonBuy = self.buttonBuy {
-                        if buttonBuy.containsPoint(touch.locationInNode(self)) {
+                        if buttonBuy.containsPoint(point) {
                             self.nextState = .buySpaceship
                             return
                         }
                     }
                     
-                    if self.headerControl.containsPoint(touch.locationInNode(self)) {
+                    if self.headerControl.containsPoint(point) {
                         return
                     }
                     
-                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
+                    if self.playerDataCard.containsPoint(point) {
                         return
                     }
                     
-                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                    if self.gameTabBar.containsPoint(point) {
                         if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.research
                             return
@@ -396,7 +409,7 @@ class MissionScene: GameScene {
                         return
                     }
                     
-                    if self.scrollNode.containsPoint(touch.locationInNode(self)) {
+                    if self.scrollNode.containsPoint(point) {
                         for item in self.scrollNode.cells {
                             if item.containsPoint(touch.locationInNode(self.scrollNode)) {
                                 if let card = item as? MissionSpaceshipCard {
@@ -526,6 +539,14 @@ class MissionScene: GameScene {
                         #endif
                     }
                     
+                    break
+                    
+                case .alert:
+                    if let gameStore = self.gameStore {
+                        if gameStore.containsPoint(point) {
+                            gameStore.touchEnded(touch)
+                        }
+                    }
                     break
                     
                 default:

@@ -12,6 +12,7 @@ class MothershipScene: GameScene {
     
     enum states : String {
         
+        //Estado de alertBox
         case alert
         
         //Estados de saida da scene
@@ -43,6 +44,8 @@ class MothershipScene: GameScene {
     var nextEvents:NextEvents!
     
     var spaceshipSlots = [SpaceshipSlot]()
+    
+    var gameStore: GameStore?
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -166,6 +169,7 @@ class MothershipScene: GameScene {
             default:
                 self.batteryControl.update()
                 self.playerDataCard.update()
+                self.gameStore?.update()
                 self.nextEvents.update()
                 break
             }
@@ -193,6 +197,7 @@ class MothershipScene: GameScene {
                 
             case .mothership:
                 self.blackSpriteNode.hidden = true
+                self.gameStore?.removeFromParent()
                 break
                 
             case .factory:
@@ -223,12 +228,6 @@ class MothershipScene: GameScene {
                 
             case .alert:
                 break
-                
-            default:
-                #if DEBUG
-                    fatalError()
-                #endif
-                break
             }
         }
         
@@ -244,6 +243,11 @@ class MothershipScene: GameScene {
                 switch (self.state) {
                 case .mothership:
                     if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                            self.gameStore = GameStore()
+                            self.addChild(self.gameStore!)
+                            return
+                        }
                         self.playerDataCard.statistics.updateOnTouchesBegan()
                         return
                     }
@@ -258,9 +262,12 @@ class MothershipScene: GameScene {
     override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
+        
+        
         //Estado atual
         if(self.state == self.nextState) {
             for _ in touches {
+                
                 switch (self.state) {
                 case .mothership:
                     self.playerDataCard.statistics.updateOnTouchesEnded()
@@ -373,6 +380,14 @@ class MothershipScene: GameScene {
                         return
                     }
                     
+                    break
+                    
+                case .alert:
+                    if let gameStore = self.gameStore {
+                        if gameStore.containsPoint(point) {
+                            gameStore.touchEnded(touch)
+                        }
+                    }
                     break
                     
                 default:

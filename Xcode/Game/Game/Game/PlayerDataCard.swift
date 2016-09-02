@@ -24,6 +24,9 @@ class PlayerDataCard: Control {
     var xpBarSpriteNode:SKSpriteNode?
     
     var statistics:PlayerDataCardStatistics!
+    
+    
+    var buttonStore:Button!
 
     override init() {
         let playerData = MemoryCard.sharedInstance.playerData
@@ -68,6 +71,10 @@ class PlayerDataCard: Control {
         self.loadLabelLevel(playerData.motherShip.level.description)
         
         self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
+        
+        self.buttonStore = Button(textureName: "buttonTakeMyMoney", x: 343, y: 19, touchArea:CGSize(width: 64,height: 64))
+        self.addChild(self.buttonStore)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -302,7 +309,7 @@ class PlayerDataCardStatistics: Control {
         self.addChild(control)
         
         self.buttonConfig = Button(textureName: "buttonConfig", x: 341, y: 75, touchArea:CGSize(width: 32,height: 32))
-        self.buttonConfig.hidden = true//TODO: 
+        self.buttonConfig.hidden = true//TODO: buttonConfig
         self.addChild(self.buttonConfig)
         
         let fontColor = SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1)
