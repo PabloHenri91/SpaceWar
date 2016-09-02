@@ -113,15 +113,17 @@ class MemoryCard {
             
             self.playerData.datamodelVersion = 6
             
+            
+            
+            let researchs = self.playerData.researches
+            self.playerData.researches = NSSet()
+            
             let newResearch = self.newResearchData()
             newResearch.type = 11
             newResearch.spaceshipLevel = 10
             newResearch.spaceshipMaxLevel = 10
             
             self.playerData.addResearchData(newResearch)
-            
-            let researchs = self.playerData.researches
-            self.playerData.researches = NSSet()
             
             for item in researchs {
                 if let researchData = item as? ResearchData {
@@ -158,10 +160,7 @@ class MemoryCard {
                             researchData.spaceshipLevel = 10
                             researchData.spaceshipMaxLevel = 10
                         }
-                        
-                        if researchData.type.integerValue == 11 {
-                            researchData.spaceshipLevel = 10
-                        }
+
                         
                         self.playerData.addResearchData(researchData)
                     }
