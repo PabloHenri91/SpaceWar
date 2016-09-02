@@ -165,6 +165,7 @@
 		844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2991CE78BFB0032F6AA /* Media.xcassets */; };
 		845FDA251D61DE9400A2C7CE /* GameAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FDA241D61DE9400A2C7CE /* GameAdManager.swift */; };
 		8461B4F71D47CAF900BB6B27 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8461B4F91D47CAF900BB6B27 /* Localizable.strings */; };
+		84629EE61D79EB4400888F44 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84629EE51D79EB4400888F44 /* IAPHelper.swift */; };
 		8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
 		846ECB131D61FBDC001C0FF0 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F31441D410C2900FDFBFE /* Metrics.swift */; };
 		846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
@@ -458,6 +459,7 @@
 		8461B52B1D47CBDC00BB6B27 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8461B52C1D47CBDC00BB6B27 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "es-MX"; path = "es-MX.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		8461B52D1D47CBDC00BB6B27 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "es-MX"; path = "es-MX.lproj/Main.storyboard"; sourceTree = "<group>"; };
+		84629EE51D79EB4400888F44 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		846F65CF1CF4777B00A2E69F /* Mothership.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mothership.swift; sourceTree = "<group>"; };
 		8478D4871D4678E9000E09DD /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		8478D4881D4678E9000E09DD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -668,6 +670,16 @@
 			name = Hangar;
 			sourceTree = "<group>";
 		};
+		3AF9D2001D786D9D0068E737 /* Research */ = {
+			isa = PBXGroup;
+			children = (
+				3A4065F31D2C616500B886DB /* ResearchCard.swift */,
+				3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */,
+				3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */,
+			);
+			name = Research;
+			sourceTree = "<group>";
+		};
 		842AD4201D74CDFC002C4AFE /* Jet */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,18 +688,6 @@
 			name = Jet;
 			sourceTree = "<group>";
 		};
-
-        3AF9D2001D786D9D0068E737 /* Research */ = {
-            isa = PBXGroup;
-            children = (
-                3A4065F31D2C616500B886DB /* ResearchCard.swift */,
-                3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */,
-                3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */,
-            );
-        name = Research;
-        sourceTree = "<group>";
-        };
-
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,6 +819,7 @@
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
+				84629EE51D79EB4400888F44 /* IAPHelper.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				849162A21D5DF9CF0064958C /* NextEvents.swift */,
@@ -1248,6 +1249,7 @@
 				3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */,
 				849162A31D5DF9CF0064958C /* NextEvents.swift in Sources */,
 				8436206C1CEB77400082A9D7 /* Event.swift in Sources */,
+				84629EE61D79EB4400888F44 /* IAPHelper.swift in Sources */,
 				84029D831CF49D68001853FF /* BattleScene.swift in Sources */,
 				84F855F31CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
 				846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */,

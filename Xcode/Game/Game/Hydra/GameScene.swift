@@ -101,6 +101,10 @@ class GameScene: SKScene {
         fatalError()
     }
     
+    func updatePremiumPoints() {
+    
+    }
+    
     override func didFinishUpdate() {
         //print("dX: " + Control.dx.description + " dY: " + Control.dy.description)
         Control.dx = 0
