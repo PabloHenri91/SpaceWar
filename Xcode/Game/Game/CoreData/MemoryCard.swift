@@ -111,8 +111,14 @@ class MemoryCard {
         
         if self.playerData.datamodelVersion.integerValue < 6 {
             
-            
             self.playerData.datamodelVersion = 6
+            
+            let newResearch = self.newResearchData()
+            newResearch.type = 11
+            newResearch.spaceshipLevel = 10
+            newResearch.spaceshipMaxLevel = 10
+            
+            self.playerData.addResearchData(newResearch)
             
             let researchs = self.playerData.researches
             self.playerData.researches = NSSet()

@@ -177,6 +177,7 @@ class ResearchScene: GameScene {
             case .research:
                 self.blackSpriteNode.hidden = true
                 self.scrollNode?.canScroll = true
+                self.gameStore?.removeFromParent()
                 break
                 
             case .mission:
