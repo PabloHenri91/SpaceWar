@@ -206,6 +206,8 @@
 		84AF821B1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */; };
 		84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B22F041D47D7D30034C03F /* PlayerDataCard.swift */; };
 		84B22F061D47D7D30034C03F /* PlayerDataCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B22F041D47D7D30034C03F /* PlayerDataCard.swift */; };
+		84B4475E1D7847FD006211F4 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4475D1D7847FD006211F4 /* GameStore.swift */; };
+		84B4475F1D7847FD006211F4 /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4475D1D7847FD006211F4 /* GameStore.swift */; };
 		84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
@@ -470,6 +472,7 @@
 		84A767A91D5BBF3200A8D808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleTrainingScene.swift; sourceTree = "<group>"; };
 		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
+		84B4475D1D7847FD006211F4 /* GameStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
 		84BF04901D50B8EF00F49792 /* museosansrounded-100-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-100-webfont.ttf"; sourceTree = "<group>"; };
 		84BF04911D50B8EF00F49792 /* museosansrounded-300-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-300-webfont.ttf"; sourceTree = "<group>"; };
@@ -794,6 +797,7 @@
 				84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */,
 				3AD261971D2562A000189671 /* FactorySpaceshipCard.swift */,
 				843803D31CEF45D1007152BC /* GameMath.swift */,
+				84B4475D1D7847FD006211F4 /* GameStore.swift */,
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
@@ -1200,6 +1204,7 @@
 				3AD261981D2562A000189671 /* FactorySpaceshipCard.swift in Sources */,
 				84110C151D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */,
 				843620741CEB77400082A9D7 /* GameScene.swift in Sources */,
+				84B4475E1D7847FD006211F4 /* GameStore.swift in Sources */,
 				3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */,
 				84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
 				842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */,
@@ -1265,6 +1270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */,
+				84B4475F1D7847FD006211F4 /* GameStore.swift in Sources */,
 				3AD2619F1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
 				84F855DA1CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				3ABECDC41D5BBAD500661C0D /* BuyMinnerSpaceshipAlert.swift in Sources */,

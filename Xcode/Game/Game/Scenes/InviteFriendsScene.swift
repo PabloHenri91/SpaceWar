@@ -118,12 +118,6 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
             case .mothership:
                 self.view?.presentScene(MothershipScene())
                 break
-                
-            default:
-                #if DEBUG
-                    fatalError()
-                #endif
-                break
             }
         }
     }

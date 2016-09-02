@@ -23,7 +23,7 @@ class CropBox: Box {
     
     override init(name:String = "", textureName:String, x:Int = -1, y:Int = -1, xAlign:Control.xAlignments = .center, yAlign:Control.yAlignments = .center) {
         
-        super.init(name: name, textureName: textureName, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
+        super.init(textureName: textureName, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
         
         let mask = SKSpriteNode(imageNamed: textureName)
         mask.texture?.filteringMode = Display.filteringMode

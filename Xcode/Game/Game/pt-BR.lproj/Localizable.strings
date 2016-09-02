@@ -136,7 +136,20 @@
 "You are now on level " = "";
 
  
-*/
+//GameStore
+ 
+"SPACE SHOP" = "";
+"Welcome to the SPACE SHOP!" = "";
+ "This is the best market in the galaxy. Use your resources wisely and strategically." = "";
+" DAYS" = "";
+" DAY" = "";
+" CHARGES" = "";
+" CHARGES" = "";
+"24 HOURS" = "";
+"FRAGMENTS AND DIAMONDS" = "";
+"BOOSTS AND ENERGY" = "";
+ 
+ */
 
 
 
