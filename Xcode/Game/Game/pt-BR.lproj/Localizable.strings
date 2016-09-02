@@ -129,6 +129,16 @@
 "You Lose. " = "";
 "Draw." = "";
 
+// Unlock research at ende of battle
+"RESEARCH UNLOCKED" = "";
+"Great!" = "";
+"You unlocked a new research:" = "";
+"Unlock " = "";
+"improvement " = "";
+"GO TO RESEARCHES" = "";
+
+
+
 
 
 //
@@ -150,6 +160,9 @@
 "BOOSTS AND ENERGY" = "";
  
  */
+
+ 
+
 
 
 
