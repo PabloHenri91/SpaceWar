@@ -819,6 +819,7 @@
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
+				84629EE51D79EB4400888F44 /* IAPHelper.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				849162A21D5DF9CF0064958C /* NextEvents.swift */,
@@ -832,7 +833,6 @@
 				3AF476251D638F0900839BBC /* Hangar */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
 				3AF9D2001D786D9D0068E737 /* Research */,
-				84629EE51D79EB4400888F44 /* IAPHelper.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
