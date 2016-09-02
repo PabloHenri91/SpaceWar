@@ -153,6 +153,10 @@ class MemoryCard {
                             researchData.spaceshipMaxLevel = 10
                         }
                         
+                        if researchData.type.integerValue == 11 {
+                            researchData.spaceshipLevel = 10
+                        }
+                        
                         self.playerData.addResearchData(researchData)
                     }
                 }
