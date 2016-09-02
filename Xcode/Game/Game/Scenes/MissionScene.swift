@@ -148,6 +148,10 @@ class MissionScene: GameScene {
         self.nextState = .mission
     }
     
+    override func updatePremiumPoints() {
+        self.playerDataCard.updatePremiumPoints()
+    }
+    
     func updateScrollNode() {
         
         self.controlArray = Array<MissionSpaceshipCard>()

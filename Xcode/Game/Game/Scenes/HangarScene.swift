@@ -155,6 +155,10 @@ class HangarScene: GameScene {
         self.nextState = .hangar
     }
     
+    override func updatePremiumPoints() {
+        self.playerDataCard.updatePremiumPoints()
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         

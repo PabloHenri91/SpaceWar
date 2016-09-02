@@ -139,6 +139,10 @@ class FactoryScene: GameScene {
         self.nextState = .factory
     }
     
+    override func updatePremiumPoints() {
+        self.playerDataCard.updatePremiumPoints()
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         

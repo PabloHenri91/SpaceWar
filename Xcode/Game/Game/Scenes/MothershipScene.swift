@@ -160,6 +160,10 @@ class MothershipScene: GameScene {
         self.nextState = .mothership
     }
     
+    override func updatePremiumPoints() {
+        self.playerDataCard.updatePremiumPoints()
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         

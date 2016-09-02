@@ -10,6 +10,8 @@ import SpriteKit
 
 class GameStore: Box {
     
+    static var sharedInstance: GameStore?
+    
     var buttonClose:Button!
     var initTime: Double = 0
     
@@ -48,9 +50,9 @@ class GameStore: Box {
         self.storeItens.append(StoreItem(iconImageNamed: "iconPointsPack1", type: StoreItem.types.points, x: 100, y: 37, price: 10, amount: Int(100000 * 1.1)))
         self.storeItens.append(StoreItem(iconImageNamed: "iconPointsPack2", type: StoreItem.types.points, x: 188, y: 37, price: 100, amount: Int(1000000 * 1.2)))
         
-        self.storeItens.append(StoreItem(iconImageNamed: "iconPremiumPointsPack0", type: StoreItem.types.premiumPoints, x: 13, y: 144, price: 0.99, amount: Int(100 * 1.0)))
-        self.storeItens.append(StoreItem(iconImageNamed: "iconPremiumPointsPack1", type: StoreItem.types.premiumPoints, x: 100, y: 144, price: 4.99, amount: Int(500 * 1.1)))
-        self.storeItens.append(StoreItem(iconImageNamed: "iconPremiumPointsPack2", type: StoreItem.types.premiumPoints, x: 188, y: 144, price: 9.99, amount: Int(1000 * 1.2)))
+        self.storeItens.append(StoreItem(productIdentifier: "com.PabloHenri91.GameIV.premiumPointsPack0", iconImageNamed: "iconPremiumPointsPack0", type: StoreItem.types.premiumPoints, x: 13, y: 144, price: 0.99, amount: Int(100 * 1.0)))
+        self.storeItens.append(StoreItem(productIdentifier: "com.PabloHenri91.GameIV.premiumPointsPack1", iconImageNamed: "iconPremiumPointsPack1", type: StoreItem.types.premiumPoints, x: 100, y: 144, price: 4.99, amount: Int(500 * 1.1)))
+        self.storeItens.append(StoreItem(productIdentifier: "com.PabloHenri91.GameIV.premiumPointsPack2", iconImageNamed: "iconPremiumPointsPack2", type: StoreItem.types.premiumPoints, x: 188, y: 144, price: 9.99, amount: Int(1000 * 1.2)))
         
         self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 13, y: 301, price: 10, amount: Int(1 * 1.0)))
         self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 100, y: 301, price: 15, amount: Int(3 * 1.0)))
@@ -74,6 +76,8 @@ class GameStore: Box {
         }
         
         self.initTime = GameScene.currentTime
+        
+        GameStore.sharedInstance = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -81,7 +85,7 @@ class GameStore: Box {
     }
     
     func touchEnded(touch: UITouch) {
-        let point = touch.locationInNode(self)
+        var point = touch.locationInNode(self)
         
         if self.buttonClose.containsPoint(point) {
             if GameScene.currentTime - self.initTime > 0.5 {
@@ -91,6 +95,15 @@ class GameStore: Box {
             return
         }
         
+        point = touch.locationInNode(self.scrollNode)
+        for storeItem in self.storeItens {
+            if storeItem.containsPoint(point) {
+                if storeItem.productIdentifier != "" {
+                    IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                }
+                return
+            }
+        }
         
     }
     
@@ -109,6 +122,36 @@ class GameStore: Box {
         }
         self.scrollNode.position.y = self.scrollNode.position.y + dy
     }
+    
+    func purchasedItem(productIdentifier: String) {
+        
+        print(productIdentifier)
+        
+        for storeItem in self.storeItens {
+            if productIdentifier == storeItem.productIdentifier {
+                
+                let playerData = MemoryCard.sharedInstance.playerData
+                
+                switch storeItem.type {
+                    
+                case .premiumPoints:
+                    playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
+                    Control.gameScene.updatePremiumPoints()
+                    break
+                default:
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                    break
+                }
+                return // encontrou o productIdentifier
+            }
+        }
+        
+        #if DEBUG
+            fatalError()
+        #endif
+    }
 }
 
 
@@ -121,11 +164,21 @@ class StoreItem: Control {
         case energy
     }
     
+    var type: types
+    
+    var amount: Int
+    
     override init() {
         fatalError()
     }
     
-    init(iconImageNamed: String, type: types, x: Int, y: Int, price: Double, amount: Int) {
+    var productIdentifier = ""
+    
+    init(productIdentifier: String = "", iconImageNamed: String, type: types, x: Int, y: Int, price: Double, amount: Int) {
+        
+        self.amount = amount
+        self.type = type
+        self.productIdentifier = productIdentifier
         
         var borderColor = SKColor.blackColor()
         var priceText = ""
@@ -192,11 +245,4 @@ class StoreItem: Control {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
-    
-    
-    
 }
