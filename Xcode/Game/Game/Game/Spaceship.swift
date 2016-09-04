@@ -647,6 +647,18 @@ class Spaceship: Control {
                 return
             }
             
+            let dx = Float(shot.position.x - self.position.x)
+            let dy = Float(shot.position.y - self.position.y)
+            
+            let rotationToShot = -atan2f(dx, dy)
+            var totalRotationToShot = rotationToShot - Float(self.zRotation)
+            while(totalRotationToShot < Float(-M_PI)) { totalRotationToShot += Float(M_PI * 2) }
+            while(totalRotationToShot >  Float(M_PI)) { totalRotationToShot -= Float(M_PI * 2) }
+            
+            let damageMultiplier = max(abs(totalRotationToShot), 1)
+            
+            shot.damage = Int(Float(shot.damage) * damageMultiplier)
+            
             if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
                 if let spaceship = shot.shooter as? Spaceship {
