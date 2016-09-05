@@ -91,71 +91,75 @@ class BatteryControl: Control {
     
     func updateLabels() {
         
-        if self.charge < self.maxCharge {
-            if let battery = MemoryCard.sharedInstance.playerData.battery {
-                
-                self.charge = battery.charge.integerValue
-                self.lastCharge = battery.lastCharge
-                
-                while self.charge < self.maxCharge {
-                    
-                    if self.charge == -1 {
-                        
-                        if GameMath.batteryBoostTimeLeft(self.lastCharge) <= 0 {
-                            self.lastCharge = NSDate()
-                            battery.lastCharge = self.lastCharge
-                            
-                            self.charge = self.maxCharge
-                            battery.charge = self.charge
-                        }
-                        break
-                        
-                    } else {
-                        if GameMath.batteryNextChargeTimeLeft(self.lastCharge) <= 0 {
-                            self.lastCharge = NSDate(timeInterval: GameMath.batteryChargeInterval, sinceDate: self.lastCharge)
-                            battery.lastCharge = self.lastCharge
-                            
-                            self.charge += 1
-                            battery.charge = self.charge
-                        } else {
-                            break
-                        }
-                        
-                        if self.charge >= self.maxCharge {
-                            break
-                        }
-                    }
-                }
-                
-                var text = ""
+        if let battery = MemoryCard.sharedInstance.playerData.battery {
+            
+            self.charge = battery.charge.integerValue
+            self.lastCharge = battery.lastCharge
+            
+            while self.charge < self.maxCharge {
                 
                 if self.charge == -1 {
-                    labelTimerLabel.setText("Boost time left: ")
-                    text = GameMath.timeFormated(GameMath.batteryBoostTimeLeft(self.lastCharge))
                     
-                    for control in chargeIndicator {
-                        control.hidden = false
+                    if GameMath.batteryBoostTimeLeft(self.lastCharge) <= 0 {
+                        self.lastCharge = NSDate()
+                        battery.lastCharge = self.lastCharge
+                        
+                        self.charge = self.maxCharge
+                        battery.charge = self.charge
                     }
+                    break
                     
                 } else {
-                    if self.charge < self.maxCharge {
-                        text = GameMath.timeFormated(GameMath.batteryNextChargeTimeLeft(self.lastCharge))
+                    if GameMath.batteryNextChargeTimeLeft(self.lastCharge) <= 0 {
+                        self.lastCharge = NSDate(timeInterval: GameMath.batteryChargeInterval, sinceDate: self.lastCharge)
+                        battery.lastCharge = self.lastCharge
+                        
+                        self.charge += 1
+                        battery.charge = self.charge
+                    } else {
+                        break
                     }
                     
-                    var i = 0
-                    for control in chargeIndicator {
-                        control.hidden = charge <= i
-                        i += 1
+                    if self.charge >= self.maxCharge {
+                        break
                     }
                 }
+            }
+            
+            var text = ""
+            
+            if self.charge == -1 {
+                labelTimerLabel.setText("Boost time left: ")
+                text = GameMath.timeFormated(GameMath.batteryBoostTimeLeft(self.lastCharge))
                 
-                self.labelTimerValue.setText(text)
-                if text == "" {
-                    self.labelTimerLabel.setText("Full")
+                for control in chargeIndicator {
+                    control.hidden = false
                 }
                 
-                self.centerLabels()
+            } else {
+                if self.charge < self.maxCharge {
+                    text = GameMath.timeFormated(GameMath.batteryNextChargeTimeLeft(self.lastCharge))
+                }
+                
+                var i = 0
+                for control in chargeIndicator {
+                    control.hidden = charge <= i
+                    i += 1
+                }
             }
+            
+            self.labelTimerValue.setText(text)
+            if text == "" {
+                
+                if self.charge > self.maxCharge {
+                    self.labelTimerLabel.setText((self.charge).description + " charges")
+                } else {
+                    self.labelTimerLabel.setText("Full")
+                }
+            }
+            
+            self.centerLabels()
         }
+        
     }
 }

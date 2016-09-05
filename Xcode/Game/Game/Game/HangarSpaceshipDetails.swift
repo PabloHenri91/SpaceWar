@@ -221,18 +221,17 @@ class HangarSpaceshipDetails: Box {
         }
         
         
+        let x = self.position.x - (self.size.width/2) * 0.1
+        let y = self.position.y + (self.size.height/2) * 0.1
+        
         self.setScale(0)
-        self.position = CGPoint(x: Display.sceneSize.width/2, y: -Display.sceneSize.height/2)
+        self.position = CGPoint(x: Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2)
         
-        let x = Display.sceneSize.width/2 - (self.size.width/2) * 1.1
-        let y = Display.sceneSize.height/2  - (self.size.height/2) * 1.1
+        let duration:Double = 0.10
         
-        
-        
-        let duration = 0.1
         let action1 = SKAction.group([
             SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(CGPoint(x: x, y: y)), duration: duration)
+            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
             ])
         
         let action2 = SKAction.group([

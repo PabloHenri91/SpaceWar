@@ -56,9 +56,9 @@ class GameStore: Box {
         self.storeItens.append(StoreItem(productIdentifier: "com.PabloHenri91.GameIV.premiumPointsPack1", iconImageNamed: "iconPremiumPointsPack1", type: StoreItem.types.premiumPoints, x: 100, y: 144, price: 4.99, amount: Int(500 * 1.1)))
         self.storeItens.append(StoreItem(productIdentifier: "com.PabloHenri91.GameIV.premiumPointsPack2", iconImageNamed: "iconPremiumPointsPack2", type: StoreItem.types.premiumPoints, x: 188, y: 144, price: 9.99, amount: Int(1000 * 1.2)))
         
-        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 13, y: 301, price: 10, amount: Int(1 * 1.0)))
-        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 100, y: 301, price: 15, amount: Int(3 * 1.0)))
-        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 188, y: 301, price: 25, amount: Int(7 * 1.0)))
+        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 13, y: 301, price: 10, amount: Int(1 * 1.0), typeIndex: 0))
+        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 100, y: 301, price: 15, amount: Int(3 * 1.0), typeIndex: 1))
+        self.storeItens.append(StoreItem(iconImageNamed: "iconXPBoost", type: StoreItem.types.xPBoost, x: 188, y: 301, price: 25, amount: Int(7 * 1.0), typeIndex: 2))
         
         self.storeItens.append(StoreItem(iconImageNamed: "iconEnergyPack0", type: StoreItem.types.energy, x: 13, y: 409, price: 1, amount: Int(2 * 1.0)))
         self.storeItens.append(StoreItem(iconImageNamed: "iconEnergyPack1", type: StoreItem.types.energy, x: 100, y: 409, price: 2, amount: Int(4 * 1.0)))
@@ -82,6 +82,31 @@ class GameStore: Box {
         self.loadSoundEffects()
         
         self.storeItensUpdateAvailable()
+        
+        self.addChild(Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+            alpha: 11/100), size: CGSize(width: 1, height: 1)),
+            y: 126, size: CGSize(width: self.size.width,
+                height: 2)))
+        
+        let x = self.position.x - (self.size.width/2) * 0.1
+        let y = self.position.y + (self.size.height/2) * 0.1
+        
+        self.setScale(0)
+        self.position = CGPoint(x: Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2)
+        
+        let duration:Double = 0.10
+        
+        let action1 = SKAction.group([
+            SKAction.scaleTo(1.1, duration: duration),
+            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
+            ])
+        
+        let action2 = SKAction.group([
+            SKAction.scaleTo(1, duration: duration),
+            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+            ])
+        
+        self.runAction(SKAction.sequence([action1, action2]))
         
         GameStore.sharedInstance = self
     }
@@ -122,8 +147,9 @@ class GameStore: Box {
                     
                     if playerData.premiumPoints.doubleValue >= storeItem.price {
                         playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
-                        playerData.points = playerData.points.integerValue + storeItem.amount
                         Control.gameScene.updatePremiumPoints()
+                        
+                        playerData.points = playerData.points.integerValue + storeItem.amount
                         Control.gameScene.updatePoints()
                         self.feedback()
                     } else {
@@ -134,10 +160,19 @@ class GameStore: Box {
                     break
                 case .premiumPoints:
                     if storeItem.productIdentifier != "" {
-                        IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                        //IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
                     }
                     break
                 case .xPBoost:
+                    
+                    Boost.reloadBoosts()
+                    
+                    if Boost.activeBoosts.count <= 0 {
+                        playerData.addBoostData(MemoryCard.sharedInstance.newBoostData(storeItem.typeIndex))
+                        Boost.reloadBoosts()
+                        self.feedback()
+                    }
+                    
                     break
                 case .energy:
                     if playerData.premiumPoints.doubleValue >= storeItem.price {
@@ -147,13 +182,17 @@ class GameStore: Box {
                             if battery.charge != -1 {
                                 if storeItem.amount > 0 {
                                     playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
+                                    Control.gameScene.updatePremiumPoints()
+                                    
                                     battery.charge = battery.charge.integerValue + storeItem.amount
                                     self.feedback()
                                 } else {
                                     playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
+                                    Control.gameScene.updatePremiumPoints()
+                                    
                                     battery.charge = -1
                                     battery.lastCharge = NSDate()
-                                    Control.gameScene.updatePremiumPoints()
+                                    
                                     self.feedback()
                                 }
                             } else {
@@ -206,6 +245,7 @@ class GameStore: Box {
                 case .premiumPoints:
                     playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
                     Control.gameScene.updatePremiumPoints()
+                    
                     self.feedback()
                     break
                 default:
@@ -265,13 +305,15 @@ class StoreItem: Control {
     
     var unavailableEffect:SKSpriteNode!
     
+    var typeIndex = 0
+    
     override init() {
         fatalError()
     }
     
     var productIdentifier = ""
     
-    init(productIdentifier: String = "", iconImageNamed: String, type: types, x: Int, y: Int, price: Double, amount: Int) {
+    init(productIdentifier: String = "", iconImageNamed: String, type: types, x: Int, y: Int, price: Double, amount: Int, typeIndex: Int = 0) {
         
         self.amount = amount
         self.price = price
@@ -353,7 +395,7 @@ class StoreItem: Control {
     
     func updateAvailable() {
         if self.productIdentifier != "" {
-            self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
+            //self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
         }
     }
     
@@ -362,7 +404,7 @@ class StoreItem: Control {
         let x = self.position.x - (self.size.width/2) * 0.1
         let y = self.position.y + (self.size.height/2) * 0.1
         
-        let duration:Double = 1/60 * 3
+        let duration:Double = 0.10
         
         let action1 = SKAction.group([
             SKAction.scaleTo(1.1, duration: duration),

@@ -81,7 +81,7 @@ class SpaceshipSlot: Control {
                     
                     labelLevel.setText(text)
                     
-                    let duration:Double = 0.125
+                    let duration:Double = 0.10
                     var actions = [SKAction]()
                     actions.append(SKAction.scaleTo(1.5, duration: duration))
                     actions.append(SKAction.scaleTo(1.0, duration: duration))

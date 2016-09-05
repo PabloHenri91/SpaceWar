@@ -31,6 +31,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var winningStreakBest: NSNumber
     @NSManaged var winningStreakCurrent: NSNumber
     @NSManaged var datamodelVersion: NSNumber
+    @NSManaged var boosts: NSSet
 
 }
 
@@ -133,13 +134,27 @@ extension MemoryCard {
         playerData.winningStreakCurrent = 0
         playerData.winningStreakBest = 0
         
-        playerData.datamodelVersion = 6
+        playerData.boosts = NSSet()
+        
+        playerData.addBoostData(self.newBoostData(0))
+        
+        playerData.datamodelVersion = 7
         
         return playerData
     }
 }
 
 extension PlayerData {
+    
+    func removeBoostData(value: BoostData) {
+        let items = self.mutableSetValueForKey("boosts")
+        items.removeObject(value)
+    }
+    
+    func addBoostData(value: BoostData) {
+        let items = self.mutableSetValueForKey("boosts")
+        items.addObject(value)
+    }
     
     func addResearchData(value: ResearchData) {
         let items = self.mutableSetValueForKey("researches")
@@ -165,7 +180,6 @@ extension PlayerData {
         let items = self.mutableOrderedSetValueForKey("missionSpaceships")
         items.addObject(value)
     }
-    
     
     func removeSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("spaceships")

@@ -174,7 +174,7 @@ class PlayerDataCard: Control {
         self.labelLevel.setText(text)
         self.labelLevelShadow.setText(text)
         
-        let duration:Double = 0.125
+        let duration:Double = 0.10
         var actions = [SKAction]()
         actions.append(SKAction.scaleTo(1.5, duration: duration))
         actions.append(SKAction.scaleTo(1.0, duration: duration))
@@ -219,7 +219,7 @@ class PlayerDataCard: Control {
         self.labelXP.setText(text)
         self.labelXPShadow.setText(text)
         
-        let duration:Double = 0.125
+        let duration:Double = 0.10
         var actions = [SKAction]()
         actions.append(SKAction.scaleTo(1.5, duration: duration))
         actions.append(SKAction.scaleTo(1.0, duration: duration))
@@ -253,7 +253,7 @@ class PlayerDataCard: Control {
         
         self.labelPoints.setText(text)
         
-        let duration:Double = 0.125
+        let duration:Double = 0.10
         var actions = [SKAction]()
         actions.append(SKAction.scaleTo(1.5, duration: duration))
         actions.append(SKAction.scaleTo(1.0, duration: duration))
@@ -269,7 +269,7 @@ class PlayerDataCard: Control {
         
         self.labelPremiumPoints.setText(text)
         
-        let duration:Double = 0.125
+        let duration:Double = 0.10
         var actions = [SKAction]()
         actions.append(SKAction.scaleTo(1.5, duration: duration))
         actions.append(SKAction.scaleTo(1.0, duration: duration))

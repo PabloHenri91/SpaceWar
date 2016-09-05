@@ -28,6 +28,7 @@ class LoadScene: GameScene {
         super.didMoveToView(view)
         #if DEBUG
 //            MemoryCard.sharedInstance.playerData.points = 1000000
+//            MemoryCard.sharedInstance.playerData.premiumPoints = 1000000
 //            Research.cheatDuration()
         #endif
     }

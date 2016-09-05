@@ -111,8 +111,9 @@ class MissionSpaceshipCard: Control {
             self.playerData.points = self.playerData.points.integerValue + mission.pointsBonus
             self.playerData.pointsSum = self.playerData.pointsSum.integerValue + mission.pointsBonus
             
-            self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + mission.xpBonus)
-
+            
+            let xpBonus = GameMath.applyXPBoosts(mission.xpBonus)
+            self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xpBonus)
             
             self.buttonCollect!.removeFromParent()
             self.buttonCollect = nil

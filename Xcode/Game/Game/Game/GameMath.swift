@@ -11,6 +11,22 @@ import SpriteKit
 class GameMath {
     
     
+    //Boosts
+    static func applyXPBoosts(xp: Int) -> Int {
+        
+        Boost.reloadBoosts()//TODO: remover daqui
+        
+        var calculatedXP = xp
+        
+        for boost in Boost.activeBoosts {
+            if boost.isActive() {
+                calculatedXP = calculatedXP * boost.type.xpMultiplier
+            }
+        }
+        
+        return calculatedXP
+    }
+    
     //Weapons
     static let weaponMinFireInterval:Double = 0.1 // seconds
     static let weaponMaxFireInterval:Double = 1.0 // seconds
@@ -117,11 +133,6 @@ class GameMath {
             return Int(500 * pow(1.3, Double(level)))
         case .legendary:
             return Int(1000 * pow(1.3, Double(level)))
-        default:
-            #if DEBUG
-                fatalError()
-            #endif
-            break
         }
     }
     
@@ -135,12 +146,7 @@ class GameMath {
         case .epic:
             return 5000
         case .legendary:
-            return 10000 
-        default:
-            #if DEBUG
-                fatalError()
-            #endif
-            break
+            return 10000
         }
     }
     
@@ -178,37 +184,10 @@ class GameMath {
         }
     }
     
-    static func spaceshipUpgradeXPBonus(level level:Int, type:SpaceshipType) -> Int {
-        switch type.rarity {
-        case .common:
-            return Int(10 * pow(1.1, Double(level)))
-        case .rare:
-            return Int(20 * pow(1.1, Double(level)))
-        case .epic:
-            return Int(50 * pow(1.1, Double(level)))
-        case .legendary:
-            return Int(100 * pow(1.1, Double(level)))
-        default:
-            #if DEBUG
-                fatalError()
-            #endif
-            break
-        }
-    }
-    
     // Weapons
     static func weaponDamage(level level:Int, type:WeaponType) -> Int {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
-    
-//    static func weaponSkinImageName(level level:Int, type:WeaponType) -> String {
-//        let level = Float(level)
-//        let maxLevel = Float(type.maxLevel)
-//        
-//        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
-//        
-//        return type.skins[Int(skinIndex)]
-//    }
     
     // Mothership
     static let mothershipHealthPointsPerLevel = 8
@@ -229,26 +208,29 @@ class GameMath {
     
     //Battle
     static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+        
+        var xp = 0
+        
         // win
         if mothership.health > 0 {
             if enemyMothership.level - mothership.level > 0 {
-                let xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
-                return xp
+                xp = mothership.level * 100 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
             } else {
-                let xp = mothership.level * 100
-                return xp
+                xp = mothership.level * 100
             }
             
         } else {
             //loose
             if enemyMothership.level - mothership.level > 0 {
-                let xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
-                return xp
+                xp = mothership.level * 10 + ((enemyMothership.level - mothership.level) * (mothership.level * 10))
             } else {
-                let xp = mothership.level * 10
-                return xp
+                xp = mothership.level * 10
             }
         }
+        
+        xp = GameMath.applyXPBoosts(xp)
+        
+        return xp
     }
     
     static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
