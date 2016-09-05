@@ -160,7 +160,10 @@ class GameStore: Box {
                     break
                 case .premiumPoints:
                     if storeItem.productIdentifier != "" {
-                        //IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                        #if os(iOS)
+                            IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                        #endif
+                        
                     }
                     break
                 case .xPBoost:
@@ -395,11 +398,18 @@ class StoreItem: Control {
     
     func updateAvailable() {
         if self.productIdentifier != "" {
-            //self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
+            if Metrics.canSendEvents() {
+                #if os(iOS)
+                    self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
+                #endif
+            }
         }
     }
     
     func jump() {
+        
+        self.resetPosition()
+        self.setScale(1)
         
         let x = self.position.x - (self.size.width/2) * 0.1
         let y = self.position.y + (self.size.height/2) * 0.1
