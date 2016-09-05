@@ -152,6 +152,10 @@ class MissionScene: GameScene {
         self.playerDataCard.updatePremiumPoints()
     }
     
+    override func updatePoints() {
+        self.playerDataCard.updatePoints()
+    }
+    
     func updateScrollNode() {
         
         self.controlArray = Array<MissionSpaceshipCard>()

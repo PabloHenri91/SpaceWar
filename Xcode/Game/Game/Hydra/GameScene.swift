@@ -105,6 +105,10 @@ class GameScene: SKScene {
     
     }
     
+    func updatePoints() {
+        
+    }
+    
     override func didFinishUpdate() {
         //print("dX: " + Control.dx.description + " dY: " + Control.dy.description)
         Control.dx = 0

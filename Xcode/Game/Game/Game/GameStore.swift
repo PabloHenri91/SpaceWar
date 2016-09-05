@@ -12,6 +12,8 @@ class GameStore: Box {
     
     static var sharedInstance: GameStore?
     
+    var explosionSoundEffect:SoundEffect!
+    
     var buttonClose:Button!
     var initTime: Double = 0
     
@@ -77,6 +79,10 @@ class GameStore: Box {
         
         self.initTime = GameScene.currentTime
         
+        self.loadSoundEffects()
+        
+        self.storeItensUpdateAvailable()
+        
         GameStore.sharedInstance = self
     }
     
@@ -84,13 +90,21 @@ class GameStore: Box {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func loadSoundEffects() {
+        self.explosionSoundEffect = SoundEffect(soundType: SoundEffect.effectTypes.explosion, node: self)
+    }
+    
+    func close() {
+        self.removeFromParent()
+        Control.gameScene.setDefaultState()
+    }
+    
     func touchEnded(touch: UITouch) {
         var point = touch.locationInNode(self)
         
         if self.buttonClose.containsPoint(point) {
             if GameScene.currentTime - self.initTime > 0.5 {
-                self.removeFromParent()
-                Control.gameScene.setDefaultState()
+                self.close()
             }
             return
         }
@@ -98,13 +112,63 @@ class GameStore: Box {
         point = touch.locationInNode(self.scrollNode)
         for storeItem in self.storeItens {
             if storeItem.containsPoint(point) {
-                if storeItem.productIdentifier != "" {
-                    IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                
+                storeItem.jump()
+                
+                let playerData = MemoryCard.sharedInstance.playerData
+                
+                switch storeItem.type {
+                case .points:
+                    
+                    if playerData.premiumPoints.doubleValue >= storeItem.price {
+                        playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
+                        playerData.points = playerData.points.integerValue + storeItem.amount
+                        Control.gameScene.updatePremiumPoints()
+                        Control.gameScene.updatePoints()
+                        self.feedback()
+                    } else {
+                        //TODO: não tem diamantes para comprar
+                        print("não tem diamantes para comprar")
+                    }
+                    
+                    break
+                case .premiumPoints:
+                    if storeItem.productIdentifier != "" {
+                        IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                    }
+                    break
+                case .xPBoost:
+                    break
+                case .energy:
+                    if playerData.premiumPoints.doubleValue >= storeItem.price {
+                        
+                        if let battery = playerData.battery {
+                            
+                            if battery.charge != -1 {
+                                if storeItem.amount > 0 {
+                                    playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
+                                    battery.charge = battery.charge.integerValue + storeItem.amount
+                                    self.feedback()
+                                } else {
+                                    playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
+                                    battery.charge = -1
+                                    battery.lastCharge = NSDate()
+                                    Control.gameScene.updatePremiumPoints()
+                                    self.feedback()
+                                }
+                            } else {
+                                print("ja estava com o boost ativo")
+                            }
+                        }
+                    } else {
+                        //TODO: não tem diamantes para comprar
+                        print("não tem diamantes para comprar")
+                    }
+                    break
                 }
                 return
             }
         }
-        
     }
     
     func update() {
@@ -123,11 +187,16 @@ class GameStore: Box {
         self.scrollNode.position.y = self.scrollNode.position.y + dy
     }
     
+    func storeItensUpdateAvailable() {
+        for storeItem in self.storeItens {
+            storeItem.updateAvailable()
+        }
+    }
+    
     func purchasedItem(productIdentifier: String) {
         
-        print(productIdentifier)
-        
         for storeItem in self.storeItens {
+            
             if productIdentifier == storeItem.productIdentifier {
                 
                 let playerData = MemoryCard.sharedInstance.playerData
@@ -137,10 +206,11 @@ class GameStore: Box {
                 case .premiumPoints:
                     playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
                     Control.gameScene.updatePremiumPoints()
+                    self.feedback()
                     break
                 default:
                     #if DEBUG
-                        fatalError()
+                        //fatalError()
                     #endif
                     break
                 }
@@ -151,6 +221,30 @@ class GameStore: Box {
         #if DEBUG
             fatalError()
         #endif
+    }
+    
+    func feedback() {
+        self.explosionSoundEffect.play()
+        let particles = SKEmitterNode(fileNamed: "explosion.sks")!
+        
+        particles.position.x = self.position.x + (self.spriteNode.size.width/2)
+        particles.position.y = self.position.y - (self.spriteNode.size.height/2)
+        particles.zPosition = self.zPosition + 1000000
+        
+        particles.numParticlesToEmit = 1000
+        particles.particleSpeedRange = 1000
+        
+        particles.particlePositionRange = CGVector(dx: self.spriteNode.size.width, dy: self.spriteNode.size.height)
+        
+        if let parent = self.parent {
+            parent.addChild(particles)
+            
+            let action = SKAction()
+            action.duration = 1
+            particles.runAction(action, completion: { [weak particles] in
+                particles?.removeFromParent()
+                })
+        }
     }
 }
 
@@ -167,6 +261,9 @@ class StoreItem: Control {
     var type: types
     
     var amount: Int
+    var price: Double
+    
+    var unavailableEffect:SKSpriteNode!
     
     override init() {
         fatalError()
@@ -177,6 +274,7 @@ class StoreItem: Control {
     init(productIdentifier: String = "", iconImageNamed: String, type: types, x: Int, y: Int, price: Double, amount: Int) {
         
         self.amount = amount
+        self.price = price
         self.type = type
         self.productIdentifier = productIdentifier
         
@@ -240,9 +338,43 @@ class StoreItem: Control {
         case .premiumPoints:
             break
         }
+        
+        self.unavailableEffect = SKSpriteNode(texture: SKTexture(imageNamed: "storeItemBackground"))
+        self.unavailableEffect.hidden = true
+        self.unavailableEffect.color = SKColor.blackColor()
+        self.unavailableEffect.alpha = 0.5
+        self.unavailableEffect.colorBlendFactor = 1
+        self.addChild(Control(spriteNode: self.unavailableEffect))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateAvailable() {
+        if self.productIdentifier != "" {
+            self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
+        }
+    }
+    
+    func jump() {
+        
+        let x = self.position.x - (self.size.width/2) * 0.1
+        let y = self.position.y + (self.size.height/2) * 0.1
+        
+        let duration:Double = 1/60 * 3
+        
+        let action1 = SKAction.group([
+            SKAction.scaleTo(1.1, duration: duration),
+            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
+            ])
+        
+        let action2 = SKAction.group([
+            SKAction.scaleTo(1, duration: duration),
+            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+            ])
+        
+        
+        self.runAction(SKAction.sequence([action1, action2]))
     }
 }

@@ -306,13 +306,20 @@ class GameMath {
     //Battery
     static let batteryMaxCharge = 4
     #if DEBUG
-    static let batteryChargeInterval = 2.0
+    static let batteryChargeInterval = 6.0 * 6.0
     #else
     static let batteryChargeInterval = 6.0 * 60.0
     #endif
     
+    static let batteryBoostInterval = 60.0 * 60.0 * 24.0
+    
     static func batteryNextChargeTimeLeft(beginChargeDate: NSDate) -> Int {
         let date = NSDate(timeInterval: batteryChargeInterval, sinceDate: beginChargeDate)
+        return Int(date.timeIntervalSinceNow)
+    }
+    
+    static func batteryBoostTimeLeft(beginChargeDate: NSDate) -> Int {
+        let date = NSDate(timeInterval: batteryBoostInterval, sinceDate: beginChargeDate)
         return Int(date.timeIntervalSinceNow)
     }
     

@@ -29,6 +29,7 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         }
         
         self.isPurchasing = true
+        GameStore.sharedInstance!.storeItensUpdateAvailable()
         
         let productsRequest = SKProductsRequest(productIdentifiers: Set<String>(arrayLiteral: productIdentifier))
         productsRequest.delegate = self
@@ -95,8 +96,9 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
                 print("Purchased: \(transaction)")
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 
-                GameStore.sharedInstance!.purchasedItem(transaction.payment.productIdentifier)
                 self.isPurchasing = false
+                GameStore.sharedInstance!.storeItensUpdateAvailable()
+                GameStore.sharedInstance!.purchasedItem(transaction.payment.productIdentifier)
                 
                 break
                 
@@ -104,6 +106,7 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
                 print("Failed: \(transaction)")
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 self.isPurchasing = false
+                GameStore.sharedInstance!.storeItensUpdateAvailable()
                 break
                 
             case .Restored: // Transaction was restored from user's purchase history.  Client should complete the transaction.

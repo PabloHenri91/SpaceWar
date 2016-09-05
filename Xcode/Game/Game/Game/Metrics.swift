@@ -28,6 +28,12 @@ class Metrics {
         }
     }
     
+    static func oneHitKillerSpaceship(spaceship: String) {
+        if Metrics.canSendEvents() {
+            GameAnalytics.addDesignEventWithEventId("OneHitKiller:" + spaceship)
+        }
+    }
+    
     static func win() {
         let level = MemoryCard.sharedInstance.playerData.motherShip.level
         if Metrics.canSendEvents() {

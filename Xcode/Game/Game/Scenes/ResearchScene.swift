@@ -149,6 +149,10 @@ class ResearchScene: GameScene {
         self.playerDataCard.updatePremiumPoints()
     }
     
+    override func updatePoints() {
+        self.playerDataCard.updatePoints()
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         

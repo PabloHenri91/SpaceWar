@@ -659,12 +659,17 @@ class Spaceship: Control {
             
             shot.damage = Int(Float(shot.damage) * damageMultiplier)
             
+            
+            
             if self.health > 0 && self.health - shot.damage <= 0 {
                 self.die()
                 if let spaceship = shot.shooter as? Spaceship {
                     if let spaceshipData = spaceship.spaceshipData {
                         spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
                         Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                        if shot.damage > self.maxHealth {
+                            Metrics.oneHitKillerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                        }
                     }
                 }
             }

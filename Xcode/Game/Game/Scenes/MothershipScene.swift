@@ -164,6 +164,10 @@ class MothershipScene: GameScene {
         self.playerDataCard.updatePremiumPoints()
     }
     
+    override func updatePoints() {
+        self.playerDataCard.updatePoints()
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
@@ -366,18 +370,14 @@ class MothershipScene: GameScene {
                             return
                         }
                         
-                        if let battery = self.playerData.battery {
-                            if battery.charge.integerValue > 0 {
-                                self.batteryControl.useCharge()
-                            } else {
-                                let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .OK)
-                                self.addChild(alertBox)
-                                alertBox.buttonOK.addHandler {
-                                    self.nextState = .mothership
-                                }
-                                self.nextState = .alert
-                                return
+                        if !self.batteryControl.useCharge() {
+                            let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .OK)
+                            self.addChild(alertBox)
+                            alertBox.buttonOK.addHandler {
+                                self.nextState = .mothership
                             }
+                            self.nextState = .alert
+                            return
                         }
                         
                         self.nextState = states.battle
