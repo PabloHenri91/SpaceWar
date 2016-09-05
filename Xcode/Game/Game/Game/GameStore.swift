@@ -83,10 +83,12 @@ class GameStore: Box {
         
         self.storeItensUpdateAvailable()
         
-        self.addChild(Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
+        let control = Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 11/100), size: CGSize(width: 1, height: 1)),
-            y: 126, size: CGSize(width: self.size.width,
-                height: 2)))
+                        y: 126, size: CGSize(width: self.size.width - 2,
+                            height: 2))
+        control.position.x = 1
+        self.addChild(control)
         
         let x = self.position.x - (self.size.width/2) * 0.1
         let y = self.position.y + (self.size.height/2) * 0.1
@@ -160,9 +162,11 @@ class GameStore: Box {
                     break
                 case .premiumPoints:
                     if storeItem.productIdentifier != "" {
-                        #if os(iOS)
-                            IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
-                        #endif
+                        if Metrics.canSendEvents() {
+                            #if os(iOS)
+                                IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
+                            #endif
+                        }
                         
                     }
                     break
