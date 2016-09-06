@@ -253,6 +253,8 @@ class GameStore: Box {
                     playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
                     Control.gameScene.updatePremiumPoints()
                     
+                    Metrics.purchasedPremiumPointsAtGameStore(storeItem)
+                    
                     self.feedback()
                     break
                 default:

@@ -16,6 +16,12 @@ class Metrics {
     
     static var battlesPlayed = 0
     
+    static func purchasedPremiumPointsAtGameStore(storeItem: StoreItem) {
+        if Metrics.canSendEvents() {
+            GameAnalytics.addBusinessEventWithCurrency("USD", amount: Int(100 * storeItem.price), itemType: "premiumPoints", itemId: storeItem.productIdentifier, cartType: "GameStore", autoFetchReceipt: true)
+        }
+    }
+    
     static func tryCheat() {
         if Metrics.canSendEvents() {
             GameAnalytics.addDesignEventWithEventId("tryCheat")
