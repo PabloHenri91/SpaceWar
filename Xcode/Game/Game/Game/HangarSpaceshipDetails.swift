@@ -167,7 +167,9 @@ class HangarSpaceshipDetails: Box {
         self.labelLifeValue = Label(text: life.description , fontSize: 11, x: Int(labelLife.position.x + labelLife.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelLifeValue)
         
-        self.labelDamageValue = Label(text: self.spaceship.weapon!.damage.description , fontSize: 11, x: Int(labelDamage.position.x + labelDamage.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        
+        let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
+        self.labelDamageValue = Label(text: damage.description , fontSize: 11, x: Int(labelDamage.position.x + labelDamage.calculateAccumulatedFrame().width), y: 207, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelDamageValue)
         
         let labelRespawnValue = Label(text: "5s" , fontSize: 11, x: Int(labelRespawn.position.x + labelRespawn.calculateAccumulatedFrame().width), y: 240, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)

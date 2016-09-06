@@ -19,6 +19,12 @@
 		3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
 		3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4065F91D2D902200B886DB /* MultiLineLabel.swift */; };
 		3A4138821D469EA80026B47E /* SocialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4138811D469EA80026B47E /* SocialScene.swift */; };
+		3A4F2F4A1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F491D7DF4D70062AE43 /* TutorialBigAlertBox.swift */; };
+		3A4F2F4B1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F491D7DF4D70062AE43 /* TutorialBigAlertBox.swift */; };
+		3A4F2F4D1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F4C1D7F39D00062AE43 /* TutorialDangerAlert.swift */; };
+		3A4F2F4E1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F4C1D7F39D00062AE43 /* TutorialDangerAlert.swift */; };
+		3A4F2F501D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F4F1D7F49AE0062AE43 /* TutorialHotTip.swift */; };
+		3A4F2F511D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F2F4F1D7F49AE0062AE43 /* TutorialHotTip.swift */; };
 		3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
 		3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5984511D4B6CB6009FDA6D /* TimeBar.swift */; };
 		3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */; };
@@ -74,6 +80,8 @@
 		3AF476231D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */; };
 		3AF9D2021D786DD60068E737 /* ResearchUnlockedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */; };
 		3AF9D2031D786DD60068E737 /* ResearchUnlockedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */; };
+		3AF9D2051D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9D2041D7A0CA40068E737 /* TutorialAlertBox.swift */; };
+		3AF9D2061D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9D2041D7A0CA40068E737 /* TutorialAlertBox.swift */; };
 		3AFD26791D2A839400A83323 /* MissionSpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */; };
 		3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
 		3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */; };
@@ -307,6 +315,9 @@
 		3A4065F31D2C616500B886DB /* ResearchCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchCard.swift; sourceTree = "<group>"; };
 		3A4065F91D2D902200B886DB /* MultiLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineLabel.swift; sourceTree = "<group>"; };
 		3A4138811D469EA80026B47E /* SocialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialScene.swift; sourceTree = "<group>"; };
+		3A4F2F491D7DF4D70062AE43 /* TutorialBigAlertBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialBigAlertBox.swift; sourceTree = "<group>"; };
+		3A4F2F4C1D7F39D00062AE43 /* TutorialDangerAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialDangerAlert.swift; sourceTree = "<group>"; };
+		3A4F2F4F1D7F49AE0062AE43 /* TutorialHotTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialHotTip.swift; sourceTree = "<group>"; };
 		3A5984511D4B6CB6009FDA6D /* TimeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeBar.swift; sourceTree = "<group>"; };
 		3A5CAF4F1D05E52200D6EFC0 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		3A696E761D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-500-webfont.ttf"; sourceTree = "<group>"; };
@@ -344,6 +355,7 @@
 		3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchUpgradeSpaceshipAlert.swift; sourceTree = "<group>"; };
 		3AF476211D638EFE00839BBC /* HangarSpaceshipDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarSpaceshipDetails.swift; sourceTree = "<group>"; };
 		3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchUnlockedAlert.swift; sourceTree = "<group>"; };
+		3AF9D2041D7A0CA40068E737 /* TutorialAlertBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAlertBox.swift; sourceTree = "<group>"; };
 		3AFD26781D2A839400A83323 /* MissionSpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionSpaceshipCard.swift; sourceTree = "<group>"; };
 		3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseMissionScene.swift; sourceTree = "<group>"; };
 		3AFD267E1D2AA8CF00A83323 /* MissionTypeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissionTypeCard.swift; sourceTree = "<group>"; };
@@ -668,6 +680,27 @@
 			name = Hangar;
 			sourceTree = "<group>";
 		};
+		3AF9D2001D786D9D0068E737 /* Research */ = {
+			isa = PBXGroup;
+			children = (
+				3A4065F31D2C616500B886DB /* ResearchCard.swift */,
+				3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */,
+				3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */,
+			);
+			name = Research;
+			sourceTree = "<group>";
+		};
+		3AF9D2071D7A0CC60068E737 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				3AF9D2041D7A0CA40068E737 /* TutorialAlertBox.swift */,
+				3A4F2F491D7DF4D70062AE43 /* TutorialBigAlertBox.swift */,
+				3A4F2F4C1D7F39D00062AE43 /* TutorialDangerAlert.swift */,
+				3A4F2F4F1D7F49AE0062AE43 /* TutorialHotTip.swift */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 		842AD4201D74CDFC002C4AFE /* Jet */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,18 +709,6 @@
 			name = Jet;
 			sourceTree = "<group>";
 		};
-
-        3AF9D2001D786D9D0068E737 /* Research */ = {
-            isa = PBXGroup;
-            children = (
-                3A4065F31D2C616500B886DB /* ResearchCard.swift */,
-                3AD73F3B1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift */,
-                3AF9D2011D786DD60068E737 /* ResearchUnlockedAlert.swift */,
-            );
-        name = Research;
-        sourceTree = "<group>";
-        };
-
 		84399E281D10303400C05670 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,6 +853,7 @@
 				3AF476251D638F0900839BBC /* Hangar */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
 				3AF9D2001D786D9D0068E737 /* Research */,
+				3AF9D2071D7A0CC60068E737 /* Tutorial */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1238,6 +1260,7 @@
 				3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				843620781CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				843620801CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
+				3A4F2F4D1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */,
 				843803D41CEF45D1007152BC /* GameMath.swift in Sources */,
 				8436207C1CEB77400082A9D7 /* Music.swift in Sources */,
 				84F855DF1CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
@@ -1245,6 +1268,7 @@
 				84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */,
 				84EE51021D638A9500943D84 /* ABNScheduler.swift in Sources */,
+				3AF9D2051D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */,
 				3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */,
 				849162A31D5DF9CF0064958C /* NextEvents.swift in Sources */,
 				8436206C1CEB77400082A9D7 /* Event.swift in Sources */,
@@ -1252,11 +1276,13 @@
 				84F855F31CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
 				846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */,
 				3A4065F11D2C54E600B886DB /* Research.swift in Sources */,
+				3A4F2F4A1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */,
 				843620601CEB77400082A9D7 /* Box.swift in Sources */,
 				8436207A1CEB77400082A9D7 /* Label.swift in Sources */,
 				848F8B791D0602BE00434FFB /* Shot.swift in Sources */,
 				84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */,
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
+				3A4F2F501D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */,
 				84C8E7931D6206DB00B7605F /* AppDelegate.swift in Sources */,
 				3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
 				3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */,
@@ -1312,6 +1338,7 @@
 				3AD73F371D6B7ADF009674B1 /* HangarSpaceshipSubCell.swift in Sources */,
 				84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
+				3A4F2F4E1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */,
 				8436206F1CEB77400082A9D7 /* GameCamera.swift in Sources */,
 				3AF476231D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */,
 				84029D841CF49D68001853FF /* BattleScene.swift in Sources */,
@@ -1323,6 +1350,7 @@
 				8436207D1CEB77400082A9D7 /* Music.swift in Sources */,
 				3AFD267D1D2A9B1E00A83323 /* MissionSpaceshipCard.swift in Sources */,
 				848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */,
+				3AF9D2061D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */,
 				3AAA933F1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843803D51CEF45D1007152BC /* GameMath.swift in Sources */,
 				84F855F81CECCE5C00FB63D2 /* PlayerData.swift in Sources */,
@@ -1348,9 +1376,11 @@
 				3AD261A21D26B61D00189671 /* MissionSpaceship.swift in Sources */,
 				84110C161D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */,
 				8436205F1CEB77400082A9D7 /* BlackSpriteNode.swift in Sources */,
+				3A4F2F511D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */,
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,
 				3A7E60D31D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */,
 				3ABECDC31D5BBAD000661C0D /* SpeedUpMinningAlert.swift in Sources */,
+				3A4F2F4B1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */,
 				848021071D0ADB220078320A /* HealthBar.swift in Sources */,
 				843620811CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
 				84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */,

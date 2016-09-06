@@ -126,7 +126,9 @@ class HangarSpaceshipChange:Box {
         self.labelLifeValue = Label(text: life.description , fontSize: 11, x: 116, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelLifeValue)
         
-        self.labelDamageValue = Label(text: self.spaceship.weapon!.damage.description , fontSize: 11, x: 210, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        
+        let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
+        self.labelDamageValue = Label(text: damage.description , fontSize: 11, x: 210, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelDamageValue)
         
         self.labelRespawnValue = Label(text: "5s" , fontSize: 11, x: 116, y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
@@ -295,8 +297,8 @@ class HangarSpaceshipChange:Box {
         
         //Damage
         
-        let damage = self.spaceship.weapon!.damage
-        let newDamage = cell.spaceship.weapon!.damage
+        let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
+        let newDamage = GameMath.weaponDamage(level: cell.spaceship.level, type: cell.spaceship.weapon!.type)
         let damageDif = newDamage - damage
         if damageDif > 0 {
             
@@ -433,7 +435,6 @@ class HangarSpaceshipChange:Box {
         for selectedSpaceship in self.selectedSpaceships {
             if selectedSpaceship as! SpaceshipData == self.spaceship.spaceshipData {
                 
-                print(selectedSpaceship)
                 self.playerData.motherShip.removeSpaceshipData(selectedSpaceship as! SpaceshipData)
                 
                 self.playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!, index: index)

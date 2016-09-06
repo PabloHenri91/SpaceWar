@@ -44,9 +44,9 @@ class Mothership: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(level:Int) {
+    init(level:Int, blueTeam:Bool = false) {
         super.init()
-        self.load(level: level, blueTeam: false)
+        self.load(level: level, blueTeam: blueTeam)
     }
     
     init(mothershipData:MothershipData) {

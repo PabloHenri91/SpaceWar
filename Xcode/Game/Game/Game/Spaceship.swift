@@ -1056,7 +1056,16 @@ class Spaceship: Control {
     
     override func removeFromParent() {
         Spaceship.spaceshipList.remove(self)
+        self.hidden = true
         super.removeFromParent()
+    }
+    
+    override func containsPoint(p: CGPoint) -> Bool {
+        if self.hidden {
+            return false
+        } else {
+            return super.containsPoint(p)
+        }
     }
 }
 
@@ -1139,6 +1148,14 @@ extension Spaceship {
                 speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
             spaceshipType.skin = "tutorialMeteor"
             spaceshipType.index = 0
+            return spaceshipType
+        }(),
+        
+        {
+            let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
+                speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
+            spaceshipType.skin = "tutorialMeteor2"
+            spaceshipType.index = 1
             return spaceshipType
         }()
     ]
