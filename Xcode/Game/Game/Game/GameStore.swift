@@ -153,7 +153,7 @@ class GameStore: Box {
                         
                         playerData.points = playerData.points.integerValue + storeItem.amount
                         Control.gameScene.updatePoints()
-                        self.feedback()
+                        self.feedback(storeItem)
                     } else {
                         //TODO: não tem diamantes para comprar
                         print("não tem diamantes para comprar")
@@ -162,11 +162,11 @@ class GameStore: Box {
                     break
                 case .premiumPoints:
                     if storeItem.productIdentifier != "" {
-                        if Metrics.canSendEvents() {
+                        //if Metrics.canSendEvents() {
                             #if os(iOS)
                                 IAPHelper.sharedInstance.requestProduct(storeItem.productIdentifier)
                             #endif
-                        }
+                        //}
                         
                     }
                     break
@@ -177,7 +177,7 @@ class GameStore: Box {
                     if Boost.activeBoosts.count <= 0 {
                         playerData.addBoostData(MemoryCard.sharedInstance.newBoostData(storeItem.typeIndex))
                         Boost.reloadBoosts()
-                        self.feedback()
+                        self.feedback(storeItem)
                     }
                     
                     break
@@ -192,7 +192,7 @@ class GameStore: Box {
                                     Control.gameScene.updatePremiumPoints()
                                     
                                     battery.charge = battery.charge.integerValue + storeItem.amount
-                                    self.feedback()
+                                    self.feedback(storeItem)
                                 } else {
                                     playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                                     Control.gameScene.updatePremiumPoints()
@@ -200,7 +200,7 @@ class GameStore: Box {
                                     battery.charge = -1
                                     battery.lastCharge = NSDate()
                                     
-                                    self.feedback()
+                                    self.feedback(storeItem)
                                 }
                             } else {
                                 print("ja estava com o boost ativo")
@@ -255,7 +255,10 @@ class GameStore: Box {
                     
                     Metrics.purchasedPremiumPointsAtGameStore(storeItem)
                     
-                    self.feedback()
+                    self.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak self] in
+                        self?.feedback(storeItem)
+                    })
+                    
                     break
                 default:
                     #if DEBUG
@@ -272,27 +275,78 @@ class GameStore: Box {
         #endif
     }
     
-    func feedback() {
+    func feedback(storeItem: StoreItem) {
         self.explosionSoundEffect.play()
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
-        particles.position.x = self.position.x + (self.spriteNode.size.width/2)
-        particles.position.y = self.position.y - (self.spriteNode.size.height/2)
+        particles.particleTexture = SKTexture(imageNamed: storeItem.iconImageNamed)
+        
         particles.zPosition = self.zPosition + 1000000
         
-        particles.numParticlesToEmit = 1000
+        particles.particleBlendMode = .Alpha
+        
+        switch storeItem.type {
+        case .points:
+            particles.numParticlesToEmit = min(storeItem.amount/1000, 1000)
+            break
+        case .premiumPoints:
+            particles.numParticlesToEmit = min(storeItem.amount, 1000)
+            break
+        case .xPBoost:
+            particles.numParticlesToEmit = min(storeItem.amount*100, 1000)
+            break
+        case .energy:
+            particles.numParticlesToEmit = min(storeItem.amount, 1000)
+            if particles.numParticlesToEmit <= 0 {
+                particles.numParticlesToEmit = 1000
+            }
+            break
+        }
+        
         particles.particleSpeedRange = 1000
         
-        particles.particlePositionRange = CGVector(dx: self.spriteNode.size.width, dy: self.spriteNode.size.height)
+        particles.particlePositionRange = CGVector(dx: storeItem.spriteNode.size.width, dy: storeItem.spriteNode.size.height)
         
         if let parent = self.parent {
+            
+            particles.position = parent.convertPoint(storeItem.position, fromNode: storeItem.parent!)
+            particles.position.x = particles.position.x + storeItem.spriteNode.size.width/2
+            particles.position.y = particles.position.y - storeItem.spriteNode.size.height/2
+            
             parent.addChild(particles)
             
             let action = SKAction()
             action.duration = 1
+            
             particles.runAction(action, completion: { [weak particles] in
                 particles?.removeFromParent()
                 })
+            
+            
+            switch storeItem.type {
+                
+            case .points, .premiumPoints, .energy:
+                
+                let label = Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "+"+storeItem.amount.description, fontSize: 12, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 11/100), shadowOffset: CGPoint(x: 0, y: -2))
+                label.position = particles.position
+                label.zPosition = particles.zPosition + 1
+                parent.addChild(label)
+                
+                let duration:Double = 1
+                
+                label.runAction(SKAction.group([
+                    SKAction.moveBy(CGVector(dx: Int.random(min: -100, max: 100), dy: 100), duration: duration),
+                    SKAction.fadeAlphaTo(0, duration: duration),
+                    SKAction.rotateByAngle(CGFloat.random(min: CGFloat(-M_PI), max: CGFloat(M_PI)), duration: duration)
+                    ])) {
+                    label.removeFromParent()
+                }
+                
+                break
+                
+            default:
+                break
+            }
         }
     }
 }
@@ -314,6 +368,8 @@ class StoreItem: Control {
     
     var unavailableEffect:SKSpriteNode!
     
+    var iconImageNamed:String = ""
+    
     var typeIndex = 0
     
     override init() {
@@ -328,6 +384,7 @@ class StoreItem: Control {
         self.price = price
         self.type = type
         self.productIdentifier = productIdentifier
+        self.iconImageNamed = iconImageNamed
         
         var borderColor = SKColor.blackColor()
         var priceText = ""
@@ -404,11 +461,11 @@ class StoreItem: Control {
     
     func updateAvailable() {
         if self.productIdentifier != "" {
-            if Metrics.canSendEvents() {
+            //if Metrics.canSendEvents() {
                 #if os(iOS)
                     self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
                 #endif
-            }
+            //}
         }
     }
     

@@ -136,8 +136,6 @@ extension MemoryCard {
         
         playerData.boosts = NSSet()
         
-        playerData.addBoostData(self.newBoostData(0))
-        
         playerData.datamodelVersion = 7
         
         return playerData
