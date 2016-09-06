@@ -167,6 +167,7 @@
 		8461B4F71D47CAF900BB6B27 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8461B4F91D47CAF900BB6B27 /* Localizable.strings */; };
 		84629EE61D79EB4400888F44 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84629EE51D79EB4400888F44 /* IAPHelper.swift */; };
 		8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */; };
+		84656D6C1D7F3A4B00930157 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84656D6B1D7F3A4B00930157 /* SocketIO.framework */; };
 		846ECB131D61FBDC001C0FF0 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F31441D410C2900FDFBFE /* Metrics.swift */; };
 		846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
 		846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
@@ -464,6 +465,7 @@
 		8461B52C1D47CBDC00BB6B27 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "es-MX"; path = "es-MX.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		8461B52D1D47CBDC00BB6B27 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "es-MX"; path = "es-MX.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		84629EE51D79EB4400888F44 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		84656D6B1D7F3A4B00930157 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SocketIO.framework; sourceTree = "<group>"; };
 		846F65CF1CF4777B00A2E69F /* Mothership.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mothership.swift; sourceTree = "<group>"; };
 		8478D4871D4678E9000E09DD /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		8478D4881D4678E9000E09DD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				842FB08C1D625B55007EAD9C /* WebKit.framework in Frameworks */,
 				842FB08A1D625B4D007EAD9C /* SystemConfiguration.framework in Frameworks */,
 				842FB0881D625B48007EAD9C /* StoreKit.framework in Frameworks */,
+				84656D6C1D7F3A4B00930157 /* SocketIO.framework in Frameworks */,
 				842FB0861D625B3D007EAD9C /* Social.framework in Frameworks */,
 				842FB0841D625B33007EAD9C /* QuartzCore.framework in Frameworks */,
 				842FB0821D625B2E007EAD9C /* MessageUI.framework in Frameworks */,
@@ -614,6 +617,7 @@
 				842FB0811D625B2E007EAD9C /* MessageUI.framework */,
 				842FB0831D625B33007EAD9C /* QuartzCore.framework */,
 				842FB0851D625B3D007EAD9C /* Social.framework */,
+				84656D6B1D7F3A4B00930157 /* SocketIO.framework */,
 				842FB0871D625B48007EAD9C /* StoreKit.framework */,
 				842FB0891D625B4D007EAD9C /* SystemConfiguration.framework */,
 				842FB08B1D625B55007EAD9C /* WebKit.framework */,
