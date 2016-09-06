@@ -106,7 +106,7 @@ class Research: Control {
         let winSpaceship = Int.random(101)
         
         // Chance de ganhar uma pesquisa >=90 ( 10% de chance)
-        if (winSpaceship >= 0) {
+        if (winSpaceship >= 75) {
             
             let playerData = MemoryCard.sharedInstance.playerData
             var researchsType = Array<ResearchType>()
