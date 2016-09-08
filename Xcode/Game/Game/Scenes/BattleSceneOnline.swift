@@ -19,7 +19,10 @@ extension BattleScene {
             switch(socketAnyEvent.event) {
                 
             case "roomInfo":
-                
+                if let roomId = socketAnyEvent.items?.firstObject as? String {
+                    
+                }
+                print(socketAnyEvent.description)
                 break
                 
             case "mySocketId":
