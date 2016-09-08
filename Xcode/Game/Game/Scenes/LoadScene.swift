@@ -12,9 +12,12 @@ class LoadScene: GameScene {
     
     static var nextScene:String?
     
-    enum states : String {
+    enum states: String {
         //Estado principal
         case load
+        
+        case connect
+        case connecting
         
         //Estados de saida da scene
         case mothership
@@ -32,6 +35,8 @@ class LoadScene: GameScene {
 //            Research.cheatDuration()
             MemoryCard.sharedInstance.playerData.needBattleTraining = true
         #endif
+        
+        self.nextState = .connect
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -75,6 +80,28 @@ class LoadScene: GameScene {
                 }
                 
                 break
+                
+            case .connect:
+                
+                let serverManager = ServerManager.sharedInstance
+                
+                self.setHandlers()
+                
+                serverManager.socket?.connect(timeoutAfter: 10, withTimeoutHandler: {
+                    print("connection timed out")
+                    serverManager.disconnect()
+                })
+                
+                self.nextState = .mothership
+                
+                break
+                
+            case .connecting:
+                #if DEBUG
+                    fatalError() // nao pode ter preparacao para troca deste estado
+                #endif
+                break
+                
             default:
                 #if DEBUG
                     fatalError()
@@ -82,5 +109,35 @@ class LoadScene: GameScene {
                 break
             }
         }
+    }
+    
+    func setHandlers() {
+        
+        let serverManager = ServerManager.sharedInstance
+        
+        serverManager.socket?.onAny({ (socketAnyEvent: SocketAnyEvent) in
+            
+            switch(socketAnyEvent.event) {
+                
+            case "connect":
+                serverManager.socket?.emit(serverManager.userDisplayInfo)
+                serverManager.leaveAllRooms()
+                break
+                
+            case "mySocketId":
+                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
+                    serverManager.userDisplayInfo.socketId = mySocketId
+                } else {
+                    fatalError()
+                }
+                break
+                
+            default:
+                print(socketAnyEvent.description)
+                break
+            }
+            
+            
+        })
     }
 }

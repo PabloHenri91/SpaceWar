@@ -450,7 +450,7 @@ class CharacterGenerator {
         }
     }
     
-    func getName(indexOfName:CharacterGenerator.indexOfNames, gender:CharacterGenerator.genders) -> String {
+    func getName(indexOfName:CharacterGenerator.indexOfNames = .random, gender:CharacterGenerator.genders = .random) -> String {
         
         var indexOfName:indexOfNames = indexOfName
         

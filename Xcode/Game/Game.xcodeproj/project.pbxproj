@@ -195,6 +195,8 @@
 		8481A2771D5BC460006DD7DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8871CFDB3B4008EE628 /* FBSDKLoginKit.framework */; };
 		8481A2781D5BC460006DD7DD /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8881CFDB3B4008EE628 /* FBSDKMessengerShareKit.framework */; };
 		8481A2791D5BC460006DD7DD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
+		84828AEA1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */; };
+		84828AEB1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848F8B791D0602BE00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
@@ -481,6 +483,8 @@
 		8478D4881D4678E9000E09DD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		847C6BAF1D4BC14300C2E36E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		848021051D0ADB220078320A /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
+		84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleSceneOnline.swift; sourceTree = "<group>"; };
+		84828AEC1D819827008E22A7 /* SpaceWar 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 8.xcdatamodel"; sourceTree = "<group>"; };
 		848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryData.swift; sourceTree = "<group>"; };
 		848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpaceWar-Bridging-Header.h"; sourceTree = "<group>"; };
 		848A7D351D40034500AC72F1 /* Game-OSX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game-OSX-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -609,6 +613,7 @@
 		3AA0C8791CFDB158008EE628 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84656DA51D7F48D100930157 /* SocketIO */,
 				842FB0491D624A9F007EAD9C /* AdColony.framework */,
 				842FB06F1D625AD5007EAD9C /* AdSupport.framework */,
 				842FB0711D625ADD007EAD9C /* AudioToolbox.framework */,
@@ -856,10 +861,12 @@
 				849162A21D5DF9CF0064958C /* NextEvents.swift */,
 				84B22F041D47D7D30034C03F /* PlayerDataCard.swift */,
 				3A4065F01D2C54E600B886DB /* Research.swift */,
+				84656D9F1D7F434500930157 /* ServerManager.swift */,
 				848F8B771D06022500434FFB /* Shot.swift */,
 				84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */,
 				84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */,
 				3A5984511D4B6CB6009FDA6D /* TimeBar.swift */,
+				84656DA21D7F475600930157 /* UserDisplayInfo.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
 				3AF476251D638F0900839BBC /* Hangar */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
@@ -873,18 +880,50 @@
 			isa = PBXGroup;
 			children = (
 				84029D821CF49D68001853FF /* BattleScene.swift */,
+				84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */,
 				84AF82191D26B6C100801D0E /* BattleTrainingScene.swift */,
 				3AFD267A1D2A9B1700A83323 /* ChooseMissionScene.swift */,
 				3AAA93411D22BF1900DD4757 /* FactoryScene.swift */,
 				3A7E60CB1D14239F00D00590 /* HangarScene.swift */,
+				3AA0CA271CFDBCB5008EE628 /* InviteFriendsScene.swift */,
 				84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */,
 				3AAA933D1D22BEDF00DD4757 /* MissionScene.swift */,
 				84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */,
 				3AAA933B1D22BDE400DD4757 /* ResearchScene.swift */,
-				3AA0CA271CFDBCB5008EE628 /* InviteFriendsScene.swift */,
 				3A4138811D469EA80026B47E /* SocialScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		84656DA51D7F48D100930157 /* SocketIO */ = {
+			isa = PBXGroup;
+			children = (
+				84656DA61D7F48E200930157 /* SocketAckEmitter.swift */,
+				84656DA71D7F48E200930157 /* SocketAckManager.swift */,
+				84656DA81D7F48E200930157 /* SocketAnyEvent.swift */,
+				84656DA91D7F48E200930157 /* SocketClientManager.swift */,
+				84656DAA1D7F48E200930157 /* SocketEngine.swift */,
+				84656DAB1D7F48E200930157 /* SocketEngineClient.swift */,
+				84656DAC1D7F48E200930157 /* SocketEnginePacketType.swift */,
+				84656DAD1D7F48E200930157 /* SocketEnginePollable.swift */,
+				84656DAE1D7F48E200930157 /* SocketEngineSpec.swift */,
+				84656DAF1D7F48E200930157 /* SocketEngineWebsocket.swift */,
+				84656DB01D7F48E200930157 /* SocketEventHandler.swift */,
+				84656DB11D7F48E200930157 /* SocketExtensions.swift */,
+				84656DB21D7F48E200930157 /* SocketIOClient.swift */,
+				84656DB31D7F48E200930157 /* SocketIOClientConfiguration.swift */,
+				84656DB41D7F48E200930157 /* SocketIOClientOption.swift */,
+				84656DB51D7F48E200930157 /* SocketIOClientSpec.swift */,
+				84656DB61D7F48E200930157 /* SocketIOClientStatus.swift */,
+				84656DB71D7F48E200930157 /* SocketLogger.swift */,
+				84656DB81D7F48E200930157 /* SocketPacket.swift */,
+				84656DB91D7F48E200930157 /* SocketParsable.swift */,
+				84656DBA1D7F48E200930157 /* SocketStringReader.swift */,
+				84656DBB1D7F48E200930157 /* SocketTypes.swift */,
+				84656DBC1D7F48E200930157 /* SSLSecurity.swift */,
+				84656DBD1D7F48E200930157 /* WebSocket.swift */,
+			);
+			name = SocketIO;
 			sourceTree = "<group>";
 		};
 		848742351D25925500A8082D /* Explosion */ = {
@@ -1235,19 +1274,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84656DA01D7F434500930157 /* ServerManager.swift in Sources */,
 				84F855F71CECCE5C00FB63D2 /* PlayerData.swift in Sources */,
 				3AD2619E1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
 				84C0117A1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				845FDA251D61DE9400A2C7CE /* GameAdManager.swift in Sources */,
 				3AFD267B1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
+				84656DE01D7F48E200930157 /* SocketLogger.swift in Sources */,
 				3AB58AE71D6B530E00E7B228 /* HangarSpaceshipChange.swift in Sources */,
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
+				84656DE61D7F48E200930157 /* SocketStringReader.swift in Sources */,
 				84BF0FC61D4A758F00145F5B /* GameTabBar.swift in Sources */,
+				84656DE21D7F48E200930157 /* SocketPacket.swift in Sources */,
 				3A3307971D414F2A005CCB4F /* Metrics.swift in Sources */,
 				3AD73F361D6B7ADF009674B1 /* HangarSpaceshipSubCell.swift in Sources */,
 				84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */,
 				84F855EB1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
+				84656DD41D7F48E200930157 /* SocketExtensions.swift in Sources */,
 				3ABECDC21D5BBAD000661C0D /* SpeedUpMinningAlert.swift in Sources */,
 				84F855EF1CECCE5C00FB63D2 /* MothershipData.swift in Sources */,
 				3A7E60CC1D14239F00D00590 /* HangarScene.swift in Sources */,
@@ -1260,8 +1304,12 @@
 				84B4475E1D7847FD006211F4 /* GameStore.swift in Sources */,
 				3AA0CA2A1CFE13BA008EE628 /* FacebookClient.swift in Sources */,
 				84B22F051D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
+				84656DDE1D7F48E200930157 /* SocketIOClientStatus.swift in Sources */,
+				84656DD61D7F48E200930157 /* SocketIOClient.swift in Sources */,
 				842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */,
+				84656DCC1D7F48E200930157 /* SocketEnginePollable.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
+				84656DCA1D7F48E200930157 /* SocketEnginePacketType.swift in Sources */,
 				3AD1E5E01D5A652500FD4BEF /* BuyMinnerSpaceshipAlert.swift in Sources */,
 				848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				3AF476221D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */,
@@ -1278,6 +1326,7 @@
 				84F855DF1CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */,
 				84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
+				84656DEA1D7F48E200930157 /* SSLSecurity.swift in Sources */,
 				3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */,
 				84EE51021D638A9500943D84 /* ABNScheduler.swift in Sources */,
 				3AF9D2051D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */,
@@ -1287,26 +1336,34 @@
 				84629EE61D79EB4400888F44 /* IAPHelper.swift in Sources */,
 				84029D831CF49D68001853FF /* BattleScene.swift in Sources */,
 				84F855F31CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
+				84656DD81D7F48E200930157 /* SocketIOClientConfiguration.swift in Sources */,
 				846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */,
+				84656DD21D7F48E200930157 /* SocketEventHandler.swift in Sources */,
 				3A4065F11D2C54E600B886DB /* Research.swift in Sources */,
 				3A4F2F4A1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */,
 				843620601CEB77400082A9D7 /* Box.swift in Sources */,
 				8436207A1CEB77400082A9D7 /* Label.swift in Sources */,
 				848F8B791D0602BE00434FFB /* Shot.swift in Sources */,
+				84656DEC1D7F48E200930157 /* WebSocket.swift in Sources */,
 				84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */,
+				84656DD01D7F48E200930157 /* SocketEngineWebsocket.swift in Sources */,
 				8436206A1CEB77400082A9D7 /* Display.swift in Sources */,
 				3A4F2F501D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */,
 				84C8E7931D6206DB00B7605F /* AppDelegate.swift in Sources */,
 				3A4065FA1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
+				84656DCE1D7F48E200930157 /* SocketEngineSpec.swift in Sources */,
 				3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620681CEB77400082A9D7 /* CropBox.swift in Sources */,
 				8436207E1CEB77400082A9D7 /* ScrollNode.swift in Sources */,
 				848021061D0ADB220078320A /* HealthBar.swift in Sources */,
 				842BAA181CEC986E00524619 /* SpaceWar.xcdatamodeld in Sources */,
+				84656DC41D7F48E200930157 /* SocketClientManager.swift in Sources */,
 				84A11BBD1D7DE34B00913413 /* BoostData.swift in Sources */,
+				84656DC21D7F48E200930157 /* SocketAnyEvent.swift in Sources */,
 				84A11BC01D7DE54600913413 /* Boost.swift in Sources */,
 				843620661CEB77400082A9D7 /* Control.swift in Sources */,
 				3AFD267F1D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */,
+				84656DBE1D7F48E200930157 /* SocketAckEmitter.swift in Sources */,
 				843620701CEB77400082A9D7 /* GameColors.swift in Sources */,
 				8436206E1CEB77400082A9D7 /* GameCamera.swift in Sources */,
 				3A7E60D21D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */,
@@ -1314,14 +1371,21 @@
 				3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */,
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
+				84656DDC1D7F48E200930157 /* SocketIOClientSpec.swift in Sources */,
 				3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */,
+				84656DC81D7F48E200930157 /* SocketEngineClient.swift in Sources */,
+				84656DE41D7F48E200930157 /* SocketParsable.swift in Sources */,
 				3A5984521D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				843620641CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
+				84656DA31D7F475600930157 /* UserDisplayInfo.swift in Sources */,
 				3AAA933E1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				3AD73F3C1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift in Sources */,
 				843620821CEB77400082A9D7 /* StringExtension.swift in Sources */,
+				84656DC01D7F48E200930157 /* SocketAckManager.swift in Sources */,
+				84656DDA1D7F48E200930157 /* SocketIOClientOption.swift in Sources */,
 				3AFD26791D2A839400A83323 /* MissionSpaceshipCard.swift in Sources */,
 				843620761CEB77400082A9D7 /* GameTextField.swift in Sources */,
+				84828AEA1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */,
 				3AD73F331D6B759E009674B1 /* HangarSpaceshipsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1339,6 +1403,8 @@
 				3A4065FB1D2D902200B886DB /* MultiLineLabel.swift in Sources */,
 				3A7E60CD1D14239F00D00590 /* HangarScene.swift in Sources */,
 				84F855FC1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
+				84656DC51D7F48E200930157 /* SocketClientManager.swift in Sources */,
+				84656DDD1D7F48E200930157 /* SocketIOClientSpec.swift in Sources */,
 				3AD261991D2562A000189671 /* FactorySpaceshipCard.swift in Sources */,
 				3AF9D2031D786DD60068E737 /* ResearchUnlockedAlert.swift in Sources */,
 				842640EC1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */,
@@ -1347,10 +1413,14 @@
 				84C14B211D412DA600D20D4D /* BatteryControl.swift in Sources */,
 				843620771CEB77400082A9D7 /* GameTextField.swift in Sources */,
 				8436206B1CEB77400082A9D7 /* Display.swift in Sources */,
+				84656DEB1D7F48E200930157 /* SSLSecurity.swift in Sources */,
 				8436206D1CEB77400082A9D7 /* Event.swift in Sources */,
+				84656DE51D7F48E200930157 /* SocketParsable.swift in Sources */,
 				8436207F1CEB77400082A9D7 /* ScrollNode.swift in Sources */,
 				843803D21CEF3A54007152BC /* Weapon.swift in Sources */,
+				84656DDB1D7F48E200930157 /* SocketIOClientOption.swift in Sources */,
 				3AD73F371D6B7ADF009674B1 /* HangarSpaceshipSubCell.swift in Sources */,
+				84656DC71D7F48E200930157 /* SocketEngine.swift in Sources */,
 				84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
 				3A4F2F4E1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */,
@@ -1360,21 +1430,33 @@
 				84A6C8311D141788006717B9 /* FriendData.swift in Sources */,
 				3AD73F341D6B759E009674B1 /* HangarSpaceshipsCell.swift in Sources */,
 				843620671CEB77400082A9D7 /* Control.swift in Sources */,
+				84656DA41D7F475600930157 /* UserDisplayInfo.swift in Sources */,
+				84656DD91D7F48E200930157 /* SocketIOClientConfiguration.swift in Sources */,
+				84656DED1D7F48E200930157 /* WebSocket.swift in Sources */,
 				84F855F01CECCE5C00FB63D2 /* MothershipData.swift in Sources */,
 				843620631CEB77400082A9D7 /* Button.swift in Sources */,
+				84656DBF1D7F48E200930157 /* SocketAckEmitter.swift in Sources */,
 				8436207D1CEB77400082A9D7 /* Music.swift in Sources */,
+				84656DD11D7F48E200930157 /* SocketEngineWebsocket.swift in Sources */,
+				84656DD31D7F48E200930157 /* SocketEventHandler.swift in Sources */,
+				84656DE91D7F48E200930157 /* SocketTypes.swift in Sources */,
+				84656DA11D7F434500930157 /* ServerManager.swift in Sources */,
 				3AFD267D1D2A9B1E00A83323 /* MissionSpaceshipCard.swift in Sources */,
+				84656DC11D7F48E200930157 /* SocketAckManager.swift in Sources */,
 				848F8B7A1D0602BF00434FFB /* Shot.swift in Sources */,
 				3AF9D2061D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */,
 				3AAA933F1D22BEDF00DD4757 /* MissionScene.swift in Sources */,
 				843803D51CEF45D1007152BC /* GameMath.swift in Sources */,
 				84F855F81CECCE5C00FB63D2 /* PlayerData.swift in Sources */,
+				84656DCB1D7F48E200930157 /* SocketEnginePacketType.swift in Sources */,
 				3AD73F3D1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift in Sources */,
 				3A4065F21D2C54E600B886DB /* Research.swift in Sources */,
+				84656DE31D7F48E200930157 /* SocketPacket.swift in Sources */,
 				843620691CEB77400082A9D7 /* CropBox.swift in Sources */,
 				844CF2881CE789AA0032F6AA /* AppDelegate.swift in Sources */,
 				3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				3AFD267C1D2A9B1700A83323 /* ChooseMissionScene.swift in Sources */,
+				84656DC91D7F48E200930157 /* SocketEngineClient.swift in Sources */,
 				84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */,
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
 				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
@@ -1383,7 +1465,10 @@
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,
 				843620731CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				3AFD26801D2AA8CF00A83323 /* MissionTypeCard.swift in Sources */,
+				84828AEB1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */,
+				84656DCD1D7F48E200930157 /* SocketEnginePollable.swift in Sources */,
 				3AB58AE81D6B530E00E7B228 /* HangarSpaceshipChange.swift in Sources */,
+				84656DC31D7F48E200930157 /* SocketAnyEvent.swift in Sources */,
 				84B22F061D47D7D30034C03F /* PlayerDataCard.swift in Sources */,
 				8464C0ED1CECFCC700C7CF24 /* SpaceWar.xcdatamodeld in Sources */,
 				846ECB131D61FBDC001C0FF0 /* Metrics.swift in Sources */,
@@ -1394,20 +1479,26 @@
 				3A4F2F511D7F49AE0062AE43 /* TutorialHotTip.swift in Sources */,
 				8436207B1CEB77400082A9D7 /* Label.swift in Sources */,
 				3A7E60D31D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */,
+				84656DE71D7F48E200930157 /* SocketStringReader.swift in Sources */,
 				3ABECDC31D5BBAD000661C0D /* SpeedUpMinningAlert.swift in Sources */,
 				3A4F2F4B1D7DF4D70062AE43 /* TutorialBigAlertBox.swift in Sources */,
 				848021071D0ADB220078320A /* HealthBar.swift in Sources */,
 				843620811CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
 				84A11BBE1D7DE34B00913413 /* BoostData.swift in Sources */,
+				84656DCF1D7F48E200930157 /* SocketEngineSpec.swift in Sources */,
+				84656DDF1D7F48E200930157 /* SocketIOClientStatus.swift in Sources */,
 				84A11BC11D7DE54600913413 /* Boost.swift in Sources */,
 				84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				843620611CEB77400082A9D7 /* Box.swift in Sources */,
 				843620831CEB77400082A9D7 /* StringExtension.swift in Sources */,
+				84656DE11D7F48E200930157 /* SocketLogger.swift in Sources */,
 				3A4065F51D2C616500B886DB /* ResearchCard.swift in Sources */,
 				84F855DE1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				849162A41D5DF9CF0064958C /* NextEvents.swift in Sources */,
 				84F855F41CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */,
+				84656DD51D7F48E200930157 /* SocketExtensions.swift in Sources */,
 				3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
+				84656DD71D7F48E200930157 /* SocketIOClient.swift in Sources */,
 				843620651CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
 				84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */,
 			);
@@ -1773,6 +1864,7 @@
 		842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				84828AEC1D819827008E22A7 /* SpaceWar 8.xcdatamodel */,
 				84A11BB81D7DE14A00913413 /* SpaceWar 7.xcdatamodel */,
 				84FCA7EB1D6CD33900F907FC /* SpaceWar 6.xcdatamodel */,
 				840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */,
@@ -1781,7 +1873,7 @@
 				84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */,
 				842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */,
 			);
-			currentVersion = 84A11BB81D7DE14A00913413 /* SpaceWar 7.xcdatamodel */;
+			currentVersion = 84828AEC1D819827008E22A7 /* SpaceWar 8.xcdatamodel */;
 			path = SpaceWar.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -105,5 +105,8 @@ class Metrics {
 #if !os(iOS)
     class GameAnalytics {
         static func addDesignEventWithEventId(string: String, value: AnyObject? = nil) { }
+        
+        static func addBusinessEventWithCurrency(currency: String!, amount: Int, itemType: String!, itemId: String!, cartType: String!, autoFetchReceipt: Bool) { }
+        
     }
 #endif
