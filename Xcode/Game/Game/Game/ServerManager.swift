@@ -25,7 +25,9 @@ class ServerManager {
     var userDisplayInfo: UserDisplayInfo
     
     var roomId:String?
-    var usersDisplayInfo = [UserDisplayInfo]()
+    var otherUsersDisplayInfo: UserDisplayInfo?
+    
+    var availableRooms = [String]()
     
      init() {
         
@@ -60,6 +62,7 @@ class ServerManager {
     }
     
     func getAllRooms() {
+        self.availableRooms = [String]()
         self.socket?.emit("getAllRooms")
     }
     
