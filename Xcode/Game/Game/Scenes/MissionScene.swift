@@ -451,7 +451,10 @@ class MissionScene: GameScene {
    
                                         if let buttonUpgrade = card.buttonUpgrade {
                                             if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
-                                                let alertBox = AlertBox(title: "Price", text: "It will cost 2000 frags.", type: AlertBox.messageType.OKCancel)
+                                                
+                                                let price = Int(4000 * pow(4, Double(card.missionSpaceship.level - 1)))
+                                                
+                                                let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", type: AlertBox.messageType.OKCancel)
                                                 
                                                 alertBox.buttonOK.addHandler(
                                                     {

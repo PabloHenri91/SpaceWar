@@ -39,7 +39,9 @@ class BuyMinnerSpaceshipAlert:Box {
         let labelBuy = Label(text: "BUY" , fontSize: 11, x: 61, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelBuy)
         
-        self.buttonBuy = Button(textureName: "buttonGreenFragments", text: "2000", fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
+        let price = 2000 * self.playerData.missionSpaceships.count
+        
+        self.buttonBuy = Button(textureName: "buttonGreenFragments", text: price.description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonBuy)
         
         let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)
@@ -66,10 +68,12 @@ class BuyMinnerSpaceshipAlert:Box {
     
     func buyMiningSpaceship() -> Bool {
         
-        if self.playerData.points.integerValue >= 2000 {
+        let price = 2000 * self.playerData.missionSpaceships.count
+        
+        if self.playerData.points.integerValue >= price {
             let missionSpaceshipData = MemoryCard.sharedInstance.newMissionSpaceshipData()
             self.playerData.addMissionSpaceshipData(missionSpaceshipData)
-            self.playerData.points = self.playerData.points.integerValue - 2000
+            self.playerData.points = self.playerData.points.integerValue - price
             return true
         }
         

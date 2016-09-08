@@ -209,10 +209,12 @@ class MissionSpaceshipCard: Control {
     
     func upgrade() -> Bool {
         
-        if self.playerData.points.integerValue >= 2000 {
+        let price = Int(2000 * pow(2, Double(self.missionSpaceship.level + 1)))
+        
+        if self.playerData.points.integerValue >= price {
             self.missionSpaceship.level = self.missionSpaceship.level + 1
             self.missionSpaceship.missionspaceshipData?.level = NSNumber(integer: (self.missionSpaceship.missionspaceshipData?.level.integerValue)! + 1)
-            self.playerData.points = self.playerData.points.integerValue - 2000
+            self.playerData.points = self.playerData.points.integerValue - price
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
             self.spaceshipImage.removeFromParent()
