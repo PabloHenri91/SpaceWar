@@ -44,6 +44,37 @@ class Mothership: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
+    init(socketAnyEvent: SocketAnyEvent) {
+        super.init()
+        self.load(level: 1, blueTeam: false)
+        
+        if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
+            
+            var i = 0
+            for item in items {
+                
+                switch i {
+                    
+                case 1:
+                    self.level = item as! Int
+                    break
+                    
+                case 2, 3, 4, 5:
+                    let spaceshipData = item as! [Int]
+                    let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
+                    spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0]))
+                    self.spaceships.append(spaceship)
+                    break
+                    
+                default:
+                    break
+                }
+                
+                i = i + 1
+            }
+        }
+    }
+    
     init(level:Int, blueTeam:Bool = false) {
         super.init()
         self.load(level: level, blueTeam: blueTeam)
