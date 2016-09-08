@@ -33,7 +33,8 @@ class LoadScene: GameScene {
 //            MemoryCard.sharedInstance.playerData.points = 1000000
 //            MemoryCard.sharedInstance.playerData.premiumPoints = 1000000
 //            Research.cheatDuration()
-            MemoryCard.sharedInstance.playerData.needBattleTraining = true
+//            MemoryCard.sharedInstance.reset()
+//            MemoryCard.sharedInstance.playerData.needBattleTraining = true
         #endif
         
         self.nextState = .connect
