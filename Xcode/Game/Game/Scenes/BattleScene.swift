@@ -13,6 +13,7 @@ class BattleScene: GameScene {
     enum states : String {
         //Estado principal
         case battle
+        case battleOnline
         
         case loading
         case countdown
@@ -28,6 +29,8 @@ class BattleScene: GameScene {
         case joinRoom
         case createRoom
         case waitForPlayers
+        
+        case syncGameData
     }
     
     //Estados iniciais
@@ -145,7 +148,7 @@ class BattleScene: GameScene {
         if(self.state == self.nextState) {
             switch (self.state) {
                 
-            case .battle:
+            case .battle, .battleOnline:
                 
                 var enemyHealth = 0
                 for botSpaceship in self.botMothership.spaceships {
@@ -182,43 +185,44 @@ class BattleScene: GameScene {
                     self.nextState = states.battleEnd
                 }
                 
-                
-                
-                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
-                    self.lastBotUpdate = currentTime
+                if true { //self.state == .battle {
                     
-                    var aliveBotSpaceships = [Spaceship]()
-                    
-                    for botSpaceship in self.botMothership.spaceships {
-                        if botSpaceship.health > 0 {
-                            aliveBotSpaceships.append(botSpaceship)
-                        }
-                    }
-                    
-                    if aliveBotSpaceships.count > 0 {
+                    if currentTime - self.lastBotUpdate > self.botUpdateInterval {
+                        self.lastBotUpdate = currentTime
                         
-                        let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
+                        var aliveBotSpaceships = [Spaceship]()
                         
-                        if botSpaceship.isInsideAMothership {
-                            if botSpaceship.health == botSpaceship.maxHealth {
-                                botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
-                                                                   y: botSpaceship.startingPosition.y - 150)
-                                botSpaceship.needToMove = true
-                                botSpaceship.physicsBody?.dynamic = true
+                        for botSpaceship in self.botMothership.spaceships {
+                            if botSpaceship.health > 0 {
+                                aliveBotSpaceships.append(botSpaceship)
                             }
-                        } else {
+                        }
+                        
+                        if aliveBotSpaceships.count > 0 {
                             
-                            if botSpaceship.health <= botSpaceship.maxHealth/10 {
-                                botSpaceship.retreat()
-                            } else {
-                                botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                                
-                                if let _ = botSpaceship.targetNode {
-                                    botSpaceship.needToMove = false
-                                } else {
-                                    botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                                       y: botSpaceship.position.y - 100)
+                            let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
+                            
+                            if botSpaceship.isInsideAMothership {
+                                if botSpaceship.health == botSpaceship.maxHealth {
+                                    botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
+                                                                       y: botSpaceship.startingPosition.y - 150)
                                     botSpaceship.needToMove = true
+                                    botSpaceship.physicsBody?.dynamic = true
+                                }
+                            } else {
+                                
+                                if botSpaceship.health <= botSpaceship.maxHealth/10 {
+                                    botSpaceship.retreat()
+                                } else {
+                                    botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                                    
+                                    if let _ = botSpaceship.targetNode {
+                                        botSpaceship.needToMove = false
+                                    } else {
+                                        botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                           y: botSpaceship.position.y - 100)
+                                        botSpaceship.needToMove = true
+                                    }
                                 }
                             }
                         }
@@ -257,6 +261,9 @@ class BattleScene: GameScene {
                 }
                 break
                 
+            case .syncGameData:
+                break
+                
             default:
                 print(self.state)
                 #if DEBUG
@@ -269,7 +276,7 @@ class BattleScene: GameScene {
             
             //Próximo estado
             switch (self.nextState) {
-            case .battle:
+            case .battle, .battleOnline:
                 self.battleBeginTime = currentTime
                 break
             case .battleEnd:
@@ -384,6 +391,10 @@ class BattleScene: GameScene {
                 self.waitForPlayersTime = currentTime
                 break
                 
+            case .syncGameData:
+                self.serverManager.socket?.emit(self.mothership)
+                break
+                
             default:
                 print(self.state)
                 #if DEBUG
@@ -404,7 +415,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case .battle:
+                case .battle, .battleOnline:
                     
                     for spaceship in self.mothership.spaceships {
                         if spaceship.health > 0 {
@@ -449,7 +460,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case .battle:
+                case .battle, .battleOnline:
                     
                     if let parent = self.botMothership.spriteNode.parent {
                         if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
@@ -482,7 +493,7 @@ class BattleScene: GameScene {
             for touch in touches {
                 switch (self.state) {
                     
-                case .battle:
+                case .battle, .battleOnline:
                     
                     for spaceship in self.mothership.spaceships {
                         if spaceship.health > 0 {

@@ -66,6 +66,10 @@ class ServerManager {
     func createRoom() {
         self.socket?.emit("createRoom")
     }
+    
+    func joinRoom(room: Room) {
+        self.socket?.emit("joinRoom", room.roomId)
+    }
 }
 
 extension SocketIOClient {
@@ -74,5 +78,17 @@ extension SocketIOClient {
         self.emit("userDisplayInfo", userDisplayInfo.displayName)
     }
     
-    
+    func emit(mothership: Mothership) {
+        
+        var items = [AnyObject]()
+        
+        items.append("mothership")
+        items.append(mothership.level)
+        
+        for spaceship in mothership.spaceships {
+            items.append([spaceship.level, spaceship.type.index, spaceship.weapon!.type.index])
+        }
+        
+        self.emit("someData", items)
+    }
 }

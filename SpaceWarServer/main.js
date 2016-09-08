@@ -3,6 +3,8 @@ var app = require('http').createServer();
 
 app.listen(8940);
 
+var roomSize = 2;
+
 function Game() {
     console.log('Game()');
     this.io = require('socket.io')(app);
@@ -154,14 +156,31 @@ Player.prototype.someData = function(data) {
 
 Player.prototype.getAllRooms = function() {
     
-    // Buscando informações de todas as salas do Game.
-    for (var roomId in this.game.allRooms) {
-        this.getRoomInfo(roomId);
-    }
+    if (Object.keys(this.game.connectedSockets).length <= 1) {
+        
+        this.socket.emit('noPlayersOnline');
+            console.log(this.socket.name + ' emit noPlayersOnline');
+    } else {
+        
+        var foundRoom = false;
     
-    var length = Object.keys(this.game.connectedSockets).length;
-    this.socket.emit('connectedSockets.length', length);
-    console.log(this.socket.name + ' connectedSockets.length ' + length);
+        // Buscando informações de todas as salas do Game.
+        for (var roomId in this.game.allRooms) {
+
+            var room = this.game.allRooms[roomId];
+
+            if (Object.keys(room.sockets).length < roomSize) {
+                this.getRoomInfo(roomId);
+                foundRoom = true;
+            }
+        }
+        
+        if (!foundRoom) {
+            
+            this.socket.emit('noRoomsAvailable');
+            console.log(this.socket.name + ' emit noRoomsAvailable');
+        }
+    }
 };
 
 Player.prototype.getRoomInfo = function(roomId) {
@@ -193,8 +212,6 @@ Player.prototype.joinRoom = function(roomId) {
     
     // Definindo id da sala atual.
     this.socket.roomId = roomId;
-    
-    this.getRoomInfo(roomId);
 };
 
 Player.prototype.disconnect = function() {
