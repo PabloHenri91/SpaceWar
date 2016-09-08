@@ -20,11 +20,15 @@ extension BattleScene {
             
             switch(socketAnyEvent.event) {
                 
+            case "noPlayersOnline":
+                scene.loadBots()
+                scene.nextState = .battle
+                break
+                
             case "roomInfo":
-                if let roomId = socketAnyEvent.items?.firstObject as? String {
-                    
-                }
-                print(socketAnyEvent.description)
+                let room = Room(socketAnyEvent: socketAnyEvent)
+                serverManager.joinRoom(room)
+                scene.nextState = .syncGameData
                 break
                 
             case "mySocketId":
