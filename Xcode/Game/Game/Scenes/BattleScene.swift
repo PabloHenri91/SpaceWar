@@ -25,7 +25,9 @@ class BattleScene: GameScene {
         case mothership
         case research
         
-        
+        case joinRoom
+        case createRoom
+        case waitForPlayers
     }
     
     //Estados iniciais
@@ -41,24 +43,27 @@ class BattleScene: GameScene {
     var botMothership:Mothership!
     var lastBotUpdate:Double = 0
     var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
+    var botLevel:Double = 1
     
     var battleEndTime: Double = 0
     var battleBeginTime: Double = 0
     
+    //MultiplayerOnline
+    let serverManager = ServerManager.sharedInstance
+    
+    var joinRoomTime:Double = 0
+    var waitForPlayersTime:Double = 0
+    var joinRoomTimeOut:Double = 3
+    var waitForPlayersTimeOut:Double = 60
+    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
-        
-        Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
+        let connected = serverManager.socket?.status == .Connected
         
         Metrics.battlesPlayed += 1
         
-        self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
-        
-        if self.botUpdateInterval < 0 {
-            self.botUpdateInterval = 0
-        }
+        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
         
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
@@ -79,6 +84,31 @@ class BattleScene: GameScene {
         self.gameWorld.addChild(self.mothership)
         self.mothership.position = CGPoint(x: 0, y: -243)
         
+        self.mothership.health = 100
+        self.mothership.maxHealth = self.mothership.health
+        self.mothership.loadHealthBar()
+        self.mothership.loadSpaceships(self.gameWorld)
+        
+        if connected {
+            self.nextState = .joinRoom
+            
+        } else {
+            self.loadBots()
+            self.nextState = .battle
+        }
+        
+    }
+    
+    func loadBots() {
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
+        
+        self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
+        self.botLevel = self.playerData.botLevel.doubleValue
+        
+        if self.botUpdateInterval < 1 {
+            self.botUpdateInterval = 1
+        }
+        
         // BotMothership
         self.botMothership = Mothership(level: self.mothership.level)
         self.botMothership.zRotation = CGFloat(M_PI)
@@ -88,7 +118,7 @@ class BattleScene: GameScene {
         // BotSpaceships
         let botSpaceshipLevel = GameMath.spaceshipBotSpaceshipLevel()
         for _ in 0 ..< 4 {
-            var level = botSpaceshipLevel + Int.random(min: -2, max: 2)
+            var level = botSpaceshipLevel + Int.random(min: -2, max: 0)
             if level < 1 {
                 level = 1
             }
@@ -97,22 +127,15 @@ class BattleScene: GameScene {
             self.botMothership.spaceships.append(botSpaceship)
         }
         
-        //Spaceships
-        
         self.mothership.health = GameMath.mothershipMaxHealth(self.mothership, enemyMothership: self.botMothership)
         self.mothership.maxHealth = self.mothership.health
-        
-        self.mothership.loadHealthBar()
+        self.mothership.updateHealthBarValue()
         
         self.botMothership.health = self.mothership.health
         self.botMothership.maxHealth = self.mothership.health
-        
         self.botMothership.loadHealthBar(blueTeam: false)
         
-        self.mothership.loadSpaceships(self.gameWorld)
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
-        
-        self.nextState = states.battle
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -221,7 +244,21 @@ class BattleScene: GameScene {
             case .unlockResearch:
                 break
                 
+            case .joinRoom:
+                if currentTime - self.joinRoomTime > self.joinRoomTimeOut {
+                    self.nextState = .createRoom
+                }
+                break
+                
+            case .waitForPlayers:
+                if currentTime - self.waitForPlayersTime > self.waitForPlayersTimeOut {
+                    self.loadBots()
+                    self.nextState = .battle
+                }
+                break
+                
             default:
+                print(self.state)
                 #if DEBUG
                     fatalError()
                 #endif
@@ -272,7 +309,8 @@ class BattleScene: GameScene {
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
                         
-                        self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
+                        self.playerData.botUpdateInterval = self.botUpdateInterval - 1
+                        self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
                         self.playerData.winCount = self.playerData.winCount.integerValue + 1
                         self.playerData.winningStreakCurrent = self.playerData.winningStreakCurrent.integerValue + 1
                         if self.playerData.winningStreakCurrent.integerValue > self.playerData.winningStreakBest.integerValue {
@@ -331,7 +369,23 @@ class BattleScene: GameScene {
                 self.view?.presentScene(ResearchScene(), transition: SKTransition.crossFadeWithDuration(1))
                 break
                 
+            case .joinRoom:
+                self.joinRoomTime = currentTime
+                self.setHandlers()
+                self.serverManager.getAllRooms()
+                break
+                
+            case .createRoom:
+                self.serverManager.createRoom()
+                self.nextState = .waitForPlayers
+                break
+                
+            case .waitForPlayers:
+                self.waitForPlayersTime = currentTime
+                break
+                
             default:
+                print(self.state)
                 #if DEBUG
                     fatalError()
                 #endif

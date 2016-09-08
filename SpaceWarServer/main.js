@@ -45,6 +45,10 @@ function Player(game, socket) {
         
         console.log(socket.name + ' on userDisplayInfo ');
         player.setUserDisplayInfo(userDisplayInfo);
+        
+        // Respondendo ao Socket para que ele saiba o seu id.
+        socket.emit('mySocketId', socket.id);
+        console.log(socket.name + ' emit mySocketId ');
     });
 
     this.socket.on('userInfo', function(userInfo) {
@@ -118,10 +122,6 @@ Player.prototype.createRoom = function() {
     
     //Definindo roomId no Socket para marcar a sala criada.
     this.socket.roomId = this.socket.id;
-    
-    // Respondendo ao Socket para que ele saiba o seu id.
-    this.socket.emit('mySocketId', this.socket.id);
-    console.log(this.socket.name + ' emit mySocketId ');
 };
 
 Player.prototype.setUserDisplayInfo = function(userDisplayInfo) {
@@ -158,6 +158,10 @@ Player.prototype.getAllRooms = function() {
     for (var roomId in this.game.allRooms) {
         this.getRoomInfo(roomId);
     }
+    
+    var length = Object.keys(this.game.connectedSockets).length;
+    this.socket.emit('connectedSockets.length', length);
+    console.log(this.socket.name + ' connectedSockets.length ' + length);
 };
 
 Player.prototype.getRoomInfo = function(roomId) {
@@ -204,7 +208,7 @@ Player.prototype.disconnect = function() {
 
 // Adicionando handlers ao Game
 Game.prototype.addHandlers = function() {
-    console.log('setHandlers()');
+    console.log('addHandlers()');
     
     // Evita retenção do Game dentro dos handlers.
     var game = this;

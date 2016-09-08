@@ -14,6 +14,7 @@ class PlayerData: NSManagedObject {
     
     @NSManaged var battery: BatteryData?
     @NSManaged var botUpdateInterval: NSNumber
+    @NSManaged var botLevel: NSNumber
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
@@ -44,7 +45,7 @@ extension MemoryCard {
         playerData.battery = self.newBatteryData()
         playerData.botUpdateInterval = NSNumber(double: 10)
         
-        playerData.name = "Name"
+        playerData.name = CharacterGenerator().getName()
         #if DEBUG
             playerData.needBattleTraining = NSNumber(bool: false)
         #else
@@ -136,7 +137,9 @@ extension MemoryCard {
         
         playerData.boosts = NSSet()
         
-        playerData.datamodelVersion = 7
+        playerData.datamodelVersion = 8
+        
+        playerData.botLevel = 1
         
         return playerData
     }

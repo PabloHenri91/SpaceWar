@@ -169,6 +169,22 @@ class MemoryCard {
             
         }
         
+        if self.playerData.datamodelVersion.integerValue < 8 {
+            self.playerData.datamodelVersion = 8
+            
+            var levelSum = 0
+            var spaceshipDataCount = 0
+            for item in self.playerData.spaceships {
+                if let spaceshipData = item as? SpaceshipData {
+                    levelSum = levelSum + spaceshipData.level.integerValue
+                    spaceshipDataCount = spaceshipDataCount + 1
+                }
+            }
+            
+            if spaceshipDataCount > 0 {
+                self.playerData.botLevel = levelSum/spaceshipDataCount
+            }
+        }
     }
     
     func reset() {
