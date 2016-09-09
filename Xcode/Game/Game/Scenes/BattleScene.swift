@@ -417,16 +417,11 @@ class BattleScene: GameScene {
                     
                 case .battle, .battleOnline:
                     
-                    for spaceship in self.mothership.spaceships {
-                        if spaceship.health > 0 {
-                            if let parent = spaceship.parent {
-                                if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                    spaceship.touchEnded()
-                                    return
-                                }
-                            }
-                        }
+                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
+                        nearestSpaceship.touchEnded()
+                        return
                     }
+                    
                     
                     if let parent = self.botMothership.spriteNode.parent {
                         if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
@@ -495,11 +490,19 @@ class BattleScene: GameScene {
                     
                 case .battle, .battleOnline:
                     
-                    for spaceship in self.mothership.spaceships {
-                        if spaceship.health > 0 {
-                            if let parent = spaceship.parent {
-                                if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                    spaceship.touchEnded()
+                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
+                        if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
+                            nearestSpaceship.targetNode = nil
+                            nearestSpaceship.needToMove = false
+                            nearestSpaceship.setBitMasksToSpaceship()
+                        }
+                    }
+                    
+                    if let parent = self.mothership.spriteNode.parent {
+                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                            if let spaceship = Spaceship.selectedSpaceship {
+                                if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                                    Spaceship.retreatSelectedSpaceship()
                                     return
                                 }
                             }
@@ -512,14 +515,11 @@ class BattleScene: GameScene {
                         }
                     }
                     
-                    if let parent = self.mothership.spriteNode.parent {
-                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
-                            Spaceship.retreatSelectedSpaceship()
-                            return
+                    if let spaceship = Spaceship.selectedSpaceship {
+                        if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                            Spaceship.touchEnded(touch)
                         }
                     }
-                    
-                    Spaceship.touchEnded(touch)
                     break
                     
                 default:
@@ -533,5 +533,41 @@ class BattleScene: GameScene {
         super.didFinishUpdate()
         
         self.gameCamera.update()
+    }
+    
+    func nearestSpaceship(spaceships: [Spaceship], touch: UITouch) -> Spaceship? {
+        
+        var spaceshipsAtPoint = [Spaceship]()
+        
+        for spaceship in spaceships {
+            if spaceship.health > 0 {
+                if let parent = spaceship.parent {
+                    if spaceship.containsPoint(touch.locationInNode(parent)) {
+                        spaceshipsAtPoint.append(spaceship)
+                    }
+                }
+            }
+        }
+        
+        var nearestSpaceship:Spaceship? = nil
+        
+        for spaceship in spaceshipsAtPoint {
+            
+            if let parent = spaceship.parent {
+                
+                let touchPosition = touch.locationInNode(parent)
+                
+                if nearestSpaceship != nil {
+                    
+                    if CGPoint.distanceSquared(touchPosition, spaceship.position) < CGPoint.distanceSquared(touchPosition, nearestSpaceship!.position) {
+                        nearestSpaceship = spaceship
+                    }
+                } else {
+                    nearestSpaceship = spaceship
+                }
+            }
+        }
+        
+        return nearestSpaceship
     }
 }
