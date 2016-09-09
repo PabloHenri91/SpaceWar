@@ -65,6 +65,8 @@ class FactoryScene: GameScene {
             break
         }
         
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
+        
         var cells = [FactorySpaceshipCard]()
         
         for item in self.playerData.unlockedSpaceships {

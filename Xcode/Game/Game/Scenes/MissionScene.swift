@@ -80,6 +80,8 @@ class MissionScene: GameScene {
             break
         }
         
+        Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
+        
         self.controlArray = Array<MissionSpaceshipCard>()
         
         for item in missionShips {
