@@ -181,6 +181,7 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .hotTip:
+                self.mothership.update()
                 break
                 
                 
@@ -225,15 +226,18 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .endBattle:
+                self.mothership.update()
                 break
                 
             case .battleEndInterval:
+                self.mothership.update()
                 if currentTime - battleEndTime > 2 {
                     self.nextState = states.showBattleResult
                 }
                 break
                 
             case .showBattleResult:
+                self.mothership.update()
                 break
                 
             default:
