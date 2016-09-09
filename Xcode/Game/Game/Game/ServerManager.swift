@@ -39,9 +39,9 @@ class ServerManager {
         
         //let url = "http://localhost:8940"
         //let url = "http://Pablos-MacBook-Pro.local:8900"
-        let url = "http://172.16.3.149:8940" //Meu ip fixo no bepid
+        //let url = "http://172.16.3.149:8940" //Meu ip fixo no bepid
         //let url = "http://192.168.1.102:8940"
-        //let url = "http://181.41.197.181:8900"
+        let url = "http://181.41.197.181:8940"
         
         if let url = NSURL(string:url) {
             self.socket = SocketIOClient(socketURL: url, config: config)
