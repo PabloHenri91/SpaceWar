@@ -21,6 +21,9 @@ class HangarSpaceshipDetails: Box {
     var labelDamageUpgrade:Label!
     var labelUpgrade:Label?
     
+    var lifeIcon:Control!
+    var damageIcon:Control!
+    
     var labelLevel:Label!
     
     var buttonGoToFactory:Button!
@@ -124,11 +127,11 @@ class HangarSpaceshipDetails: Box {
         self.addChild(labelAtributte)
         
         
-        let lifeIcon = Control(textureName: "lifeIcon", x: 14, y: 196)
-        self.addChild(lifeIcon)
+        self.lifeIcon = Control(textureName: "lifeIcon", x: 14, y: 196)
+        self.addChild(self.lifeIcon)
         
-        let damageIcon = Control(textureName: "damageIcon", x: 139, y: 194)
-        self.addChild(damageIcon)
+        self.damageIcon = Control(textureName: "damageIcon", x: 139, y: 194)
+        self.addChild(self.damageIcon)
         
         let respawnIcon = Control(textureName: "respawnIcon", x: 14, y: 228)
         self.addChild(respawnIcon)
@@ -262,19 +265,97 @@ class HangarSpaceshipDetails: Box {
     func reload() {
         self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
         
-        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
-        self.labelLifeValue.setText(life.description)
+        let duration:Double = 0.5
         
-        let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
-        self.labelDamageValue.setText(damage.description)
+        let action1 = SKAction.scaleTo(1.5, duration: duration)
+        
+        let action2 = SKAction.scaleTo(1, duration: duration)
+        
+        self.labelLevel.runAction(SKAction.sequence([action1, action2]))
+        self.lifeIcon.runAction(SKAction.sequence([action1, action2]))
+        self.damageIcon.runAction(SKAction.sequence([action1, action2]))
+        
+        let level = self.spaceship.spaceshipData?.level.integerValue
+        
+        
+        let life = GameMath.spaceshipMaxHealth(level: level!, type: self.spaceship.type)
+        var auxLife = GameMath.spaceshipMaxHealth(level: level! - 1, type: self.spaceship.type)
+        
+        let dif = life - auxLife
+        
+        var time:CGFloat = 0.0
+        var difTime:CGFloat = 0.0
+       
+            let action = SKAction.customActionWithDuration(2, actionBlock: { (node: SKNode, elapsedTime: CGFloat) in
+                
+                difTime = elapsedTime - time
+                
+                if difTime > CGFloat(0.5/Double(dif)) {
+                    time = elapsedTime
+                    
+                    if auxLife < life {
+                        if let label = node as? Label {
+                            auxLife += 1
+                            label.setText(auxLife.description)
+                            self.labelLifeUpgrade.position.x = self.labelLifeValue.position.x + self.labelLifeValue.calculateAccumulatedFrame().width
+                        }
+                    }
+                    
+                }
+ 
+
+            })
+
+        self.labelLifeValue.runAction(action)
+            
+        
+
+        let damage = GameMath.weaponDamage(level: level!, type: self.spaceship.weapon!.type)
+        var auxDamage = GameMath.weaponDamage(level: level! - 1, type: self.spaceship.weapon!.type)
+
+        
+        let difDamage = damage - auxDamage
+        
+        var damageTime:CGFloat = 0.0
+        var damageDifTime:CGFloat = 0.0
+        
+        if difDamage > 0 {
+            
+            
+            let actionDamage = SKAction.customActionWithDuration(2, actionBlock: { (node2: SKNode, elapsedTime2: CGFloat) in
+                
+                damageDifTime = elapsedTime2 - damageTime
+                
+                if damageDifTime > CGFloat(0.5/Double(difDamage)) {
+                    damageTime = elapsedTime2
+                    
+                    if auxDamage < damage {
+                        if let label = node2 as? Label {
+                            auxDamage += 1
+                            label.setText(auxDamage.description)
+                            self.labelDamageUpgrade.position.x = self.labelDamageValue.position.x + self.labelDamageValue.calculateAccumulatedFrame().width
+                        }
+                    }
+                    
+                }
+                
+                
+            })
+            
+            self.labelDamageValue.runAction(actionDamage)
+            
+        }
+        
+        
+    
         
         let lifeUpgrade = GameMath.spaceshipMaxHealth(level: self.spaceship.level + 1, type: self.spaceship.type) - life
         self.labelLifeUpgrade.setText("+ " + lifeUpgrade.description)
-        self.labelLifeUpgrade.position.x = labelLifeValue.position.x + labelLifeValue.calculateAccumulatedFrame().width
+        
         
         let damageUpgrade = GameMath.weaponDamage(level: self.spaceship.level + 1, type: self.spaceship.weapon!.type) - damage
         self.labelDamageUpgrade.setText("+ " + damageUpgrade.description)
-        self.labelDamageUpgrade.position.x = labelDamageValue.position.x + labelDamageValue.calculateAccumulatedFrame().width
+       
         
         self.buttonUpgrade?.removeFromParent()
         
