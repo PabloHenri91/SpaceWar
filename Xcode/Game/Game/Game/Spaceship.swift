@@ -179,6 +179,8 @@ class Spaceship: Control {
             emitterNode.zPosition = self.zPosition - 1
             emitterNode.particleSize = CGSize(width: 10, height: 10)
             if let targetNode = targetNode {
+                emitterNode.targetNode = targetNode
+            } else {
                 emitterNode.targetNode = self.parent
             }
             self.parent?.addChild(emitterNode)
