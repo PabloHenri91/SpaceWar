@@ -32,6 +32,7 @@ extension BattleScene {
             case "roomInfo":
                 let room = Room(socketAnyEvent: socketAnyEvent)
                 if room.roomId == serverManager.userDisplayInfo.socketId {
+                    
                 } else {
                     serverManager.joinRoom(room)
                     scene.nextState = .syncGameData
@@ -90,21 +91,19 @@ extension BattleScene {
                             
                             var labelText = ""
                             if let room = serverManager.room {
-                                if room.roomId == serverManager.userDisplayInfo.socketId {
+                                
+                                if room.usersDisplayInfo[0].displayName == serverManager.userDisplayInfo.displayName {
                                     
                                     labelText += room.usersDisplayInfo[1].displayName
                                     labelText += " x "
                                     labelText += serverManager.userDisplayInfo.displayName
                                 } else {
                                     
-                                    labelText += serverManager.userDisplayInfo.displayName
-                                    labelText += " x "
                                     labelText += room.usersDisplayInfo[0].displayName
+                                    labelText += " x "
+                                    labelText += serverManager.userDisplayInfo.displayName
                                 }
                             }
-                            
-                            
-                            
                             
                             let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.whiteColor(), fontSize: 32)
                             

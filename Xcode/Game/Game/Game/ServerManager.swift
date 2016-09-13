@@ -76,11 +76,12 @@ class ServerManager {
                 "http://Pablos-MacBook-Pro.local:8900",
                 "http://172.16.3.149:8940", //Pablos-MacBook-Pro ip fixo no bepid
                 "http://192.168.1.102:8940"
-                ]
+            ]
         #else
             let urls = [
+                "http://ec2-52-53-213-35.us-west-1.compute.amazonaws.com:8940", //
                 "http://181.41.197.181:8940", //Host1Plus
-                ]
+            ]
         #endif
         
         

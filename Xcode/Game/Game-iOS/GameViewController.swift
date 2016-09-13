@@ -22,8 +22,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         let scene = LoadScene()
         
         #if DEBUG
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+//            skView.showsFPS = true
+//            skView.showsNodeCount = true
         #endif
         
         skView.presentScene(scene)
