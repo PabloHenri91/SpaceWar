@@ -47,8 +47,6 @@ class MothershipScene: GameScene {
     
     var gameStore: GameStore?
     
-    var labelSocketStatus: Label!
-    
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
@@ -121,9 +119,6 @@ class MothershipScene: GameScene {
         self.nextEvents = NextEvents()
         self.addChild(nextEvents)
         
-        self.labelSocketStatus = Label(color: SKColor.blackColor(), text: "labelSocketStatus", x: 160, y: 430, xAlign: .center, yAlign: .center)
-        self.addChild(self.labelSocketStatus)
-        
         switch GameTabBar.lastState {
         case .research, .mission:
             for node in self.children {
@@ -175,11 +170,6 @@ class MothershipScene: GameScene {
     
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
-        
-        let status = ServerManager.sharedInstance.socket?.status.rawValue
-        if self.labelSocketStatus.getText() != status {
-            self.labelSocketStatus.setText(status ?? "")
-        }
         
         if(self.state == self.nextState) {
             //Estado atual

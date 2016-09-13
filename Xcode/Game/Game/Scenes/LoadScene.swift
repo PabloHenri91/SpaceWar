@@ -30,9 +30,10 @@ class LoadScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         #if DEBUG
-            MemoryCard.sharedInstance.playerData.points = 1000000
+//            MemoryCard.sharedInstance.playerData.points = 1000000
 //            MemoryCard.sharedInstance.playerData.premiumPoints = 1000000
 //            Research.cheatDuration()
+//            Research.cheatUnlockAll()
 //            MemoryCard.sharedInstance.reset()
 //            MemoryCard.sharedInstance.playerData.needBattleTraining = true
         #endif
@@ -86,12 +87,7 @@ class LoadScene: GameScene {
                 
                 let serverManager = ServerManager.sharedInstance
                 
-                self.setHandlers()
-                
-                serverManager.socket?.connect(timeoutAfter: 10, withTimeoutHandler: {
-                    print("connection timed out")
-                    serverManager.disconnect()
-                })
+                serverManager.connect()
                 
                 self.nextState = .mothership
                 
@@ -110,35 +106,5 @@ class LoadScene: GameScene {
                 break
             }
         }
-    }
-    
-    func setHandlers() {
-        
-        let serverManager = ServerManager.sharedInstance
-        
-        serverManager.socket?.onAny({ (socketAnyEvent: SocketAnyEvent) in
-            
-            switch(socketAnyEvent.event) {
-                
-            case "connect":
-                serverManager.socket?.emit(serverManager.userDisplayInfo)
-                serverManager.leaveAllRooms()
-                break
-                
-            case "mySocketId":
-                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
-                    serverManager.userDisplayInfo.socketId = mySocketId
-                } else {
-                    fatalError()
-                }
-                break
-                
-            default:
-                print(socketAnyEvent.description)
-                break
-            }
-            
-            
-        })
     }
 }

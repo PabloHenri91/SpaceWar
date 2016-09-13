@@ -34,7 +34,7 @@ class BattleScene: GameScene {
     }
     
     //Estados iniciais
-    var state = states.loading
+    static var state = states.loading
     var nextState = states.loading
     
     let playerData = MemoryCard.sharedInstance.playerData
@@ -53,6 +53,8 @@ class BattleScene: GameScene {
     
     //MultiplayerOnline
     let serverManager = ServerManager.sharedInstance
+    var lastOnlineUpdate:Double = 0
+    var emitInterval:NSTimeInterval = 1/30
     
     var joinRoomTime:Double = 0
     var waitForPlayersTime:Double = 0
@@ -141,39 +143,62 @@ class BattleScene: GameScene {
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
     }
     
+    
+    
     override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         //Estado atual
-        if(self.state == self.nextState) {
-            switch (self.state) {
+        if(BattleScene.state == self.nextState) {
+            switch (BattleScene.state) {
                 
             case .battle, .battleOnline:
                 
                 var enemyHealth = 0
+                
                 for botSpaceship in self.botMothership.spaceships {
                     enemyHealth += botSpaceship.health
                 }
+                
                 if enemyHealth <= 0 {
-                    self.botMothership.health = self.botMothership.health - Int(1 + Int(self.botMothership.level / 10))
-                    self.botMothership.updateHealthBarValue()
-                    if self.botMothership.health <= 0 {
-                        self.botMothership.die()
-                        self.nextState = .battleEnd
+                    
+                    let damage = Int(1 + Int(self.botMothership.level / 10))
+                    
+                    if BattleScene.state == .battleOnline {
+                        self.botMothership.onlineDamage = self.botMothership.onlineDamage + damage
                     }
+                    
+                    if self.botMothership.health > 0 && self.botMothership.health - damage <= 0 {
+                        self.botMothership.die()
+                    } else {
+                        self.botMothership.health = self.botMothership.health - damage
+                    }
+                    
+                    self.botMothership.updateHealthBarValue()
                 }
                 
                 var myHealth = 0
+                
                 for spaceship in self.mothership.spaceships {
                     myHealth += spaceship.health
                 }
+                
                 if myHealth <= 0 {
-                    self.mothership.health = self.mothership.health - Int(1 + Int(self.mothership.level / 10))
-                    self.mothership.updateHealthBarValue()
-                    if self.mothership.health <= 0 {
-                        self.mothership.die()
-                        self.nextState = .battleEnd
+                    
+                    let damage = Int(1 + Int(self.mothership.level / 10))
+                    
+                    if BattleScene.state == .battleOnline {
+                       // o outro jogador me avisa caso eu receba dano
+                    } else {
+                        
+                        if self.mothership.health > 0 && self.mothership.health - damage <= 0 {
+                            self.mothership.die()
+                        } else {
+                            self.mothership.health = self.mothership.health - damage
+                        }
                     }
+                    
+                    self.mothership.updateHealthBarValue()
                 }
                 
                 self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
@@ -182,10 +207,11 @@ class BattleScene: GameScene {
                 if self.mothership.health <= 0 ||
                     self.botMothership.health <= 0
                 {
-                    self.nextState = states.battleEnd
+                    self.nextState = .battleEnd
+                    return
                 }
                 
-                if true { //self.state == .battle {
+                if BattleScene.state == .battle {
                     
                     if currentTime - self.lastBotUpdate > self.botUpdateInterval {
                         self.lastBotUpdate = currentTime
@@ -236,6 +262,7 @@ class BattleScene: GameScene {
                 self.botMothership.update()
                 
                 if currentTime - battleEndTime >= 2 {
+                    self.serverManager.leaveAllRooms()
                     self.nextState = states.showBattleResult
                 }
                 break
@@ -265,14 +292,14 @@ class BattleScene: GameScene {
                 break
                 
             default:
-                print(self.state)
+                print(BattleScene.state)
                 #if DEBUG
                     fatalError()
                 #endif
                 break
             }
         } else {
-            self.state = self.nextState
+            BattleScene.state = self.nextState
             
             //Próximo estado
             switch (self.nextState) {
@@ -283,6 +310,8 @@ class BattleScene: GameScene {
                 //TODO: musica do fim da partida
                 //Music.sharedInstance.stop()
                 
+                self.serverManager.leaveAllRooms()
+                
                 Metrics.battleTime(currentTime - self.battleBeginTime)
                 
                 self.mothership.endBattle()
@@ -292,6 +321,8 @@ class BattleScene: GameScene {
                 self.nextState = .battleEndInterval
                 break
             case .battleEndInterval:
+                self.mothership.endBattle()
+                self.botMothership.endBattle()
                 break
             case .showBattleResult:
                 
@@ -396,7 +427,7 @@ class BattleScene: GameScene {
                 break
                 
             default:
-                print(self.state)
+                print(BattleScene.state)
                 #if DEBUG
                     fatalError()
                 #endif
@@ -407,13 +438,19 @@ class BattleScene: GameScene {
         Shot.update()
     }
     
+    override func didSimulatePhysics() {
+        super.didSimulatePhysics()
+        
+        self.updateOnline()
+    }
+    
     override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
-        if(self.state == self.nextState) {
+        if(BattleScene.state == self.nextState) {
             for touch in touches {
-                switch (self.state) {
+                switch (BattleScene.state) {
                     
                 case .battle, .battleOnline:
                     
@@ -451,9 +488,9 @@ class BattleScene: GameScene {
         super.touchesMoved(touches)
         
         //Estado atual
-        if(self.state == self.nextState) {
+        if(BattleScene.state == self.nextState) {
             for touch in touches {
-                switch (self.state) {
+                switch (BattleScene.state) {
                     
                 case .battle, .battleOnline:
                     
@@ -484,9 +521,9 @@ class BattleScene: GameScene {
         super.touchesEnded(touches)
         
         //Estado atual
-        if(self.state == self.nextState) {
+        if(BattleScene.state == self.nextState) {
             for touch in touches {
-                switch (self.state) {
+                switch (BattleScene.state) {
                     
                 case .battle, .battleOnline:
                     

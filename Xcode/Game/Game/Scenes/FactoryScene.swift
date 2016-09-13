@@ -76,10 +76,13 @@ class FactoryScene: GameScene {
                     let weapon = Weapon(type: weaponData.type.integerValue, level: 1)
                     spaceship.addWeapon(weapon)
                 }
-                if let factorySpaceshipCard = FactorySpaceshipCard(spaceship: spaceship) {
-                    cells.append(factorySpaceshipCard)
-                }
+                
+                cells.append(FactorySpaceshipCard(spaceship: spaceship))
             }
+        }
+        
+        cells.sortInPlace { (factorySpaceshipCard0, factorySpaceshipCard1) -> Bool in
+            return factorySpaceshipCard0.typeCount < factorySpaceshipCard1.typeCount
         }
     
         self.scrollNode = ScrollNode(cells: cells, x: 17, y: 143, xAlign: .center, yAlign: .up, spacing: 10 , scrollDirection: .vertical)

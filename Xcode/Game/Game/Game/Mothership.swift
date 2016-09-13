@@ -29,6 +29,11 @@ class Mothership: Control {
     
     var cropNode:SKCropNode!
     
+    var isOnline = false
+    var isAlly = true
+    
+    var onlineDamage = 0
+    
     override var description: String {
         return "\nMothership\n" +
             "level: " + level.description + "\n" +
@@ -46,6 +51,10 @@ class Mothership: Control {
     
     init(socketAnyEvent: SocketAnyEvent) {
         super.init()
+        
+        self.isOnline = true
+        self.isAlly = false
+        
         self.load(level: 1, blueTeam: false)
         
         if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
@@ -62,6 +71,8 @@ class Mothership: Control {
                 case 2, 3, 4, 5:
                     let spaceshipData = item as! [Int]
                     let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
+                    spaceship.isOnline = true
+                    spaceship.isAlly = false
                     spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0]))
                     self.spaceships.append(spaceship)
                     break
@@ -226,14 +237,11 @@ class Mothership: Control {
         
         if isAlly {
             spaceship.loadHealthBar(gameWorld, blueTeam: true)
-            
         } else {
             spaceship.loadHealthBar(gameWorld, blueTeam: false)
         }
         spaceship.loadWeaponRangeSprite(gameWorld)
         spaceship.loadWeaponDetail()
-        
-        
     }
 
     func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
@@ -271,25 +279,38 @@ class Mothership: Control {
     func getShot(shot:Shot?, contact: SKPhysicsContact?) {
         if let shot = shot {
             
-            if self.health > 0 && self.health - shot.damage <= 0 {
-                self.die()
+            if BattleScene.state == .battleOnline {
                 
-                for spaceship in self.spaceships {
-                    if spaceship.isInsideAMothership {
-                        spaceship.die()
+                if self.isAlly {
+                    // o outro jogador me avisa caso eu receba dano
+                } else {
+                    
+                    self.onlineDamage = self.onlineDamage + shot.damage
+                    
+                    if self.health > 0 && self.health - shot.damage <= 0 {
+                        self.die()
+                    } else {
+                        self.health = self.health - shot.damage
                     }
+                }
+                
+            } else {
+                
+                if self.health > 0 && self.health - shot.damage <= 0 {
+                    self.die()
+                } else {
+                    self.health = self.health - shot.damage
                 }
             }
             
-            self.health = self.health - shot.damage
+            self.updateHealthBarValue()
+            
             if self.health < 0 { self.health = 0 }
             if shot.damage > 0 {
                 self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
             }
             shot.damage = 0
             shot.removeFromParent()
-            
-            self.updateHealthBarValue()
         }
     }
     
@@ -302,6 +323,12 @@ class Mothership: Control {
     }
     
     func die() {
+        
+        for spaceship in self.spaceships {
+            if spaceship.isInsideAMothership {
+                spaceship.die()
+            }
+        }
         
         self.endBattle()
         
@@ -330,6 +357,7 @@ class Mothership: Control {
         self.hidden = true
         self.physicsBody = nil
         self.healthBar.hidden = true
+        self.health = 0
     }
     
     func update(enemyMothership enemyMothership:Mothership? = nil, enemySpaceships:[Spaceship] = [Spaceship]()) {

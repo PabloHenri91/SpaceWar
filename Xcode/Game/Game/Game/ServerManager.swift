@@ -18,18 +18,51 @@
 class ServerManager {
     
     static var sharedInstance = ServerManager()
-
+    
     //Multiplayer Online
     var socket:SocketIOClient?
     
     var userDisplayInfo: UserDisplayInfo
     
-    var roomId:String?
-    var otherUsersDisplayInfo: UserDisplayInfo?
+    var room: Room?
     
-    var availableRooms = [String]()
+    init() {
+        
+        let displayName = MemoryCard.sharedInstance.playerData.name
+        self.userDisplayInfo = UserDisplayInfo(displayName: displayName)
+    }
     
-     init() {
+    func setHandlers() {
+        
+        let serverManager = ServerManager.sharedInstance
+        
+        serverManager.socket?.removeAllHandlers()
+        
+        serverManager.socket?.onAny({ (socketAnyEvent: SocketAnyEvent) in
+            
+            switch(socketAnyEvent.event) {
+                
+            case "connect":
+                serverManager.socket?.emit(serverManager.userDisplayInfo)
+                serverManager.leaveAllRooms()
+                break
+                
+            case "mySocketId":
+                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
+                    serverManager.userDisplayInfo.socketId = mySocketId
+                }
+                break
+                
+            default:
+                print(socketAnyEvent.description)
+                break
+            }
+        })
+    }
+    
+    func connect(completion block: () -> Void = {}) {
+        
+        let startTime = GameScene.currentTime
         
         let config =  SocketIOClientConfiguration(
             arrayLiteral:
@@ -37,41 +70,84 @@ class ServerManager {
             SocketIOClientOption.ReconnectWait(2)
         )
         
-        //let url = "http://localhost:8940"
-        //let url = "http://Pablos-MacBook-Pro.local:8900"
-        //let url = "http://172.16.3.149:8940" //Meu ip fixo no bepid
-        //let url = "http://192.168.1.102:8940"
-        let url = "http://181.41.197.181:8940"
+        #if DEGUB
+            let urls = [
+                "http://localhost:8940",
+                "http://Pablos-MacBook-Pro.local:8900",
+                "http://172.16.3.149:8940", //Pablos-MacBook-Pro ip fixo no bepid
+                "http://192.168.1.102:8940"
+                ]
+        #else
+            let urls = [
+                "http://181.41.197.181:8940", //Host1Plus
+                ]
+        #endif
         
-        if let url = NSURL(string:url) {
-            self.socket = SocketIOClient(socketURL: url, config: config)
+        
+        for url in urls {
+            if let url = NSURL(string:url) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)) { [weak self] in
+                    
+                    guard let serverManager = self else { return }
+                    
+                    let socket = SocketIOClient(socketURL: url, config: config)
+                    
+                    socket.on("connect", callback: { (data:[AnyObject], socketAckEmitter:SocketAckEmitter) in
+                        
+                        if let _ = serverManager.socket {
+                            print("disconnecting from: " + url.description)
+                            socket.disconnect()
+                        } else {
+                            
+                            serverManager.socket = socket
+                            print("connected to " + url.description)
+                            socket.emit(serverManager.userDisplayInfo)
+                            serverManager.leaveAllRooms()
+                            serverManager.setHandlers()
+                            
+                            block()
+                        }
+                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
+                    })
+                    
+                    socket.connect(timeoutAfter: 10, withTimeoutHandler: {
+                        print("connection timed out for: " + url.description)
+                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
+                        socket.disconnect()
+                    })
+                }
+            }
         }
-        
-        let displayName = MemoryCard.sharedInstance.playerData.name
-        self.userDisplayInfo = UserDisplayInfo(displayName: displayName)
     }
     
     func disconnect() {
-        self.roomId = nil
+        self.room = nil
         self.socket?.disconnect()
     }
     
     func leaveAllRooms() {
-        self.roomId = nil
+        self.room = nil
         self.socket?.emit("leaveAllRooms")
     }
     
     func getAllRooms() {
-        self.availableRooms = [String]()
         self.socket?.emit("getAllRooms")
     }
     
     func createRoom() {
+        self.room = Room(roomId: self.userDisplayInfo.socketId, userDisplayInfo: self.userDisplayInfo)
         self.socket?.emit("createRoom")
     }
     
     func joinRoom(room: Room) {
+        self.room = room
+        self.room?.addPlayer(self.userDisplayInfo)
         self.socket?.emit("joinRoom", room.roomId)
+    }
+    
+    func addPlayer(socketAnyEvent: SocketAnyEvent) {
+        self.room?.addPlayer(socketAnyEvent)
     }
 }
 

@@ -16,7 +16,7 @@ class FactorySpaceshipCard: Control {
     var labelTypeCount:Label!
     var typeCount = 0
     
-    init?(spaceship: Spaceship) {
+    init(spaceship: Spaceship) {
         
         let playerData = MemoryCard.sharedInstance.playerData
         
@@ -26,16 +26,14 @@ class FactorySpaceshipCard: Control {
             if let spaceshipData = item as? SpaceshipData {
                 if spaceshipData.type.integerValue == spaceship.type.index {
                     if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-                        if weaponData.type.integerValue == spaceship.weapon!.type.index {
-                            self.typeCount += 1
+                        if let weapon = spaceship.weapon {
+                            if weaponData.type.integerValue == weapon.type.index {
+                                self.typeCount += 1
+                            }
                         }
                     }
                 }
             }
-        }
-        
-        if self.typeCount >= 4 {
-            return nil
         }
         
         var textureName = ""
@@ -136,6 +134,12 @@ class FactorySpaceshipCard: Control {
             let labelFireRateLabel = Label(color: fontColor, text: "Fire Rate: ", fontSize: 11, x: 191 + 15, y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
             self.addChild(labelFireRateLabel)
             self.addChild(Label(color: fontColor, text: (1/weapon.fireInterval).description, fontSize: 11, x: 191 + 15 + Int(labelFireRateLabel.calculateAccumulatedFrame().size.width), y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        }
+        
+        self.labelTypeCount.setText(self.typeCount.description + "/4")
+        
+        if self.typeCount >= 4 {
+            self.buttonBuy.hidden = true
         }
         
     }

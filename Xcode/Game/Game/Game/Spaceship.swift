@@ -82,8 +82,12 @@ class Spaceship: Control {
     
     //statistics
     var isAlly = true
+    var isOnline = false
 
     var explosionSoundEffect:SoundEffect!
+    
+    var onlineDamage = 0
+    var onlineHeal = 0
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -99,7 +103,7 @@ class Spaceship: Control {
     
     static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
         //TODO: displayName
-        var name = Spaceship.types[type].name + " " + Weapon.types[weaponType].name
+        let name = Spaceship.types[type].name + " " + Weapon.types[weaponType].name
 //        if level > 0 {
 //            name += " Level: " + level.description
 //        }
@@ -659,10 +663,7 @@ class Spaceship: Control {
             
             shot.damage = Int(Float(shot.damage) * damageMultiplier)
             
-            
-            
             if self.health > 0 && self.health - shot.damage <= 0 {
-                self.die()
                 if let spaceship = shot.shooter as? Spaceship {
                     if let spaceshipData = spaceship.spaceshipData {
                         spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
@@ -674,15 +675,38 @@ class Spaceship: Control {
                 }
             }
             
-            self.health = self.health - shot.damage
+            if BattleScene.state == .battleOnline {
+                
+                if self.isAlly {
+                    // o outro jogador me avisa caso eu receba dano
+                } else {
+                    
+                    self.onlineDamage = self.onlineDamage + shot.damage
+                    
+                    if self.health > 0 && self.health - shot.damage <= 0 {
+                        self.die()
+                    } else {
+                        self.health = self.health - shot.damage
+                    }
+                }
+                
+            } else {
+                
+                if self.health > 0 && self.health - shot.damage <= 0 {
+                    self.die()
+                } else {
+                    self.health = self.health - shot.damage
+                }
+            }
+            
+            self.healthBar.update(self.health, maxHealth: self.maxHealth)
+            
             if self.health < 0 { self.health = 0 }
             if shot.damage > 0 {
                 self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
             }
             shot.damage = 0
             shot.removeFromParent()
-            
-            self.healthBar.update(self.health, maxHealth: self.maxHealth)
         }
     }
     
@@ -731,11 +755,23 @@ class Spaceship: Control {
         self.hidden = true
         self.physicsBody = nil
         self.healthBar.hidden = true
+        self.health = 0
     }
     
     func heal() {
         if self.health < self.maxHealth {
-            self.health = self.health + self.healPerFrame
+            
+            if BattleScene.state == .battleOnline {
+                if self.isAlly {
+                    self.onlineHeal = self.onlineHeal + self.healPerFrame
+                    self.health = self.health + self.healPerFrame
+                } else {
+                   // o outro jogador me avisa quando ele estiver recupesando vida
+                }
+            } else {
+                self.health = self.health + self.healPerFrame
+            }
+            
             if self.health > self.maxHealth {
                 self.health = self.maxHealth
             }
@@ -761,11 +797,13 @@ class Spaceship: Control {
                     self.heal()
                 }
                 
-                if self.destination != self.startingPosition {
+                if CGPoint.distanceSquared(self.destination, self.startingPosition) > 16 {
                     if let physicsBody = self.physicsBody {
                         let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
                         
-                        self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
+                        if !self.isOnline {
+                            self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
+                        }
                         
                         if velocitySquared < self.maxVelocitySquared {
                             self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
@@ -781,7 +819,7 @@ class Spaceship: Control {
                
                     self.needToMove = false
                     
-                    if self.destination == self.startingPosition {
+                    if CGPoint.distanceSquared(self.destination, self.startingPosition) < 16 {
                         self.resetToStartingPosition()
                     } else {
                         if !self.isInsideAMothership {
@@ -966,7 +1004,7 @@ class Spaceship: Control {
                         
                     case GameWorld.categoryBitMask.mothership.rawValue:
                         self.isInsideAMothership = false
-                        if self.destination != self.startingPosition {
+                        if CGPoint.distanceSquared(self.destination, self.startingPosition) > 16 {
                             self.setBitMasksToSpaceship()
                         }
                         break
