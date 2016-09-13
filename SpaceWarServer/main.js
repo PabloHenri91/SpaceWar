@@ -169,7 +169,7 @@ Player.prototype.getAllRooms = function() {
 
             var room = this.game.allRooms[roomId];
 
-            if (Object.keys(room.sockets).length < roomSize) {
+            if (Object.keys(room.sockets).length < roomSize && roomId !== this.socket.id) {
                 this.getRoomInfo(roomId);
                 foundRoom = true;
             }

@@ -192,7 +192,9 @@ extension BattleScene {
                         spaceship.position.y = (spaceship.position.y + position.y)/2
                     }
                     
-                    spaceship.zRotation = (CGFloat(i.next() as! Int) / 1000000)
+                    let zRotation = (CGFloat(i.next() as! Int) / 1000000)
+                    
+                    self.zRotation = (self.zRotation + zRotation)/2
                     
                     if i.next() as! Bool {
                         if let physicsBody = spaceship.physicsBody {
@@ -227,17 +229,29 @@ extension BattleScene {
             
             var items = [AnyObject]()
             
-            items.append(self.botMothership.onlineDamage)
+            if self.botMothership.onlineDamage == 0 {
+                items.append(false)
+            } else {
+                items.append(self.botMothership.onlineDamage)
+            }
             self.botMothership.onlineDamage = 0
             
             for spaceship in self.botMothership.spaceships {
-                items.append(spaceship.onlineDamage)
+                if spaceship.onlineDamage == 0 {
+                    items.append(false)
+                } else {
+                    items.append(spaceship.onlineDamage)
+                }
                 spaceship.onlineDamage = 0
             }
             
             for spaceship in self.mothership.spaceships {
                 
-                items.append(spaceship.onlineHeal)
+                if spaceship.onlineHeal == 0 {
+                    items.append(false)
+                } else {
+                    items.append(spaceship.onlineHeal)
+                }
                 spaceship.onlineHeal = 0
                 
                 items.append(spaceship.needToMove)

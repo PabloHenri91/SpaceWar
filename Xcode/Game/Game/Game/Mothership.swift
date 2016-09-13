@@ -28,8 +28,7 @@ class Mothership: Control {
     var explosionSoundEffect:SoundEffect!
     
     var cropNode:SKCropNode!
-    
-    var isOnline = false
+
     var isAlly = true
     
     var onlineDamage = 0
@@ -52,7 +51,6 @@ class Mothership: Control {
     init(socketAnyEvent: SocketAnyEvent) {
         super.init()
         
-        self.isOnline = true
         self.isAlly = false
         
         self.load(level: 1, blueTeam: false)
@@ -71,7 +69,6 @@ class Mothership: Control {
                 case 2, 3, 4, 5:
                     let spaceshipData = item as! [Int]
                     let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
-                    spaceship.isOnline = true
                     spaceship.isAlly = false
                     spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0]))
                     self.spaceships.append(spaceship)

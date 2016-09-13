@@ -82,7 +82,6 @@ class Spaceship: Control {
     
     //statistics
     var isAlly = true
-    var isOnline = false
 
     var explosionSoundEffect:SoundEffect!
     
@@ -755,6 +754,7 @@ class Spaceship: Control {
         self.hidden = true
         self.physicsBody = nil
         self.healthBar.hidden = true
+        self.position = self.startingPosition
         self.health = 0
     }
     
@@ -797,13 +797,15 @@ class Spaceship: Control {
                     self.heal()
                 }
                 
+                if CGPoint.distanceSquared(CGPoint(x: self.startingPosition.x, y: self.position.y), self.startingPosition) > 4545 {
+                    self.isInsideAMothership = false
+                }
+                
                 if CGPoint.distanceSquared(self.destination, self.startingPosition) > 16 {
                     if let physicsBody = self.physicsBody {
                         let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
                         
-                        if !self.isOnline {
-                            self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
-                        }
+                        self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
                         
                         if velocitySquared < self.maxVelocitySquared {
                             self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))

@@ -70,7 +70,7 @@ class ServerManager {
             SocketIOClientOption.ReconnectWait(2)
         )
         
-        #if DEGUB
+        #if DEBUG
             let urls = [
                 "http://localhost:8940",
                 "http://Pablos-MacBook-Pro.local:8900",
