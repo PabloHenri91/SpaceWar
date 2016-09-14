@@ -41,7 +41,7 @@ class BuyMinnerSpaceshipAlert:Box {
         
         let price = 2000 * self.playerData.missionSpaceships.count
         
-        self.buttonBuy = Button(textureName: "buttonGreenFragments", text: price.description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 44/255, green: 150/255, blue: 59/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
+        self.buttonBuy = Button(textureName: "buttonOrangeFragments", text: price.description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonBuy)
         
         let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)

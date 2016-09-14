@@ -42,7 +42,13 @@ class MissionTypeCard: Control {
         let labelFragments = Label(text: missionType.pointsBonus.description , fontSize: 10, x: 167, y: 26, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(labelFragments)
         
-        self.buttonSelect = Button(textureName: "asteroidSelectButton", text: "", x: 245, y: 11)
+        
+        let fontColor = SKColor.whiteColor()
+        let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100)
+        let fontShadowOffset = CGPoint(x: 0, y: -2)
+        let fontName = GameFonts.fontName.museo1000
+        
+        self.buttonSelect = Button(textureName: "buttonGreen66x21", text: "BEGIN", fontSize: 13, x: 207, y: 11, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
         self.addChild(self.buttonSelect)
         
     }

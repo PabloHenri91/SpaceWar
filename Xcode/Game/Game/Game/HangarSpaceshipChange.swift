@@ -89,6 +89,12 @@ class HangarSpaceshipChange:Box {
         self.addChild(labelRarity)
         
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
+        
+        spaceshipImage.setScale(min(58/spaceshipImage.size.width, 45/spaceshipImage.size.height))
+        if spaceshipImage.xScale > 2 {
+            spaceshipImage.setScale(2)
+        }
+        
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 46, y: 78)
         spaceshipImage.resetPosition()
@@ -419,7 +425,7 @@ class HangarSpaceshipChange:Box {
         
         if self.buttonChoose == nil {
 
-            self.buttonChoose = Button(textureName: "buttonGray131x30", text: "CHOOSE", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.buttonChoose = Button(textureName: "buttonBlue131x32", text: "CHOOSE", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonChoose!)
         }
         
