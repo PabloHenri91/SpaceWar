@@ -257,8 +257,6 @@
 		848FD6CA1D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */; };
 		848FD6CB1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */; };
 		848FD6CC1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */; };
-		848FD6CD1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */; };
-		848FD6CE1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */; };
 		848FD6CF1D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */; };
 		848FD6D01D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */; };
 		848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */; };
@@ -569,7 +567,6 @@
 		848F8B771D06022500434FFB /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bus-blanchie_bright-stars.mp3"; sourceTree = "<group>"; };
 		848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jredd_magma-crystal-falls.mp3"; sourceTree = "<group>"; };
-		848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_one-morning-in-space.mp3"; sourceTree = "<group>"; };
 		848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "klamm_space-life.mp3"; sourceTree = "<group>"; };
 		848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pandamindset_pandamindset---space-sleepers.mp3"; sourceTree = "<group>"; };
 		849162A21D5DF9CF0064958C /* NextEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextEvents.swift; sourceTree = "<group>"; };
@@ -1019,7 +1016,6 @@
 			children = (
 				848FD6C11D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 */,
 				848FD6C21D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 */,
-				848FD6C31D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 */,
 				848FD6C41D42A4BA0002D4F5 /* klamm_space-life.mp3 */,
 				848FD6C61D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 */,
 			);
@@ -1260,7 +1256,6 @@
 				84C011891D4659B800EC7080 /* laser3.mp3 in Resources */,
 				84D6212B1D259021005D550C /* explosion.png in Resources */,
 				848FD6C91D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */,
-				848FD6CD1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */,
 				3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */,
 				84C0115A1D46433400EC7080 /* explosion1.wav in Resources */,
 				3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
@@ -1319,7 +1314,6 @@
 				84BF04991D50B8EF00F49792 /* museosansrounded-700-webfont.ttf in Resources */,
 				84BF04971D50B8EF00F49792 /* museosansrounded-300-webfont.ttf in Resources */,
 				84C0115F1D46433400EC7080 /* explosion3.wav in Resources */,
-				848FD6CE1D42A4BA0002D4F5 /* klamm_one-morning-in-space.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -251,7 +251,12 @@ class MemoryCard {
         
         var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+        #if DEBUG
+            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+        #else
+            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+        #endif
+        
         
         var failureReason = "There was an error creating or loading the application's saved data."
         
