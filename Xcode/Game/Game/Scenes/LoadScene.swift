@@ -32,8 +32,8 @@ class LoadScene: GameScene {
         #if DEBUG
             MemoryCard.sharedInstance.playerData.points = 1000000
 //            MemoryCard.sharedInstance.playerData.premiumPoints = 1000000
-//            Research.cheatDuration()
-              Research.cheatUnlockAll()
+           // Research.cheatDuration()
+          //    Research.cheatUnlockAll()
 //            MemoryCard.sharedInstance.reset()
 //            MemoryCard.sharedInstance.playerData.needBattleTraining = true
         #endif
