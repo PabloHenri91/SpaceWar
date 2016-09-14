@@ -382,10 +382,6 @@ class ResearchScene: GameScene {
                         return
                     }
                     
-//                    if self.headerControl.containsPoint(point) {
-//                        return
-//                    }
-                    
                     if self.playerDataCard.containsPoint(point) {
                         return
                     }

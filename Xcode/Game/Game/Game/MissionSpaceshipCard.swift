@@ -133,6 +133,92 @@ class MissionSpaceshipCard: Control {
                 self.buttonUpgrade = Button(textureName: "buttonGraySmall", text: "UPGRADE", fontSize: 11 ,  x: 175, y: 79 , fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonUpgrade!)
             }
+            
+            
+            let labelFrags = Label(color: SKColor(red: 255/255, green: 162/255, blue: 87/255, alpha: 1), text: "+" + mission.pointsBonus.description, fontSize: 30, x: 220, y: Int(self.calculateAccumulatedFrame().height/2), fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 40/100), shadowOffset: CGPoint(x: 0, y: -1))
+
+            self.addChild(labelFrags)
+            
+            let iconFragments = Control(textureName: "fragIcon", x: Int(labelFrags.calculateAccumulatedFrame().width/2 + labelFrags.screenPosition.x), y: Int(labelFrags.screenPosition.y - labelFrags.calculateAccumulatedFrame().height/2))
+            iconFragments.setScale(2)
+  
+            self.addChild(iconFragments)
+            
+            let duration:Double = 1
+            
+            let action = SKAction.group([
+                SKAction.moveBy(CGVector(dx: 0, dy: 20), duration: duration),
+                SKAction.fadeAlphaTo(0, duration: duration),
+                ])
+            
+            iconFragments.runAction(action) {
+                iconFragments.removeFromParent()
+            }
+            
+            
+            let particles = SKEmitterNode(fileNamed: "explosion.sks")!
+            particles.particleTexture = SKTexture(imageNamed: "fragIcon")
+            particles.alpha = 0.5
+            particles.zPosition = 10000000
+            particles.particleBlendMode = .Alpha
+            particles.numParticlesToEmit = 50
+            particles.particleSpeedRange = 400
+            particles.particlePositionRange = CGVector(dx: 20, dy: 20)
+            particles.position = labelFrags.position
+            self.addChild(particles)
+            
+            labelFrags.zPosition = particles.zPosition + 1
+            iconFragments.zPosition = particles.zPosition + 1
+            
+            let partAction = SKAction()
+            partAction.duration = 1
+            
+            particles.runAction(partAction, completion: { [weak particles] in
+                particles?.removeFromParent()
+                })
+            
+            
+            labelFrags.runAction(action) {
+                labelFrags.removeFromParent()
+                
+                let labelXp = Label(color: SKColor(red: 45/255, green: 195/255, blue: 245/255, alpha: 1), text: "+" + mission.xpBonus.description, fontSize: 30, x: 220, y: Int(self.calculateAccumulatedFrame().height/2), fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 40/100), shadowOffset: CGPoint(x: 0, y: -1))
+                
+                self.addChild(labelXp)
+                
+                let iconXp = Control(textureName: "xpIcon", x: Int(labelXp.calculateAccumulatedFrame().width/2 + labelXp.screenPosition.x), y: Int(labelXp.screenPosition.y - labelXp.calculateAccumulatedFrame().height/2))
+                iconXp.setScale(2)
+                self.addChild(iconXp)
+                
+                let particles = SKEmitterNode(fileNamed: "explosion.sks")!
+                particles.particleTexture = SKTexture(imageNamed: "xpIcon")
+                particles.alpha = 0.5
+                particles.zPosition = 10000000
+                particles.particleBlendMode = .Alpha
+                particles.numParticlesToEmit = 50
+                particles.particleSpeedRange = 400
+                particles.particlePositionRange = CGVector(dx: 20, dy: 20)
+                particles.position = labelXp.position
+                self.addChild(particles)
+                
+                labelFrags.zPosition = particles.zPosition + 1
+                iconFragments.zPosition = particles.zPosition + 1
+                
+                let partAction = SKAction()
+                partAction.duration = 1
+                
+                particles.runAction(partAction, completion: { [weak particles] in
+                    particles?.removeFromParent()
+                    })
+                
+                iconXp.runAction(action) {
+                    iconXp.removeFromParent()
+                }
+                
+                labelXp.runAction(action) {
+                    labelXp.removeFromParent()
+                }
+            }
+            
         }
         
     }
