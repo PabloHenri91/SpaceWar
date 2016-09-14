@@ -149,7 +149,7 @@ class SpeedUpMiningAlert:Box {
             
             self.playerData.premiumPoints = NSNumber(integer: self.playerData.premiumPoints.integerValue - diamonds)
             print(self.date.dateByAddingTimeInterval(Double(time * -1)))
-            //self.missionSpaceship.speedUp(NSTimeInterval(time))
+            self.missionSpaceship.speedUp(NSTimeInterval(time))
             
             return true
         }
