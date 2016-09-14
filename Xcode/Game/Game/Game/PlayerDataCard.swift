@@ -459,9 +459,10 @@ class PlayerDataCardStatistics: Control {
         if self.touchIsMooving {
             let lastPosition = self.position
             let y:CGFloat = lastPosition.y + Control.dy
-            if y > 0 {
+            if y > 0 && y < 384 {
                 self.runAction(SKAction.moveBy(CGVector(dx: 0, dy: Control.dy), duration: 2/60))
             }
+            
             
             Control.gameScene.blackSpriteNode.alpha = 1 - self.position.y/CGFloat(self.playerDataCardBackground2PositionY)
             Control.gameScene.blackSpriteNode.zPosition = 25

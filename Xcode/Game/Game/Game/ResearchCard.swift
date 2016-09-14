@@ -58,6 +58,12 @@ class ResearchCard: Control {
         super.init(textureName: textureName)
         
         if let spaceship = self.spaceship {
+            
+            spaceship.setScale(min(55/spaceship.size.width, (self.size.height-10)/spaceship.size.height))
+            if spaceship.xScale > 2 {
+                spaceship.setScale(2)
+            }
+            
             self.addChild(spaceship)
         }
     
@@ -102,7 +108,7 @@ class ResearchCard: Control {
             }
             
         } else {
-            self.buttonBegin = Button(textureName: "buttonGray89x22", text: "BEGIN", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+            self.buttonBegin = Button(textureName: "buttonGreen89x22", text: "BEGIN", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
             self.addChild(self.buttonBegin!)
 
             self.labelTimeLeft.setText(GameMath.timeFormated(self.research.researchType.duration))

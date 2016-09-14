@@ -22,6 +22,11 @@ class FactorySpaceshipCard: Control {
         
         self.spaceship = spaceship
         
+        self.spaceship.setScale(min(66/self.spaceship.size.width, 77/self.spaceship.size.height))
+        if self.spaceship.xScale > 2 {
+            self.spaceship.setScale(2)
+        }
+        
         for item in playerData.spaceships {
             if let spaceshipData = item as? SpaceshipData {
                 if spaceshipData.type.integerValue == spaceship.type.index {
@@ -77,7 +82,7 @@ class FactorySpaceshipCard: Control {
         let fontName = GameFonts.fontName.museo1000
         let textOffset = CGPoint(x: 8, y: 0)
         
-        self.buttonBuy = Button(textureName: "buttonGray82x23", text: GameMath.spaceshipPrice(spaceship.type).description, fontSize: 13, x: 145, y: 106, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName, textOffset: textOffset)
+        self.buttonBuy = Button(textureName: "buttonOrange84x25", text: GameMath.spaceshipPrice(spaceship.type).description, fontSize: 13, x: 145, y: 106, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: CGPoint(x: 0, y: -2), fontName: fontName, textOffset: textOffset)
         self.addChild(self.buttonBuy)
         self.buttonBuy.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
         

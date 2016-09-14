@@ -41,6 +41,12 @@ class HangarSpaceshipSubCell: Control {
      
         
         let spaceshipImage = Spaceship(spaceshipData: self.spaceship.spaceshipData!)
+        
+        spaceshipImage.setScale(min(58/spaceshipImage.size.width, 45/spaceshipImage.size.height))
+        if spaceshipImage.xScale > 2 {
+            spaceshipImage.setScale(2)
+        }
+        
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 0, y: -10)
         spaceshipImage.resetPosition()
