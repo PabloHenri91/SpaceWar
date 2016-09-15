@@ -93,4 +93,9 @@ class TimeBar: CropBox {
             self.labelDescription?.setText("FINISHED")
         }
     }
+    
+    override func removeFromParent() {
+        self.greenBar = nil
+        super.removeFromParent()
+    }
 }

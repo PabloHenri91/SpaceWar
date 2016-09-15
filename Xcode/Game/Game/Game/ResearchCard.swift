@@ -49,7 +49,7 @@ class ResearchCard: Control {
             
             if let weaponUnlocked = research.researchType.weaponUnlocked {
                 self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
-                let weapon = Weapon(type: weaponUnlocked, level: 1)
+                let weapon = Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false)
                 self.spaceship?.addWeapon(weapon)
                 self.spaceship?.position = CGPoint(x:33, y: -33)
             }

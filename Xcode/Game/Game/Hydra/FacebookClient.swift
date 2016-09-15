@@ -17,7 +17,7 @@ import FBSDKLoginKit
 class FacebookClient {
     
     static let sharedInstance = FacebookClient()
-    let playerData = MemoryCard.sharedInstance.playerData
+    
     let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
     
     let facebookReadPermissions = ["public_profile", "email", "user_friends"]

@@ -14,6 +14,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     var buttonInviteAll:Button!
     var buttonInviteSome:Button!
     var loadingImage:SKSpriteNode!
+    
     lazy var deathEffect:SKAction = {
         return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
     }()
@@ -203,6 +204,11 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     func inviteFinished() {
         //print("finished")
         self.nextState = .normal
+    }
+    
+    override func removeFromParent() {
+        self.loadingImage = nil
+        super.removeFromParent()
     }
     
 }

@@ -91,7 +91,7 @@ class BattleTrainingScene: GameScene {
         // Spaceships
         let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
         self.mothership.spaceships.append(spaceship)
-        spaceship.addWeapon(Weapon(type: 0, level: 1))
+        spaceship.addWeapon(Weapon(type: 0, level: 1, loadSoundEffects: true))
         
         self.mothership.loadSpaceships(self.gameWorld)
         
@@ -327,7 +327,7 @@ class BattleTrainingScene: GameScene {
                     guard let scene = self else { return }
                     
                     let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
-                    spaceship.addWeapon(Weapon(type: 0, level: 1))
+                    spaceship.addWeapon(Weapon(type: 0, level: 1, loadSoundEffects: true))
                     scene.mothership.spaceships.append(spaceship)
                     scene.mothership.loadSpaceship(spaceship, gameWorld: scene.gameWorld, i: 1)
                     
@@ -456,12 +456,12 @@ class BattleTrainingScene: GameScene {
                 }
                 
                 var spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
-                spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1))
+                spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1, loadSoundEffects: true))
                 self.mothership.spaceships.append(spaceship)
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 2)
                 
                 spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
-                spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1))
+                spaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: 1, loadSoundEffects: true))
                 self.mothership.spaceships.append(spaceship)
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 3)
                 
@@ -487,7 +487,7 @@ class BattleTrainingScene: GameScene {
                         botSpaceship.canRespawn = false
                         
                         let weaponTypeIndex = Int.random(Weapon.types.count)
-                        botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: 1)
+                        botSpaceship.weapon = Weapon(type: weaponTypeIndex, level: 1, loadSoundEffects: true)
                         botSpaceship.weapon?.damage = 1
                         botSpaceship.addChild(botSpaceship.weapon!)
                         
@@ -910,15 +910,15 @@ class BattleTrainingScene: GameScene {
         }
         
         if let botMothership = self.botMothership {
-            if let parent = botMothership.spriteNode.parent {
-                if botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+            if let parent = botMothership.parent {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
-        if let parent = self.mothership.spriteNode.parent {
-            if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+        if let parent = self.mothership.parent {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 Spaceship.retreatSelectedSpaceship()
                 return
             }
@@ -934,15 +934,15 @@ class BattleTrainingScene: GameScene {
         }
         
         if let botMothership = self.botMothership {
-            if let parent = botMothership.spriteNode.parent {
-                if botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+            if let parent = botMothership.parent {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
-        if let parent = self.mothership.spriteNode.parent {
-            if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+        if let parent = self.mothership.parent {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 return
             }
         }
@@ -992,15 +992,15 @@ class BattleTrainingScene: GameScene {
         
         
         if let botMothership = self.botMothership {
-            if let parent = botMothership.spriteNode.parent {
-                if botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+            if let parent = botMothership.parent {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
-        if let parent = self.mothership.spriteNode.parent {
-            if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+        if let parent = self.mothership.parent {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 Spaceship.retreatSelectedSpaceship()
                 return
             }

@@ -199,7 +199,7 @@ class EventCard: Control {
                 if let spaceshipUnlocked = Research.types[researchData.type.integerValue].spaceshipUnlocked {
                     if let weaponUnlocked = Research.types[researchData.type.integerValue].weaponUnlocked {
                         let spaceship = Spaceship(type: spaceshipUnlocked, level: 0)
-                        spaceship.addWeapon(Weapon(type: weaponUnlocked, level: 1))
+                        spaceship.addWeapon(Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false))
                         spaceship.position = CGPoint(x: Int(self.size.width/2), y: -Int(self.size.height/2))
                         self.addChild(spaceship)
                     }

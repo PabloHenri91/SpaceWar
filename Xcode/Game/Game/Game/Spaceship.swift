@@ -88,6 +88,8 @@ class Spaceship: Control {
     var onlineDamage = 0
     var onlineHeal = 0
     
+    private var spriteNode:SKSpriteNode!
+    
     override var description: String {
         return "\nSpaceship\n" +
             "level: " + level.description + "\n" +
@@ -137,7 +139,7 @@ class Spaceship: Control {
         self.load(type: spaceshipData.type.integerValue, level: spaceshipData.level.integerValue, loadPhysics: loadPhysics)
         
         if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-            self.weapon = (Weapon(weaponData: weaponData))
+            self.weapon = (Weapon(weaponData: weaponData, loadSoundEffects: loadPhysics))
         }
         
         if let weapon = self.weapon {
@@ -297,7 +299,7 @@ class Spaceship: Control {
     }
     
     private func load(loadPhysics:Bool) {
-        self.loadSoundEffects()
+        
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
         self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
         self.maxHealth = health
@@ -342,17 +344,18 @@ class Spaceship: Control {
         self.selectedSpriteNode.zPosition = zPositions.selectedDetail.rawValue
         self.addChild(self.selectedSpriteNode)
         
-        self.weaponRangeBonus = self.spriteNode.size.height/2
+        self.weaponRangeBonus = spriteNode.size.height/2
         
         if loadPhysics {
-            self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+            self.loadSoundEffects()
+            self.loadPhysics(rectangleOfSize: spriteNode.size)
         }
         
         self.increaseTouchArea()
         
         Spaceship.spaceshipList.insert(self)
         
-        self.size = self.spriteNode.size
+        self.size = spriteNode.size
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
@@ -1114,6 +1117,8 @@ class Spaceship: Control {
     }
     
     override func removeFromParent() {
+        self.selectedSpriteNode = nil
+        self.spriteNode = nil
         Spaceship.spaceshipList.remove(self)
         self.hidden = true
         super.removeFromParent()

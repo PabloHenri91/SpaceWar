@@ -128,7 +128,7 @@ class BattleScene: GameScene {
                 level = 1
             }
             let botSpaceship = Spaceship(type: Int.random(Spaceship.types.count), level: level, loadPhysics: true)
-            botSpaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: botSpaceship.level))
+            botSpaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: botSpaceship.level, loadSoundEffects: true))
             self.botMothership.spaceships.append(botSpaceship)
         }
         
@@ -460,14 +460,14 @@ class BattleScene: GameScene {
                     }
                     
                     
-                    if let parent = self.botMothership.spriteNode.parent {
-                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.botMothership.parent {
+                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
                             return
                         }
                     }
                     
-                    if let parent = self.mothership.spriteNode.parent {
-                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.mothership.parent {
+                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
                             Spaceship.retreatSelectedSpaceship()
                             return
                         }
@@ -494,14 +494,14 @@ class BattleScene: GameScene {
                     
                 case .battle, .battleOnline:
                     
-                    if let parent = self.botMothership.spriteNode.parent {
-                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.botMothership.parent {
+                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
                             return
                         }
                     }
                     
-                    if let parent = self.mothership.spriteNode.parent {
-                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.mothership.parent {
+                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
                             return
                         }
                     }
@@ -535,8 +535,8 @@ class BattleScene: GameScene {
                         }
                     }
                     
-                    if let parent = self.mothership.spriteNode.parent {
-                        if self.mothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.mothership.parent {
+                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
                             if let spaceship = Spaceship.selectedSpaceship {
                                 if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
                                     Spaceship.retreatSelectedSpaceship()
@@ -546,8 +546,8 @@ class BattleScene: GameScene {
                         }
                     }
                     
-                    if let parent = self.botMothership.spriteNode.parent {
-                        if self.botMothership.spriteNode.containsPoint(touch.locationInNode(parent)) {
+                    if let parent = self.botMothership.parent {
+                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
                             return
                         }
                     }

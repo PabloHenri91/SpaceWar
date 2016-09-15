@@ -12,9 +12,11 @@ class BuyMinnerSpaceshipAlert:Box {
     
     var buttonCancel:Button!
     var buttonBuy:Button!
-    var playerData = MemoryCard.sharedInstance.playerData
     
     init() {
+        
+        let playerData = MemoryCard.sharedInstance.playerData
+        
         let spriteNode = SKSpriteNode(imageNamed: "buyMinnerSpaceshipAlert")
         super.init(spriteNode: spriteNode)
         
@@ -33,13 +35,13 @@ class BuyMinnerSpaceshipAlert:Box {
         let labelLevel = Label(text: "MINING SPACESHIP LEVEL 1" , fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelLevel)
         
-        let labelAmount = Label(text: "YOU HAVE ".translation() + self.playerData.missionSpaceships.count.description + "/4" , fontSize: 11, x: -78, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left)
+        let labelAmount = Label(text: "YOU HAVE ".translation() + playerData.missionSpaceships.count.description + "/4" , fontSize: 11, x: -78, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left)
         self.addChild(labelAmount)
         
         let labelBuy = Label(text: "BUY" , fontSize: 11, x: 61, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelBuy)
         
-        let price = 2000 * self.playerData.missionSpaceships.count
+        let price = 2000 * playerData.missionSpaceships.count
         
         self.buttonBuy = Button(textureName: "buttonOrangeFragments", text: price.description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonBuy)
@@ -47,13 +49,13 @@ class BuyMinnerSpaceshipAlert:Box {
         let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)
         self.addChild(minnerSpaceship)
         
-        for i in 0..<self.playerData.missionSpaceships.count {
+        for i in 0..<playerData.missionSpaceships.count {
             let x = -78 + 27 * i
             let minnerSpaceship = Control(textureName: "minnerSpaceshipSmallBuyed", x: x, y: 30)
             self.addChild(minnerSpaceship)
         }
         
-        for i in self.playerData.missionSpaceships.count..<4 {
+        for i in playerData.missionSpaceships.count..<4 {
             let x = -78 + 27 * i
             let minnerSpaceship = Control(textureName: "minnerSpaceshipUnlocked", x: x, y: 30)
             self.addChild(minnerSpaceship)
@@ -68,12 +70,14 @@ class BuyMinnerSpaceshipAlert:Box {
     
     func buyMiningSpaceship() -> Bool {
         
-        let price = 2000 * self.playerData.missionSpaceships.count
+        let playerData = MemoryCard.sharedInstance.playerData
         
-        if self.playerData.points.integerValue >= price {
+        let price = 2000 * playerData.missionSpaceships.count
+        
+        if playerData.points.integerValue >= price {
             let missionSpaceshipData = MemoryCard.sharedInstance.newMissionSpaceshipData()
-            self.playerData.addMissionSpaceshipData(missionSpaceshipData)
-            self.playerData.points = self.playerData.points.integerValue - price
+            playerData.addMissionSpaceshipData(missionSpaceshipData)
+            playerData.points = playerData.points.integerValue - price
             return true
         }
         

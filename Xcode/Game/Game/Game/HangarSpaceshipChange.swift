@@ -43,10 +43,10 @@ class HangarSpaceshipChange:Box {
     var selectedCell:HangarSpaceshipSubCell?
     
     let selectedSpaceships = MemoryCard.sharedInstance.playerData.motherShip.spaceships
-    let playerData = MemoryCard.sharedInstance.playerData
     
     init(spaceship:Spaceship) {
         
+        let playerData = MemoryCard.sharedInstance.playerData
         
         self.spaceship = spaceship
         
@@ -170,7 +170,7 @@ class HangarSpaceshipChange:Box {
         
         self.runAction(SKAction.sequence([action1, action2])) {
             
-            let spaceships = self.playerData.spaceships.sort({ (item0, item1) -> Bool in
+            let spaceships = playerData.spaceships.sort({ (item0, item1) -> Bool in
                 if let spaceshipData0 = item0 as? SpaceshipData {
                     if let spaceshipData1 = item1 as? SpaceshipData {
                         return spaceshipData0.level.integerValue > spaceshipData1.level.integerValue
@@ -186,7 +186,7 @@ class HangarSpaceshipChange:Box {
                 self.addChild(self.cropBox.cropNode)
                 
                 
-                var spaceshipList = Array<Spaceship>()
+                var spaceshipList = Array<SpaceshipData>()
                 var controlArray = Array<Control>()
                 
                 for spaceshipData in spaceships {
@@ -200,7 +200,7 @@ class HangarSpaceshipChange:Box {
                     }
                     
                     if canSelect {
-                        spaceshipList.append(Spaceship(spaceshipData: spaceshipData as! SpaceshipData))
+                        spaceshipList.append(spaceshipData as! SpaceshipData)
                         if spaceshipList.count == 3 {
                             let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
                             controlArray.append(cell)
@@ -434,13 +434,15 @@ class HangarSpaceshipChange:Box {
     
     func choose() {
         
+        let playerData = MemoryCard.sharedInstance.playerData
+        
         var index = 0
         for selectedSpaceship in self.selectedSpaceships {
             if selectedSpaceship as! SpaceshipData == self.spaceship.spaceshipData {
                 
-                self.playerData.motherShip.removeSpaceshipData(selectedSpaceship as! SpaceshipData)
+                playerData.motherShip.removeSpaceshipData(selectedSpaceship as! SpaceshipData)
                 
-                self.playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!, index: index)
+                playerData.motherShip.addSpaceshipData(self.selectedCell!.spaceship.spaceshipData!, index: index)
                 return
             }
             index += 1

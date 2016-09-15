@@ -13,19 +13,18 @@ class HangarSpaceshipsCell: Control {
     
     var spaceshipsSubCells: Array<HangarSpaceshipSubCell>!
     
-    init(spaceships: Array<Spaceship>) {
+    init(spaceships: Array<SpaceshipData>) {
         super.init()
         self.spaceshipsSubCells = Array<HangarSpaceshipSubCell>()
         
-        for i in 0 ..< spaceships.count{
-            
+        var i = 0
+        for spaceshipData in spaceships {
             let x = 51 + 90 * i
-            let subCell = HangarSpaceshipSubCell(spaceship: spaceships[i], x:x)
+            let subCell = HangarSpaceshipSubCell(spaceshipData: spaceshipData, x:x)
             self.spaceshipsSubCells.append(subCell)
             
             self.addChild(subCell)
-            
-            
+            i += 1
         }
     }
     

@@ -47,13 +47,12 @@ class BuySpaceshipAlert: Box {
         
         
         
-        let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)
-        minnerSpaceship.spriteNode.alpha = 0
+        let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9, alpha: 0)
         self.addChild(minnerSpaceship)
         
         let minnerSpaceshipTinySpaceship = Spaceship(type: spaceship.type.index, level: spaceship.level)
         if let weapon = spaceship.weapon {
-            minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1))
+            minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1, loadSoundEffects: false))
         }
         minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
         minnerSpaceshipTinySpaceship.position = CGPoint(x: minnerSpaceship.size.width/2, y: -minnerSpaceship.size.height/2)
@@ -62,13 +61,12 @@ class BuySpaceshipAlert: Box {
         
         for i in 0..<count {
             let x = -78 + 27 * i
-            let minnerSpaceship = Control(textureName: "minnerSpaceshipSmallBuyed", x: x, y: 30)
-            minnerSpaceship.spriteNode.alpha = 0
+            let minnerSpaceship = Control(textureName: "minnerSpaceshipSmallBuyed", x: x, y: 30, alpha: 0)
             self.addChild(minnerSpaceship)
             
             let minnerSpaceshipTinySpaceship = Spaceship(type: spaceship.type.index, level: spaceship.level)
             if let weapon = spaceship.weapon {
-                minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1))
+                minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1, loadSoundEffects: false))
             }
             minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
             minnerSpaceshipTinySpaceship.position = CGPoint(x: minnerSpaceship.size.width/2, y: -minnerSpaceship.size.height/2)
@@ -77,8 +75,7 @@ class BuySpaceshipAlert: Box {
         
         for i in count..<4 {
             let x = -78 + 27 * i
-            let minnerSpaceship = Control(textureName: "minnerSpaceshipUnlocked", x: x, y: 30)
-            minnerSpaceship.spriteNode.alpha = 0
+            let minnerSpaceship = Control(textureName: "minnerSpaceshipUnlocked", x: x, y: 30, alpha: 0)
             self.addChild(minnerSpaceship)
             
             let minnerSpaceshipTinySpaceship = SKSpriteNode(imageNamed: spaceship.type.skin + "Mask")

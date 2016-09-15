@@ -12,9 +12,9 @@ class HangarSpaceshipSubCell: Control {
     
     var spaceship: Spaceship
     
-    init(spaceship: Spaceship, x: Int) {
+    init(spaceshipData: SpaceshipData, x: Int) {
         
-        self.spaceship = spaceship
+        self.spaceship = Spaceship(spaceshipData: spaceshipData)
         
         var imageName = ""
         
@@ -33,23 +33,19 @@ class HangarSpaceshipSubCell: Control {
             break
         }
         
-        
         let spriteNode = SKSpriteNode(imageNamed: imageName)
         super.init(spriteNode: spriteNode, x:x)
         
         spriteNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-     
         
-        let spaceshipImage = Spaceship(spaceshipData: self.spaceship.spaceshipData!)
-        
-        spaceshipImage.setScale(min(58/spaceshipImage.size.width, 45/spaceshipImage.size.height))
-        if spaceshipImage.xScale > 2 {
-            spaceshipImage.setScale(2)
+        self.spaceship.setScale(min(58/self.spaceship.size.width, 45/self.spaceship.size.height))
+        if self.spaceship.xScale > 2 {
+            self.spaceship.setScale(2)
         }
         
-        self.addChild(spaceshipImage)
-        spaceshipImage.screenPosition = CGPoint(x: 0, y: -10)
-        spaceshipImage.resetPosition()
+        self.addChild(self.spaceship)
+        self.spaceship.screenPosition = CGPoint(x: 0, y: -10)
+        self.spaceship.resetPosition()
         
         let labelLevel = Label(color:SKColor.whiteColor() ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 0, y: 30, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelLevel)

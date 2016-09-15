@@ -396,11 +396,13 @@ class Button: Control {
     
     func buttonRelease() {
         self.pressed = false
-        self.button.hidden = false
-        self.buttonPressed.hidden = true
+        self.button?.hidden = false
+        self.buttonPressed?.hidden = true
     }
     
     override func removeFromParent() {
+        self.button = nil
+        self.buttonPressed = nil
         Button.buttonList.remove(self)
         super.removeFromParent()
     }

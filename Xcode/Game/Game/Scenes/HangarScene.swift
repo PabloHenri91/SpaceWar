@@ -11,7 +11,7 @@ import SpriteKit
 class HangarScene: GameScene {
     
    
-    var playerData = MemoryCard.sharedInstance.playerData
+    let playerData = MemoryCard.sharedInstance.playerData
     
     var spaceships = [Spaceship]()
     var selectedSpaceship: Spaceship?
@@ -85,8 +85,6 @@ class HangarScene: GameScene {
                     
             if let spaceshipData = item as? SpaceshipData {
                 
-                let spaceship = Spaceship(spaceshipData: spaceshipData)
-                
                 var x = 0
                 var y = 0
                 
@@ -115,7 +113,7 @@ class HangarScene: GameScene {
                     break
                 }
                 
-                let card = HangarSpaceshipCard(spaceship: spaceship, x: x, y: y)
+                let card = HangarSpaceshipCard(spaceshipData: spaceshipData, x: x, y: y)
                 self.addChild(card)
                 
                 self.hangarCardsArray.append(card)
@@ -409,6 +407,7 @@ class HangarScene: GameScene {
                             if let buttonChoose = alert.buttonChoose {
                                 if buttonChoose.containsPoint(touch.locationInNode(alert)){
                                     alert.choose()
+                                    self.selectedCard?.spaceship.removeFromParent()
                                     self.selectedCard?.spaceship = alert.selectedCell?.spaceship
                                     self.selectedCard?.reloadCard()
                                     self.nextState = .hangar

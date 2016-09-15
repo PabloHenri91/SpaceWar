@@ -12,8 +12,6 @@ class SpaceshipSlot: Control {
     
     var spaceship:Spaceship?
     
-    let playerData = MemoryCard.sharedInstance.playerData
-    
     var labelLevel:Label?
     
     init(spaceship:Spaceship?) {

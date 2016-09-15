@@ -32,15 +32,15 @@ class Weapon: Control {
             "range: " + range.description  + "\n"
     }
     
-    init(type:Int, level:Int) {
+    init(type:Int, level:Int, loadSoundEffects: Bool) {
         super.init()
-        self.load(type, level: level)
+        self.load(type, level: level, loadSoundEffects: loadSoundEffects)
     }
     
-    init(weaponData:WeaponData) {
+    init(weaponData:WeaponData, loadSoundEffects: Bool) {
         super.init()
         self.weaponData = weaponData
-        self.load(weaponData.type.integerValue, level: weaponData.level.integerValue)
+        self.load(weaponData.type.integerValue, level: weaponData.level.integerValue, loadSoundEffects: loadSoundEffects)
     }
     
     override init() {
@@ -51,7 +51,7 @@ class Weapon: Control {
         self.initShotSoundEffect = SoundEffect(soundFile: self.type.initSoundFileName, node: self)
     }
     
-    private func load(type:Int, level:Int) {
+    private func load(type:Int, level:Int, loadSoundEffects: Bool) {
         
         self.type = Weapon.types[type]
         
@@ -66,7 +66,9 @@ class Weapon: Control {
         let imageName = self.type.shotSkin
         self.weaponShotTexture = SKTexture(imageNamed: imageName)
         
-        self.loadSoundEffects()
+        if loadSoundEffects {
+            self.loadSoundEffects()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,10 +84,8 @@ class Weapon: Control {
                     if parentSpaceshipPhysicsBody.dynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
                             
-                            let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody)
+                            let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody, color: self.type.color)
                             parentSpaceshipParent.addChild(shot)
-                            shot.spriteNode.color = self.type.color
-                            shot.spriteNode.colorBlendFactor = 1
                             self.initShotSoundEffect.play()
                         }
                     }

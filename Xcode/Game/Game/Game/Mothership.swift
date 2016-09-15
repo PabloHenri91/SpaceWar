@@ -70,7 +70,7 @@ class Mothership: Control {
                     let spaceshipData = item as! [Int]
                     let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
                     spaceship.isAlly = false
-                    spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0]))
+                    spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0], loadSoundEffects: true))
                     self.spaceships.append(spaceship)
                     break
                     
@@ -108,16 +108,20 @@ class Mothership: Control {
         self.health = 1
         self.maxHealth = health
         
+        
+        var spriteNode: SKSpriteNode!
+        
         //Gráfico
         if blueTeam {
-            self.spriteNode = SKSpriteNode(imageNamed: "mothershipBlue")
+            spriteNode = SKSpriteNode(imageNamed: "mothershipBlue")
         } else {
-            self.spriteNode = SKSpriteNode(imageNamed: "mothershipRed")
+            spriteNode = SKSpriteNode(imageNamed: "mothershipRed")
         }
-        self.spriteNode.texture?.filteringMode = Display.filteringMode
+        spriteNode.texture?.filteringMode = Display.filteringMode
         
+        self.size = spriteNode.size
         
-        self.addChild(self.spriteNode)
+        self.addChild(spriteNode)
         
         let mothershipHealthBarMask = SKSpriteNode(imageNamed: "mothershipHealthBarMask")
         mothershipHealthBarMask.texture?.filteringMode = Display.filteringMode
@@ -138,7 +142,7 @@ class Mothership: Control {
         mothershipWhiteShape.texture?.filteringMode = Display.filteringMode
         self.addChild(mothershipWhiteShape)
         
-        self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+        self.loadPhysics(rectangleOfSize: spriteNode.size)
         
         Mothership.mothershipList.insert(self)
         
@@ -258,7 +262,7 @@ class Mothership: Control {
     func canBeTarget(spaceship:Spaceship) -> Bool {
         
         if let spaceshipWeapon = spaceship.weapon {
-            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.spriteNode.size.height/2
+            let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.size.height/2
             if CGPoint.distance(CGPoint(x: spaceship.position.x, y:self.position.y), spaceship.position) > range {
                 return false
             }
@@ -339,7 +343,7 @@ class Mothership: Control {
         particles.numParticlesToEmit = 1000
         particles.particleSpeedRange = 1000
         
-        particles.particlePositionRange = CGVector(dx: self.spriteNode.size.width, dy: self.spriteNode.size.height)
+        particles.particlePositionRange = CGVector(dx: self.size.width, dy: self.size.height)
         
         if let parent = self.parent {
             parent.addChild(particles)

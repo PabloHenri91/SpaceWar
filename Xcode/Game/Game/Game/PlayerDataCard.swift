@@ -277,6 +277,12 @@ class PlayerDataCard: Control {
         
         self.labelPremiumPoints.runAction(action)
     }
+    
+    override func removeFromParent() {
+        self.xpBarSpriteNode = nil
+        self.xpBarCircle = nil
+        super.removeFromParent()
+    }
 }
 
 class PlayerDataCardStatistics: Control {

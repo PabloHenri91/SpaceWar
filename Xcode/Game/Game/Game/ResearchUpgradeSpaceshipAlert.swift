@@ -12,7 +12,6 @@ class ResearchUpgradeSpaceshipAlert:Box {
     
     var buttonCancel: Button!
     var buttonGoToHangar: Button!
-    var playerdata = MemoryCard.sharedInstance.playerData
     var spaceship: Spaceship!
     
     init(research:Research) {
@@ -45,7 +44,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
             
             if let weaponUnlocked = research.researchType.weaponUnlocked {
                 self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
-                let weapon = Weapon(type: weaponUnlocked, level: 1)
+                let weapon = Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false)
                 self.spaceship?.addWeapon(weapon)
                 self.spaceship?.position = CGPoint(x:33, y: -33)
             }
@@ -76,7 +75,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
         } else {
             spaceshipImage = Spaceship(type: spaceship.type.index, level: spaceship.level)
             if let weapon = spaceship.weapon {
-                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level))
+                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level, loadSoundEffects: false))
             }
         }
         self.addChild(spaceshipImage)

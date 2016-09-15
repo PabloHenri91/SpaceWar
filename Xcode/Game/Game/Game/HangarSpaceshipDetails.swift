@@ -105,7 +105,7 @@ class HangarSpaceshipDetails: Box {
         } else {
             spaceshipImage = Spaceship(type: spaceship.type.index, level: spaceship.level)
             if let weapon = spaceship.weapon {
-                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level))
+                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level, loadSoundEffects: false))
             }
         }
         self.addChild(spaceshipImage)

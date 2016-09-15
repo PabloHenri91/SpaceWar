@@ -305,13 +305,13 @@ class GameStore: Box {
         
         particles.particleSpeedRange = 1000
         
-        particles.particlePositionRange = CGVector(dx: storeItem.spriteNode.size.width, dy: storeItem.spriteNode.size.height)
+        particles.particlePositionRange = CGVector(dx: storeItem.size.width, dy: storeItem.size.height)
         
         if let parent = self.parent {
             
             particles.position = parent.convertPoint(storeItem.position, fromNode: storeItem.parent!)
-            particles.position.x = particles.position.x + storeItem.spriteNode.size.width/2
-            particles.position.y = particles.position.y - storeItem.spriteNode.size.height/2
+            particles.position.x = particles.position.x + storeItem.size.width/2
+            particles.position.y = particles.position.y - storeItem.size.height/2
             
             parent.addChild(particles)
             
@@ -491,5 +491,10 @@ class StoreItem: Control {
         
         
         self.runAction(SKAction.sequence([action1, action2]))
+    }
+    
+    override func removeFromParent() {
+        self.unavailableEffect = nil
+        super.removeFromParent()
     }
 }

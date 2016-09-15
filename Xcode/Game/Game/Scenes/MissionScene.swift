@@ -11,7 +11,7 @@ import SpriteKit
 
 class MissionScene: GameScene {
     
-    var playerData = MemoryCard.sharedInstance.playerData
+    let playerData = MemoryCard.sharedInstance.playerData
     let missionShips = MemoryCard.sharedInstance.playerData.missionSpaceships
     
     var selectedSpaceship: MissionSpaceship?

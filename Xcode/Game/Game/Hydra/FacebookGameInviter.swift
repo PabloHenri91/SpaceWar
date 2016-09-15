@@ -20,7 +20,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     var idFriendArray = [AnyObject]()
     var inviteNow = [AnyObject]()
     var gameInviterDelegate:FacebookGameInviterDelegate!
-    let playerData = MemoryCard.sharedInstance.playerData
+    
     let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
     
     func gameRequestDialogDidCancel(gameRequestDialog: FBSDKGameRequestDialog!) {
@@ -57,7 +57,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             }
             
             if needAdd {
-                playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
+                MemoryCard.sharedInstance.playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
             }
             
         }
@@ -130,9 +130,14 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     }
     
     func updateInvitedFriends() {
+        
+        
         if FBSDKAccessToken.currentAccessToken() != nil {
             FacebookClient.sharedInstance.listGameFriends({ (meFriends, error) in
                 if meFriends.count > 0 {
+                    
+                    let playerData = MemoryCard.sharedInstance.playerData
+                    
                     for item in meFriends {
                         let id = item.objectForKey("id") as! String
                         for friend in self.friends {
@@ -142,7 +147,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
                                 let picture = item.objectForKey("picture")
                                 let data = picture?.objectForKey("data")
                                 let photoURL = data?.objectForKey("url") as! String
-                                self.playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
+                                playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
                                 //print("I invited you and update")
                                 //print(MemoryCard.sharedInstance.playerData.invitedFriends)
                                 return

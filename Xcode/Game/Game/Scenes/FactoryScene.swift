@@ -10,7 +10,7 @@ import SpriteKit
 
 class FactoryScene: GameScene {
     
-    var playerData = MemoryCard.sharedInstance.playerData
+    let playerData = MemoryCard.sharedInstance.playerData
     
     var scrollNode:ScrollNode!
     
@@ -73,7 +73,7 @@ class FactoryScene: GameScene {
             if let spaceshipData = item as? SpaceshipData {
                 let spaceship = Spaceship(type: spaceshipData.type.integerValue, level: 1)
                 if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-                    let weapon = Weapon(type: weaponData.type.integerValue, level: 1)
+                    let weapon = Weapon(type: weaponData.type.integerValue, level: 1, loadSoundEffects: false)
                     spaceship.addWeapon(weapon)
                 }
                 

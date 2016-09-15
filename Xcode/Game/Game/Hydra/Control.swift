@@ -51,29 +51,29 @@ class Control: SKNode {
     
     var screenPosition:CGPoint = CGPointZero
     
-    var spriteNode:SKSpriteNode!
-    
     override init() {
         super.init()
     }
     
-    init(name:String = "", textureName:String, size:CGSize = CGSize.zero, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up) {
+    init(name:String = "", textureName:String, size:CGSize = CGSize.zero, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, alpha: CGFloat = 1) {
         super.init()
         let spriteNode = SKSpriteNode(imageNamed: textureName)
         spriteNode.texture?.filteringMode = Display.filteringMode
-        self.load(name, spriteNode: spriteNode, size:size, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
+        self.load(name, spriteNode: spriteNode, size:size, x: x, y: y, xAlign: xAlign, yAlign: yAlign, alpha: alpha)
     }
     
-    init(name:String = "", spriteNode:SKSpriteNode, size:CGSize = CGSize.zero, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up) {
+    init(name:String = "", spriteNode:SKSpriteNode, size:CGSize = CGSize.zero, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, alpha: CGFloat = 1) {
         super.init()
-        self.load(name, spriteNode: spriteNode, size:size, x: x, y: y, xAlign: xAlign, yAlign: yAlign)
+        self.load(name, spriteNode: spriteNode, size:size, x: x, y: y, xAlign: xAlign, yAlign: yAlign, alpha: alpha)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(name:String, spriteNode:SKSpriteNode, size:CGSize, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments) {
+    func load(name:String, spriteNode:SKSpriteNode, size:CGSize, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments, alpha: CGFloat) {
+        
+        spriteNode.alpha = alpha
         
         self.name = name
         self.screenPosition = CGPoint(x: x, y: y)
@@ -86,7 +86,6 @@ class Control: SKNode {
             spriteNode.size = size
         }
         self.size = spriteNode.size
-        self.spriteNode = spriteNode
         spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
         spriteNode.name = name
         self.addChild(spriteNode)
@@ -119,6 +118,8 @@ class Control: SKNode {
     }
     
     override func removeFromParent() {
+        self.removeAllActions()
+        
         for node in self.children {
             node.removeFromParent()
         }

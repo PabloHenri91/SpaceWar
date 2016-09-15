@@ -11,8 +11,6 @@ import SpriteKit
 
 class ResearchScene: GameScene {
     
-    var playerData = MemoryCard.sharedInstance.playerData
-    
     var scrollNode:ScrollNode?
     
     var currentResearchCard:ResearchCard?
@@ -235,7 +233,9 @@ class ResearchScene: GameScene {
 
         var researchCards = Array<ResearchCard>()
         
-        for item in self.playerData.researches {
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        for item in playerData.researches {
             if let researchData = item as? ResearchData {
                 let research = Research(researchData: researchData)
                 

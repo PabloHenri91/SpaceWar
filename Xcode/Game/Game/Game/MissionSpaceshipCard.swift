@@ -25,8 +25,6 @@ class MissionSpaceshipCard: Control {
     
     var lastUpdate:NSTimeInterval = 0
     
-    var playerData = MemoryCard.sharedInstance.playerData
-    
     init(missionSpaceship:MissionSpaceship) {
         
         super.init()
@@ -101,6 +99,8 @@ class MissionSpaceshipCard: Control {
         
         if let missionspaceshipData = self.missionSpaceship.missionspaceshipData {
             
+            let playerData = MemoryCard.sharedInstance.playerData
+            
             self.needUpdate = false
             
             let mission = MissionSpaceship.types[Int(self.missionSpaceship.missionspaceshipData!.missionType.intValue)]
@@ -108,12 +108,12 @@ class MissionSpaceshipCard: Control {
             missionspaceshipData.missionType = NSNumber(integer: -1)
             self.missionSpaceship.missionType = -1
             
-            self.playerData.points = self.playerData.points.integerValue + mission.pointsBonus
-            self.playerData.pointsSum = self.playerData.pointsSum.integerValue + mission.pointsBonus
+            playerData.points = playerData.points.integerValue + mission.pointsBonus
+            playerData.pointsSum = playerData.pointsSum.integerValue + mission.pointsBonus
             
             
             let xpBonus = GameMath.applyXPBoosts(mission.xpBonus)
-            self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + xpBonus)
+            playerData.motherShip.xp = NSNumber(integer: playerData.motherShip.xp.integerValue + xpBonus)
             
             self.buttonCollect!.removeFromParent()
             self.buttonCollect = nil
@@ -297,10 +297,12 @@ class MissionSpaceshipCard: Control {
         
         let price = Int(2000 * pow(2, Double(self.missionSpaceship.level + 1)))
         
-        if self.playerData.points.integerValue >= price {
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        if playerData.points.integerValue >= price {
             self.missionSpaceship.level = self.missionSpaceship.level + 1
             self.missionSpaceship.missionspaceshipData?.level = NSNumber(integer: (self.missionSpaceship.missionspaceshipData?.level.integerValue)! + 1)
-            self.playerData.points = self.playerData.points.integerValue - price
+            playerData.points = playerData.points.integerValue - price
             self.labelLevel.setText(self.missionSpaceship.level.description)
             
             self.spaceshipImage.removeFromParent()

@@ -15,13 +15,10 @@ class HangarSpaceshipCard: Control {
     var buttonChange: Button!
     var labelLevel: Label!
     var labelName: Label!
-    var playerData = MemoryCard.sharedInstance.playerData
-    var spaceshipImage: Spaceship!
     
-    init(spaceship:Spaceship, x:Int, y:Int) {
+    init(spaceshipData:SpaceshipData, x:Int, y:Int) {
         
-        
-        self.spaceship = spaceship
+        self.spaceship = Spaceship(spaceshipData: spaceshipData)
         
         var imageName = ""
         
@@ -43,15 +40,15 @@ class HangarSpaceshipCard: Control {
         super.init(textureName: imageName, x: x, y: y, xAlign: .center, yAlign: .center)
        
 
-        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        self.addChild(self.spaceshipImage)
-        self.spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
-        self.spaceshipImage.resetPosition()
         
-        self.spaceshipImage.setScale(min(139/self.spaceshipImage.size.width, 54/self.spaceshipImage.size.height))
+        self.addChild(self.spaceship)
+        self.spaceship.screenPosition = CGPoint(x: 74, y: 62)
+        self.spaceship.resetPosition()
         
-        if self.spaceshipImage.xScale > 2 {
-            self.spaceshipImage.setScale(2)
+        self.spaceship.setScale(min(139/self.spaceship.size.width, 54/self.spaceship.size.height))
+        
+        if self.spaceship.xScale > 2 {
+            self.spaceship.setScale(2)
         }
             
         self.buttonUpgrade = Button(textureName: "buttonGreen92x25", text: "UPGRADE", fontSize: 13 ,  x: 31, y: 120, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
@@ -78,21 +75,24 @@ class HangarSpaceshipCard: Control {
     
     func reloadCard() {
         
-        self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
-        self.labelName.setText((self.spaceship.factoryDisplayName()).uppercaseString)
-        
-        self.spaceshipImage.removeFromParent()
-        
-        self.spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
-        
-        self.addChild(self.spaceshipImage)
-        self.spaceshipImage.screenPosition = CGPoint(x: 74, y: 62)
-        self.spaceshipImage.resetPosition()
-        
-        self.spaceshipImage.setScale(min(139/self.spaceshipImage.size.width, 54/self.spaceshipImage.size.height))
-        
-        if self.spaceshipImage.xScale > 2 {
-            self.spaceshipImage.setScale(2)
+        if let spaceshipData = self.spaceship.spaceshipData {
+            
+            self.spaceship.removeFromParent()
+            
+            self.spaceship = Spaceship(spaceshipData: spaceshipData)
+            
+            self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
+            self.labelName.setText((self.spaceship.factoryDisplayName()).uppercaseString)
+            
+            self.addChild(self.spaceship)
+            self.spaceship.screenPosition = CGPoint(x: 74, y: 62)
+            self.spaceship.resetPosition()
+            
+            self.spaceship.setScale(min(139/self.spaceship.size.width, 54/self.spaceship.size.height))
+            
+            if self.spaceship.xScale > 2 {
+                self.spaceship.setScale(2)
+            }
         }
     }
     

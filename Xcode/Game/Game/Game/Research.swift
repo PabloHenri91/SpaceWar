@@ -12,8 +12,6 @@ class Research: Control {
     
     var researchType:ResearchType!
     var researchData:ResearchData?
-    var playerData = MemoryCard.sharedInstance.playerData
-    
     
     init(type:Int) {
         super.init()
@@ -37,8 +35,10 @@ class Research: Control {
     
     func isUnlocked() -> Bool {
         
+        let playerData = MemoryCard.sharedInstance.playerData
+        
         for item in self.researchType.researchsNeeded {
-            for subItem in self.playerData.researches {
+            for subItem in playerData.researches {
                 if let researchData = subItem as? ResearchData {
                     if researchData.type == item {
                         if researchData.done == 0 {
@@ -54,8 +54,9 @@ class Research: Control {
     
     func start() -> Bool {
         
+        let playerData = MemoryCard.sharedInstance.playerData
         
-        for research in self.playerData.researches {
+        for research in playerData.researches {
             let researchData = research as! ResearchData
             if researchData.startDate != nil && researchData.done == false {
                 return false
@@ -90,14 +91,11 @@ class Research: Control {
                         let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
                         spaceshipData.addWeaponData(weaponData)
                         spaceshipData
-                        self.playerData.unlockSpaceshipData(spaceshipData)
+                        
+                        MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
                     }
                 }
             }
-            
-            
-            
-
         }
     }
     

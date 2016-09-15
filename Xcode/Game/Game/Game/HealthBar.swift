@@ -60,4 +60,9 @@ class HealthBar: Control {
         let y = 0
         self.spriteNodeFill.position = CGPoint(x: x, y: y)
     }
+    
+    override func removeFromParent() {
+        self.spriteNodeFill = nil
+        super.removeFromParent()
+    }
 }
