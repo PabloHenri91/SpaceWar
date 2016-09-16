@@ -37,7 +37,7 @@ class BattleScene: GameScene {
     static var state = states.loading
     var nextState = states.loading
     
-    let playerData = MemoryCard.sharedInstance.playerData
+    let playerData = MemoryCard.sharedInstance.playerData!
     
     var gameWorld:GameWorld!
     var gameCamera:GameCamera!
@@ -54,17 +54,17 @@ class BattleScene: GameScene {
     //MultiplayerOnline
     let serverManager = ServerManager.sharedInstance
     var lastOnlineUpdate:Double = 0
-    var emitInterval:NSTimeInterval = 1/30
+    var emitInterval:TimeInterval = 1/30
     
     var joinRoomTime:Double = 0
     var waitForPlayersTime:Double = 0
     var joinRoomTimeOut:Double = 3
     var waitForPlayersTimeOut:Double = 60
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
         
-        let connected = serverManager.socket?.status == .Connected
+        let connected = serverManager.socket?.status == SocketIOClientStatus.connected
         
         Metrics.battlesPlayed += 1
         
@@ -145,7 +145,7 @@ class BattleScene: GameScene {
     
     
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
         //Estado atual
@@ -233,7 +233,7 @@ class BattleScene: GameScene {
                                     botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
                                                                        y: botSpaceship.startingPosition.y - 150)
                                     botSpaceship.needToMove = true
-                                    botSpaceship.physicsBody?.dynamic = true
+                                    botSpaceship.physicsBody?.isDynamic = true
                                 }
                             } else {
                                 
@@ -329,13 +329,13 @@ class BattleScene: GameScene {
                 let battleXP:Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
                 let battlePoints:Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
                 
-                self.playerData.points = self.playerData.points.integerValue + battlePoints
-                self.playerData.pointsSum = self.playerData.pointsSum.integerValue + battlePoints
+                self.playerData.points = (self.playerData.points.intValue + battlePoints) as NSNumber
+                self.playerData.pointsSum = (self.playerData.pointsSum.intValue + battlePoints) as NSNumber
                 
-                self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
+                self.playerData.motherShip.xp = (self.playerData.motherShip.xp.intValue + battleXP) as NSNumber
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
-                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + battleXP.description, type: AlertBox.messageType.ok)
                     alertBox.buttonOK.addHandler({
                         self.nextState = states.mothership
                     })
@@ -345,14 +345,14 @@ class BattleScene: GameScene {
                         
                         Metrics.win()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.ok)
                         
-                        self.playerData.botUpdateInterval = self.botUpdateInterval - 1
-                        self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
-                        self.playerData.winCount = self.playerData.winCount.integerValue + 1
-                        self.playerData.winningStreakCurrent = self.playerData.winningStreakCurrent.integerValue + 1
-                        if self.playerData.winningStreakCurrent.integerValue > self.playerData.winningStreakBest.integerValue {
-                            self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.integerValue
+                        self.playerData.botUpdateInterval = (self.botUpdateInterval - 1) as NSNumber
+                        self.playerData.botLevel = (self.playerData.botLevel.intValue + 1) as NSNumber
+                        self.playerData.winCount = (self.playerData.winCount.intValue + 1) as NSNumber
+                        self.playerData.winningStreakCurrent = (self.playerData.winningStreakCurrent.intValue + 1) as NSNumber
+                        if self.playerData.winningStreakCurrent.intValue > self.playerData.winningStreakBest.intValue {
+                            self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.intValue as NSNumber
                         }
                         
                         alertBox.buttonOK.addHandler({
@@ -363,9 +363,9 @@ class BattleScene: GameScene {
                         
                         Metrics.loose()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.ok)
                         alertBox.buttonOK.addHandler({
-                            self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue + 1
+                            self.playerData.botUpdateInterval = (self.playerData.botUpdateInterval.intValue + 1) as NSNumber
                             self.playerData.winningStreakCurrent = 0
                             self.nextState = states.mothership
                         })
@@ -399,12 +399,12 @@ class BattleScene: GameScene {
                 break
             
             case .mothership:
-                self.view?.presentScene(MothershipScene(), transition: SKTransition.crossFadeWithDuration(1))
+                self.view?.presentScene(MothershipScene(), transition: SKTransition.crossFade(withDuration: 1))
                 break
                 
             case .research:
                 GameTabBar.lastState = .research
-                self.view?.presentScene(ResearchScene(), transition: SKTransition.crossFadeWithDuration(1))
+                self.view?.presentScene(ResearchScene(), transition: SKTransition.crossFade(withDuration: 1))
                 break
                 
             case .joinRoom:
@@ -444,7 +444,7 @@ class BattleScene: GameScene {
         self.updateOnline()
     }
     
-    override func touchesBegan(touches: Set<UITouch>) {
+    override func touchesBegan(_ touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
@@ -461,13 +461,13 @@ class BattleScene: GameScene {
                     
                     
                     if let parent = self.botMothership.parent {
-                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.botMothership.contains(touch.location(in: parent)) {
                             return
                         }
                     }
                     
                     if let parent = self.mothership.parent {
-                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.mothership.contains(touch.location(in: parent)) {
                             Spaceship.retreatSelectedSpaceship()
                             return
                         }
@@ -484,7 +484,7 @@ class BattleScene: GameScene {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>) {
+    override func touchesMoved(_ touches: Set<UITouch>) {
         super.touchesMoved(touches)
         
         //Estado atual
@@ -495,13 +495,13 @@ class BattleScene: GameScene {
                 case .battle, .battleOnline:
                     
                     if let parent = self.botMothership.parent {
-                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.botMothership.contains(touch.location(in: parent)) {
                             return
                         }
                     }
                     
                     if let parent = self.mothership.parent {
-                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.mothership.contains(touch.location(in: parent)) {
                             return
                         }
                     }
@@ -517,7 +517,7 @@ class BattleScene: GameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>) {
+    override func touchesEnded(_ touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -536,7 +536,7 @@ class BattleScene: GameScene {
                     }
                     
                     if let parent = self.mothership.parent {
-                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.mothership.contains(touch.location(in: parent)) {
                             if let spaceship = Spaceship.selectedSpaceship {
                                 if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
                                     Spaceship.retreatSelectedSpaceship()
@@ -547,7 +547,7 @@ class BattleScene: GameScene {
                     }
                     
                     if let parent = self.botMothership.parent {
-                        if self.botMothership.containsPoint(touch.locationInNode(parent)) {
+                        if self.botMothership.contains(touch.location(in: parent)) {
                             return
                         }
                     }
@@ -572,14 +572,14 @@ class BattleScene: GameScene {
         self.gameCamera.update()
     }
     
-    func nearestSpaceship(spaceships: [Spaceship], touch: UITouch) -> Spaceship? {
+    func nearestSpaceship(_ spaceships: [Spaceship], touch: UITouch) -> Spaceship? {
         
         var spaceshipsAtPoint = [Spaceship]()
         
         for spaceship in spaceships {
             if spaceship.health > 0 {
                 if let parent = spaceship.parent {
-                    if spaceship.containsPoint(touch.locationInNode(parent)) {
+                    if spaceship.contains(touch.location(in: parent)) {
                         spaceshipsAtPoint.append(spaceship)
                     }
                 }
@@ -592,7 +592,7 @@ class BattleScene: GameScene {
             
             if let parent = spaceship.parent {
                 
-                let touchPosition = touch.locationInNode(parent)
+                let touchPosition = touch.location(in: parent)
                 
                 if nearestSpaceship != nil {
                     

@@ -44,7 +44,7 @@ class GameTextField: Control, UITextFieldDelegate {
         self.addChild(spriteNode)
         
         self.textField = UITextField(frame: CGRect(x: 0, y: 0 , width: 150, height: 50))
-        self.textField.backgroundColor = SKColor.clearColor()
+        self.textField.backgroundColor = SKColor.clear
         //TODO: self.textField.textAlignment = .Center
         self.textField.delegate = self
         view.addSubview(self.textField)
@@ -67,15 +67,15 @@ class GameTextField: Control, UITextFieldDelegate {
         
         let scale = Display.scale
         
-        let x = self.position.x * scale
-        let y = self.position.y * scale
+        let x = self.position.x * scale!
+        let y = self.position.y * scale!
         
-        self.textField.frame = CGRect(x: x, y: -y, width: size.width * scale, height: size.height * scale)
+        self.textField.frame = CGRect(x: x, y: -y, width: size.width * scale!, height: size.height * scale!)
         
     }
     
     #if os(iOS)
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.scene?.view?.endEditing(true)
         if let text = self.textField.text {
             self.text = text

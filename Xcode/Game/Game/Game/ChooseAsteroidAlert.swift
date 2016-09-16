@@ -32,7 +32,7 @@ class ChooseAsteroidAlert:Box {
             self?.scrollNode?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: "CHOOSE ASTEROID" , fontSize: 13, x: -127, y: -220, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(color:SKColor.white ,text: "CHOOSE ASTEROID" , fontSize: 13, x: -127, y: -220, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelTitle)
         
         self.minerSpaceship = minerSpaceship
@@ -40,10 +40,10 @@ class ChooseAsteroidAlert:Box {
         let spaceshipImage = Control(textureName: "minerSpaceshipSmall", x: -127, y: -190)
         self.addChild(spaceshipImage)
         
-        let labelDescription = MultiLineLabel(text: "Mining spaceships are designed to extract precious metals from asteroids. Increase your level to be able to mine bigger asteroids!", maxWidth: 168, x: -43, y: -174, fontSize: 11, horizontalAlignmentMode: .Left)
+        let labelDescription = MultiLineLabel(text: "Mining spaceships are designed to extract precious metals from asteroids. Increase your level to be able to mine bigger asteroids!", maxWidth: 168, fontSize: 11, x: -43, y: -174, horizontalAlignmentMode: .left)
         self.addChild(labelDescription)
         
-        let labelBegin = Label(text: "START MINING" , fontSize: 12, x: -127, y: -94 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
+        let labelBegin = Label(text: "START MINING" , fontSize: 12, x: -127, y: -94 , horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelBegin)
         
         self.cropBox = CropBox(textureName: "chooseAsteroidCropBox", x: -141, y: -61, xAlign: .left, yAlign: .up)
@@ -54,12 +54,11 @@ class ChooseAsteroidAlert:Box {
         
         
         
-        self.runAction({
-            let action = SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)])
+        self.run({
+            let action = SKAction.sequence([SKAction.scale(to: 1.1, duration: 0.10), SKAction.scale(to: 1, duration: 0.10)])
             self.setScale(0)
             return action
-        }())
-        {
+        }(), completion: {
             self.controlArray = Array<Control>()
             
             for i in 0..<(self.minerSpaceship.level * 2){
@@ -75,8 +74,9 @@ class ChooseAsteroidAlert:Box {
             
             self.cropBox.addChild(self.scrollNode!)
             self.scrollNode!.alpha = 0
-            self.scrollNode!.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
-        }
+            self.scrollNode!.run(SKAction.fadeAlpha(to: 1, duration: 0.25))
+        })
+        
         
         
     }

@@ -22,18 +22,18 @@ class MissionSpaceship: Control {
     init(missionSpaceshipData:MissionSpaceshipData) {
         super.init()
         self.missionspaceshipData = missionSpaceshipData
-        self.load(missionSpaceshipData.missionType.integerValue, level: missionSpaceshipData.level.integerValue)
+        self.load(missionSpaceshipData.missionType.intValue, level: missionSpaceshipData.level.intValue)
     }
     
-    func load(type:Int, level:Int) {
+    func load(_ type:Int, level:Int) {
         self.level = level
         if type >= 0 {
             self.missionType = type
         }
     }
     
-    func speedUp(seconds:NSTimeInterval) {
-        let date = NSDate(timeInterval: seconds * -1, sinceDate: self.missionspaceshipData!.startMissionDate!)
+    func speedUp(_ seconds:TimeInterval) {
+        let date = Date(timeInterval: seconds * -1, since: self.missionspaceshipData!.startMissionDate! as Date)
         self.missionspaceshipData!.startMissionDate! = date
     }
     

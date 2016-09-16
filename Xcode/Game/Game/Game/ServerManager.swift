@@ -28,7 +28,7 @@ class ServerManager {
     
     init() {
         
-        let displayName = MemoryCard.sharedInstance.playerData.name
+        let displayName = MemoryCard.sharedInstance.playerData!.name
         self.userDisplayInfo = UserDisplayInfo(displayName: displayName)
     }
     
@@ -48,7 +48,7 @@ class ServerManager {
                 break
                 
             case "mySocketId":
-                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
+                if let mySocketId = socketAnyEvent.items?.first as? String {
                     serverManager.userDisplayInfo.socketId = mySocketId
                 }
                 break
@@ -60,14 +60,14 @@ class ServerManager {
         })
     }
     
-    func connect(completion block: () -> Void = {}) {
+    func connect(completion block: @escaping () -> Void = {}) {
         
         let startTime = GameScene.currentTime
         
         let config =  SocketIOClientConfiguration(
             arrayLiteral:
-            SocketIOClientOption.ReconnectAttempts(30),
-            SocketIOClientOption.ReconnectWait(2)
+            SocketIOClientOption.reconnectAttempts(30),
+            SocketIOClientOption.reconnectWait(2)
         )
         
         #if DEBUG
@@ -86,15 +86,15 @@ class ServerManager {
         
         
         for url in urls {
-            if let url = NSURL(string:url) {
+            if let url = URL(string:url) {
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)) { [weak self] in
+                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { [weak self] in
                     
                     guard let serverManager = self else { return }
                     
                     let socket = SocketIOClient(socketURL: url, config: config)
                     
-                    socket.on("connect", callback: { (data:[AnyObject], socketAckEmitter:SocketAckEmitter) in
+                    socket.on("connect", callback: { (data:[Any], socketAckEmitter:SocketAckEmitter) in
                         
                         if let _ = serverManager.socket {
                             print("disconnecting from: " + url.description)
@@ -112,7 +112,7 @@ class ServerManager {
                         print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                     })
                     
-                    socket.connect(timeoutAfter: 10, withTimeoutHandler: {
+                    socket.connect(timeoutAfter: 10, withHandler: {
                         print("connection timed out for: " + url.description)
                         print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                         socket.disconnect()
@@ -141,26 +141,26 @@ class ServerManager {
         self.socket?.emit("createRoom")
     }
     
-    func joinRoom(room: Room) {
+    func joinRoom(_ room: Room) {
         self.room = room
         self.room?.addPlayer(self.userDisplayInfo)
         self.socket?.emit("joinRoom", room.roomId)
     }
     
-    func addPlayer(socketAnyEvent: SocketAnyEvent) {
+    func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
         self.room?.addPlayer(socketAnyEvent)
     }
 }
 
 extension SocketIOClient {
     
-    func emit(userDisplayInfo: UserDisplayInfo) {
+    func emit(_ userDisplayInfo: UserDisplayInfo) {
         self.emit("userDisplayInfo", userDisplayInfo.displayName)
     }
     
-    func emit(mothership: Mothership) {
+    func emit(_ mothership: Mothership) {
         
-        var items = [AnyObject]()
+        var items = [Any]()
         
         items.append("mothership")
         items.append(mothership.level)

@@ -45,8 +45,8 @@ class ResearchScene: GameScene {
     var playerDataCard:PlayerDataCard!
     var gameTabBar:GameTabBar!
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
         
         let actionDuration = 0.25
         
@@ -59,7 +59,7 @@ class ResearchScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(self)
+                node.moveToParent(parent: self)
             }
             break
         }
@@ -68,35 +68,35 @@ class ResearchScene: GameScene {
         
         self.header0.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-            y: 67, size: CGSize(width: self.size.width,
-                height: 56)))
+            size: CGSize(width: self.size.width,
+                height: 56), y: 67))
         self.header0.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-            y: 123, size: CGSize(width: self.size.width,
-                height: 3)))
+            size: CGSize(width: self.size.width,
+                height: 3), y: 123))
         self.label0 = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "label0", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
         
         self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-            y: 226, size: CGSize(width: self.size.width,
-                height: 3)))
+            size: CGSize(width: self.size.width,
+                height: 3), y: 226))
         self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-            y: 229, size: CGSize(width: self.size.width,
-                height: 56)))
+            size: CGSize(width: self.size.width,
+                height: 56), y: 229))
         self.header1.append(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-            y: 285, size: CGSize(width: self.size.width,
-                height: 3)))
+            size: CGSize(width: self.size.width,
+                height: 3), y: 285))
         self.label1 = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "label1", fontSize: 14, x: 160, y: 257, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
         
         self.auxHeader = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 201/255, green: 207/255, blue: 213/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-                                  y: 123, size: CGSize(width: self.size.width,
-                                    height: 162))
+                                  size: CGSize(width: self.size.width,
+                                    height: 162), y: 123)
         self.addChild(self.auxHeader)
         self.auxHeader.zPosition = -1
-        self.auxHeader.hidden = true
+        self.auxHeader.isHidden = true
         
         
         for control in self.header0 {
@@ -118,12 +118,12 @@ class ResearchScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
             }
             break
         }
         
-        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.run({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }
@@ -153,7 +153,7 @@ class ResearchScene: GameScene {
         self.playerDataCard.updatePoints()
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -183,7 +183,7 @@ class ResearchScene: GameScene {
             switch (self.nextState) {
                 
             case .research:
-                self.blackSpriteNode.hidden = true
+                self.blackSpriteNode.isHidden = true
                 self.scrollNode?.canScroll = true
                 self.gameStore?.removeFromParent()
                 break
@@ -233,7 +233,7 @@ class ResearchScene: GameScene {
 
         var researchCards = Array<ResearchCard>()
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         for item in playerData.researches {
             if let researchData = item as? ResearchData {
@@ -259,9 +259,9 @@ class ResearchScene: GameScene {
         if self.currentResearchCard != nil {
             
             for control in self.header1 {
-                control.hidden = false
+                control.isHidden = false
             }
-            self.label1.hidden = false
+            self.label1.isHidden = false
             
             self.label0.setText("RESEARCH IN PROGRESS")
             
@@ -269,19 +269,19 @@ class ResearchScene: GameScene {
                 self.label1.setText("AVAILABLE RESEARCHES")
             } else {
                 for control in self.header1 {
-                    control.hidden = true
+                    control.isHidden = true
                 }
-                self.label1.hidden = true
+                self.label1.isHidden = true
             }
             
-            self.auxHeader.hidden = false
+            self.auxHeader.isHidden = false
             
         } else {
             
             for control in self.header1 {
-                control.hidden = true
+                control.isHidden = true
             }
-            self.label1.hidden = true
+            self.label1.isHidden = true
             
             if researchCards.count > 0 {
                 self.label0.setText("AVAILABLE RESEARCHES")
@@ -289,7 +289,7 @@ class ResearchScene: GameScene {
                 self.label0.setText("NO AVAILABLE RESEARCHES")
             }
             
-            self.auxHeader.hidden = true
+            self.auxHeader.isHidden = true
         }
         
         if researchCards.count > 0 {
@@ -326,17 +326,17 @@ class ResearchScene: GameScene {
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>) {
+    override func touchesBegan(_ touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.locationInNode(self)
+                let point = touch.location(in: self)
                 switch (self.state) {
                 case .research:
-                    if self.playerDataCard.containsPoint(point) {
-                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                    if self.playerDataCard.contains(point) {
+                        if self.playerDataCard.buttonStore.contains(touch.location(in: self.playerDataCard)) {
                             self.gameStore = GameStore()
                             self.addChild(self.gameStore!)
                             return
@@ -351,7 +351,7 @@ class ResearchScene: GameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>) {
+    override func touchesEnded(_ touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -374,7 +374,7 @@ class ResearchScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.locationInNode(self)
+                let point = touch.location(in: self)
                 switch (self.state) {
                 case .research:
                     
@@ -382,27 +382,27 @@ class ResearchScene: GameScene {
                         return
                     }
                     
-                    if self.playerDataCard.containsPoint(point) {
+                    if self.playerDataCard.contains(point) {
                         return
                     }
                     
-                    if self.gameTabBar.containsPoint(point) {
-                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if self.gameTabBar.contains(point) {
+                        if(self.gameTabBar.buttonMission.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.mission
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMothership.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.mothership
                             return
                         }
                         
-                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonHangar.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.hangar
                             return
                         }
                         
-                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonFactory.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.factory
                             return
                         }
@@ -411,14 +411,14 @@ class ResearchScene: GameScene {
                     
                     if let researchCard = self.currentResearchCard {
                         if let buttonSpeedup = researchCard.buttonSpeedUp {
-                            if(buttonSpeedup.containsPoint(touch.locationInNode(researchCard))) {
+                            if(buttonSpeedup.contains(touch.location(in: researchCard))) {
                                 // TODO:buttonSpeedup.containsPoint
                                 return
                             }
                         }
                         
                         if let buttonCollect = researchCard.buttonCollect {
-                            if(buttonCollect.containsPoint(touch.locationInNode(researchCard))) {
+                            if(buttonCollect.contains(touch.location(in: researchCard))) {
                                 
                                 
                                 researchCard.research.collect()
@@ -426,12 +426,12 @@ class ResearchScene: GameScene {
                                 self.updateResearchs()
                                 
                                 if let spaceship = researchCard.spaceship {
-                                    self.blackSpriteNode.hidden = false
+                                    self.blackSpriteNode.isHidden = false
                                     self.blackSpriteNode.zPosition = 10000
                                     
                                     self.scrollNode?.canScroll = false
                                     
-                                    if researchCard.research.researchData!.spaceshipLevel.integerValue > 10 {
+                                    if researchCard.research.researchData!.spaceshipLevel.intValue > 10 {
                                         
                                         let detailsAlert = ResearchUpgradeSpaceshipAlert(research: researchCard.research)
                                         detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
@@ -478,20 +478,20 @@ class ResearchScene: GameScene {
                     
                     if let scrollNode = self.scrollNode {
                         
-                        if scrollNode.containsPoint(point) {
+                        if scrollNode.contains(point) {
                             
                             for item in scrollNode.cells {
                                 
-                                if item.containsPoint(touch.locationInNode(scrollNode)) {
+                                if item.contains(touch.location(in: scrollNode)) {
                                     
                                     if let researchCard = item as? ResearchCard {
                                         
                                         if let buttonBegin = researchCard.buttonBegin {
-                                            if(buttonBegin.containsPoint(touch.locationInNode(researchCard))) {
+                                            if(buttonBegin.contains(touch.location(in: researchCard))) {
                                                 if researchCard.research.start() {
                                                     self.updateResearchs()
                                                 } else {
-                                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.ok)
                                                     self.addChild(alertBox)
                                                 }
                                                 return
@@ -508,7 +508,7 @@ class ResearchScene: GameScene {
                     
                 case .alert:
                     if let gameStore = self.gameStore {
-                        if gameStore.containsPoint(point) {
+                        if gameStore.contains(point) {
                             gameStore.touchEnded(touch)
                         }
                     }

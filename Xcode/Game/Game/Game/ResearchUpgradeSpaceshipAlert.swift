@@ -61,11 +61,11 @@ class ResearchUpgradeSpaceshipAlert:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: spaceship.type.name.uppercaseString + " + " + spaceship.weapon!.type.name.uppercaseString , fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(color:SKColor.white ,text: spaceship.type.name.uppercased() + " + " + spaceship.weapon!.type.name.uppercased() , fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelTitle)
         
         
-        let labelRarity = Label(color:rarityColor ,text: spaceship.type.rarity.rawValue.uppercaseString , fontSize: 11, x: 47, y: 22, horizontalAlignmentMode: .Center, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        let labelRarity = Label(color:rarityColor ,text: spaceship.type.rarity.rawValue.uppercased() , fontSize: 11, x: 47, y: 22, horizontalAlignmentMode: .center, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(labelRarity)
         
         var spaceshipImage:Spaceship!
@@ -83,26 +83,26 @@ class ResearchUpgradeSpaceshipAlert:Box {
         spaceshipImage.resetPosition()
         spaceshipImage.setScale(1.8)
         
-        let labelUnlocked = MultiLineLabel(text: "You unlocked more levels to upgrade your ship!", maxWidth: 165, x: 96, y: 68, fontName: GameFonts.fontName.museo1000, fontSize: 11, horizontalAlignmentMode: .Left)
+        let labelUnlocked = MultiLineLabel(text: "You unlocked more levels to upgrade your ship!", maxWidth: 165, fontSize: 11, x: 96, y: 68, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         self.addChild(labelUnlocked)
         
-        let labelHangar = MultiLineLabel(text: "Go to hangar to upgrade this ship!", maxWidth: 165, x: 96, y: 97, fontName: GameFonts.fontName.museo500, fontSize: 11, horizontalAlignmentMode: .Left)
+        let labelHangar = MultiLineLabel(text: "Go to hangar to upgrade this ship!", maxWidth: 165, fontSize: 11, x: 96, y: 97, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         self.addChild(labelHangar)
         
-        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "NEW MAX LEVEL", fontSize: 12, x: 15, y: 166, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "NEW MAX LEVEL", fontSize: 12, x: 15, y: 166, horizontalAlignmentMode: .left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         
         let levelUpIcon = Control(textureName: "levelUpIcon", x: 18, y: 184)
         self.addChild(levelUpIcon)
         
         
-        let maxLevel = research.researchData!.spaceshipLevel.integerValue - 10
+        let maxLevel = research.researchData!.spaceshipLevel.intValue - 10
         
-        let labelMaxLevel = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MAX LEVEL: " + maxLevel.description , fontSize: 12, x: 35, y: 190, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        let labelMaxLevel = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MAX LEVEL: " + maxLevel.description , fontSize: 12, x: 35, y: 190, horizontalAlignmentMode: .left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
         
         self.addChild(labelMaxLevel)
         
-        let labelLevelUp = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 1), text: " + 10" , fontSize: 12, x: Int(labelMaxLevel.position.x + labelMaxLevel.calculateAccumulatedFrame().width) , y: 190, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
+        let labelLevelUp = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 1), text: " + 10" , fontSize: 12, x: Int(labelMaxLevel.position.x + labelMaxLevel.calculateAccumulatedFrame().width) , y: 190, horizontalAlignmentMode: .left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
         
         self.addChild(labelLevelUp)
         
@@ -111,7 +111,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
         let fontShadowOffset = CGPoint(x: 0, y: -2)
         let fontName = GameFonts.fontName.museo1000
         
-        self.buttonGoToHangar = Button(textureName: "buttonDarkBlue131x30", text: "GO TO HANGAR", fontSize: 11, x: 76, y: 246, fontColor: SKColor.whiteColor(), fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+        self.buttonGoToHangar = Button(textureName: "buttonDarkBlue131x30", text: "GO TO HANGAR", fontSize: 11, x: 76, y: 246, fontColor: SKColor.white, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
         self.addChild(self.buttonGoToHangar)
         
         

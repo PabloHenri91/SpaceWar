@@ -14,7 +14,7 @@ import CoreData
 class MissionSpaceshipData: NSManagedObject {
     
     @NSManaged var level: NSNumber
-    @NSManaged var startMissionDate: NSDate?
+    @NSManaged var startMissionDate: Date?
     @NSManaged var missionType: NSNumber
     
     @NSManaged var parentPlayer: PlayerData?
@@ -27,9 +27,9 @@ extension MemoryCard {
     
     func newMissionSpaceshipData() -> MissionSpaceshipData {
         
-        let missionSpaceshipData = NSEntityDescription.insertNewObjectForEntityForName("MissionSpaceshipData", inManagedObjectContext: self.managedObjectContext) as! MissionSpaceshipData
+        let missionSpaceshipData = NSEntityDescription.insertNewObject(forEntityName: "MissionSpaceshipData", into: self.managedObjectContext) as! MissionSpaceshipData
         missionSpaceshipData.level = 1
-        missionSpaceshipData.missionType = NSNumber(integer: -1)
+        missionSpaceshipData.missionType = -1
 
         return missionSpaceshipData
     }

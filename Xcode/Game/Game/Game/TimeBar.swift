@@ -25,7 +25,7 @@ class TimeBar: CropBox {
         let texture = SKTexture(imageNamed: textureName)
         self.greenBarMaxWidth = texture.size().width + 4
         
-        var color = SKColor.clearColor()
+        var color = SKColor.clear
         
         switch type {
         case  .missionSpaceshipTimer:
@@ -50,7 +50,7 @@ class TimeBar: CropBox {
         }
         
         if loadLabel {
-            self.labelDescription = Label(text: "teste" , fontSize: 11, x: Int(texture.size().width / 2), y: Int(texture.size().height / 2), shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelDescription = Label(text: "teste" , fontSize: 11, x: Int(texture.size().width / 2), y: Int(texture.size().height / 2), fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelDescription!)
         }
     }
@@ -60,14 +60,14 @@ class TimeBar: CropBox {
     }
     
     
-    func update(missionShip:MissionSpaceship) {
+    func update(_ missionShip:MissionSpaceship) {
         let startDate = missionShip.missionspaceshipData!.startMissionDate
-        let mission = MissionSpaceship.types[Int(missionShip.missionspaceshipData!.missionType.intValue)]
+        let mission = MissionSpaceship.types[Int(missionShip.missionspaceshipData!.missionType.int32Value)]
         let duration = mission.duration
-        self.update(startDate: startDate!, duration: duration)
+        self.update(startDate: startDate! as Date, duration: duration)
     }
     
-    func update(startDate startDate:NSDate, duration:Int) {
+    func update(startDate:Date, duration:Int) {
         
         let progress = (startDate.timeIntervalSinceNow * -1) + 1
 
@@ -79,15 +79,15 @@ class TimeBar: CropBox {
                 width = 0
             }
             
-            let action = SKAction.resizeToWidth(width, height: height, duration: 1)
-            self.greenBar.runAction(action)
+            let action = SKAction.resize(toWidth: width, height: height, duration: 1)
+            self.greenBar.run(action)
             
             self.labelDescription?.setText(GameMath.timeFormated(duration - Int(progress)))
         } else {
             
             if self.greenBar.size.width < self.greenBarMaxWidth {
-                let action = SKAction.resizeToWidth(self.greenBarMaxWidth, height: self.greenBar.size.height, duration: 1)
-                self.greenBar.runAction(action)
+                let action = SKAction.resize(toWidth: self.greenBarMaxWidth, height: self.greenBar.size.height, duration: 1)
+                self.greenBar.run(action)
             }
             
             self.labelDescription?.setText("FINISHED")

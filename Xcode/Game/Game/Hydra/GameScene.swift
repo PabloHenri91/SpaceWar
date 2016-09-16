@@ -28,9 +28,9 @@ class GameScene: SKScene {
     
     static var nextButton:Button?
     
-    static var currentTime:NSTimeInterval = 0
+    static var currentTime:TimeInterval = 0
     
-    static var transition = SKTransition.crossFadeWithDuration(0)
+    static var transition = SKTransition.crossFade(withDuration: 0)
     
     var blackSpriteNode:BlackSpriteNode!
     
@@ -75,9 +75,9 @@ class GameScene: SKScene {
         //TODO: Class.classSet = Set<Class>()
     }
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
-        self.scaleMode = SKSceneScaleMode.AspectFit
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        self.scaleMode = SKSceneScaleMode.aspectFit
         self.anchorPoint = CGPoint(x: 0, y: 1)
         Control.gameScene = self
         
@@ -88,7 +88,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         GameScene.currentTime = currentTime
         ScrollNode.update()
     }
@@ -116,19 +116,19 @@ class GameScene: SKScene {
     }
     
      #if os(iOS) || os(tvOS)
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         Control.touchesBegan(touches, self)
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         Control.touchesMoved(touches, self)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         Control.touchesEnded(touches, self)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         Control.touchesCancelled(self)
     }
     #endif
@@ -175,13 +175,13 @@ class GameScene: SKScene {
 
 #if os(iOS) || os(tvOS)
     public extension UIResponder {
-        func touchesBegan(touches: Set<UITouch>) {
+        func touchesBegan(_ touches: Set<UITouch>) {
             
         }
-        func touchesMoved(touches: Set<UITouch>) {
+        func touchesMoved(_ touches: Set<UITouch>) {
             
         }
-        func touchesEnded(touches: Set<UITouch>) {
+        func touchesEnded(_ touches: Set<UITouch>) {
             
         }
         func touchesCancelled() {

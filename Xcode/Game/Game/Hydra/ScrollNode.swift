@@ -71,7 +71,7 @@ class ScrollNode: Control {
                 
                 control.resetPosition()
                 
-                control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
+                control.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 10, height: 10))
                 control.physicsBody?.affectedByGravity = false
                 control.physicsBody?.categoryBitMask = 0
                 control.physicsBody?.collisionBitMask = 0
@@ -112,7 +112,7 @@ class ScrollNode: Control {
                 var containsPoins = false
                 
                 for touch in Control.touchesArray {
-                    if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
+                    if scrollNode.contains(touch.0.location(in: scrollNode.parent!)) {
                         containsPoins = true
                         break
                     }
@@ -228,7 +228,7 @@ class ScrollNode: Control {
                     if(canMove) {
                         
                         for touch in Control.touchesArray {
-                            if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
+                            if scrollNode.contains(touch.0.location(in: scrollNode.parent!)) {
                                 for cell in scrollNode.cells {
                                     let position = cell.position
                                     cell.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
@@ -258,7 +258,7 @@ class ScrollNode: Control {
                         }
                         
                         if(canMove) {
-                            if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
+                            if scrollNode.contains(touch.0.location(in: scrollNode.parent!)) {
                                 
                                 for cell in scrollNode.cells {
                                     let position = cell.position
@@ -287,7 +287,7 @@ class ScrollNode: Control {
                 case scrollDirections.horizontal:
                     
                     for touch in Control.touchesArray {
-                        if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
+                        if scrollNode.contains(touch.0.location(in: scrollNode.parent!)) {
                             
                             for cell in scrollNode.cells {
                                 let position = cell.position
@@ -301,7 +301,7 @@ class ScrollNode: Control {
                 case scrollDirections.vertical:
                     
                     for touch in Control.touchesArray {
-                        if scrollNode.containsPoint(touch.0.locationInNode(scrollNode.parent!)) {
+                        if scrollNode.contains(touch.0.location(in: scrollNode.parent!)) {
                             
                             for cell in scrollNode.cells {
                                 let position = cell.position

@@ -10,7 +10,7 @@ import SpriteKit
 
 class FactoryScene: GameScene {
     
-    let playerData = MemoryCard.sharedInstance.playerData
+    let playerData = MemoryCard.sharedInstance.playerData!
     
     var scrollNode:ScrollNode!
     
@@ -41,8 +41,8 @@ class FactoryScene: GameScene {
     
     var gameStore: GameStore?
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
         
         let actionDuration = 0.25
         
@@ -51,7 +51,7 @@ class FactoryScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(self)
+                node.moveToParent(parent: self)
             }
             break
         case .factory:
@@ -60,7 +60,7 @@ class FactoryScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(self)
+                node.moveToParent(parent: self)
             }
             break
         }
@@ -71,9 +71,9 @@ class FactoryScene: GameScene {
         
         for item in self.playerData.unlockedSpaceships {
             if let spaceshipData = item as? SpaceshipData {
-                let spaceship = Spaceship(type: spaceshipData.type.integerValue, level: 1)
+                let spaceship = Spaceship(type: spaceshipData.type.intValue, level: 1)
                 if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-                    let weapon = Weapon(type: weaponData.type.integerValue, level: 1, loadSoundEffects: false)
+                    let weapon = Weapon(type: weaponData.type.intValue, level: 1, loadSoundEffects: false)
                     spaceship.addWeapon(weapon)
                 }
                 
@@ -81,7 +81,7 @@ class FactoryScene: GameScene {
             }
         }
         
-        cells.sortInPlace { (factorySpaceshipCard0, factorySpaceshipCard1) -> Bool in
+        cells.sort { (factorySpaceshipCard0, factorySpaceshipCard1) -> Bool in
             return factorySpaceshipCard0.typeCount < factorySpaceshipCard1.typeCount
         }
     
@@ -93,13 +93,13 @@ class FactoryScene: GameScene {
         
         self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-                                      y: 67, size: CGSize(width: self.size.width,
-                                        height: 56))
+                                      size: CGSize(width: self.size.width,
+                                        height: 56), y: 67)
         self.addChild(self.headerControl)
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-            y: 123, size: CGSize(width: self.size.width,
-                height: 3)))
+                               size: CGSize(width: self.size.width,
+                                            height: 3), y: 123))
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "FACTORY", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         
@@ -108,7 +108,7 @@ class FactoryScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
             }
             break
         case .factory:
@@ -117,12 +117,12 @@ class FactoryScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
             }
             break
         }
         
-        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.run({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }
@@ -152,7 +152,7 @@ class FactoryScene: GameScene {
         self.playerDataCard.updatePoints()
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -201,7 +201,7 @@ class FactoryScene: GameScene {
                 break
                 
             case .factory:
-                self.blackSpriteNode.hidden = true
+                self.blackSpriteNode.isHidden = true
                 self.gameStore?.removeFromParent()
                 self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.buySpaceshipAlert?.removeFromParent()
@@ -216,7 +216,7 @@ class FactoryScene: GameScene {
                 break
                 
             case .buySpaceship:
-                self.blackSpriteNode.hidden = false
+                self.blackSpriteNode.isHidden = false
                 self.blackSpriteNode.zPosition = 10000
                 
                 self.buySpaceshipAlert?.zPosition = self.blackSpriteNode.zPosition + 1
@@ -233,17 +233,17 @@ class FactoryScene: GameScene {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>) {
+    override func touchesBegan(_ touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.locationInNode(self)
+                let point = touch.location(in: self)
                 switch (self.state) {
                 case .factory:
-                    if self.playerDataCard.containsPoint(point) {
-                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
+                    if self.playerDataCard.contains(point) {
+                        if self.playerDataCard.buttonStore.contains(touch.location(in: self.playerDataCard)) {
                             self.gameStore = GameStore()
                             self.addChild(self.gameStore!)
                             return
@@ -258,7 +258,7 @@ class FactoryScene: GameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>) {
+    override func touchesEnded(_ touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -281,12 +281,12 @@ class FactoryScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.locationInNode(self)
+                let point = touch.location(in: self)
                 switch (self.state) {
                     
                 case .buySpaceship:
                     if let buySpaceshipAlert = self.buySpaceshipAlert {
-                        if buySpaceshipAlert.buttonBuy.containsPoint(touch.locationInNode(buySpaceshipAlert)){
+                        if buySpaceshipAlert.buttonBuy.contains(touch.location(in: buySpaceshipAlert)){
                             buySpaceshipAlert.buySpaceship()
                             self.playerDataCard.updatePoints()
                             self.nextState = .factory
@@ -301,48 +301,48 @@ class FactoryScene: GameScene {
                         return
                     }
                     
-                    if self.headerControl.containsPoint(point) {
+                    if self.headerControl.contains(point) {
                         return
                     }
                     
-                    if self.playerDataCard.containsPoint(point) {
+                    if self.playerDataCard.contains(point) {
                         return
                     }
                     
-                    if self.gameTabBar.containsPoint(point) {
-                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                    if self.gameTabBar.contains(point) {
+                        if(self.gameTabBar.buttonResearch.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.research
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMission.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.mission
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMothership.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.mothership
                             return
                         }
                         
-                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
+                        if(self.gameTabBar.buttonHangar.contains(touch.location(in: self.gameTabBar))) {
                             self.nextState = states.hangar
                             return
                         }
                         return
                     }
                     
-                    if self.scrollNode.containsPoint(point) {
+                    if self.scrollNode.contains(point) {
                         
                         for cell in self.scrollNode.cells {
                             
-                            if cell.containsPoint(touch.locationInNode(self.scrollNode)) {
+                            if cell.contains(touch.location(in: self.scrollNode)) {
                                 
                                 if let factorySpaceshipCard = cell as? FactorySpaceshipCard {
                                     
-                                    if factorySpaceshipCard.buttonBuy.containsPoint(touch.locationInNode(factorySpaceshipCard)) {
+                                    if factorySpaceshipCard.buttonBuy.contains(touch.location(in: factorySpaceshipCard)) {
                                         
-                                        if self.playerData.points.integerValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type) {
+                                        if self.playerData.points.intValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type) {
                                             
                                             self.buySpaceshipAlert = BuySpaceshipAlert(spaceship: factorySpaceshipCard.spaceship, count: factorySpaceshipCard.typeCount)
                                             self.buySpaceshipAlert?.buttonBuy.addHandler({
@@ -352,7 +352,7 @@ class FactoryScene: GameScene {
                                             
                                         } else {
                                             
-                                            let alertBox = AlertBox(title: "Alert!", text: "Insuficient funds.", type: .OK)
+                                            let alertBox = AlertBox(title: "Alert!", text: "Insuficient funds.", type: .ok)
                                             self.addChild(alertBox)
                                             alertBox.buttonOK.addHandler {
                                                 self.nextState = .factory
@@ -369,7 +369,7 @@ class FactoryScene: GameScene {
                     
                 case .alert:
                     if let gameStore = self.gameStore {
-                        if gameStore.containsPoint(point) {
+                        if gameStore.contains(point) {
                             gameStore.touchEnded(touch)
                         }
                     }

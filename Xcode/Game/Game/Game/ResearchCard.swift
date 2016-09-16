@@ -14,7 +14,7 @@ class ResearchCard: Control {
     
     var labelTimeLeft: Label!
     var needUpdate = true
-    var lastUpdate: NSTimeInterval = 0
+    var lastUpdate: TimeInterval = 0
     
     var buttonBegin: Button?
     var buttonSpeedUp: Button?
@@ -67,7 +67,7 @@ class ResearchCard: Control {
             self.addChild(spaceship)
         }
     
-        let fontColor = SKColor.whiteColor()
+        let fontColor = SKColor.white
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
@@ -76,7 +76,7 @@ class ResearchCard: Control {
    
         let researchType = self.research.researchType
         
-        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: researchType.name, fontSize: 12, x: 76, y: 22, fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: (researchType?.name)!, fontSize: 12, x: 76, y: 22, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         self.timeBar = TimeBar(textureName: "timeBarResearchCard", x: 78, y: 31, loadLabel: false, type: TimeBar.types.researchTimer, loadBorder: false)
         self.addChild(self.timeBar!.cropNode)
@@ -89,13 +89,13 @@ class ResearchCard: Control {
             
             self.timeBar.update(startDate: startDate, duration: self.research.researchType.duration)
             
-            let timeLeft = GameMath.timeLeft(startDate: self.research.researchData!.startDate!, duration: researchType.duration)
+            let timeLeft = GameMath.timeLeft(startDate: self.research.researchData!.startDate!, duration: (researchType?.duration)!)
             
             if timeLeft > 0 {
                 
                 self.buttonSpeedUp = Button(textureName: "buttonGreen89x22", text: "SPEED UP", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
                 self.addChild(self.buttonSpeedUp!)
-                self.buttonSpeedUp?.hidden = true
+                self.buttonSpeedUp?.isHidden = true
                 
                 self.labelTimeLeft.setText(GameMath.timeFormated(timeLeft))
                 
@@ -122,7 +122,7 @@ class ResearchCard: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(currentTime: NSTimeInterval) {
+    func update(_ currentTime: TimeInterval) {
         
         if currentTime - self.lastUpdate > 1 {
             self.lastUpdate = currentTime
@@ -154,7 +154,7 @@ class ResearchCard: Control {
                             self.buttonCollect = nil
                         }
                         
-                        let fontColor = SKColor.whiteColor()
+                        let fontColor = SKColor.white
                         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
                         let fontShadowOffset = CGPoint(x: 0, y: -1)
                         let fontName = GameFonts.fontName.museo1000

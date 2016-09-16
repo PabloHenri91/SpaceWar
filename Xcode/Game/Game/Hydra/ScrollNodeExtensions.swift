@@ -10,7 +10,7 @@ import SpriteKit
 
 extension ScrollNode {
 
-    func append(control:Control) {
+    func append(_ control:Control) {
         
         let size = control.calculateAccumulatedFrame().size
         self.width = Int(size.width)
@@ -31,7 +31,7 @@ extension ScrollNode {
             break
         }
         
-        control.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 10, height: 10))
+        control.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 10, height: 10))
         control.physicsBody?.affectedByGravity = false
         control.physicsBody?.categoryBitMask = 0
         control.physicsBody?.linearDamping = 4

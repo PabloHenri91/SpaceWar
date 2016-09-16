@@ -12,7 +12,7 @@ import CoreData
 
 class SpaceshipData: NSManagedObject {
 
-    @NSManaged var crashDate: NSDate
+    @NSManaged var crashDate: Date
     @NSManaged var killCount: NSNumber
     @NSManaged var level: NSNumber
     @NSManaged var type: NSNumber
@@ -29,14 +29,14 @@ extension MemoryCard {
         return self.newSpaceshipData(type: Int.random(Spaceship.types.count))
     }
     
-    func newSpaceshipData(type type:Int) -> SpaceshipData {
+    func newSpaceshipData(type:Int) -> SpaceshipData {
         
-        let spaceshipData = NSEntityDescription.insertNewObjectForEntityForName("SpaceshipData", inManagedObjectContext: self.managedObjectContext) as! SpaceshipData
+        let spaceshipData = NSEntityDescription.insertNewObject(forEntityName: "SpaceshipData", into: self.managedObjectContext) as! SpaceshipData
         
-        spaceshipData.crashDate = NSDate(timeInterval: -7200, sinceDate: NSDate())
+        spaceshipData.crashDate = Date(timeInterval: -7200, since: Date())
         spaceshipData.killCount = 0
         spaceshipData.level = 1
-        spaceshipData.type = type
+        spaceshipData.type = type as NSNumber
         spaceshipData.xp = 0
         
         spaceshipData.weapons = NSSet()
@@ -47,14 +47,14 @@ extension MemoryCard {
 
 extension SpaceshipData {
     
-    func addWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
-        items.addObject(value)
+    func addWeaponData(_ value: WeaponData) {
+        let items = self.mutableSetValue(forKey: "weapons")
+        items.add(value)
     }
     
-    func removeWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
-        items.removeObject(value)
+    func removeWeaponData(_ value: WeaponData) {
+        let items = self.mutableSetValue(forKey: "weapons")
+        items.remove(value)
     }
     
 }

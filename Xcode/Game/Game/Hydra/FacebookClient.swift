@@ -18,14 +18,14 @@ class FacebookClient {
     
     static let sharedInstance = FacebookClient()
     
-    let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
+    let friends = MemoryCard.sharedInstance.playerData!.invitedFriends as! Set<FriendData>
     
     let facebookReadPermissions = ["public_profile", "email", "user_friends"]
     //Some other options: "user_about_me", "user_birthday", "user_hometown", "user_likes", "user_interests", "user_photos", "friends_photos", "friends_hometown", "friends_location", "friends_education_history"
     
-    func loginToFacebookWithSuccess( successBlock: () -> (), andFailure failureBlock: (NSError?) -> ()) {
+    func loginToFacebookWithSuccess( _ successBlock: @escaping () -> (), andFailure failureBlock: @escaping (NSError?) -> ()) {
         
-        if FBSDKAccessToken.currentAccessToken() != nil {
+        if FBSDKAccessToken.current() != nil {
             //For debugging, when we want to ensure that facebook login always happens
             //FBSDKLoginManager().logOut()
             //Otherwise do:
@@ -33,7 +33,8 @@ class FacebookClient {
             return
         }
         
-        FBSDKLoginManager().logInWithReadPermissions(facebookReadPermissions, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+        FBSDKLoginManager().logIn(withReadPermissions: facebookReadPermissions) { (result: FBSDKLoginManagerLoginResult?, error: Error?) in
+    
             if error != nil {
                 //According to Facebook:
                 //Errors will rarely occur in the typical login flow because the login dialog
@@ -41,8 +42,8 @@ class FacebookClient {
                 
                 // Process error
                 FBSDKLoginManager().logOut()
-                failureBlock(error)
-            } else if result.isCancelled {
+                failureBlock(error as NSError?)
+            } else if (result?.isCancelled)! {
                 // Handle cancellations
                 FBSDKLoginManager().logOut()
                 failureBlock(nil)
@@ -52,7 +53,7 @@ class FacebookClient {
                 var allPermsGranted = true
                 
                 //result.grantedPermissions returns an array of _NSCFString pointers
-                let grantedPermissions = Array(result.grantedPermissions).map( {"\($0)"} )
+                let grantedPermissions = Array(result!.grantedPermissions).map( {"\($0)"} )
                 for permission in self.facebookReadPermissions {
                     if !grantedPermissions.contains(permission) {
                         allPermsGranted = false
@@ -81,29 +82,32 @@ class FacebookClient {
                     failureBlock(nil)
                 }
             }
-        })
+        }
         
         
     }
     
-    func listGameFriends(returnFunction: (Array<NSDictionary>, NSError?) -> Void) {
+    func listGameFriends(_ returnFunction: @escaping ([AnyHashable: Any], Error?) -> Void) {
         
-        let params: NSMutableDictionary = ["fields": "picture,name" ]
-        var friendArray = Array<NSDictionary>()
+        let params: [String : String] = ["fields": "picture,name" ]
+        var friendArray = [AnyHashable: Any]()
         
         loginToFacebookWithSuccess({
-            let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: params as [NSObject : AnyObject], HTTPMethod: "GET")
+            let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: params, httpMethod: "GET")
             
-            request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
+            request.start(completionHandler: { (graphRequestConnection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) in
                 if result != nil && error == nil {
                     //print(result)
-                    friendArray = result.objectForKey("data") as! Array<NSDictionary>
+                    
+                    var result = result as! [AnyHashable: Any]
+                    
+                    friendArray = result.removeValue(forKey: "data") as! [AnyHashable: Any]
+                    
                     returnFunction(friendArray, nil)
                     
                 } else if error != nil {
                     returnFunction(friendArray, error)
                 }
-                
             })
             
         }) { (error) in
@@ -111,19 +115,22 @@ class FacebookClient {
         }
     }
     
-    func listInvitablesFriends(returnFunction: (Array<NSDictionary>, NSError?) -> Void) {
+    func listInvitablesFriends(_ returnFunction: @escaping ([AnyHashable: Any], Error?) -> Void) {
         
-        let params: NSMutableDictionary = ["fields": "picture,name" ]
-        var friendArray = Array<NSDictionary>()
+        let params = ["fields": "picture,name" ]
+        var friendArray = [AnyHashable: Any]()
         
         loginToFacebookWithSuccess({
-            let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/invitable_friends?limit=1000", parameters: params as [NSObject : AnyObject], HTTPMethod: "GET")
+            let request: FBSDKGraphRequest = FBSDKGraphRequest.init(graphPath: "me/invitable_friends?limit=1000", parameters: params as [AnyHashable: Any], httpMethod: "GET")
             
-            request.startWithCompletionHandler({ (FBSDKGraphRequestConnection, result, error) -> Void in
+            request.start(completionHandler: { (FBSDKGraphRequestConnection, result, error) -> Void in
                 if result != nil && error == nil {
                     
-                    //print(result)
-                    friendArray = result.objectForKey("data") as! Array<NSDictionary>
+                    
+                    var result = result as! [AnyHashable: Any]
+                    
+                    friendArray = result.removeValue(forKey: "data") as! [AnyHashable: Any]
+                    
                     returnFunction(friendArray, nil)
                     
                 } else if error != nil {

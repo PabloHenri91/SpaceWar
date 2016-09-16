@@ -44,7 +44,7 @@ class Shot: Control {
         
         self.addChild(spriteNode)
         
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: spriteNode.size)
+        self.physicsBody = SKPhysicsBody(rectangleOf: spriteNode.size)
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceshipShot.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceshipShot
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.spaceshipShot
@@ -58,9 +58,9 @@ class Shot: Control {
         self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 500 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 500  + shooterPhysicsBody.velocity.dy)
         
         
-        self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
+        self.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak self] in
             self?.removeFromParent()
-        }
+        }) 
         
          Shot.shotSet.insert(self)
     }
@@ -94,13 +94,13 @@ class Shot: Control {
         
         if self.damage > 0 {
             for spaceship in Spaceship.spaceshipList {
-                if self.intersectsNode(spaceship) {
+                if self.intersects(spaceship) {
                     spaceship.getShot(self, contact: nil)
                 }
             }
             
             for mothership in Mothership.mothershipList {
-                if self.intersectsNode(mothership) {
+                if self.intersects(mothership) {
                     mothership.getShot(self, contact: nil)
                 }
             }

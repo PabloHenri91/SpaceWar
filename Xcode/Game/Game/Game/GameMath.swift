@@ -12,7 +12,7 @@ class GameMath {
     
     
     //Boosts
-    static func applyXPBoosts(xp: Int) -> Int {
+    static func applyXPBoosts(_ xp: Int) -> Int {
         
         Boost.reloadBoosts()//TODO: remover daqui
         
@@ -33,7 +33,7 @@ class GameMath {
     static let weaponMaxRangeInPoints:CGFloat = 300
     static let weaponMinRangeInPoints:CGFloat = 100
     
-    static func xpForNextLevel(level level:Int) -> Int {
+    static func xpForNextLevel(level:Int) -> Int {
         
         return ((100 * level) * level)
         
@@ -41,29 +41,29 @@ class GameMath {
     
     
     // de 5 a 30, fixo pela nave
-    static func spaceshipSpeedAtribute(level level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipSpeedAtribute(level:Int, type:SpaceshipType) -> Int {
         return type.speedBonus
     }
     
     // Pontos de HP, aumenta 10 por cento por level
-    static func spaceshipMaxHealth(level level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipMaxHealth(level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.healthBonus * 10) * pow(1.1, Double(level - 1)))
     }
     
     // Pontos de escudo, aumenta 10 por cento por level
-    static func spaceshipShieldPower(level level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipShieldPower(level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldPowerBonus) * pow(1.1, Double(level - 1)))
     }
     
     // Quantidade de pontos de escudo recarregado por segundo
-    static func spaceshipShieldRecharge(level level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipShieldRecharge(level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
     
 
     // SPACESHIP
 
-    static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
+    static func spaceshipMaxVelocitySquared(speed:Int) -> CGFloat {
         let maxVelocity =  CGFloat(speed) * 4
         return CGFloat(maxVelocity * maxVelocity)
     }
@@ -78,11 +78,11 @@ class GameMath {
 //    }
     
     static func spaceshipBotSpaceshipLevel() -> Int {
-        return MemoryCard.sharedInstance.playerData.botLevel.integerValue
+        return MemoryCard.sharedInstance.playerData!.botLevel.intValue
     }
     
     // Spaceship upgrade
-    static func spaceshipUpgradeCost(level level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipUpgradeCost(level:Int, type:SpaceshipType) -> Int {
         switch type.rarity {
         case .common:
             return Int(100 * pow(1.3, Double(level)))
@@ -96,7 +96,7 @@ class GameMath {
     }
     
     
-    static func spaceshipPrice(type:SpaceshipType) -> Int {
+    static func spaceshipPrice(_ type:SpaceshipType) -> Int {
         switch type.rarity {
         case .common:
             return 1000
@@ -109,14 +109,14 @@ class GameMath {
         }
     }
     
-    static func spaceshipFixTime(fromDate: NSDate) -> Int {
+    static func spaceshipFixTime(_ fromDate: Date) -> Int {
         
-        let date = NSDate(timeInterval: NSTimeInterval(1800), sinceDate: fromDate)
+        let date = Date(timeInterval: TimeInterval(1800), since: fromDate)
         return Int(date.timeIntervalSinceNow)
         
     }
     
-    static func timeFormated(time: Int) -> String {
+    static func timeFormated(_ time: Int) -> String {
         if time > 0 {
             if time < 60 {
                 return (time.description + "s")
@@ -144,14 +144,14 @@ class GameMath {
     }
     
     // Weapons
-    static func weaponDamage(level level:Int, type:WeaponType) -> Int {
+    static func weaponDamage(level:Int, type:WeaponType) -> Int {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     
     // Mothership
     static let mothershipHealthPointsPerLevel = 8
     
-    static func mothershipMaxHealth(mothership:Mothership , enemyMothership: Mothership) -> Int {
+    static func mothershipMaxHealth(_ mothership:Mothership , enemyMothership: Mothership) -> Int {
         var dps = 0
         for spaceship in mothership.spaceships {
             dps = dps + Int(Double((spaceship.weapon?.damage)!) / (spaceship.weapon?.fireInterval)!)
@@ -166,7 +166,7 @@ class GameMath {
     }
     
     //Battle
-    static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+    static func battleXP(mothership:Mothership, enemyMothership:Mothership) -> Int {
         
         var xp = 0
         
@@ -192,7 +192,7 @@ class GameMath {
         return xp
     }
     
-    static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
+    static func battlePoints(mothership:Mothership, enemyMothership:Mothership) -> Int {
 
         // win
         if mothership.health > 0 {
@@ -235,12 +235,12 @@ class GameMath {
     }
     
     //Mission Spaceship        
-    static func finishDate(timeLeft timeLeft: Int) -> NSDate {
-       return NSDate(timeInterval: NSTimeInterval(timeLeft), sinceDate: NSDate())
+    static func finishDate(timeLeft: Int) -> Date {
+       return Date(timeInterval: TimeInterval(timeLeft), since: Date())
     }
     
-    static func timeLeft(startDate startDate: NSDate, duration: Int) -> Int {
-        let date = NSDate(timeInterval: NSTimeInterval(duration), sinceDate: startDate)
+    static func timeLeft(startDate: Date, duration: Int) -> Int {
+        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
         return Int(date.timeIntervalSinceNow)
     }
     
@@ -254,13 +254,13 @@ class GameMath {
     
     static let batteryBoostInterval = 60.0 * 60.0 * 24.0
     
-    static func batteryNextChargeTimeLeft(beginChargeDate: NSDate) -> Int {
-        let date = NSDate(timeInterval: batteryChargeInterval, sinceDate: beginChargeDate)
+    static func batteryNextChargeTimeLeft(_ beginChargeDate: Date) -> Int {
+        let date = Date(timeInterval: batteryChargeInterval, since: beginChargeDate)
         return Int(date.timeIntervalSinceNow)
     }
     
-    static func batteryBoostTimeLeft(beginChargeDate: NSDate) -> Int {
-        let date = NSDate(timeInterval: batteryBoostInterval, sinceDate: beginChargeDate)
+    static func batteryBoostTimeLeft(_ beginChargeDate: Date) -> Int {
+        let date = Date(timeInterval: batteryBoostInterval, since: beginChargeDate)
         return Int(date.timeIntervalSinceNow)
     }
     

@@ -18,7 +18,7 @@ class FactorySpaceshipCard: Control {
     
     init(spaceship: Spaceship) {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         self.spaceship = spaceship
         
@@ -29,10 +29,10 @@ class FactorySpaceshipCard: Control {
         
         for item in playerData.spaceships {
             if let spaceshipData = item as? SpaceshipData {
-                if spaceshipData.type.integerValue == spaceship.type.index {
+                if spaceshipData.type.intValue == spaceship.type.index {
                     if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
                         if let weapon = spaceship.weapon {
-                            if weaponData.type.integerValue == weapon.type.index {
+                            if weaponData.type.intValue == weapon.type.index {
                                 self.typeCount += 1
                             }
                         }
@@ -43,27 +43,27 @@ class FactorySpaceshipCard: Control {
         
         var textureName = ""
         var textRarity = ""
-        var textColor = SKColor.blackColor()
+        var textColor = SKColor.black
         
         switch spaceship.type.rarity {
         case .common:
             textureName = "factorySpaceshipCardCommon"
-            textRarity = "Common".uppercaseString
+            textRarity = "Common".uppercased()
             textColor = SKColor(red: 63/255, green: 119/255, blue: 73/255, alpha: 1)
             break
         case .rare:
             textureName = "factorySpaceshipCardRare"
-            textRarity = "Rare".uppercaseString
+            textRarity = "Rare".uppercased()
             textColor = SKColor(red: 164/255, green: 69/255, blue: 48/255, alpha: 1)
             break
         case .epic:
             textureName = "factorySpaceshipCardEpic"
-            textRarity = "Epic".uppercaseString
+            textRarity = "Epic".uppercased()
             textColor = SKColor(red: 63/255, green: 68/255, blue: 119/255, alpha: 1)
             break
         case .legendary:
             textureName = "factorySpaceshipCardLegendary"
-            textRarity = "Legendary".uppercaseString
+            textRarity = "Legendary".uppercased()
             textColor = SKColor(red: 76/255, green: 60/255, blue: 77/255, alpha: 1)
             break
         }
@@ -76,7 +76,7 @@ class FactorySpaceshipCard: Control {
         self.addChild(spaceship)
         
         
-        var fontColor = SKColor.whiteColor()
+        var fontColor = SKColor.white
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
@@ -86,9 +86,9 @@ class FactorySpaceshipCard: Control {
         self.addChild(self.buttonBuy)
         self.buttonBuy.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
         
-        self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        self.addChild(Label(color: SKColor.white, text: spaceship.factoryDisplayName().uppercased(), fontSize: 11, x: 90, y: 21, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         let textTypeCount = self.typeCount.description + "/4"
         fontColor = SKColor(red: 96/255, green: 96/255, blue: 96/255, alpha: 1)
@@ -101,18 +101,18 @@ class FactorySpaceshipCard: Control {
         speedIcon.setScale(min(11/speedIcon.size.width, 11/speedIcon.size.height))
         self.addChild(speedIcon)
         
-        let labelSpeedLabel = Label(color: fontColor, text: "Speed: ", fontSize: 11, x: 97 + 15, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        let labelSpeedLabel = Label(color: fontColor, text: "Speed: ", fontSize: 11, x: 97 + 15, y: 54, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.addChild(labelSpeedLabel)
-        self.addChild(Label(color: fontColor, text: spaceship.speedAtribute.description, fontSize: 11, x: 97 + 15 + Int(labelSpeedLabel.calculateAccumulatedFrame().size.width), y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        self.addChild(Label(color: fontColor, text: spaceship.speedAtribute.description, fontSize: 11, x: 97 + 15 + Int(labelSpeedLabel.calculateAccumulatedFrame().size.width), y: 54, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         
         let lifeIcon = Control(textureName: "lifeIcon", x: 97, y: 68 - 11)
         lifeIcon.setScale(min(11/lifeIcon.size.width, 11/lifeIcon.size.height))
         self.addChild(lifeIcon)
         
-        let labelAlrmorLabel = Label(color: fontColor, text: "Armor: ", fontSize: 11, x: 97 + 15, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        let labelAlrmorLabel = Label(color: fontColor, text: "Armor: ", fontSize: 11, x: 97 + 15, y: 68, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.addChild(labelAlrmorLabel)
-        self.addChild(Label(color: fontColor, text: spaceship.maxHealth.description, fontSize: 11, x: 97 + 15 + Int(labelAlrmorLabel.calculateAccumulatedFrame().size.width), y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        self.addChild(Label(color: fontColor, text: spaceship.maxHealth.description, fontSize: 11, x: 97 + 15 + Int(labelAlrmorLabel.calculateAccumulatedFrame().size.width), y: 68, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         if let weapon = spaceship.weapon {
             
@@ -120,31 +120,31 @@ class FactorySpaceshipCard: Control {
             damageIcon.setScale(min(11/damageIcon.size.width, 11/damageIcon.size.height))
             self.addChild(damageIcon)
             
-            let labelDamageLabel = Label(color: fontColor, text: "Damage: ", fontSize: 11, x: 191 + 15, y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            let labelDamageLabel = Label(color: fontColor, text: "Damage: ", fontSize: 11, x: 191 + 15, y: 54, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
             self.addChild(labelDamageLabel)
-            self.addChild(Label(color: fontColor, text: weapon.damage.description, fontSize: 11, x: 191 + 15 + Int(labelDamageLabel.calculateAccumulatedFrame().size.width), y: 54, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            self.addChild(Label(color: fontColor, text: weapon.damage.description, fontSize: 11, x: 191 + 15 + Int(labelDamageLabel.calculateAccumulatedFrame().size.width), y: 54, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
             
             let rangeIcon = Control(textureName: "rangeIcon", x: 191, y: 68 - 11)
             rangeIcon.setScale(min(11/rangeIcon.size.width, 11/rangeIcon.size.height))
             self.addChild(rangeIcon)
             
-            let labelRangeLabel = Label(color: fontColor, text: "Range: ", fontSize: 11, x: 191 + 15, y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            let labelRangeLabel = Label(color: fontColor, text: "Range: ", fontSize: 11, x: 191 + 15, y: 68, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
             self.addChild(labelRangeLabel)
-            self.addChild(Label(color: fontColor, text: weapon.range.description, fontSize: 11, x: 191 + 15 + Int(labelRangeLabel.calculateAccumulatedFrame().size.width), y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            self.addChild(Label(color: fontColor, text: weapon.range.description, fontSize: 11, x: 191 + 15 + Int(labelRangeLabel.calculateAccumulatedFrame().size.width), y: 68, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
             
             let fireRateIcon = Control(textureName: "fireRateIcon", x: 191, y: 82 - 11)
             fireRateIcon.setScale(min(11/fireRateIcon.size.width, 11/fireRateIcon.size.height))
             self.addChild(fireRateIcon)
             
-            let labelFireRateLabel = Label(color: fontColor, text: "Fire Rate: ", fontSize: 11, x: 191 + 15, y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+            let labelFireRateLabel = Label(color: fontColor, text: "Fire Rate: ", fontSize: 11, x: 191 + 15, y: 82, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo900, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
             self.addChild(labelFireRateLabel)
-            self.addChild(Label(color: fontColor, text: (1/weapon.fireInterval).description, fontSize: 11, x: 191 + 15 + Int(labelFireRateLabel.calculateAccumulatedFrame().size.width), y: 82, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            self.addChild(Label(color: fontColor, text: (1/weapon.fireInterval).description, fontSize: 11, x: 191 + 15 + Int(labelFireRateLabel.calculateAccumulatedFrame().size.width), y: 82, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         }
         
         self.labelTypeCount.setText(self.typeCount.description + "/4")
         
         if self.typeCount >= 4 {
-            self.buttonBuy.hidden = true
+            self.buttonBuy.isHidden = true
         }
         
     }
@@ -155,7 +155,7 @@ class FactorySpaceshipCard: Control {
         self.labelTypeCount.setText(textTypeCount)
         
         if self.typeCount >= 4 {
-            self.buttonBuy.hidden = true
+            self.buttonBuy.isHidden = true
         }
     }
     

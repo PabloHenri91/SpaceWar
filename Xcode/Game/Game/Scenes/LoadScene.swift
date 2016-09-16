@@ -27,21 +27,21 @@ class LoadScene: GameScene {
     var state = states.load
     var nextState = states.load
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
         #if DEBUG
             MemoryCard.sharedInstance.reset()
-            MemoryCard.sharedInstance.playerData.points = 1000000
-            MemoryCard.sharedInstance.playerData.premiumPoints = 1000000
+            MemoryCard.sharedInstance.playerData!.points = 1000000
+            MemoryCard.sharedInstance.playerData!.premiumPoints = 1000000
             Research.cheatDuration()
             Research.cheatUnlockAll()
-            //MemoryCard.sharedInstance.playerData.needBattleTraining = true
+            //MemoryCard.sharedInstance.playerData!.needBattleTraining = true
         #endif
         
         self.nextState = .connect
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -59,7 +59,7 @@ class LoadScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
             case .mothership:
-                if MemoryCard.sharedInstance.playerData.needBattleTraining.boolValue {
+                if MemoryCard.sharedInstance.playerData!.needBattleTraining.boolValue {
                     self.view?.presentScene(BattleTrainingScene())
                 } else {
                     if let nextScene = LoadScene.nextScene {

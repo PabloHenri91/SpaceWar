@@ -23,12 +23,12 @@ extension MemoryCard {
         return self.newWeaponData(type: Int.random(Weapon.types.count))
     }
     
-    func newWeaponData(type type:Int) -> WeaponData {
+    func newWeaponData(type:Int) -> WeaponData {
         
-        let weaponData = NSEntityDescription.insertNewObjectForEntityForName("WeaponData", inManagedObjectContext: self.managedObjectContext) as! WeaponData
+        let weaponData = NSEntityDescription.insertNewObject(forEntityName: "WeaponData", into: self.managedObjectContext) as! WeaponData
         
         weaponData.level = 1
-        weaponData.type = type
+        weaponData.type = type as NSNumber
         
         return weaponData
     }

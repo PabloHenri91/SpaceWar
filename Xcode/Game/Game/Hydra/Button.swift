@@ -19,19 +19,19 @@ class Button: Control {
     
     var event:Event<Void>?
     
-    func addHandler(handler: Void -> ()) {
+    func addHandler(_ handler: @escaping (Void) -> ()) {
         if let _ = self.event { } else {
             self.event = Event()
         }
         self.event!.addHandler(handler)
     }
     
-    private var labelColor = SKColor.blackColor()
+    fileprivate var labelColor = SKColor.black
     
     init(textureName:String, icon:String = "", text:String = "", fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up, alpha:CGFloat = CGFloat(1), touchArea:CGSize = CGSize.zero,
          top:Int = 0, bottom:Int = 0, left:Int = 0, right:Int = 0,
-         fontColor:SKColor = SKColor.blackColor(), fontShadowColor:SKColor = SKColor.clearColor(), fontShadowOffset:CGPoint = CGPoint.zero,
-         pressedFontColor:SKColor = SKColor.whiteColor(), pressedFontShadowColor:SKColor = SKColor.clearColor(), pressedFontShadowOffset:CGPoint = CGPoint.zero,
+         fontColor:SKColor = SKColor.black, fontShadowColor:SKColor = SKColor.clear, fontShadowOffset:CGPoint = CGPoint.zero,
+         pressedFontColor:SKColor = SKColor.white, pressedFontShadowColor:SKColor = SKColor.clear, pressedFontShadowOffset:CGPoint = CGPoint.zero,
          fontName:String = GameFonts.fontName.museo500,
          textOffset:CGPoint = CGPoint.zero) {
         super.init()
@@ -48,7 +48,7 @@ class Button: Control {
         texture.filteringMode = Display.filteringMode
         
         if top != 0 || bottom != 0 || left != 0 || right != 0 {
-            let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clearColor(), size: CGSize(
+            let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clear, size: CGSize(
                 width: Int(texture.size().width) + left + right,
                 height: Int(texture.size().height) + top + bottom))
             spriteNode.texture?.filteringMode = Display.filteringMode
@@ -57,7 +57,7 @@ class Button: Control {
             self.addChild(spriteNode)
             spriteNode.position = CGPoint(x: -left, y: top)
         } else if touchArea != CGSize.zero {
-            let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clearColor(), size:touchArea)
+            let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clear, size:touchArea)
             spriteNode.anchorPoint = CGPoint(x: 0, y: 1)
             self.addChild(spriteNode)
             spriteNode.position = CGPoint(x: (texture.size().width - spriteNode.size.width)/2, y: -(texture.size().height - spriteNode.size.height)/2)
@@ -92,18 +92,18 @@ class Button: Control {
             labelNode.text = text.translation()
             labelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
             labelNode.fontColor = fontColor
-            labelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-            labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+            labelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             labelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
             labelNode.position = CGPoint(x: labelNode.position.x + textOffset.x, y: labelNode.position.y + textOffset.y)
             
-            if fontShadowColor != SKColor.clearColor() {
+            if fontShadowColor != SKColor.clear {
                 let shadowLabelNode = SKLabelNode(fontNamed: fontName)
                 shadowLabelNode.text = labelNode.text
                 shadowLabelNode.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                 shadowLabelNode.fontColor = fontShadowColor
-                shadowLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-                shadowLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+                shadowLabelNode.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+                shadowLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
                 shadowLabelNode.position = CGPoint(x: texture.size().width/2, y: -texture.size().height/2)
                 shadowLabelNode.position = CGPoint(x: shadowLabelNode.position.x + fontShadowOffset.x, y: shadowLabelNode.position.y + fontShadowOffset.y)
                 shadowLabelNode.position = CGPoint(x: shadowLabelNode.position.x + textOffset.x, y: shadowLabelNode.position.y + textOffset.y)
@@ -121,7 +121,7 @@ class Button: Control {
         self.buttonPressed.color = SKColor(red: 1, green: 1, blue: 1, alpha: alpha)
         self.buttonPressed.colorBlendFactor = 1
         self.buttonPressed.anchorPoint = CGPoint(x: 0, y: 1)
-        self.buttonPressed.hidden = true
+        self.buttonPressed.isHidden = true
         self.addChild(self.buttonPressed)
         
         if icon != "" {
@@ -145,21 +145,21 @@ class Button: Control {
             labelNodePressed.text = text.translation()
             labelNodePressed.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
             labelNodePressed.fontColor = pressedFontColor
-            labelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-            labelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+            labelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            labelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             labelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
             labelNodePressed.position = CGPoint(x: labelNodePressed.position.x + textOffset.x, y: labelNodePressed.position.y + textOffset.y)
             
-            var shadowColor = SKColor.clearColor()
-            if pressedFontShadowColor != SKColor.clearColor() {
+            var shadowColor = SKColor.clear
+            if pressedFontShadowColor != SKColor.clear {
                 shadowColor = pressedFontShadowColor
             } else {
-                if fontShadowColor != SKColor.clearColor() {
+                if fontShadowColor != SKColor.clear {
                     shadowColor = fontShadowColor
                 }
             }
             
-            if shadowColor != SKColor.clearColor() {
+            if shadowColor != SKColor.clear {
                 
                 var shadowOffset = CGPoint.zero
                 if pressedFontShadowOffset != CGPoint.zero {
@@ -172,8 +172,8 @@ class Button: Control {
                 shadowLabelNodePressed.text = labelNodePressed.text
                 shadowLabelNodePressed.fontSize = fontSize < GameFonts.minFontSize ? GameFonts.minFontSize : fontSize
                 shadowLabelNodePressed.fontColor = shadowColor
-                shadowLabelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-                shadowLabelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+                shadowLabelNodePressed.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+                shadowLabelNodePressed.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
                 shadowLabelNodePressed.position = CGPoint(x: texturePressed.size().width/2, y: -texturePressed.size().height/2)
                 shadowLabelNodePressed.position = CGPoint(x: shadowLabelNodePressed.position.x + shadowOffset.x, y: shadowLabelNodePressed.position.y + shadowOffset.y)
                 shadowLabelNodePressed.position = CGPoint(x: shadowLabelNodePressed.position.x + textOffset.x, y: shadowLabelNodePressed.position.y + textOffset.y)
@@ -192,11 +192,11 @@ class Button: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func containsPoint(p: CGPoint) -> Bool {
-        if self.hidden {
+    override func contains(_ p: CGPoint) -> Bool {
+        if self.isHidden {
             return false
         } else {
-            return super.containsPoint(p)
+            return super.contains(p)
         }
     }
     
@@ -207,13 +207,13 @@ class Button: Control {
     }
     
     #if os(iOS)
-    class func update(taps: Set<UITouch>) {
+    class func update(_ taps: Set<UITouch>) {
         for button in Button.buttonList {
             if let event = button.event {
                 for tap in taps {
                     if let parent = button.parent {
-                        let location = tap.locationInNode(parent)
-                        if button.containsPoint(location) {
+                        let location = tap.location(in: parent)
+                        if button.contains(location) {
                             event.raise()
                         }
                     }
@@ -262,8 +262,8 @@ class Button: Control {
         var i = 0
         for touch in Control.touchesArray {
             if let parent = self.parent {
-                let location = touch.0.locationInNode(parent)
-                if self.containsPoint(location) {
+                let location = touch.0.location(in: parent)
+                if self.contains(location) {
                     i += 1
                 }
             }
@@ -390,14 +390,14 @@ class Button: Control {
     
     func buttonPress() {
         self.pressed = true
-        self.button.hidden = true
-        self.buttonPressed.hidden = false
+        self.button.isHidden = true
+        self.buttonPressed.isHidden = false
     }
     
     func buttonRelease() {
         self.pressed = false
-        self.button?.hidden = false
-        self.buttonPressed?.hidden = true
+        self.button?.isHidden = false
+        self.buttonPressed?.isHidden = true
     }
     
     override func removeFromParent() {
@@ -418,7 +418,7 @@ class Button: Control {
     
     func positionInScene() -> CGPoint {
         if let scene = self.scene {
-            return self.convertPoint(self.position, toNode: scene)
+            return self.convert(self.position, to: scene)
         }
         //print("button.scene == nil! Algo saiu errado")
         return CGPoint.zero

@@ -43,15 +43,15 @@ class ChooseMissionScene: GameScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
         let background = Control(textureName: "missionsAlert", x: 17, y: 24, xAlign: .center, yAlign: .center)
         self.addChild(background)
         
         self.buttonBack = Button(textureName: "buttonCancelChooseMission", text: "", x: 282, y: 7, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonBack)
         
-        self.addChild(Label(color: SKColor.blackColor(), text: "Choose mission",fontSize: 12, x: 161, y: 42, xAlign: .center, yAlign: .center))
+        self.addChild(Label(color: SKColor.black, text: "Choose mission",fontSize: 12, x: 161, y: 42, xAlign: .center, yAlign: .center))
         
         self.controlArray = Array<MissionTypeCard>()
         
@@ -67,7 +67,7 @@ class ChooseMissionScene: GameScene {
     }
     
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -107,18 +107,18 @@ class ChooseMissionScene: GameScene {
                 case .normal:
                     
                     
-                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
+                    if(self.buttonBack.contains(touch.location(in: self))) {
                         self.nextState = .missionScene
                         return
                     }
                     
                     
-                    if self.scrollNode.containsPoint(touch.locationInNode(self)) {
+                    if self.scrollNode.contains(touch.location(in: self)) {
                         for item in self.scrollNode.cells {
-                            if item.containsPoint(touch.locationInNode(self.scrollNode)) {
+                            if item.contains(touch.location(in: self.scrollNode)) {
                                 if let card = item as? MissionTypeCard {
                                     
-                                    if card.buttonSelect.containsPoint(touch.locationInNode(card)) {
+                                    if card.buttonSelect.contains(touch.location(in: card)) {
                                         card.selectMission()
                                         self.nextState = .missionScene
                                     }

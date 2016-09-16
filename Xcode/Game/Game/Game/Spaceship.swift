@@ -69,7 +69,7 @@ class Spaceship: Control {
     
     var isInsideAMothership = true
     
-    private var healthBar:HealthBar!
+    fileprivate var healthBar:HealthBar!
     var weaponRangeSprite:SKShapeNode!
     
     //Respawn
@@ -88,7 +88,7 @@ class Spaceship: Control {
     var onlineDamage = 0
     var onlineHeal = 0
     
-    private var spriteNode:SKSpriteNode!
+    fileprivate var spriteNode:SKSpriteNode!
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -102,7 +102,7 @@ class Spaceship: Control {
             "shieldRecharge: " + shieldRecharge.description  + "\n"
     }
     
-    static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
+    static func displayName(_ type:Int, level:Int = 0, weaponType:Int) -> String {
         //TODO: displayName
         let name = Spaceship.types[type].name + " " + Weapon.types[weaponType].name
 //        if level > 0 {
@@ -136,7 +136,7 @@ class Spaceship: Control {
     init(spaceshipData:SpaceshipData, loadPhysics:Bool = false) {
         super.init()
         self.spaceshipData = spaceshipData
-        self.load(type: spaceshipData.type.integerValue, level: spaceshipData.level.integerValue, loadPhysics: loadPhysics)
+        self.load(type: spaceshipData.type.intValue, level: spaceshipData.level.intValue, loadPhysics: loadPhysics)
         
         if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
             self.weapon = (Weapon(weaponData: weaponData, loadSoundEffects: loadPhysics))
@@ -148,7 +148,7 @@ class Spaceship: Control {
         }
     }
     
-    func loadJetEffect(targetNode: SKNode?, color: SKColor) {
+    func loadJetEffect(_ targetNode: SKNode?, color: SKColor) {
         
         self.defaultEmitterNodeParticleBirthRate  = CGFloat(self.speedAtribute * 20)
         
@@ -189,7 +189,7 @@ class Spaceship: Control {
         }
     }
     
-    func loadHealthBar(gameWorld:GameWorld, blueTeam:Bool) {
+    func loadHealthBar(_ gameWorld:GameWorld, blueTeam:Bool) {
         
         var fillColor:SKColor!
         var backColor:SKColor!
@@ -250,11 +250,11 @@ class Spaceship: Control {
         self.loadJetEffect(gameWorld, color: backColor)
     }
     
-    func loadWeaponRangeSprite(gameWorld:GameWorld) {
+    func loadWeaponRangeSprite(_ gameWorld:GameWorld) {
         if let weapon = self.weapon {
             self.weaponRangeSprite = SKShapeNode(circleOfRadius: weapon.rangeInPoints)
-            self.weaponRangeSprite.strokeColor = SKColor.whiteColor()
-            self.weaponRangeSprite.fillColor = SKColor.clearColor()
+            self.weaponRangeSprite.strokeColor = SKColor.white
+            self.weaponRangeSprite.fillColor = SKColor.clear
             self.weaponRangeSprite.position = self.position
             self.weaponRangeSprite.alpha = 0
             
@@ -276,19 +276,19 @@ class Spaceship: Control {
     }
     
     func increaseTouchArea() {
-        let spriteNodeTest = SKSpriteNode(color: SKColor.clearColor(), size: CGSize(width: 64, height: 64))
+        let spriteNodeTest = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 64, height: 64))
         spriteNodeTest.texture?.filteringMode = Display.filteringMode
         spriteNodeTest.zPosition = zPositions.touchAreaEffect.rawValue
         self.addChild(spriteNodeTest)
     }
     
-    private func load(type type:Int, level:Int, loadPhysics:Bool) {
+    fileprivate func load(type:Int, level:Int, loadPhysics:Bool) {
         self.type = Spaceship.types[type]
         self.level = level
         self.load(loadPhysics)
     }
     
-    private func load(extraType type:Int, level:Int, loadPhysics:Bool) {
+    fileprivate func load(extraType type:Int, level:Int, loadPhysics:Bool) {
         self.type = Spaceship.extraTypes[type]
         self.level = level
         self.load(loadPhysics)
@@ -298,7 +298,7 @@ class Spaceship: Control {
         self.explosionSoundEffect = SoundEffect(soundType: SoundEffect.effectTypes.explosion, node: self)
     }
     
-    private func load(loadPhysics:Bool) {
+    fileprivate func load(_ loadPhysics:Bool) {
         
         self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
         self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
@@ -340,7 +340,7 @@ class Spaceship: Control {
         self.selectedSpriteNode.setScale(self.type.scale)
         self.selectedSpriteNode.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         self.selectedSpriteNode.colorBlendFactor = 1
-        self.selectedSpriteNode.hidden = true
+        self.selectedSpriteNode.isHidden = true
         self.selectedSpriteNode.zPosition = zPositions.selectedDetail.rawValue
         self.addChild(self.selectedSpriteNode)
         
@@ -362,9 +362,9 @@ class Spaceship: Control {
         
         self.zPosition = GameWorld.zPositions.spaceship.rawValue
         
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody = SKPhysicsBody(rectangleOf: size)
         self.physicsBody?.mass = 0.0455111116170883
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.isDynamic = false
         
         self.setBitMasksToMothershipSpaceship()
         
@@ -387,8 +387,8 @@ class Spaceship: Control {
         spriteNode.position = self.destination
         self.parent?.addChild(spriteNode)
         
-        spriteNode.runAction(SKAction.resizeToWidth(0, height: 1, duration: 0.5))
-        spriteNode.runAction(SKAction.fadeOutWithDuration(0.5), completion: { [weak spriteNode] in
+        spriteNode.run(SKAction.resize(toWidth: 0, height: 1, duration: 0.5))
+        spriteNode.run(SKAction.fadeOut(withDuration: 0.5), completion: { [weak spriteNode] in
             spriteNode?.removeFromParent()
         })
         self.showWeaponRangeSprite()
@@ -406,19 +406,19 @@ class Spaceship: Control {
             
         } else {
             if let spaceship = Spaceship.selectedSpaceship {
-                spaceship.selectedSpriteNode.hidden = true
+                spaceship.selectedSpriteNode.isHidden = true
             }
             if self.health > 0 {
                 Spaceship.selectedSpaceship = self
                 self.showWeaponRangeSprite()
                 
-                self.physicsBody?.dynamic = true
-                self.selectedSpriteNode.hidden = false
+                self.physicsBody?.isDynamic = true
+                self.selectedSpriteNode.isHidden = false
             }
         }
     }
     
-    static func touchEnded(touch: UITouch) {
+    static func touchEnded(_ touch: UITouch) {
         if let spaceship = Spaceship.selectedSpaceship {
             if spaceship.health > 0 {
                 if let parent = spaceship.parent {
@@ -426,8 +426,8 @@ class Spaceship: Control {
                     //Precisa mover, esqueca o que está fazendo
                     spaceship.targetNode = nil
                     
-                    spaceship.destination = touch.locationInNode(parent)
-                    spaceship.physicsBody?.dynamic = true
+                    spaceship.destination = touch.location(in: parent)
+                    spaceship.physicsBody?.isDynamic = true
                     spaceship.needToMove = true
                     spaceship.setMoveArrowToDestination()
                 }
@@ -450,11 +450,11 @@ class Spaceship: Control {
         self.destination = self.startingPosition
         self.needToMove = true
         
-        self.selectedSpriteNode.hidden = true
+        self.selectedSpriteNode.isHidden = true
         self.setBitMasksToMothershipSpaceship()
     }
     
-    func update(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
+    func update(enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
         
         self.emitterNodeParticleBirthRate = 0
         self.emitterNodeLeftParticleBirthRate = 0
@@ -544,10 +544,10 @@ class Spaceship: Control {
         self.zRotation = self.startingZPosition
         self.physicsBody?.velocity = CGVector.zero
         self.physicsBody?.angularVelocity = 0
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.isDynamic = false
     }
     
-    func canBeTarget(spaceship:Spaceship) -> Bool {
+    func canBeTarget(_ spaceship:Spaceship) -> Bool {
         
         if self.isInsideAMothership {
             return false
@@ -569,7 +569,7 @@ class Spaceship: Control {
         return true
     }
     
-    func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship]) -> SKNode? {
+    func nearestTarget(enemyMothership:Mothership?, enemySpaceships:[Spaceship]) -> SKNode? {
         
         var currentTarget:SKNode? = nil
         
@@ -612,7 +612,7 @@ class Spaceship: Control {
         return currentTarget
     }
     
-    func fire(allySpaceships allySpaceships:[Spaceship]) {
+    func fire(allySpaceships:[Spaceship]) {
         var canfire = true
         
         for allySpaceship in allySpaceships {
@@ -647,7 +647,7 @@ class Spaceship: Control {
         
     }
     
-    func getShot(shot:Shot?, contact: SKPhysicsContact?) {
+    func getShot(_ shot:Shot?, contact: SKPhysicsContact?) {
         
         if let shot = shot {
             
@@ -670,7 +670,7 @@ class Spaceship: Control {
             if self.health > 0 && self.health - shot.damage <= 0 {
                 if let spaceship = shot.shooter as? Spaceship {
                     if let spaceshipData = spaceship.spaceshipData {
-                        spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
+                        spaceshipData.killCount = (spaceshipData.killCount.intValue + 1) as NSNumber
                         Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
                         if shot.damage > self.maxHealth {
                             Metrics.oneHitKillerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
@@ -724,12 +724,12 @@ class Spaceship: Control {
         }
         self.resetToStartingPosition()
         
-        self.hidden = false
+        self.isHidden = false
         
         self.health = self.maxHealth
         self.healthBar.update(1, maxHealth: 1)
         self.updateHealthBarPosition()
-        self.healthBar.hidden = false
+        self.healthBar.isHidden = false
     }
     
     func die() {
@@ -751,14 +751,14 @@ class Spaceship: Control {
             
             let action = SKAction()
             action.duration = 1
-            particles.runAction(action, completion: { [weak particles] in
+            particles.run(action, completion: { [weak particles] in
                 particles?.removeFromParent()
             })
         }
         
-        self.hidden = true
+        self.isHidden = true
         self.physicsBody = nil
-        self.healthBar.hidden = true
+        self.healthBar.isHidden = true
         self.position = self.startingPosition
         self.health = 0
     }
@@ -792,7 +792,7 @@ class Spaceship: Control {
         self.healthBar.update(self.health, maxHealth: self.maxHealth)
     }
     
-    func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
+    func move(enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
        
         if self.health > 0 {
             
@@ -895,7 +895,7 @@ class Spaceship: Control {
                         label.position = self.startingPosition
                         self.parent?.addChild(label)
                         
-                        label.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak label] in
+                        label.run({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak label] in
                             label?.removeFromParent()
                             })
                     }
@@ -904,7 +904,7 @@ class Spaceship: Control {
         }
     }
     
-    func rotateToPoint(point:CGPoint) {
+    func rotateToPoint(_ point:CGPoint) {
         
         if let physicsBody = self.physicsBody {
             
@@ -935,7 +935,7 @@ class Spaceship: Control {
         }
     }
     
-    func didBeginContact(otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
+    func didBeginContact(_ otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
         if let myPhysicsBody = self.physicsBody {
             
             switch myPhysicsBody.categoryBitMask {
@@ -979,7 +979,7 @@ class Spaceship: Control {
         }
     }
     
-    func didEndContact(otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
+    func didEndContact(_ otherPhysicsBody:SKPhysicsBody, contact: SKPhysicsContact) {
         
         if let myPhysicsBody = self.physicsBody {
             
@@ -1034,7 +1034,7 @@ class Spaceship: Control {
         }
     }
     
-    func addWeapon(weapon:Weapon) {
+    func addWeapon(_ weapon:Weapon) {
         self.weapon = weapon
         self.loadWeaponDetail()
         self.addChild(weapon)
@@ -1049,7 +1049,7 @@ class Spaceship: Control {
         }
     }
     
-    func removeWeapon(weapon:Weapon) {
+    func removeWeapon(_ weapon:Weapon) {
         self.weapon = nil
         
         if let spaceshipData = self.spaceshipData {
@@ -1064,24 +1064,24 @@ class Spaceship: Control {
     
     func updateSpaceshipData() {
         if let spaceshipData = self.spaceshipData {
-            spaceshipData.level = self.level
+            spaceshipData.level = self.level as NSNumber
         }
     }
     
     func upgrade() {
         if let spaceshipData = self.spaceshipData {
             
-            spaceshipData.level = NSNumber(integer: spaceshipData.level.integerValue + 1)
-            self.level = spaceshipData.level.integerValue
+            spaceshipData.level = (spaceshipData.level.intValue + 1) as NSNumber
+            self.level = spaceshipData.level.intValue
             for item in spaceshipData.weapons {
                 if let weaponData = item as? WeaponData {
-                    weaponData.level = NSNumber(integer: weaponData.level.integerValue + 1)
+                    weaponData.level = (weaponData.level.intValue + 1) as NSNumber
                 }
             }
         }
     }
     
-    func damageEffect(points:Int, contactPoint: CGPoint, contact: SKPhysicsContact?) {
+    func damageEffect(_ points:Int, contactPoint: CGPoint, contact: SKPhysicsContact?) {
         
         let duration = 0.5
         var distance:CGFloat = 32
@@ -1097,9 +1097,9 @@ class Spaceship: Control {
         let label = SKLabelNode(text: points.description)
         label.zPosition = GameWorld.zPositions.damageEffect.rawValue
         label.position = contactPoint
-        label.fontColor = SKColor.whiteColor()
+        label.fontColor = SKColor.white
         self.parent?.addChild(label)
-        label.runAction(SKAction.moveBy(vector, duration: duration))
+        label.run(SKAction.move(by: vector, duration: duration))
         
         
         let particles = SKEmitterNode(fileNamed: "spark.sks")!
@@ -1108,10 +1108,10 @@ class Spaceship: Control {
         particles.emissionAngle = CGFloat(-atan2(vector.dx, vector.dy)) + CGFloat(M_PI/2)
         self.parent?.addChild(particles)
         
-        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label, weak particles] in
+        label.run({ let a = SKAction(); a.duration = duration; return a }(), completion: { [weak label, weak particles] in
             label?.removeFromParent()
             particles?.removeFromParent()
-        }
+        }) 
         
         
     }
@@ -1120,15 +1120,15 @@ class Spaceship: Control {
         self.selectedSpriteNode = nil
         self.spriteNode = nil
         Spaceship.spaceshipList.remove(self)
-        self.hidden = true
+        self.isHidden = true
         super.removeFromParent()
     }
     
-    override func containsPoint(p: CGPoint) -> Bool {
-        if self.hidden {
+    override func contains(_ p: CGPoint) -> Bool {
+        if self.isHidden {
             return false
         } else {
-            return super.containsPoint(p)
+            return super.contains(p)
         }
     }
 }
@@ -1193,7 +1193,9 @@ extension Spaceship {
     
     static func cheatUnlockAll() {
         let memoryCard = MemoryCard.sharedInstance
-        let playerData = memoryCard.playerData
+        
+        let playerData = MemoryCard.sharedInstance.playerData!
+        
         playerData.unlockedSpaceships = NSSet()
         
         for spaceshipType in Spaceship.types {

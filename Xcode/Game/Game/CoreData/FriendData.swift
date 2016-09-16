@@ -24,12 +24,12 @@ class FriendData: NSManagedObject {
 
 extension MemoryCard {
     
-    func newFriendData(id id:String) -> FriendData {
+    func newFriendData(id:String) -> FriendData {
         
-        let friendData = NSEntityDescription.insertNewObjectForEntityForName("FriendData", inManagedObjectContext: self.managedObjectContext) as! FriendData
+        let friendData = NSEntityDescription.insertNewObject(forEntityName: "FriendData", into: self.managedObjectContext) as! FriendData
         
         friendData.id = id
-        friendData.acceptedInvite = NSNumber(bool: false)
+        friendData.acceptedInvite = false
 
         return friendData
     }

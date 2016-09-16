@@ -12,7 +12,7 @@ class BatteryControl: Control {
     
     var maxCharge = GameMath.batteryMaxCharge
     var charge = 0
-    var lastCharge:NSDate!
+    var lastCharge:Date!
     
     var labelTimerLabel:Label!
     var labelTimerValue:Label!
@@ -21,7 +21,7 @@ class BatteryControl: Control {
     let timerPositionX:CGFloat = 85
     let timerPositionY:CGFloat = 32
     
-    var lastUpdate:NSTimeInterval = 0
+    var lastUpdate:TimeInterval = 0
     
     init(x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up) {
         super.init(textureName: "batteryBackground", x: x, y: y, xAlign: xAlign, yAlign: yAlign)
@@ -36,10 +36,10 @@ class BatteryControl: Control {
         
         let color = SKColor(red: 60/255, green: 75/255, blue: 88/255, alpha: 1)
         
-        self.labelTimerLabel = Label(color: color, text: "Next charge: ", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .Right, fontName: GameFonts.fontName.museo700)
+        self.labelTimerLabel = Label(color: color, text: "Next charge: ", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .right, fontName: GameFonts.fontName.museo700)
         self.addChild(self.labelTimerLabel)
         
-        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+        self.labelTimerValue = Label(color: color, text: "0m 00s", fontSize:12, x: 0, y: 0, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelTimerValue)
         
         self.updateLabels()
@@ -72,11 +72,11 @@ class BatteryControl: Control {
             return false
         }
         
-        if let battery = MemoryCard.sharedInstance.playerData.battery {
-            if battery.charge.integerValue == GameMath.batteryMaxCharge {
-                battery.lastCharge = NSDate()
+        if let battery = MemoryCard.sharedInstance.playerData!.battery {
+            if battery.charge.intValue == GameMath.batteryMaxCharge {
+                battery.lastCharge = Date()
             }
-            battery.charge = battery.charge.integerValue - 1
+            battery.charge = ((battery.charge as Int) - 1) as NSNumber
         }
         
         return true
@@ -91,31 +91,31 @@ class BatteryControl: Control {
     
     func updateLabels() {
         
-        if let battery = MemoryCard.sharedInstance.playerData.battery {
+        if let battery = MemoryCard.sharedInstance.playerData!.battery {
             
-            self.charge = battery.charge.integerValue
-            self.lastCharge = battery.lastCharge
+            self.charge = battery.charge.intValue
+            self.lastCharge = battery.lastCharge as Date!
             
             while self.charge < self.maxCharge {
                 
                 if self.charge == -1 {
                     
                     if GameMath.batteryBoostTimeLeft(self.lastCharge) <= 0 {
-                        self.lastCharge = NSDate()
+                        self.lastCharge = Date()
                         battery.lastCharge = self.lastCharge
                         
                         self.charge = self.maxCharge
-                        battery.charge = self.charge
+                        battery.charge = self.charge as NSNumber
                     }
                     break
                     
                 } else {
                     if GameMath.batteryNextChargeTimeLeft(self.lastCharge) <= 0 {
-                        self.lastCharge = NSDate(timeInterval: GameMath.batteryChargeInterval, sinceDate: self.lastCharge)
+                        self.lastCharge = Date(timeInterval: GameMath.batteryChargeInterval, since: self.lastCharge)
                         battery.lastCharge = self.lastCharge
                         
                         self.charge += 1
-                        battery.charge = self.charge
+                        battery.charge = self.charge as NSNumber
                     } else {
                         break
                     }
@@ -133,7 +133,7 @@ class BatteryControl: Control {
                 text = GameMath.timeFormated(GameMath.batteryBoostTimeLeft(self.lastCharge))
                 
                 for control in chargeIndicator {
-                    control.hidden = false
+                    control.isHidden = false
                 }
                 
             } else {
@@ -143,7 +143,7 @@ class BatteryControl: Control {
                 
                 var i = 0
                 for control in chargeIndicator {
-                    control.hidden = charge <= i
+                    control.isHidden = charge <= i
                     i += 1
                 }
             }

@@ -30,7 +30,7 @@ class SpaceshipSlot: Control {
     
 
     
-    func update(spaceshipData: SpaceshipData) {
+    func update(_ spaceshipData: SpaceshipData) {
         //self.playerData.motherShip.addSpaceshipData(spaceshipData, index: spaceshipData.index)
         
         let spaceship = Spaceship(spaceshipData: spaceshipData)
@@ -49,7 +49,7 @@ class SpaceshipSlot: Control {
         self.spaceship = spaceship
     }
     
-    func setSpaceshipSlotDetails(spaceship:Spaceship) {
+    func setSpaceshipSlotDetails(_ spaceship:Spaceship) {
         
         var imageName = ""
         let lableLevelShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100)
@@ -73,7 +73,7 @@ class SpaceshipSlot: Control {
         spriteNode.position = CGPoint(x: 34, y: -55)
         self.addChild(spriteNode)
         
-        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level ".translation() + spaceship.level.description, fontSize: 13, fontName: GameFonts.fontName.museo1000, shadowColor: lableLevelShadowColor, shadowOffset: CGPoint(x: 0, y: -1))
+        self.labelLevel = Label(color: SKColor.white, text: "Level ".translation() + spaceship.level.description, fontSize: 13, fontName: GameFonts.fontName.museo1000, shadowColor: lableLevelShadowColor, shadowOffset: CGPoint(x: 0, y: -1))
         spriteNode.addChild(self.labelLevel!)
     }
     
@@ -87,17 +87,17 @@ class SpaceshipSlot: Control {
                     
                     let duration:Double = 0.10
                     var actions = [SKAction]()
-                    actions.append(SKAction.scaleTo(1.5, duration: duration))
-                    actions.append(SKAction.scaleTo(1.0, duration: duration))
+                    actions.append(SKAction.scale(to: 1.5, duration: duration))
+                    actions.append(SKAction.scale(to: 1.0, duration: duration))
                     let action = SKAction.sequence(actions)
                     
-                    labelLevel.runAction(action)
+                    labelLevel.run(action)
                 }
             }
         }
     }
     
-    override func addChild(node: SKNode) {
+    override func addChild(_ node: SKNode) {
         super.addChild(node)
         if let spaceship = node as? Spaceship {
             spaceship.position = CGPoint(x: 34, y: -24)

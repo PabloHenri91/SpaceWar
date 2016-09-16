@@ -42,11 +42,11 @@ class HangarSpaceshipChange:Box {
     
     var selectedCell:HangarSpaceshipSubCell?
     
-    let selectedSpaceships = MemoryCard.sharedInstance.playerData.motherShip.spaceships
+    let selectedSpaceships = MemoryCard.sharedInstance.playerData!.motherShip.spaceships
     
     init(spaceship:Spaceship) {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         self.spaceship = spaceship
         
@@ -81,11 +81,11 @@ class HangarSpaceshipChange:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: self.spaceship.type.name.uppercaseString + " + " + self.spaceship.weapon!.type.name.uppercaseString , fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelTitle = Label(color:SKColor.white ,text: self.spaceship.type.name.uppercased() + " + " + self.spaceship.weapon!.type.name.uppercased() , fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelTitle)
         
         
-        let labelRarity = Label(color:rarityColor ,text: self.spaceship.type.rarity.rawValue.uppercaseString , fontSize: 11, x: 47, y: 22, horizontalAlignmentMode: .Center, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        let labelRarity = Label(color:rarityColor ,text: self.spaceship.type.rarity.rawValue.uppercased() , fontSize: 11, x: 47, y: 22, horizontalAlignmentMode: .center, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(labelRarity)
         
         let spaceshipImage = Spaceship(spaceshipData: spaceship.spaceshipData!)
@@ -99,7 +99,7 @@ class HangarSpaceshipChange:Box {
         spaceshipImage.screenPosition = CGPoint(x: 46, y: 78)
         spaceshipImage.resetPosition()
         
-        let labelLevel = Label(color:SKColor.whiteColor() ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 46, y: 113, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        let labelLevel = Label(color:SKColor.white ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 46, y: 113, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelLevel)
         
         
@@ -129,25 +129,25 @@ class HangarSpaceshipChange:Box {
         
         
         let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
-        self.labelLifeValue = Label(text: life.description , fontSize: 11, x: 116, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelLifeValue = Label(text: life.description , fontSize: 11, x: 116, y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelLifeValue)
         
         
         let damage = GameMath.weaponDamage(level: self.spaceship.level, type: self.spaceship.weapon!.type)
-        self.labelDamageValue = Label(text: damage.description , fontSize: 11, x: 210, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelDamageValue = Label(text: damage.description , fontSize: 11, x: 210, y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelDamageValue)
         
-        self.labelRespawnValue = Label(text: "5s" , fontSize: 11, x: 116, y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelRespawnValue = Label(text: "5s" , fontSize: 11, x: 116, y: 93, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelRespawnValue)
         
         let fireRate = 1 / self.spaceship.weapon!.fireInterval
-        self.labelFirerateValue = Label(text: fireRate.description + "/s" , fontSize: 11, x: 210, y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelFirerateValue = Label(text: fireRate.description + "/s" , fontSize: 11, x: 210, y: 93, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelFirerateValue)
         
-        self.labelSpeedValue = Label(text: GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 11, x: 116, y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelSpeedValue = Label(text: GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 11, x: 116, y: 119, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelSpeedValue)
         
-        self.labelRangeValue = Label(text: self.spaceship.weapon!.type.range.description , fontSize: 11, x: 210, y: 120, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelRangeValue = Label(text: self.spaceship.weapon!.type.range.description , fontSize: 11, x: 210, y: 120, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
         self.addChild(self.labelRangeValue)
         
         let x = self.position.x - (self.size.width/2) * 0.1
@@ -159,26 +159,25 @@ class HangarSpaceshipChange:Box {
         let duration:Double = 0.10
         
         let action1 = SKAction.group([
-            SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
+            SKAction.scale(to: 1.1, duration: duration),
+            SKAction.move(to: CGPoint(x: x, y: y), duration: duration)
             ])
         
         let action2 = SKAction.group([
-            SKAction.scaleTo(1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+            SKAction.scale(to: 1, duration: duration),
+            SKAction.move(to: self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
             ])
         
-        self.runAction(SKAction.sequence([action1, action2])) {
+        self.run(SKAction.sequence([action1, action2]), completion: {
             
-            let spaceships = playerData.spaceships.sort({ (item0, item1) -> Bool in
+            let spaceships = playerData.spaceships.sorted(by: { (item0: Any, item1: Any) -> Bool in
                 if let spaceshipData0 = item0 as? SpaceshipData {
                     if let spaceshipData1 = item1 as? SpaceshipData {
-                        return spaceshipData0.level.integerValue > spaceshipData1.level.integerValue
+                        return spaceshipData0.level.intValue > spaceshipData1.level.intValue
                     }
                 }
                 return false
             })
-
             
             if spaceships.count > 4 {
                 
@@ -222,15 +221,15 @@ class HangarSpaceshipChange:Box {
                 
             } else {
                 
-                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12)
+                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontSize: 12, x: 141, y: 251, fontName: GameFonts.fontName.museo1000)
                 
                 self.addChild(empityLabel)
                 
-                self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+                self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.white, fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
                 self.addChild(self.buttonFactory!)
                 
             }
-        }
+        }) 
        
         
         
@@ -245,7 +244,7 @@ class HangarSpaceshipChange:Box {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func selectSpaceship(cell:HangarSpaceshipSubCell){
+    func selectSpaceship(_ cell:HangarSpaceshipSubCell){
         
         
         
@@ -275,7 +274,7 @@ class HangarSpaceshipChange:Box {
         let lifeDif = newLife - life
         if lifeDif > 0 {
             
-            self.labelLifeDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + lifeDif.description , fontSize: 11, x: Int(self.labelLifeValue.position.x + self.labelLifeValue.calculateAccumulatedFrame().width) , y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelLifeDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + lifeDif.description , fontSize: 11, x: Int(self.labelLifeValue.position.x + self.labelLifeValue.calculateAccumulatedFrame().width) , y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelLifeDif!)
             
             self.backgroundLifeDif = Control(textureName: "betterAtributeSmall", x: 91, y: 56)
@@ -286,7 +285,7 @@ class HangarSpaceshipChange:Box {
             
         } else if lifeDif < 0 {
             
-            self.labelLifeDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(lifeDif).description , fontSize: 11, x: Int(self.labelLifeValue.position.x + self.labelLifeValue.calculateAccumulatedFrame().width) , y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelLifeDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(lifeDif).description , fontSize: 11, x: Int(self.labelLifeValue.position.x + self.labelLifeValue.calculateAccumulatedFrame().width) , y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelLifeDif!)
             
             self.backgroundLifeDif = Control(textureName: "worseAtributte", x: 91, y: 56)
@@ -305,7 +304,7 @@ class HangarSpaceshipChange:Box {
         let damageDif = newDamage - damage
         if damageDif > 0 {
             
-            self.labelDamageDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + damageDif.description , fontSize: 11, x: Int(self.labelDamageValue.position.x + self.labelDamageValue.calculateAccumulatedFrame().width) , y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelDamageDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + damageDif.description , fontSize: 11, x: Int(self.labelDamageValue.position.x + self.labelDamageValue.calculateAccumulatedFrame().width) , y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelDamageDif!)
             
             self.backgroundDamageDif = Control(textureName: "betterAtributeSmall", x: 190, y: 56)
@@ -316,7 +315,7 @@ class HangarSpaceshipChange:Box {
             
         } else if damageDif < 0 {
             
-            self.labelDamageDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(damageDif).description , fontSize: 11, x: Int(self.labelDamageValue.position.x + self.labelDamageValue.calculateAccumulatedFrame().width) , y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelDamageDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(damageDif).description , fontSize: 11, x: Int(self.labelDamageValue.position.x + self.labelDamageValue.calculateAccumulatedFrame().width) , y: 70, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelDamageDif!)
             
             self.backgroundDamageDif = Control(textureName: "worseAtributte", x: 190, y: 56)
@@ -338,7 +337,7 @@ class HangarSpaceshipChange:Box {
         let firerateDif = newFirerate - firerate
         if firerateDif < 0 {
             
-            self.labelFirerateDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(firerateDif).description , fontSize: 11, x: Int(self.labelFirerateValue.position.x + self.labelFirerateValue.calculateAccumulatedFrame().width) , y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelFirerateDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(firerateDif).description , fontSize: 11, x: Int(self.labelFirerateValue.position.x + self.labelFirerateValue.calculateAccumulatedFrame().width) , y: 93, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelFirerateDif!)
             
             self.backgroundFirerateDif = Control(textureName: "worseAtributte", x: 190, y: 79)
@@ -349,7 +348,7 @@ class HangarSpaceshipChange:Box {
             
         } else if firerateDif > 0 {
             
-            self.labelFirerateDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + firerateDif.description , fontSize: 11, x: Int(self.labelFirerateValue.position.x + self.labelFirerateValue.calculateAccumulatedFrame().width) , y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelFirerateDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + firerateDif.description , fontSize: 11, x: Int(self.labelFirerateValue.position.x + self.labelFirerateValue.calculateAccumulatedFrame().width) , y: 93, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelFirerateDif!)
             
             self.backgroundFirerateDif = Control(textureName: "betterAtributeSmall", x: 190, y: 79)
@@ -369,7 +368,7 @@ class HangarSpaceshipChange:Box {
         
         if speedDif > 0 {
             
-            self.labelSpeedDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + speedDif.description , fontSize: 11, x: Int(self.labelSpeedValue.position.x + self.labelSpeedValue.calculateAccumulatedFrame().width) , y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelSpeedDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + speedDif.description , fontSize: 11, x: Int(self.labelSpeedValue.position.x + self.labelSpeedValue.calculateAccumulatedFrame().width) , y: 119, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelSpeedDif!)
             
             self.backgroundSpeedDif = Control(textureName: "betterAtributeSmall", x: 91, y: 105)
@@ -380,7 +379,7 @@ class HangarSpaceshipChange:Box {
             
         } else if speedDif < 0 {
             
-            self.labelSpeedDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(speedDif).description , fontSize: 11, x: Int(self.labelSpeedValue.position.x + self.labelSpeedValue.calculateAccumulatedFrame().width) , y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelSpeedDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(speedDif).description , fontSize: 11, x: Int(self.labelSpeedValue.position.x + self.labelSpeedValue.calculateAccumulatedFrame().width) , y: 119, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelSpeedDif!)
             
             self.backgroundSpeedDif = Control(textureName: "worseAtributte", x: 91, y: 105)
@@ -400,7 +399,7 @@ class HangarSpaceshipChange:Box {
         
         if rangeDif > 0 {
             
-            self.labelRangeDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + rangeDif.description , fontSize: 11, x: Int(self.labelRangeValue.position.x + self.labelRangeValue.calculateAccumulatedFrame().width) , y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelRangeDif = Label(color: SKColor(red: 104/255, green: 181/255, blue: 59/255, alpha: 100/100), text: "+ " + rangeDif.description , fontSize: 11, x: Int(self.labelRangeValue.position.x + self.labelRangeValue.calculateAccumulatedFrame().width) , y: 119, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelRangeDif!)
             
             self.backgroundRangeDif = Control(textureName: "betterAtributeSmall", x: 185, y: 105)
@@ -411,7 +410,7 @@ class HangarSpaceshipChange:Box {
             
         } else if rangeDif < 0 {
             
-            self.labelRangeDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(rangeDif).description , fontSize: 11, x: Int(self.labelRangeValue.position.x + self.labelRangeValue.calculateAccumulatedFrame().width) , y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.labelRangeDif = Label(color: SKColor(red: 231/255, green: 48/255, blue: 60/255, alpha: 100/100), text: "- " + abs(rangeDif).description , fontSize: 11, x: Int(self.labelRangeValue.position.x + self.labelRangeValue.calculateAccumulatedFrame().width) , y: 119, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1))
             self.addChild(self.labelRangeDif!)
             
             self.backgroundRangeDif = Control(textureName: "worseAtributte", x: 185, y: 105)
@@ -425,7 +424,7 @@ class HangarSpaceshipChange:Box {
         
         if self.buttonChoose == nil {
 
-            self.buttonChoose = Button(textureName: "buttonBlue131x32", text: "CHOOSE", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.buttonChoose = Button(textureName: "buttonBlue131x32", text: "CHOOSE", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.white, fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             self.addChild(self.buttonChoose!)
         }
         
@@ -434,7 +433,7 @@ class HangarSpaceshipChange:Box {
     
     func choose() {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         var index = 0
         for selectedSpaceship in self.selectedSpaceships {

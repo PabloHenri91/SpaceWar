@@ -40,7 +40,7 @@ extension BattleScene {
                 break
                 
             case "mySocketId":
-                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
+                if let mySocketId = socketAnyEvent.items?.first as? String {
                     serverManager.userDisplayInfo.socketId = mySocketId
                 } else {
                     
@@ -60,8 +60,8 @@ extension BattleScene {
                 break
                 
             case "someData":
-                if let message = socketAnyEvent.items?.firstObject as? [AnyObject] {
-                    var i = message.generate()
+                if let message = socketAnyEvent.items?.first as? [Any] {
+                    var i = message.makeIterator()
                     
                     switch (i.next() as! String) {
                         
@@ -105,12 +105,12 @@ extension BattleScene {
                                 }
                             }
                             
-                            let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.whiteColor(), fontSize: 32)
+                            let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.white, fontSize: 32)
                             
                             scene.gameWorld.addChild(label)
                             
-                            label.runAction({ let a = SKAction(); a.duration = 3; return a }(), completion: {
-                                label.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: {
+                            label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: {
+                                label.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
                                     label.removeFromParent()
                                 })
                             })
@@ -140,10 +140,10 @@ extension BattleScene {
         
     }
     
-    func updateOnline(socketAnyEvent: SocketAnyEvent) {
+    func updateOnline(_ socketAnyEvent: SocketAnyEvent) {
         
-        if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
-            var i = items.generate()
+        if let items = socketAnyEvent.items?.first as? [Any] {
+            var i = items.makeIterator()
             
             if let i = i.next() as? Int {
                 if self.mothership.health > 0 && self.mothership.health - i <= 0 {
@@ -204,7 +204,7 @@ extension BattleScene {
                             physicsBody.categoryBitMask = UInt32(i.next() as! Int) //3
                             physicsBody.collisionBitMask = UInt32(i.next() as! Int)  //4
                             physicsBody.contactTestBitMask = UInt32(i.next() as! Int) //5
-                            physicsBody.dynamic = Bool(i.next() as! Int) //6
+                            physicsBody.isDynamic = (i.next() as! Bool) //6
                         } else {
                             for _ in 0..<7 {
                                 i.next()
@@ -226,20 +226,20 @@ extension BattleScene {
         if GameScene.currentTime - self.lastOnlineUpdate > self.emitInterval {
             self.lastOnlineUpdate = GameScene.currentTime
             
-            var items = [AnyObject]()
+            var items = [Any]()
             
             if self.botMothership.onlineDamage == 0 {
-                items.append(false)
+                items.append(false as AnyObject)
             } else {
-                items.append(self.botMothership.onlineDamage)
+                items.append(self.botMothership.onlineDamage as AnyObject)
             }
             self.botMothership.onlineDamage = 0
             
             for spaceship in self.botMothership.spaceships {
                 if spaceship.onlineDamage == 0 {
-                    items.append(false)
+                    items.append(false as AnyObject)
                 } else {
-                    items.append(spaceship.onlineDamage)
+                    items.append(spaceship.onlineDamage as AnyObject)
                 }
                 spaceship.onlineDamage = 0
             }
@@ -247,35 +247,35 @@ extension BattleScene {
             for spaceship in self.mothership.spaceships {
                 
                 if spaceship.onlineHeal == 0 {
-                    items.append(false)
+                    items.append(false as AnyObject)
                 } else {
-                    items.append(spaceship.onlineHeal)
+                    items.append(spaceship.onlineHeal as AnyObject)
                 }
                 spaceship.onlineHeal = 0
                 
-                items.append(spaceship.needToMove)
-                items.append(spaceship.isInsideAMothership)
+                items.append(spaceship.needToMove as AnyObject)
+                items.append(spaceship.isInsideAMothership as AnyObject)
                 
-                items.append(Int(-spaceship.destination.x * 1000000))
-                items.append(Int(-spaceship.destination.y * 1000000))
+                items.append(Int(-spaceship.destination.x * 1000000) as AnyObject)
+                items.append(Int(-spaceship.destination.y * 1000000) as AnyObject)
                     
-                items.append(Int(-spaceship.position.x * 1000000))
-                items.append(Int(-spaceship.position.y * 1000000))
-                items.append(Int((spaceship.zRotation + CGFloat(M_PI)) * 1000000))
+                items.append(Int(-spaceship.position.x * 1000000) as AnyObject)
+                items.append(Int(-spaceship.position.y * 1000000) as AnyObject)
+                items.append(Int((spaceship.zRotation + CGFloat(M_PI)) * 1000000) as AnyObject)
                 
                 if let physicsBody = spaceship.physicsBody {
-                    items.append(true)
+                    items.append(true as AnyObject)
                     
-                    items.append(Int(-physicsBody.velocity.dx * 1000000))
-                    items.append(Int(-physicsBody.velocity.dy * 1000000))
-                    items.append(Int(physicsBody.angularVelocity * 1000000))
+                    items.append(Int(-physicsBody.velocity.dx * 1000000) as AnyObject)
+                    items.append(Int(-physicsBody.velocity.dy * 1000000) as AnyObject)
+                    items.append(Int(physicsBody.angularVelocity * 1000000) as AnyObject)
                     
-                    items.append(Int(physicsBody.categoryBitMask))
-                    items.append(Int(physicsBody.collisionBitMask))
-                    items.append(Int(physicsBody.contactTestBitMask))
-                    items.append(Int(physicsBody.dynamic))
+                    items.append(Int(physicsBody.categoryBitMask) as AnyObject)
+                    items.append(Int(physicsBody.collisionBitMask) as AnyObject)
+                    items.append(Int(physicsBody.contactTestBitMask) as AnyObject)
+                    items.append(physicsBody.isDynamic)
                 } else {
-                    items.append(false)
+                    items.append(false as AnyObject)
                 }
             }
             
@@ -297,7 +297,7 @@ class Room {
     }
     
     init(socketAnyEvent: SocketAnyEvent) {
-        if let message = socketAnyEvent.items?.firstObject as? [String : AnyObject] {
+        if let message = socketAnyEvent.items?.first as? [String : AnyObject] {
             if let roomId = message["roomId"] as? String {
                 
                 self.roomId = roomId
@@ -312,7 +312,7 @@ class Room {
         }
     }
     
-    func addPlayer(newUserDisplayInfo: UserDisplayInfo) {
+    func addPlayer(_ newUserDisplayInfo: UserDisplayInfo) {
         
         var containsNewUserDisplayInfo = false
         
@@ -328,9 +328,9 @@ class Room {
         }
     }
     
-    func addPlayer(socketAnyEvent: SocketAnyEvent) {
+    func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
         
-        if let message = socketAnyEvent.items?.firstObject as? [String] {
+        if let message = socketAnyEvent.items?.first as? [String] {
             self.addPlayer(UserDisplayInfo(socketId: message[0], displayName: message[1]))
         }
     }

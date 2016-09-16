@@ -15,7 +15,7 @@ class NextEvents: Control {
     var upcomingEvents = [EventCard]()
     
     override init() {
-        let spriteNode = SKSpriteNode(color: SKColor.clearColor(), size: CGSize(width: 10, height: 10))
+        let spriteNode = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 10, height: 10))
         
         super.init(spriteNode: spriteNode, x: 31, y: 369, xAlign: .center, yAlign: .center)
         
@@ -24,7 +24,7 @@ class NextEvents: Control {
         
         var allEvents = [EventCard]()
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         for item in playerData.researches {
             if let researchData = item as? ResearchData {
@@ -36,13 +36,13 @@ class NextEvents: Control {
         
         for item in playerData.missionSpaceships {
             if let missionSpaceshipData = item as? MissionSpaceshipData {
-                if missionSpaceshipData.missionType.integerValue > -1 {
+                if missionSpaceshipData.missionType.intValue > -1 {
                     allEvents.append(EventCard(missionSpaceshipData: missionSpaceshipData))
                 }
             }
         }
         
-        allEvents.sortInPlace { (eventCard0, eventCard1) -> Bool in
+        allEvents.sort { (eventCard0, eventCard1) -> Bool in
             return eventCard0.timeLeft() < eventCard1.timeLeft()
         }
         
@@ -79,7 +79,7 @@ class NextEvents: Control {
             break
         }
         
-        self.addChild(Label(color: color, text: titleText, fontSize: 14, x: 128, y: 11, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo1000, shadowColor: shadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: color, text: titleText, fontSize: 14, x: 128, y: 11, verticalAlignmentMode: .baseline, fontName: GameFonts.fontName.museo1000, shadowColor: shadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         
     }
     
@@ -128,21 +128,21 @@ class EventCard: Control {
         super.init(textureName: EventCard.backgroundTextureName)
         self.missionSpaceshipData = missionSpaceshipData
         self.type = .missionSpaceshipEvent
-        self.duration = MissionSpaceship.types[self.missionSpaceshipData!.missionType.integerValue].duration
+        self.duration = MissionSpaceship.types[self.missionSpaceshipData!.missionType.intValue].duration
     }
     
     init(researchData: ResearchData) {
         super.init(textureName: EventCard.backgroundTextureName)
         self.researchData = researchData
         self.type = .researchEvent
-        self.duration = Research.types[self.researchData!.type.integerValue].duration
+        self.duration = Research.types[self.researchData!.type.intValue].duration
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(index: Int, upcomingEventsCount: Int) {
+    func load(_ index: Int, upcomingEventsCount: Int) {
         
         var x = 0
         let y = 30
@@ -196,8 +196,8 @@ class EventCard: Control {
         case .researchEvent:
             timerType = TimeBar.types.researchTimer
             if let researchData = self.researchData {
-                if let spaceshipUnlocked = Research.types[researchData.type.integerValue].spaceshipUnlocked {
-                    if let weaponUnlocked = Research.types[researchData.type.integerValue].weaponUnlocked {
+                if let spaceshipUnlocked = Research.types[researchData.type.intValue].spaceshipUnlocked {
+                    if let weaponUnlocked = Research.types[researchData.type.intValue].weaponUnlocked {
                         let spaceship = Spaceship(type: spaceshipUnlocked, level: 0)
                         spaceship.addWeapon(Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false))
                         spaceship.position = CGPoint(x: Int(self.size.width/2), y: -Int(self.size.height/2))
@@ -220,7 +220,7 @@ class EventCard: Control {
         let shadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 10/100)
         
         
-        self.labelTime = Label(color: color, text: text, fontSize: 11, x: 33, y: 92, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo1000, shadowColor: shadowColor, shadowOffset: CGPoint(x: 0, y: -2))
+        self.labelTime = Label(color: color, text: text, fontSize: 11, x: 33, y: 92, verticalAlignmentMode: .baseline, fontName: GameFonts.fontName.museo1000, shadowColor: shadowColor, shadowOffset: CGPoint(x: 0, y: -2))
         self.labelTime.zPosition = 25
         self.addChild(self.labelTime)
         
@@ -241,14 +241,14 @@ class EventCard: Control {
         self.labelTime.setText(text)
     }
     
-    func startDate() -> NSDate? {
+    func startDate() -> Date? {
         switch self.type {
             
         case .missionSpaceshipEvent:
-            return self.missionSpaceshipData?.startMissionDate
+            return self.missionSpaceshipData?.startMissionDate as Date?
             
         case .researchEvent:
-            return self.researchData?.startDate
+            return self.researchData?.startDate as Date?
             
         default:
             return nil

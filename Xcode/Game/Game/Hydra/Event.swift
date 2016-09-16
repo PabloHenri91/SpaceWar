@@ -7,15 +7,15 @@
 //
 
 class Event<T> {
-    typealias EventHandler = T -> ()
+    typealias EventHandler = (T) -> ()
     
-    private var eventHandlers = [EventHandler]()
+    fileprivate var eventHandlers = [EventHandler]()
     
-    func addHandler(handler: EventHandler) {
+    func addHandler(_ handler: @escaping EventHandler) {
         eventHandlers.append(handler)
     }
     
-    func raise(data: T) {
+    func raise(_ data: T) {
         for handler in eventHandlers {
             handler(data)
         }

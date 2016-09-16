@@ -40,7 +40,7 @@ class Weapon: Control {
     init(weaponData:WeaponData, loadSoundEffects: Bool) {
         super.init()
         self.weaponData = weaponData
-        self.load(weaponData.type.integerValue, level: weaponData.level.integerValue, loadSoundEffects: loadSoundEffects)
+        self.load(weaponData.type.intValue, level: weaponData.level.intValue, loadSoundEffects: loadSoundEffects)
     }
     
     override init() {
@@ -51,7 +51,7 @@ class Weapon: Control {
         self.initShotSoundEffect = SoundEffect(soundFile: self.type.initSoundFileName, node: self)
     }
     
-    private func load(type:Int, level:Int, loadSoundEffects: Bool) {
+    fileprivate func load(_ type:Int, level:Int, loadSoundEffects: Bool) {
         
         self.type = Weapon.types[type]
         
@@ -75,13 +75,13 @@ class Weapon: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fire(bonusRange:CGFloat) {
+    func fire(_ bonusRange:CGFloat) {
         
         if GameScene.currentTime - self.lastFire > self.fireInterval {
             
             if let parentSpaceship = self.parent {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {
-                    if parentSpaceshipPhysicsBody.dynamic {
+                    if parentSpaceshipPhysicsBody.isDynamic {
                         if let parentSpaceshipParent = parentSpaceship.parent {
                             
                             let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody, color: self.type.color)
@@ -101,7 +101,7 @@ class Weapon: Control {
 
 class WeaponType {
     
-    var color = SKColor.whiteColor()
+    var color = SKColor.white
     var shotSkin = ""
     
     var maxLevel:Int

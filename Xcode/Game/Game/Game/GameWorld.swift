@@ -45,13 +45,13 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setScreenBox(size:CGSize) {
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRect(origin: CGPoint(x: -size.width/2, y: -size.height/2), size: size))
+    func setScreenBox(_ size:CGSize) {
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: CGPoint(x: -size.width/2, y: -size.height/2), size: size))
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.world.rawValue
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.isDynamic = false
     }
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         
         //Assign the two physics bodies so that the one with the lower category is always stored in firstBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -175,7 +175,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         }
     }
     
-    func didEndContact(contact: SKPhysicsContact) {
+    func didEnd(_ contact: SKPhysicsContact) {
         
         //Assign the two physics bodies so that the one with the lower category is always stored in firstBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -294,14 +294,14 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         }
     }
     
-    struct categoryBitMask : OptionSetType {
+    struct categoryBitMask : OptionSet {
         typealias RawValue = UInt32
-        private var value: UInt32 = 0
+        fileprivate var value: UInt32 = 0
         init(_ value: UInt32) { self.value = value }
         init(rawValue value: UInt32) { self.value = value }
         init(nilLiteral: ()) { self.value = 0 }
         static var allZeros: categoryBitMask { return self.init(0) }
-        static func fromMask(raw: UInt32) -> categoryBitMask { return self.init(raw) }
+        static func fromMask(_ raw: UInt32) -> categoryBitMask { return self.init(raw) }
         var rawValue: UInt32 { return self.value }
         
         static var none: categoryBitMask { return self.init(0) }

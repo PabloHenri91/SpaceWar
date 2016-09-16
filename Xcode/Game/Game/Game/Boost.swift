@@ -20,7 +20,7 @@ class Boost {
         
         Boost.activeBoosts = [Boost]()
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         var inactiveBoostData = [BoostData]()
         
@@ -45,10 +45,10 @@ class Boost {
     init(boostData: BoostData) {
         self.boostData = boostData
         
-        self.load(boostData.type.integerValue)
+        self.load(boostData.type.intValue)
     }
     
-    func load(type: Int) {
+    func load(_ type: Int) {
         self.type = Boost.types[type]
     }
     

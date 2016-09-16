@@ -41,12 +41,12 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         Control.resetControls()
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-            return  UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.Portrait.rawValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+            return  UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue | UIInterfaceOrientationMask.portraitUpsideDown.rawValue)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,7 +54,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -64,13 +64,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         let vc = self.view?.window?.rootViewController
         let gc = GKGameCenterViewController()
         gc.gameCenterDelegate = self
-        vc?.presentViewController(gc, animated: true, completion: nil)
+        vc?.present(gc, animated: true, completion: nil)
     }
     
     //hides leaderboard screen
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController)
     {
-        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+        gameCenterViewController.dismiss(animated: true, completion: nil)
         
     }
     
@@ -81,26 +81,26 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         
         localPlayer.authenticateHandler = {(viewController, error) in
             if viewController != nil {
-                self.presentViewController(viewController!, animated: true, completion: nil)
+                self.present(viewController!, animated: true, completion: nil)
             } else {
                 //print("GKLocalPlayer.authenticated: " + GKLocalPlayer.localPlayer().authenticated.description)
             }
             
-            if localPlayer.authenticated {
+            if localPlayer.isAuthenticated {
                 if let name = localPlayer.alias {
-                    MemoryCard.sharedInstance.playerData.name = name
+                    MemoryCard.sharedInstance.playerData!.name = name
                 }
             }
         }
     }
     
     
-    func saveLevel(level:Int) {
+    func saveLevel(_ level:Int) {
         
         if Metrics.canSendEvents() {
             
             //check if user is signed in
-            if GKLocalPlayer.localPlayer().authenticated {
+            if GKLocalPlayer.localPlayer().isAuthenticated {
                 
                 let scoreReporter = GKScore(leaderboardIdentifier: "com.Spacewar.Rank") //leaderboard id here
                 
@@ -108,7 +108,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
                 
                 let scoreArray: [GKScore] = [scoreReporter]
                 
-                GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -> Void in
+                GKScore.report(scoreArray, withCompletionHandler: { (error: Error?) in
                     if error != nil {
                         //print("error")
                     }

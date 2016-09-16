@@ -29,13 +29,13 @@ class PlayerDataCard: Control {
     var buttonStore:Button!
 
     override init() {
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
-        var xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.integerValue)
+        var xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.intValue)
         
-        if playerData.motherShip.xp.integerValue >= xpForNextLevel {
-            playerData.motherShip.level = NSNumber(int: playerData.motherShip.level.integerValue + 1)
-            playerData.motherShip.xp = NSNumber(integer: playerData.motherShip.xp.integerValue - xpForNextLevel)
+        if playerData.motherShip.xp.intValue >= xpForNextLevel {
+            playerData.motherShip.level = (playerData.motherShip.level.intValue + 1) as NSNumber
+            playerData.motherShip.xp = (playerData.motherShip.xp.intValue - xpForNextLevel) as NSNumber
             
             Metrics.levelUp()
             #if os(iOS)
@@ -44,9 +44,9 @@ class PlayerDataCard: Control {
                 }
             #endif
             
-            let scene = Control.gameScene
+            let scene = Control.gameScene!
             
-            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
+            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.ok)
             alertBox.buttonOK.addHandler({
                 scene.setDefaultState()
             })
@@ -54,7 +54,7 @@ class PlayerDataCard: Control {
             scene.addChild(alertBox)
         }
         
-        xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.integerValue)
+        xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.intValue)
         
         super.init(textureName: "playerDataCardBackground", x: -58, y: 0, xAlign: .center, yAlign: .up)
         self.zPosition = 100
@@ -62,7 +62,7 @@ class PlayerDataCard: Control {
         self.statistics = PlayerDataCardStatistics()
         self.addChild(self.statistics)
         
-        self.loadXPBar(xp: playerData.motherShip.xp.integerValue, xpForNextLevel: xpForNextLevel)
+        self.loadXPBar(xp: playerData.motherShip.xp.intValue, xpForNextLevel: xpForNextLevel)
         self.loadLabelXP(playerData.motherShip.xp.description + "/" + xpForNextLevel.description)
         
         
@@ -70,7 +70,7 @@ class PlayerDataCard: Control {
         
         self.loadLabelLevel(playerData.motherShip.level.description)
         
-        self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
+        self.loadResourcesLabels(playerData.points.intValue, premiumPoints: playerData.premiumPoints.intValue)
         
         self.buttonStore = Button(textureName: "buttonTakeMyMoney", x: 343, y: 19, touchArea:CGSize(width: 64,height: 64))
         self.addChild(self.buttonStore)
@@ -85,7 +85,7 @@ class PlayerDataCard: Control {
         self.statistics.update()
     }
     
-    func loadResourcesLabels(points:Int, premiumPoints:Int) {
+    func loadResourcesLabels(_ points:Int, premiumPoints:Int) {
         let valueFontName = GameFonts.fontName.museo1000
         let fontSize = CGFloat(9)
         let pointsColor = SKColor(red: 255/255, green: 162/255, blue: 87/255, alpha: 1)
@@ -95,14 +95,14 @@ class PlayerDataCard: Control {
         
         let labelPremiumPointsValuePosition = CGPoint(x: 287, y: 41)
         
-        self.labelPoints = Label(color: pointsColor, text: points.description, fontSize: fontSize, x: Int(labelPointsValuePosition.x), y: Int(labelPointsValuePosition.y), verticalAlignmentMode: .Center, horizontalAlignmentMode: .Left, fontName: valueFontName)
+        self.labelPoints = Label(color: pointsColor, text: points.description, fontSize: fontSize, x: Int(labelPointsValuePosition.x), y: Int(labelPointsValuePosition.y), verticalAlignmentMode: .center, horizontalAlignmentMode: .left, fontName: valueFontName)
         self.addChild(self.labelPoints)
         
-        self.labelPremiumPoints = Label(color: premiumPointsColor, text: premiumPoints.description, fontSize: fontSize, x: Int(labelPremiumPointsValuePosition.x), y: Int(labelPremiumPointsValuePosition.y), verticalAlignmentMode: .Center, horizontalAlignmentMode: .Left, fontName: valueFontName)
+        self.labelPremiumPoints = Label(color: premiumPointsColor, text: premiumPoints.description, fontSize: fontSize, x: Int(labelPremiumPointsValuePosition.x), y: Int(labelPremiumPointsValuePosition.y), verticalAlignmentMode: .center, horizontalAlignmentMode: .left, fontName: valueFontName)
         self.addChild(self.labelPremiumPoints)
     }
     
-    func loadLabelLevel(text:String) {
+    func loadLabelLevel(_ text:String) {
         let fontName = GameFonts.fontName.museo1000
         let positionX = 217
         let positionY = 35
@@ -110,15 +110,15 @@ class PlayerDataCard: Control {
         let color = SKColor(red: 60/255, green: 75/255, blue: 88/255, alpha: 1)
         let shadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 8/100)
         
-        self.labelLevel = Label(color: color, text: text, fontSize: fontSize, x: positionX, y: positionY, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center, fontName: fontName)
+        self.labelLevel = Label(color: color, text: text, fontSize: fontSize, x: positionX, y: positionY, verticalAlignmentMode: .center, horizontalAlignmentMode: .center, fontName: fontName)
         
-        self.labelLevelShadow = Label(color: shadowColor, text: text, fontSize: fontSize, x: positionX, y: positionY + 1, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center, fontName: fontName)
+        self.labelLevelShadow = Label(color: shadowColor, text: text, fontSize: fontSize, x: positionX, y: positionY + 1, verticalAlignmentMode: .center, horizontalAlignmentMode: .center, fontName: fontName)
         
         self.addChild(self.labelLevelShadow)
         self.addChild(self.labelLevel)
     }
     
-    func loadLabelXP(text:String) {
+    func loadLabelXP(_ text:String) {
         let fontName = GameFonts.fontName.museo1000
         let positionX = 114
         let positionY = 35
@@ -126,15 +126,15 @@ class PlayerDataCard: Control {
         let color = SKColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         let shadowColor = SKColor(red: 28/255, green: 112/255, blue: 141/255, alpha: 100/100)
         
-        self.labelXP = Label(color: color, text: text, fontSize: fontSize, x: positionX, y: positionY, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center, fontName: fontName)
+        self.labelXP = Label(color: color, text: text, fontSize: fontSize, x: positionX, y: positionY, verticalAlignmentMode: .center, horizontalAlignmentMode: .center, fontName: fontName)
         
-        self.labelXPShadow = Label(color: shadowColor, text: text, fontSize: fontSize, x: positionX, y: positionY +  1, verticalAlignmentMode: .Center, horizontalAlignmentMode: .Center, fontName: fontName)
+        self.labelXPShadow = Label(color: shadowColor, text: text, fontSize: fontSize, x: positionX, y: positionY +  1, verticalAlignmentMode: .center, horizontalAlignmentMode: .center, fontName: fontName)
         
         self.addChild(self.labelXPShadow)
         self.addChild(self.labelXP)
     }
     
-    func loadXPBar(xp xp:Int, xpForNextLevel:Int) {
+    func loadXPBar(xp:Int, xpForNextLevel:Int) {
         
         let color = SKColor(red: 45/255, green: 195/255, blue: 245/255, alpha: 1)
         let width:CGFloat = 103 * (CGFloat(xp)/CGFloat(xpForNextLevel))
@@ -144,7 +144,7 @@ class PlayerDataCard: Control {
         
         self.xpBarCircle = SKShapeNode(circleOfRadius: CGFloat(height/2))
         self.xpBarCircle.fillColor = color
-        self.xpBarCircle.strokeColor = SKColor.clearColor()
+        self.xpBarCircle.strokeColor = SKColor.clear
         self.xpBarCircle.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
         
         if width > height/2 {
@@ -166,8 +166,8 @@ class PlayerDataCard: Control {
         self.addChild(self.xpBarCircle)
     }
     
-    private func updateLevel() {
-        let playerData = MemoryCard.sharedInstance.playerData
+    fileprivate func updateLevel() {
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         let text = playerData.motherShip.level.description
         
@@ -176,24 +176,24 @@ class PlayerDataCard: Control {
         
         let duration:Double = 0.10
         var actions = [SKAction]()
-        actions.append(SKAction.scaleTo(1.5, duration: duration))
-        actions.append(SKAction.scaleTo(1.0, duration: duration))
+        actions.append(SKAction.scale(to: 1.5, duration: duration))
+        actions.append(SKAction.scale(to: 1.0, duration: duration))
         let action = SKAction.sequence(actions)
         
-        self.labelLevel.runAction(action)
-        self.labelLevelShadow.runAction(action)
+        self.labelLevel.run(action)
+        self.labelLevelShadow.run(action)
     }
     
     func updateXP() {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
-        var xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.integerValue)
+        var xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.intValue)
         
-        if playerData.motherShip.xp.integerValue >= xpForNextLevel {
-            playerData.motherShip.level = NSNumber(int: playerData.motherShip.level.integerValue + 1)
+        if playerData.motherShip.xp.intValue >= xpForNextLevel {
+            playerData.motherShip.level = NSNumber(value: playerData.motherShip.level.intValue + 1 as Int32)
             self.updateLevel()
-            playerData.motherShip.xp = NSNumber(integer: playerData.motherShip.xp.integerValue - xpForNextLevel)
+            playerData.motherShip.xp = NSNumber(value: playerData.motherShip.xp.intValue - xpForNextLevel as Int)
             
             Metrics.levelUp()
             #if os(iOS)
@@ -202,9 +202,9 @@ class PlayerDataCard: Control {
                 }
             #endif
             
-            let scene = Control.gameScene
+            let scene = Control.gameScene!
             
-            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.OK)
+            let alertBox = AlertBox(title: "Level Up!", text: "You are now on level ".translation() + playerData.motherShip.level.description + "! " + String.winEmoji(), type: AlertBox.messageType.ok)
             alertBox.buttonOK.addHandler({
                 scene.setDefaultState()
             })
@@ -212,7 +212,7 @@ class PlayerDataCard: Control {
             scene.addChild(alertBox)
         }
         
-        xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.integerValue)
+        xpForNextLevel = GameMath.xpForNextLevel(level: playerData.motherShip.level.intValue)
         
         let text = playerData.motherShip.xp.description + "/" + xpForNextLevel.description
         
@@ -221,33 +221,33 @@ class PlayerDataCard: Control {
         
         let duration:Double = 0.10
         var actions = [SKAction]()
-        actions.append(SKAction.scaleTo(1.5, duration: duration))
-        actions.append(SKAction.scaleTo(1.0, duration: duration))
+        actions.append(SKAction.scale(to: 1.5, duration: duration))
+        actions.append(SKAction.scale(to: 1.0, duration: duration))
         let action = SKAction.sequence(actions)
         
-        self.labelXP.runAction(action)
-        self.labelXPShadow.runAction(action)
+        self.labelXP.run(action)
+        self.labelXPShadow.run(action)
         
         let positionX:CGFloat = 166
         let positionY:CGFloat = -26
-        let width:CGFloat = 103 * (CGFloat(playerData.motherShip.xp.integerValue)/CGFloat(xpForNextLevel))
+        let width:CGFloat = 103 * (CGFloat(playerData.motherShip.xp.intValue)/CGFloat(xpForNextLevel))
         let height:CGFloat = 17
         
         self.xpBarCircle.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
         
         if let xpBarSpriteNode = self.xpBarSpriteNode {
             if width > height/2 {
-                xpBarSpriteNode.hidden = false
+                xpBarSpriteNode.isHidden = false
                 xpBarSpriteNode.size = CGSize(width: width - (height/2), height: height)
                 xpBarSpriteNode.position = CGPoint(x: positionX, y: positionY)
             } else {
-                xpBarSpriteNode.hidden = true
+                xpBarSpriteNode.isHidden = true
             }
         }
     }
     
     func updatePoints() {
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         let text = playerData.points.description
         
@@ -255,15 +255,15 @@ class PlayerDataCard: Control {
         
         let duration:Double = 0.10
         var actions = [SKAction]()
-        actions.append(SKAction.scaleTo(1.5, duration: duration))
-        actions.append(SKAction.scaleTo(1.0, duration: duration))
+        actions.append(SKAction.scale(to: 1.5, duration: duration))
+        actions.append(SKAction.scale(to: 1.0, duration: duration))
         let action = SKAction.sequence(actions)
         
-        self.labelPoints.runAction(action)
+        self.labelPoints.run(action)
     }
     
     func updatePremiumPoints() {
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
         let text = playerData.premiumPoints.description
         
@@ -271,11 +271,11 @@ class PlayerDataCard: Control {
         
         let duration:Double = 0.10
         var actions = [SKAction]()
-        actions.append(SKAction.scaleTo(1.5, duration: duration))
-        actions.append(SKAction.scaleTo(1.0, duration: duration))
+        actions.append(SKAction.scale(to: 1.5, duration: duration))
+        actions.append(SKAction.scale(to: 1.0, duration: duration))
         let action = SKAction.sequence(actions)
         
-        self.labelPremiumPoints.runAction(action)
+        self.labelPremiumPoints.run(action)
     }
     
     override func removeFromParent() {
@@ -301,9 +301,9 @@ class PlayerDataCardStatistics: Control {
     
     override init() {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+        let playerData = MemoryCard.sharedInstance.playerData!
         
-        let spriteNode = SKSpriteNode(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 1, height: 1))
+        let spriteNode = SKSpriteNode(texture: nil, color: SKColor.white, size: CGSize(width: 1, height: 1))
         
         super.init(spriteNode: spriteNode, size: CGSize(width: self.spriteNodeWidth, height: self.playerDataCardBackground2PositionY), x: 0, y: 0)
         Control.controlList.remove(self)
@@ -315,13 +315,13 @@ class PlayerDataCardStatistics: Control {
         self.addChild(control)
         
         self.buttonConfig = Button(textureName: "buttonConfig", x: 341, y: 75, touchArea:CGSize(width: 32,height: 32))
-        self.buttonConfig.hidden = true//TODO: buttonConfig
+        self.buttonConfig.isHidden = true//TODO: buttonConfig
         self.addChild(self.buttonConfig)
         
         let fontColor = SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1)
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 10/100)
         
-        self.buttonRanking = Button(textureName: "buttonRanking", text: "Ranking", fontSize:10, x: 333, y: 143, touchArea:CGSize(width: 32,height: 32), fontColor:fontColor, pressedFontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: -20))
+        self.buttonRanking = Button(textureName: "buttonRanking", text: "Ranking", fontSize:10, x: 333, y: 143, touchArea:CGSize(width: 32,height: 32), fontColor:fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: CGPoint(x: 0, y: -1), pressedFontColor: fontColor, fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: -20))
         self.addChild(self.buttonRanking)
         #if os(iOS)
             self.buttonRanking.addHandler {
@@ -335,31 +335,31 @@ class PlayerDataCardStatistics: Control {
         self.addChild(Label(color: fontColor, text: "Available Updates", fontSize: 15, x: 217, y: 369, fontName: GameFonts.fontName.museo1000, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         
         
-        let availableUpdates = [AnyObject]()
+        let availableUpdates = [Any]()
         if availableUpdates.count > 0 {
             //TODO: Available Updates
         } else {
             self.addChild(Control(textureName: "iconNoUpdatesAvailable", x: 208, y: 393))
         }
         
-        self.addChild(Label(color: fontColor, text: "General Statistics", fontSize: 15, x: 124, y: 160, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: fontColor, text: "General Statistics", fontSize: 15, x: 124, y: 160, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         
         self.addChild(Control(textureName: "iconPlayerAvatar", x: 79, y: 67))
         
-        self.addChild(Label(color: fontColor, text: playerData.name, fontSize: 12, x: 124, y: 83, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: fontColor, text: playerData.name, fontSize: 12, x: 124, y: 83, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         
         //TODO GKLocalPlayer ??? update
-        if GKLocalPlayer.localPlayer().authenticated {
-            self.addChild(Label(color: fontColor, text: "Connected to the Game Center", fontSize: 10, x: 124, y: 97, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
+        if GKLocalPlayer.localPlayer().isAuthenticated {
+            self.addChild(Label(color: fontColor, text: "Connected to the Game Center", fontSize: 10, x: 124, y: 97, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: CGPoint(x: 0, y: -2)))
         }
         
         self.addChild(Control(textureName: "statisticsIcons", x: 81, y: 190))
         
         // winCount
-        let winCountLabel = Label(color: fontColor, text: "Victories: ", fontSize: 11, x: 110, y: 207, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+        let winCountLabel = Label(color: fontColor, text: "Victories: ", fontSize: 11, x: 110, y: 207, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         
         let winCountValueXOffset = Int(winCountLabel.calculateAccumulatedFrame().size.width)
-        let winCountValue = Label(color: fontColor, text: playerData.winCount.integerValue.description, fontSize: 11, x: 110 + winCountValueXOffset, y: 207, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+        let winCountValue = Label(color: fontColor, text: playerData.winCount.intValue.description, fontSize: 11, x: 110 + winCountValueXOffset, y: 207, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         
         self.addChild(winCountLabel)
         self.addChild(winCountValue)
@@ -372,26 +372,26 @@ class PlayerDataCardStatistics: Control {
         
         for item in playerData.spaceships {
             if let spaceshipData = item as? SpaceshipData {
-                if spaceshipData.killCount.integerValue > bestSspaceshipKillCount {
+                if spaceshipData.killCount.intValue > bestSspaceshipKillCount {
                     if let weaponData = (spaceshipData.weapons.anyObject() as? WeaponData) {
-                        bestSspaceshipKillCount = spaceshipData.killCount.integerValue
-                        bestSpaceshipName = Spaceship.displayName(spaceshipData.type.integerValue, weaponType: weaponData.type.integerValue) + ". Killed ".translation()
+                        bestSspaceshipKillCount = spaceshipData.killCount.intValue
+                        bestSpaceshipName = Spaceship.displayName(spaceshipData.type.intValue, weaponType: weaponData.type.intValue) + ". Killed ".translation()
                     }
                 }
             }
         }
         
-        let labelBestSpaceshipLabel = Label(color: fontColor, text: "MVP: ", fontSize: 11, x: 110, y: 235, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+        let labelBestSpaceshipLabel = Label(color: fontColor, text: "MVP: ", fontSize: 11, x: 110, y: 235, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         
         let labelBestSpaceshipNameXOffset = Int(labelBestSpaceshipLabel.calculateAccumulatedFrame().size.width)
-        let labelBestSpaceshipName = Label(color: fontColor, text: bestSpaceshipName, fontSize: 11, x: 110 + labelBestSpaceshipNameXOffset, y: 235, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+        let labelBestSpaceshipName = Label(color: fontColor, text: bestSpaceshipName, fontSize: 11, x: 110 + labelBestSpaceshipNameXOffset, y: 235, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         
         if bestSspaceshipKillCount > 0 {
             let labelBestSpaceshipKillCountXOffset = labelBestSpaceshipNameXOffset + Int(labelBestSpaceshipName.calculateAccumulatedFrame().size.width)
-            let labelBestSpaceshipKillCount = Label(color: fontColor, text: bestSspaceshipKillCount.description, fontSize: 11, x: 110 + labelBestSpaceshipKillCountXOffset, y: 235, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+            let labelBestSpaceshipKillCount = Label(color: fontColor, text: bestSspaceshipKillCount.description, fontSize: 11, x: 110 + labelBestSpaceshipKillCountXOffset, y: 235, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
             
             let labelBestSpaceshipKillCountRightXOffset = labelBestSpaceshipKillCountXOffset + Int(labelBestSpaceshipKillCount.calculateAccumulatedFrame().size.width)
-            let labelBestSpaceshipKillCountRight = Label(color: fontColor, text: "enemies.", fontSize: 11, x: 110 + labelBestSpaceshipKillCountRightXOffset, y: 235, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+            let labelBestSpaceshipKillCountRight = Label(color: fontColor, text: "enemies.", fontSize: 11, x: 110 + labelBestSpaceshipKillCountRightXOffset, y: 235, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
             
             self.addChild(labelBestSpaceshipKillCountRight)
             self.addChild(labelBestSpaceshipKillCount)
@@ -405,10 +405,10 @@ class PlayerDataCardStatistics: Control {
         
         
         //best winning streak
-        let labelWinningStreakLabel = Label(color: fontColor, text: "Best Winning Streak: ", fontSize: 11, x: 110, y: 263, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+        let labelWinningStreakLabel = Label(color: fontColor, text: "Best Winning Streak: ", fontSize: 11, x: 110, y: 263, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         
         let labelWinningStreakValueXOffset = Int(labelWinningStreakLabel.calculateAccumulatedFrame().size.width)
-        let labelWinningStreakValue = Label(color: fontColor, text: playerData.winningStreakBest.integerValue.description, fontSize: 11, x: 110 + labelWinningStreakValueXOffset, y: 263, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+        let labelWinningStreakValue = Label(color: fontColor, text: playerData.winningStreakBest.intValue.description, fontSize: 11, x: 110 + labelWinningStreakValueXOffset, y: 263, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         
         self.addChild(labelWinningStreakValue)
         self.addChild(labelWinningStreakLabel)
@@ -416,13 +416,13 @@ class PlayerDataCardStatistics: Control {
         
         
         // pointsSum
-        let labelPointsSumLabel = Label(color: fontColor, text: "Collected a total of ", fontSize: 11, x: 110, y: 291, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+        let labelPointsSumLabel = Label(color: fontColor, text: "Collected a total of ", fontSize: 11, x: 110, y: 291, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         
         let labelPointsSumXOffset = Int(labelPointsSumLabel.calculateAccumulatedFrame().size.width)
-        let labelPointsSumValue = Label(color: fontColor, text: playerData.pointsSum.integerValue.description, fontSize: 11, x: 110 + labelPointsSumXOffset, y: 291, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000)
+        let labelPointsSumValue = Label(color: fontColor, text: playerData.pointsSum.intValue.description, fontSize: 11, x: 110 + labelPointsSumXOffset, y: 291, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000)
         
         let iconFragmentsXOffset = labelPointsSumXOffset + Int(labelPointsSumValue.calculateAccumulatedFrame().size.width) + 2
-        let labelFragments =  Label(color: fontColor, text: " fragments.", fontSize: 11, x: 110 + iconFragmentsXOffset, y: 291, verticalAlignmentMode: .Baseline, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo500)
+        let labelFragments =  Label(color: fontColor, text: " fragments.", fontSize: 11, x: 110 + iconFragmentsXOffset, y: 291, verticalAlignmentMode: .baseline, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500)
         
         self.addChild(labelPointsSumLabel)
         self.addChild(labelPointsSumValue)
@@ -432,23 +432,23 @@ class PlayerDataCardStatistics: Control {
         
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 3/100), size: CGSize(width: 1, height: 1)),
-            y: 122, size: CGSize(width: self.spriteNodeWidth,
-                height: 10)))
+            size: CGSize(width: self.spriteNodeWidth,
+                height: 10), y: 122))
         
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 3/100), size: CGSize(width: 1, height: 1)),
-            y: 326, size: CGSize(width: self.spriteNodeWidth,
-                height: 10)))
+            size: CGSize(width: self.spriteNodeWidth,
+                height: 10), y: 326))
         
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 8/100), size: CGSize(width: 1, height: 1)),
-            y: 324, size: CGSize(width: self.spriteNodeWidth,
-                height: 2)))
+            size: CGSize(width: self.spriteNodeWidth,
+                height: 2), y: 324))
         
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 8/100), size: CGSize(width: 1, height: 1)),
-            y: 120, size: CGSize(width: self.spriteNodeWidth,
-                height: 2)))
+            size: CGSize(width: self.spriteNodeWidth,
+                height: 2), y: 120))
         
         
     }
@@ -466,13 +466,13 @@ class PlayerDataCardStatistics: Control {
             let lastPosition = self.position
             let y:CGFloat = lastPosition.y + Control.dy
             if y > 0 && y < 384 {
-                self.runAction(SKAction.moveBy(CGVector(dx: 0, dy: Control.dy), duration: 2/60))
+                self.run(SKAction.move(by: CGVector(dx: 0, dy: Control.dy), duration: 2/60))
             }
             
             
             Control.gameScene.blackSpriteNode.alpha = 1 - self.position.y/CGFloat(self.playerDataCardBackground2PositionY)
             Control.gameScene.blackSpriteNode.zPosition = 25
-            Control.gameScene.blackSpriteNode.hidden = false
+            Control.gameScene.blackSpriteNode.isHidden = false
         }
     }
     
@@ -510,12 +510,12 @@ class PlayerDataCardStatistics: Control {
         }
     }
     
-    private func forceClose() {
-        self.runAction(SKAction.moveTo(CGPoint(x:0, y: self.playerDataCardBackground2PositionY), duration: 0.25))
-        Control.gameScene.blackSpriteNode.runAction(SKAction.fadeAlphaTo(0, duration: 0.25)) {
-            Control.gameScene.blackSpriteNode.hidden = true
+    fileprivate func forceClose() {
+        self.run(SKAction.move(to: CGPoint(x:0, y: self.playerDataCardBackground2PositionY), duration: 0.25))
+        Control.gameScene.blackSpriteNode.run(SKAction.fadeAlpha(to: 0, duration: 0.25), completion: {
+            Control.gameScene.blackSpriteNode.isHidden = true
             Control.gameScene.blackSpriteNode.alpha = 1
-        }
+        }) 
     }
     
     func open() {
@@ -525,9 +525,9 @@ class PlayerDataCardStatistics: Control {
         }
     }
     
-    private func forceOpen() {
-        self.runAction(SKAction.moveTo(CGPoint(x:0, y: 0), duration: 0.25))
-        Control.gameScene.blackSpriteNode.hidden = false
-        Control.gameScene.blackSpriteNode.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
+    fileprivate func forceOpen() {
+        self.run(SKAction.move(to: CGPoint(x:0, y: 0), duration: 0.25))
+        Control.gameScene.blackSpriteNode.isHidden = false
+        Control.gameScene.blackSpriteNode.run(SKAction.fadeAlpha(to: 1, duration: 0.25))
     }
 }

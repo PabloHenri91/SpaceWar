@@ -49,7 +49,7 @@ class Control: SKNode {
     
     var size = CGSize.zero
     
-    var screenPosition:CGPoint = CGPointZero
+    var screenPosition:CGPoint = CGPoint.zero
     
     override init() {
         super.init()
@@ -71,7 +71,7 @@ class Control: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(name:String, spriteNode:SKSpriteNode, size:CGSize, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments, alpha: CGFloat) {
+    func load(_ name:String, spriteNode:SKSpriteNode, size:CGSize, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments, alpha: CGFloat) {
         
         spriteNode.alpha = alpha
         
@@ -104,6 +104,11 @@ class Control: SKNode {
         self.gameScene.blackSpriteNode.size = self.gameScene.size
     }
     
+    override func moveToParent(parent: SKNode) {
+        super.removeFromParent()
+        parent.addChild(self)
+    }
+    
     func resetPosition() {
         //TODO: quebrou aqui
         self.position = CGPoint(
@@ -111,7 +116,7 @@ class Control: SKNode {
             y: -Int(screenPosition.y/Display.screenScale) - Int(Display.translate.y * CGFloat(yAlign.rawValue)))
     }
     
-    func getPositionWithScreenPosition(screenPosition:CGPoint) -> CGPoint {
+    func getPositionWithScreenPosition(_ screenPosition:CGPoint) -> CGPoint {
         return CGPoint(
             x: Int(screenPosition.x/Display.screenScale) + Int(Display.translate.x * CGFloat(xAlign.rawValue)),
             y: -Int(screenPosition.y/Display.screenScale) - Int(Display.translate.y * CGFloat(yAlign.rawValue)))
@@ -125,11 +130,6 @@ class Control: SKNode {
         }
         Control.controlList.remove(self)
         super.removeFromParent()
-    }
-    
-    override func moveToParent(parent: SKNode) {
-        super.removeFromParent()
-        parent.addChild(self)
     }
        
     //Input
@@ -165,8 +165,8 @@ class Control: SKNode {
     static func touchesMovedUpdate() {
         #if os(iOS) || os(tvOS)
             for touch in Control.touchesArray {
-                let location = touch.0.locationInNode(Control.gameScene)
-                let previousLocation = touch.0.previousLocationInNode(Control.gameScene)
+                let location = touch.0.location(in: Control.gameScene)
+                let previousLocation = touch.0.previousLocation(in: Control.gameScene)
                 
                 Control.totalDx += location.x - previousLocation.x
                 Control.totalDy += location.y - previousLocation.y
@@ -196,7 +196,7 @@ class Control: SKNode {
     }
     
     #if os(iOS) || os(tvOS)
-    static func touchesBegan(touches: Set<UITouch>, _ responder:UIResponder) {
+    static func touchesBegan(_ touches: Set<UITouch>, _ responder:UIResponder) {
         Control.touchesEndedUpdate()
         for touch in touches {
             Control.touchesArray.updateValue(GameScene.currentTime, forKey: touch)
@@ -205,21 +205,21 @@ class Control: SKNode {
         responder.touchesBegan(touches)
     }
     
-    static func touchesMoved(touches: Set<UITouch>, _ responder:UIResponder) {
+    static func touchesMoved(_ touches: Set<UITouch>, _ responder:UIResponder) {
         Control.touchesMovedUpdate()
         Button.update()
         ScrollNode.updateOnTouchesMoved()
         responder.touchesMoved(touches)
     }
     
-    static func touchesEnded(touches: Set<UITouch>, _ responder:UIResponder) {
+    static func touchesEnded(_ touches: Set<UITouch>, _ responder:UIResponder) {
         ScrollNode.updateOnTouchesEnded()
         
         #if os(iOS) || os(tvOS)
             var taps = Set<UITouch>()
             
             for touch in touches {
-                if let value = Control.touchesArray.removeValueForKey(touch) {
+                if let value = Control.touchesArray.removeValue(forKey: touch) {
                     if(GameScene.currentTime - value < 1) {
                         if(!((Control.totalDx * Control.totalDx) + (Control.totalDy * Control.totalDy) > 10 * 10)) {
                             taps.insert(touch)
@@ -243,7 +243,7 @@ class Control: SKNode {
         Control.touchesEndedUpdate()
     }
     
-    static func touchesCancelled(responder:UIResponder) {
+    static func touchesCancelled(_ responder:UIResponder) {
         Control.resetInput()
         Button.update()
         Control.touchesEndedUpdate()
@@ -286,4 +286,12 @@ class Control: SKNode {
         Control.touchesEndedUpdate()
     }
     #endif
+}
+
+extension SKNode {
+    
+    func moveToParent(parent: SKNode) {
+        self.removeFromParent()
+        parent.addChild(self)
+    }
 }

@@ -23,7 +23,7 @@ extension MemoryCard {
     
     func newMothershipData() -> MothershipData {
         
-        let mothershipData = NSEntityDescription.insertNewObjectForEntityForName("MothershipData", inManagedObjectContext: self.managedObjectContext) as! MothershipData
+        let mothershipData = NSEntityDescription.insertNewObject(forEntityName: "MothershipData", into: self.managedObjectContext) as! MothershipData
         
         mothershipData.level = 1
         mothershipData.xp = 0
@@ -36,15 +36,15 @@ extension MemoryCard {
 
 extension MothershipData {
     
-    func addSpaceshipData(value: SpaceshipData, index: Int) {
-        let items = self.mutableOrderedSetValueForKey("spaceships")
+    func addSpaceshipData(_ value: SpaceshipData, index: Int) {
+        let items = self.mutableOrderedSetValue(forKey: "spaceships")
         //items.addObject(value)
-        items.insertObject(value, atIndex: index)
+        items.insert(value, at: index)
     }
     
-    func removeSpaceshipData(value: SpaceshipData) {
-        let items = self.mutableOrderedSetValueForKey("spaceships")
-        items.removeObject(value)
+    func removeSpaceshipData(_ value: SpaceshipData) {
+        let items = self.mutableOrderedSetValue(forKey: "spaceships")
+        items.remove(value)
     }
     
 }

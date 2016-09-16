@@ -32,7 +32,7 @@ class Music {
     var musicName = ""
     var musicType:musicTypes = .noMusic
     
-    func playMusicWithType(musicType:musicTypes) {
+    func playMusicWithType(_ musicType:musicTypes) {
         if self.musicType != musicType {
             self.musicType = musicType
             var musicNames = [String]()
@@ -40,10 +40,10 @@ class Music {
             case .noMusic:
                 return
             case .menu:
-                musicNames.appendContentsOf(Music.fileNames.menu)
+                musicNames.append(contentsOf: Music.fileNames.menu)
                 break
             case .battle:
-                musicNames.appendContentsOf(Music.fileNames.battle)
+                musicNames.append(contentsOf: Music.fileNames.battle)
                 break
             }
             
@@ -51,20 +51,20 @@ class Music {
         }
     }
     
-    func playMusicWithName(musicName:String) {
+    func playMusicWithName(_ musicName:String) {
         if self.musicName != musicName {
             self.musicName = musicName
             self.play(musicNamed: musicName)
         }
     }
     
-    private func play(musicNamed name:String) {
-        var auxName:[String] = name.componentsSeparatedByString(".")
+    fileprivate func play(musicNamed name:String) {
+        var auxName:[String] = name.components(separatedBy: ".")
         
-        let backgroundMusicURL = NSBundle.mainBundle().URLForResource(auxName[0], withExtension: auxName[1])//TODO: remover auxName[i]
+        let backgroundMusicURL = Bundle.main.url(forResource: auxName[0], withExtension: auxName[1])//TODO: remover auxName[i]
         
         do {
-            try self.audioPlayer = AVAudioPlayer(contentsOfURL: backgroundMusicURL!)
+            try self.audioPlayer = AVAudioPlayer(contentsOf: backgroundMusicURL!)
             self.audioPlayer.volume = 0.3
             self.audioPlayer.numberOfLoops = -1
             self.audioPlayer.prepareToPlay()

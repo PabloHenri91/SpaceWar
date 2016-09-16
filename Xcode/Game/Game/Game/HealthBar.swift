@@ -15,7 +15,7 @@ class HealthBar: Control {
     
     var positionOffset = CGPoint(x: 0, y: 0)
 
-    init(background:SKSpriteNode? = nil, size:CGSize = CGSize(width: 37, height: 6), backColor: SKColor = SKColor.clearColor(), fillColor: SKColor = SKColor.greenColor()) {
+    init(background:SKSpriteNode? = nil, size:CGSize = CGSize(width: 37, height: 6), backColor: SKColor = SKColor.clear, fillColor: SKColor = SKColor.green) {
         super.init()
         
         let spriteNodeBack = SKSpriteNode(texture: nil, color: backColor, size: size)
@@ -39,13 +39,13 @@ class HealthBar: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(position position:CGPoint) {
+    func update(position:CGPoint) {
         let x = position.x + self.positionOffset.x
         let y = position.y + self.positionOffset.y
         self.position = CGPoint(x: x, y: y)
     }
     
-    func update(health:Int, maxHealth:Int) {
+    func update(_ health:Int, maxHealth:Int) {
         
         var width = Int((CGFloat(health) / CGFloat(maxHealth)) * self.fillMaxWidth)
         let height = Int(self.spriteNodeFill.size.height)
