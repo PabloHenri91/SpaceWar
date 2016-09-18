@@ -197,9 +197,7 @@ extension BattleScene {
                         spaceship.position.y = (spaceship.position.y + position.y)/2
                     }
                     
-                    let zRotation = (CGFloat(i.next() as! Int) / 1000000)
-                    
-                    spaceship.zRotation = (spaceship.zRotation + zRotation)/2
+                    i.next()
                     
                     if i.next() as! Bool {
                         if let physicsBody = spaceship.physicsBody {
@@ -267,7 +265,8 @@ extension BattleScene {
                     
                 items.append(Int(-spaceship.position.x * 1000000) as AnyObject)
                 items.append(Int(-spaceship.position.y * 1000000) as AnyObject)
-                items.append(Int((spaceship.zRotation + CGFloat(M_PI)) * 1000000) as AnyObject)
+                
+                items.append(false as AnyObject)
                 
                 if let physicsBody = spaceship.physicsBody {
                     items.append(true as AnyObject)

@@ -160,13 +160,18 @@ extension SocketIOClient {
     
     func emit(_ mothership: Mothership) {
         
-        var items = [AnyObject]()
+        var items = [Any]()
         
-        items.append("mothership" as NSString)
-        items.append(mothership.level as NSNumber)
+        items.append("mothership" as AnyObject)
+        items.append(mothership.level as AnyObject)
         
         for spaceship in mothership.spaceships {
-            items.append([spaceship.level, spaceship.type.index, spaceship.weapon!.type.index] as NSArray)
+            items.append(
+                [
+                    spaceship.level as AnyObject,
+                    spaceship.type.index as AnyObject,
+                    spaceship.weapon!.type.index as AnyObject
+                ])
         }
         
         self.emit("someData", items)
