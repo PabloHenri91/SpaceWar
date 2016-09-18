@@ -128,13 +128,12 @@ extension BattleScene {
                 break
                 
             case "removePlayer":
-                
                 if scene.botMothership == nil {
                     scene.loadBots()
+                    
+                    scene.nextState = .battle
+                    serverManager.leaveAllRooms()
                 }
-                
-                scene.nextState = .battle
-                serverManager.leaveAllRooms()
                 
                 break
                 
