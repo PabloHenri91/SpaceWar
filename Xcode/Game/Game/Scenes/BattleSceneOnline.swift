@@ -199,7 +199,7 @@ extension BattleScene {
                     
                     let zRotation = (CGFloat(i.next() as! Int) / 1000000)
                     
-                    self.zRotation = (self.zRotation + zRotation)/2
+                    spaceship.zRotation = (spaceship.zRotation + zRotation)/2
                     
                     if i.next() as! Bool {
                         if let physicsBody = spaceship.physicsBody {
