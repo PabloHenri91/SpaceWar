@@ -37,7 +37,7 @@ class Research: Control {
         
         let playerData = MemoryCard.sharedInstance.playerData!
         
-        for item in self.researchType.researchsNeeded {
+        for item in self.researchType.researchesNeeded {
             for subItem in playerData.researches {
                 if let researchData = subItem as? ResearchData {
                     if researchData.type.intValue == item {
@@ -106,7 +106,7 @@ class Research: Control {
         if (winSpaceship >= 75) {
             
             let playerData = MemoryCard.sharedInstance.playerData!
-            var researchsType = NSArray()
+            var researchTypes = NSArray()
             
             let diceRoll = Int.random(101)
             
@@ -117,17 +117,17 @@ class Research: Control {
                 for researchType in Research.types {
                     let spaceshipType = Spaceship.types[researchType.spaceshipUnlocked!]
                     if spaceshipType.rarity == .common {
-                        researchsType.adding(researchType)
+                        researchTypes.adding(researchType)
                     }
                     
                 }
                 
-                let index = Int.random(researchsType.count)
+                let index = Int.random(researchTypes.count)
                 
                 for item in playerData.researches {
                     if let researchData = item as? ResearchData {
                         
-                        if researchData.type.intValue == (researchsType.object(at: index) as! ResearchType).index {
+                        if researchData.type.intValue == (researchTypes.object(at: index) as! ResearchType).index {
                             
                             researchData.spaceshipMaxLevel = (researchData.spaceshipMaxLevel.intValue + 10) as NSNumber
                             
@@ -138,7 +138,7 @@ class Research: Control {
                 
                 
                 let newResearch = MemoryCard.sharedInstance.newResearchData()
-                newResearch.type = (researchsType[index] as! ResearchType).index as NSNumber
+                newResearch.type = (researchTypes[index] as! ResearchType).index as NSNumber
                 playerData.addResearchData(newResearch)
                 
                 
@@ -181,7 +181,7 @@ class ResearchType {
     var cost: Int!
     var lineType: ResearchLineType!
     var requisites: [String] = []
-    var researchsNeeded: [Int] = []
+    var researchesNeeded: [Int] = []
     var weaponUnlocked: Int?
     var spaceshipUnlocked: Int?
     
@@ -224,7 +224,7 @@ extension Research {
             research.researchDescription = "A common spaceship with a fast Striker."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 0
-            research.researchsNeeded = []
+            research.researchesNeeded = []
             research.requisites = []
             return research
         }(),
@@ -234,7 +234,7 @@ extension Research {
             research.researchDescription = "A common spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 0
-            research.researchsNeeded = [0]
+            research.researchesNeeded = [0]
             research.requisites = []
             return research
         }(),
@@ -244,7 +244,7 @@ extension Research {
             research.researchDescription = "A common spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 0
-            research.researchsNeeded = [1]
+            research.researchesNeeded = [1]
             research.requisites = []
             return research
         }(),
@@ -255,7 +255,7 @@ extension Research {
             research.researchDescription = "A resistant spaceship with a common gun."
             research.weaponUnlocked = 0
             research.spaceshipUnlocked = 1
-            research.researchsNeeded = []
+            research.researchesNeeded = []
             research.requisites = []
             return research
         }(),
@@ -265,7 +265,7 @@ extension Research {
             research.researchDescription = "A resistant spaceship with a fast Striker."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 1
-            research.researchsNeeded = [3]
+            research.researchesNeeded = [3]
             research.requisites = []
             return research
         }(),
@@ -275,7 +275,7 @@ extension Research {
             research.researchDescription = "A resistante spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 1
-            research.researchsNeeded = [4]
+            research.researchesNeeded = [4]
             research.requisites = []
             return research
         }(),
@@ -285,7 +285,7 @@ extension Research {
             research.researchDescription = "A resistant spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 1
-            research.researchsNeeded = [5]
+            research.researchesNeeded = [5]
             research.requisites = []
             return research
         }(),
@@ -295,7 +295,7 @@ extension Research {
             research.researchDescription = "A fast spaceship with a common gun."
             research.weaponUnlocked = 0
             research.spaceshipUnlocked = 2
-            research.researchsNeeded = []
+            research.researchesNeeded = []
             research.requisites = []
             return research
         }(),
@@ -305,7 +305,7 @@ extension Research {
             research.researchDescription = "A fast spaceship with a fast Striker."
             research.weaponUnlocked = 1
             research.spaceshipUnlocked = 2
-            research.researchsNeeded = [7]
+            research.researchesNeeded = [7]
             research.requisites = []
             return research
         }(),
@@ -315,7 +315,7 @@ extension Research {
             research.researchDescription = "A fast spaceship with a powerfull and low range gun."
             research.weaponUnlocked = 2
             research.spaceshipUnlocked = 2
-            research.researchsNeeded = [8]
+            research.researchesNeeded = [8]
             research.requisites = []
             return research
         }(),
@@ -325,7 +325,7 @@ extension Research {
             research.researchDescription = "A fast spaceship with a long range gun."
             research.weaponUnlocked = 3
             research.spaceshipUnlocked = 2
-            research.researchsNeeded = [9]
+            research.researchesNeeded = [9]
             research.requisites = []
             return research
         }(),
@@ -335,7 +335,7 @@ extension Research {
             research.researchDescription = ""
             research.weaponUnlocked = 0
             research.spaceshipUnlocked = 0
-            research.researchsNeeded = [99]
+            research.researchesNeeded = [99]
             research.requisites = []
             return research
         }(),

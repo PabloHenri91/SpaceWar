@@ -97,7 +97,7 @@ class ResearchCard: Control {
                 self.addChild(self.buttonSpeedUp!)
                 self.buttonSpeedUp?.isHidden = true
                 
-                self.labelTimeLeft.setText(GameMath.timeFormated(timeLeft))
+                self.labelTimeLeft.setText(GameMath.timeLeftFormatted(timeLeft: timeLeft))
                 
             } else {
                 
@@ -111,7 +111,7 @@ class ResearchCard: Control {
             self.buttonBegin = Button(textureName: "buttonGreen89x22", text: "BEGIN", fontSize: 13, x: 182, y: 35, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
             self.addChild(self.buttonBegin!)
 
-            self.labelTimeLeft.setText(GameMath.timeFormated(self.research.researchType.duration))
+            self.labelTimeLeft.setText(GameMath.timeLeftFormatted(timeLeft: self.research.researchType.duration))
         }
         
     }
@@ -135,7 +135,7 @@ class ResearchCard: Control {
                     self.timeBar.update(startDate: self.research.researchData!.startDate!, duration: self.research.researchType.duration)
                     
                     if time > 0 {
-                        self.labelTimeLeft.setText(GameMath.timeFormated(time))
+                        self.labelTimeLeft.setText(GameMath.timeLeftFormatted(timeLeft: time))
                     } else {
                         self.needUpdate = false
                         

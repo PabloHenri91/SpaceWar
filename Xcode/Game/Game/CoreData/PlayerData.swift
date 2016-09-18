@@ -89,7 +89,7 @@ extension MemoryCard {
         
      
         
-        //adicionei a nave 3 na nave mae
+        // adicionei a nave 3 na nave mae
         spaceshipData = self.newSpaceshipData(type: 0)
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
@@ -107,7 +107,7 @@ extension MemoryCard {
         
 
         
-        //weapons
+        // weapons
         playerData.weapons = NSSet()
         
         // mission spaceships
@@ -116,7 +116,7 @@ extension MemoryCard {
         let missionSpaceshipData = self.newMissionSpaceshipData()
         playerData.addMissionSpaceshipData(missionSpaceshipData)
         
-        //researches
+        // researches
         playerData.researches = NSSet()
         
         let newResearch = self.newResearchData()
@@ -125,7 +125,7 @@ extension MemoryCard {
         playerData.addResearchData(newResearch)
         
         
-        //list of facebook friends sent game invite
+        // list of facebook friends sent game invite
         playerData.invitedFriends = NSSet()
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         

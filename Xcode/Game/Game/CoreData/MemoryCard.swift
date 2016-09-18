@@ -83,7 +83,7 @@ class MemoryCard {
                 self.playerData.addResearchData(newResearch)
             }
             
-            let researchs = self.playerData.researches
+            let researches = self.playerData.researches
             
             for weapon in weapons {
                 for spaceship in spaceships {
@@ -95,7 +95,7 @@ class MemoryCard {
                     
                     self.playerData.unlockSpaceshipData(spaceshipData)
                     
-                    for research in researchs {
+                    for research in researches {
                         let researchData = research as! ResearchData
                         let researchType = Research.types[Int(researchData.type.int32Value)]
                         
@@ -115,7 +115,7 @@ class MemoryCard {
             
             
             
-            let researchs = self.playerData.researches
+            let researches = self.playerData.researches
             self.playerData.researches = NSSet()
             
             let newResearch = self.newResearchData()
@@ -125,7 +125,7 @@ class MemoryCard {
             
             self.playerData.addResearchData(newResearch)
             
-            for item in researchs {
+            for item in researches {
                 if let researchData = item as? ResearchData {
                     //let research = Research(researchData: researchData)
                     
@@ -134,8 +134,8 @@ class MemoryCard {
                     
                     let researchType = Research.types[researchData.type.intValue]
                     
-                    for item in researchType.researchsNeeded {
-                        for subItem in researchs {
+                    for item in researchType.researchesNeeded {
+                        for subItem in researches {
                             if let researchData = subItem as? ResearchData {
                                 if researchData.type.intValue == item {
                                     if researchData.done.boolValue == false {
@@ -314,11 +314,11 @@ class MemoryCard {
     }
     
     func resetTimers() {
-        let researchs = playerData.researches
+        let researches = playerData.researches
         let missionShips = playerData.missionSpaceships
         let battery = playerData.battery
         
-        for item in researchs {
+        for item in researches {
             if let research = item as? ResearchData {
                 if research.done == 0 {
                     if research.startDate != nil {

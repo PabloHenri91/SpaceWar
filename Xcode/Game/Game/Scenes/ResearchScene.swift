@@ -109,7 +109,7 @@ class ResearchScene: GameScene {
         }
         self.addChild(self.label1)
         
-        self.updateResearchs()
+        self.updateResearches()
         
         switch GameTabBar.lastState {
         case .research:
@@ -226,7 +226,7 @@ class ResearchScene: GameScene {
         }
     }
     
-    func updateResearchs() {
+    func updateResearches() {
         
         self.currentResearchCard?.removeFromParent()
         self.currentResearchCard = nil
@@ -423,7 +423,7 @@ class ResearchScene: GameScene {
                                 
                                 researchCard.research.collect()
                                 self.playerDataCard.updateXP()
-                                self.updateResearchs()
+                                self.updateResearches()
                                 
                                 if let spaceship = researchCard.spaceship {
                                     self.blackSpriteNode.isHidden = false
@@ -489,7 +489,7 @@ class ResearchScene: GameScene {
                                         if let buttonBegin = researchCard.buttonBegin {
                                             if(buttonBegin.contains(touch.location(in: researchCard))) {
                                                 if researchCard.research.start() {
-                                                    self.updateResearchs()
+                                                    self.updateResearches()
                                                 } else {
                                                     let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.ok)
                                                     self.addChild(alertBox)

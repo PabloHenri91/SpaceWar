@@ -10,8 +10,31 @@ import SpriteKit
 
 class GameMath {
     
+    static let dateComponentsFormatter: DateComponentsFormatter = {
+        
+        let dateComponentsFormatter = DateComponentsFormatter()
+        
+        dateComponentsFormatter.unitsStyle = .abbreviated
+        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
+        
+        return dateComponentsFormatter
+    }()
     
-    //Boosts
+    
+    static func finishDate(timeLeft: Int) -> Date {
+        return Date(timeInterval: TimeInterval(timeLeft), since: Date())
+    }
+    
+    static func timeLeft(startDate: Date, duration: Int) -> Int {
+        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
+        return Int(date.timeIntervalSinceNow)
+    }
+    
+    static func timeLeftFormatted(timeLeft: Int) -> String {
+        return GameMath.dateComponentsFormatter.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
+    }
+    
+    //MARK: Boosts
     static func applyXPBoosts(_ xp: Int) -> Int {
         
         Boost.reloadBoosts()//TODO: remover daqui
@@ -27,18 +50,7 @@ class GameMath {
         return calculatedXP
     }
     
-    //Weapons
-    static let weaponMinFireInterval:Double = 0.1 // seconds
-    static let weaponMaxFireInterval:Double = 1.0 // seconds
-    static let weaponMaxRangeInPoints:CGFloat = 300
-    static let weaponMinRangeInPoints:CGFloat = 100
-    
-    static func xpForNextLevel(level:Int) -> Int {
-        
-        return ((100 * level) * level)
-        
-    }
-    
+    //MARK: Spaceships
     
     // de 5 a 30, fixo pela nave
     static func spaceshipSpeedAtribute(level:Int, type:SpaceshipType) -> Int {
@@ -59,29 +71,16 @@ class GameMath {
     static func spaceshipShieldRecharge(level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
-    
-
-    // SPACESHIP
 
     static func spaceshipMaxVelocitySquared(speed:Int) -> CGFloat {
         let maxVelocity =  CGFloat(speed) * 4
         return CGFloat(maxVelocity * maxVelocity)
     }
     
-//    static func spaceshipSkinImageName(level level:Int, type:SpaceshipType) -> String {
-//        let level = Float(level)
-//        let maxLevel = Float(type.maxLevel)
-//        
-//        let skinIndex = ((level-1)/(maxLevel-1)) * Float(type.skins.count-1)
-//        
-//        return type.skins[Int(skinIndex)]
-//    }
-    
     static func spaceshipBotSpaceshipLevel() -> Int {
         return MemoryCard.sharedInstance.playerData!.botLevel.intValue
     }
     
-    // Spaceship upgrade
     static func spaceshipUpgradeCost(level:Int, type:SpaceshipType) -> Int {
         switch type.rarity {
         case .common:
@@ -94,7 +93,6 @@ class GameMath {
             return Int(1000 * pow(1.3, Double(level)))
         }
     }
-    
     
     static func spaceshipPrice(_ type:SpaceshipType) -> Int {
         switch type.rarity {
@@ -109,47 +107,22 @@ class GameMath {
         }
     }
     
-    static func spaceshipFixTime(_ fromDate: Date) -> Int {
-        
-        let date = Date(timeInterval: TimeInterval(1800), since: fromDate)
-        return Int(date.timeIntervalSinceNow)
-        
-    }
+    //MARK: Weapons
+    static let weaponMinFireInterval:Double = 0.1 // seconds
+    static let weaponMaxFireInterval:Double = 1.0 // seconds
+    static let weaponMaxRangeInPoints:CGFloat = 300
+    static let weaponMinRangeInPoints:CGFloat = 100
     
-    static func timeFormated(_ time: Int) -> String {
-        if time > 0 {
-            if time < 60 {
-                return (time.description + "s")
-            } else if time < 3600 {
-                let minutes = Int(time / 60)
-                let seconds = time % 60
-                if seconds > 0 {
-                    return (minutes.description + "m " + seconds.description + "s" )
-                } else {
-                    return (minutes.description + "m ")
-                }
-                
-            } else {
-                let hours = Int(time/3600)
-                let minutes = Int((time % 3600) / 60)
-                if minutes > 0 {
-                    return (hours.description + "h " + minutes.description + "m" )
-                } else {
-                    return (hours.description + "h ")
-                }
-            }
-        } else {
-            return "0seconds"
-        }
-    }
-    
-    // Weapons
     static func weaponDamage(level:Int, type:WeaponType) -> Int {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     
-    // Mothership
+    //MARK: Mothership
     static let mothershipHealthPointsPerLevel = 8
+    
+    static func xpForNextLevel(level:Int) -> Int {
+        return ((100 * level) * level)
+    }
     
     static func mothershipMaxHealth(_ mothership:Mothership , enemyMothership: Mothership) -> Int {
         var dps = 0
@@ -165,7 +138,7 @@ class GameMath {
         return maxHealth
     }
     
-    //Battle
+    //MARK: Battle
     static func battleXP(mothership:Mothership, enemyMothership:Mothership) -> Int {
         
         var xp = 0
@@ -216,6 +189,8 @@ class GameMath {
         }
     }
     
+    //MARK: Researches
+    
     static func getRandomResearch() {
         let winSpaceship = Int(arc4random_uniform(101) + 1)
         
@@ -234,24 +209,9 @@ class GameMath {
         }
     }
     
-    //Mission Spaceship        
-    static func finishDate(timeLeft: Int) -> Date {
-       return Date(timeInterval: TimeInterval(timeLeft), since: Date())
-    }
-    
-    static func timeLeft(startDate: Date, duration: Int) -> Int {
-        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
-        return Int(date.timeIntervalSinceNow)
-    }
-    
-    //Battery
+    //MARK: Battery
     static let batteryMaxCharge = 4
-    #if DEBUG
-    static let batteryChargeInterval = 6.0 * 6.0
-    #else
     static let batteryChargeInterval = 6.0 * 60.0
-    #endif
-    
     static let batteryBoostInterval = 60.0 * 60.0 * 24.0
     
     static func batteryNextChargeTimeLeft(_ beginChargeDate: Date) -> Int {

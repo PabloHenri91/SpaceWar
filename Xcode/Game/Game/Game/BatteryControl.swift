@@ -130,7 +130,7 @@ class BatteryControl: Control {
             
             if self.charge == -1 {
                 labelTimerLabel.setText("Boost time left: ")
-                text = GameMath.timeFormated(GameMath.batteryBoostTimeLeft(self.lastCharge))
+                text = GameMath.timeLeftFormatted(timeLeft: GameMath.batteryBoostTimeLeft(self.lastCharge))
                 
                 for control in chargeIndicator {
                     control.isHidden = false
@@ -138,7 +138,7 @@ class BatteryControl: Control {
                 
             } else {
                 if self.charge < self.maxCharge {
-                    text = GameMath.timeFormated(GameMath.batteryNextChargeTimeLeft(self.lastCharge))
+                    text = GameMath.timeLeftFormatted(timeLeft: GameMath.batteryNextChargeTimeLeft(self.lastCharge))
                 }
                 
                 var i = 0

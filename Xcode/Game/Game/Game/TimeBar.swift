@@ -82,7 +82,7 @@ class TimeBar: CropBox {
             let action = SKAction.resize(toWidth: width, height: height, duration: 1)
             self.greenBar.run(action)
             
-            self.labelDescription?.setText(GameMath.timeFormated(duration - Int(progress)))
+            self.labelDescription?.setText(GameMath.timeLeftFormatted(timeLeft: duration - Int(progress)))
         } else {
             
             if self.greenBar.size.width < self.greenBarMaxWidth {
