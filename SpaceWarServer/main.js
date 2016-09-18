@@ -89,7 +89,7 @@ function Player(game, socket) {
     });
     
     this.socket.on('disconnect', function() {
-        //console.log(socket.name + ' on disconnect ');
+        console.log(socket.name + ' on disconnect ');
         player.disconnect();
     });
     

@@ -88,7 +88,7 @@ class ServerManager {
         for url in urls {
             if let url = URL(string:url) {
                 
-                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { [weak self] in
+                DispatchQueue.global(qos: .default).async(execute: { [weak self] in
                     
                     guard let serverManager = self else { return }
                     
@@ -117,7 +117,7 @@ class ServerManager {
                         print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                         socket.disconnect()
                     })
-                }
+                })
             }
         }
     }
@@ -160,13 +160,13 @@ extension SocketIOClient {
     
     func emit(_ mothership: Mothership) {
         
-        var items = [Any]()
+        var items = [AnyObject]()
         
-        items.append("mothership")
-        items.append(mothership.level)
+        items.append("mothership" as NSString)
+        items.append(mothership.level as NSNumber)
         
         for spaceship in mothership.spaceships {
-            items.append([spaceship.level, spaceship.type.index, spaceship.weapon!.type.index])
+            items.append([spaceship.level, spaceship.type.index, spaceship.weapon!.type.index] as NSArray)
         }
         
         self.emit("someData", items)

@@ -109,9 +109,9 @@ extension BattleScene {
                             
                             scene.gameWorld.addChild(label)
                             
-                            label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: {
-                                label.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
-                                    label.removeFromParent()
+                            label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+                                label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
+                                    label?.removeFromParent()
                                 })
                             })
                             
@@ -128,8 +128,14 @@ extension BattleScene {
                 break
                 
             case "removePlayer":
+                
+                if scene.botMothership == nil {
+                    scene.loadBots()
+                }
+                
                 scene.nextState = .battle
                 serverManager.leaveAllRooms()
+                
                 break
                 
             default:

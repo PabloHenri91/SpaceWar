@@ -58,8 +58,8 @@ class BattleScene: GameScene {
     
     var joinRoomTime:Double = 0
     var waitForPlayersTime:Double = 0
-    var joinRoomTimeOut:Double = 3
-    var waitForPlayersTimeOut:Double = 60
+    var waitForRoomTimeOut:Double = 3
+    var waitForPlayersTimeOut:Double = 10
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -276,15 +276,19 @@ class BattleScene: GameScene {
                 break
                 
             case .joinRoom:
-                if currentTime - self.joinRoomTime > self.joinRoomTimeOut {
+                if currentTime - self.joinRoomTime > self.waitForRoomTimeOut {
                     self.nextState = .createRoom
                 }
                 break
                 
             case .waitForPlayers:
                 if currentTime - self.waitForPlayersTime > self.waitForPlayersTimeOut {
-                    self.loadBots()
+                    if self.botMothership == nil {
+                        self.loadBots()
+                    }
+                    
                     self.nextState = .battle
+                    self.serverManager.leaveAllRooms()
                 }
                 break
                 
