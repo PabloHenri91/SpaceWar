@@ -106,7 +106,7 @@ class Research: Control {
         if (winSpaceship >= 75) {
             
             let playerData = MemoryCard.sharedInstance.playerData!
-            var researchTypes = NSArray()
+            var researchTypes = [ResearchType]()
             
             let diceRoll = Int.random(101)
             
@@ -117,9 +117,8 @@ class Research: Control {
                 for researchType in Research.types {
                     let spaceshipType = Spaceship.types[researchType.spaceshipUnlocked!]
                     if spaceshipType.rarity == .common {
-                        researchTypes.adding(researchType)
+                        researchTypes.append(researchType)
                     }
-                    
                 }
                 
                 let index = Int.random(researchTypes.count)
@@ -127,7 +126,7 @@ class Research: Control {
                 for item in playerData.researches {
                     if let researchData = item as? ResearchData {
                         
-                        if researchData.type.intValue == (researchTypes.object(at: index) as! ResearchType).index {
+                        if researchData.type.intValue == researchTypes[index].index {
                             
                             researchData.spaceshipMaxLevel = (researchData.spaceshipMaxLevel.intValue + 10) as NSNumber
                             
@@ -136,15 +135,11 @@ class Research: Control {
                     }
                 }
                 
-                
                 let newResearch = MemoryCard.sharedInstance.newResearchData()
-                newResearch.type = (researchTypes[index] as! ResearchType).index as NSNumber
+                newResearch.type = (researchTypes[index]).index as NSNumber
                 playerData.addResearchData(newResearch)
                 
-                
                 return newResearch
-                
-                
             }
             //            } else if (diceRoll <= 95) {
             //                print("rare")

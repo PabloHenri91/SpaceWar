@@ -14,6 +14,8 @@ class HealthBar: Control {
     var fillMaxWidth:CGFloat = 1
     
     var positionOffset = CGPoint(x: 0, y: 0)
+    
+    var labelLevel:Label!
 
     init(background:SKSpriteNode? = nil, size:CGSize = CGSize(width: 37, height: 6), backColor: SKColor = SKColor.clear, fillColor: SKColor = SKColor.green) {
         super.init()

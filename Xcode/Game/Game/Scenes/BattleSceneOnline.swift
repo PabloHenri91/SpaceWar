@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AudioToolbox
 
 extension BattleScene {
     
@@ -22,6 +23,7 @@ extension BattleScene {
                 
             case "addPlayer":
                 serverManager.addPlayer(socketAnyEvent)
+                
                 break
                 
             case "noPlayersOnline":
@@ -69,57 +71,44 @@ extension BattleScene {
                         
                         if BattleScene.state != .battleOnline {
                             
-                            scene.botMothership = Mothership(socketAnyEvent: socketAnyEvent)
-                            
-                            scene.botMothership.zRotation = CGFloat(M_PI)
-                            scene.botMothership.position = CGPoint(x: 0, y: 243)
-                            scene.gameWorld.addChild(scene.botMothership)
-                            
-                            scene.mothership.health = GameMath.mothershipMaxHealth(scene.mothership, enemyMothership: scene.botMothership)
-                            scene.mothership.maxHealth = scene.mothership.health
-                            
-                            scene.botMothership.health = scene.mothership.health
-                            scene.botMothership.maxHealth = scene.mothership.health
-                            scene.botMothership.loadHealthBar(blueTeam: false)
-                            
-                            scene.botMothership.loadSpaceships(scene.gameWorld, isAlly: false)
+                            if scene.botMothership == nil {
+                                
+                                scene.botMothership = Mothership(socketAnyEvent: socketAnyEvent)
+                                
+                                if let room = serverManager.room {
+                                    for userDisplayInfo in room.usersDisplayInfo {
+                                        if userDisplayInfo.displayName != serverManager.userDisplayInfo.displayName {
+                                            scene.botMothership.displayName = userDisplayInfo.displayName
+                                            break
+                                        }
+                                    }
+                                }
+                                
+                                scene.botMothership.zRotation = CGFloat(M_PI)
+                                scene.botMothership.position = CGPoint(x: 0, y: 243)
+                                scene.gameWorld.addChild(scene.botMothership)
+                                
+                                scene.mothership.health = GameMath.mothershipMaxHealth(scene.mothership, enemyMothership: scene.botMothership)
+                                scene.mothership.maxHealth = scene.mothership.health
+                                
+                                scene.botMothership.health = scene.mothership.health
+                                scene.botMothership.maxHealth = scene.mothership.health
+                                scene.botMothership.loadHealthBar(blueTeam: false)
+                                
+                                scene.botMothership.loadSpaceships(scene.gameWorld, isAlly: false)
+                                
+                                scene.updateSpaceshipLevels()
+                            }
                             
                             scene.nextState = .battleOnline
                             
                             serverManager.socket?.emit(scene.mothership)
-                            
-                            
-                            var labelText = ""
-                            if let room = serverManager.room {
-                                
-                                if room.usersDisplayInfo[0].displayName == serverManager.userDisplayInfo.displayName {
-                                    
-                                    labelText += room.usersDisplayInfo[1].displayName
-                                    labelText += " x "
-                                    labelText += serverManager.userDisplayInfo.displayName
-                                } else {
-                                    
-                                    labelText += room.usersDisplayInfo[0].displayName
-                                    labelText += " x "
-                                    labelText += serverManager.userDisplayInfo.displayName
-                                }
-                            }
-                            
-                            let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.white, fontSize: 32)
-                            
-                            scene.gameWorld.addChild(label)
-                            
-                            label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
-                                label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
-                                    label?.removeFromParent()
-                                })
-                            })
-                            
                         }
                         
                         break
                         
                     default:
+                        print(BattleScene.state)
                         print(socketAnyEvent.description)
                         break
                     }
@@ -130,14 +119,20 @@ extension BattleScene {
             case "removePlayer":
                 if scene.botMothership == nil {
                     scene.loadBots()
-                    
                     scene.nextState = .battle
-                    serverManager.leaveAllRooms()
                 }
+                
+                if BattleScene.state == .battleOnline {
+                    scene.nextState = .battle
+                    BattleScene.state = .battle
+                }
+                
+                serverManager.leaveAllRooms()
                 
                 break
                 
             default:
+                print(BattleScene.state)
                 print(socketAnyEvent.description)
                 break
             }
@@ -196,7 +191,11 @@ extension BattleScene {
                         spaceship.position.y = (spaceship.position.y + position.y)/2
                     }
                     
-                    i.next()
+                    let level = i.next() as! Int
+                    
+                    if spaceship.level < level {
+                        spaceship.upgradeOnBattle()
+                    }
                     
                     if i.next() as! Bool {
                         if let physicsBody = spaceship.physicsBody {
@@ -221,10 +220,13 @@ extension BattleScene {
     
     func updateOnline() {
         
-        if self.botMothership == nil || self.serverManager.room == nil {
+        if self.botMothership == nil {
             return
         }
         
+        if self.serverManager.room == nil {
+            return
+        }
         
         if GameScene.currentTime - self.lastOnlineUpdate > self.emitInterval {
             self.lastOnlineUpdate = GameScene.currentTime
@@ -265,7 +267,7 @@ extension BattleScene {
                 items.append(Int(-spaceship.position.x * 1000000) as AnyObject)
                 items.append(Int(-spaceship.position.y * 1000000) as AnyObject)
                 
-                items.append(false as AnyObject)
+                items.append(spaceship.level as AnyObject)
                 
                 if let physicsBody = spaceship.physicsBody {
                     items.append(true as AnyObject)
@@ -285,57 +287,48 @@ extension BattleScene {
             
             self.serverManager.socket?.emit("update", items)
         }
-    }
-}
-
-
-class Room {
-    
-    var roomId = ""
-    
-    var usersDisplayInfo = [UserDisplayInfo]()
-    
-    init(roomId: String, userDisplayInfo: UserDisplayInfo) {
-        self.roomId = roomId
-        self.usersDisplayInfo.append(userDisplayInfo)
-    }
-    
-    init(socketAnyEvent: SocketAnyEvent) {
-        if let message = socketAnyEvent.items?.first as? [String : AnyObject] {
-            if let roomId = message["roomId"] as? String {
-                
-                self.roomId = roomId
-                
-                if let rawUsersDisplayInfo = message["usersDisplayInfo"] as? [[String]] {
-                    
-                    for var rawUserDisplayInfo in rawUsersDisplayInfo {
-                        self.usersDisplayInfo.append(UserDisplayInfo(socketId: rawUserDisplayInfo[0], displayName: rawUserDisplayInfo[1]))
-                    }
-                }
+        
+        if BattleScene.state == .battleOnline {
+            if self.mothership.health <= 0 || self.botMothership.health <= 0 {
+                self.nextState = .battle
+                self.serverManager.leaveAllRooms()
             }
         }
     }
     
-    func addPlayer(_ newUserDisplayInfo: UserDisplayInfo) {
-        
-        var containsNewUserDisplayInfo = false
-        
-        for userDisplayInfo in self.usersDisplayInfo {
-            if userDisplayInfo.socketId == newUserDisplayInfo.socketId {
-                containsNewUserDisplayInfo = true
-                break
+    func updateSpaceshipLevels() {
+        var minLevel = Int.max
+        for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
+            if spaceship.level < minLevel {
+                minLevel = spaceship.level
             }
         }
         
-        if !containsNewUserDisplayInfo {
-            self.usersDisplayInfo.append(newUserDisplayInfo)
+        for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
+            spaceship.setBattleLevel(level: minLevel)
         }
     }
     
-    func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
+    func showPlayerNames(playAlertSound: Bool) {
         
-        if let message = socketAnyEvent.items?.first as? [String] {
-            self.addPlayer(UserDisplayInfo(socketId: message[0], displayName: message[1]))
+        if playAlertSound {
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         }
+        
+        var labelText = ""
+                
+        labelText += self.botMothership.displayName
+        labelText += " x "
+        labelText += self.mothership.displayName
+        
+        let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.white, fontSize: 32)
+        
+        self.gameWorld.addChild(label)
+        
+        label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+            label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
+                label?.removeFromParent()
+            })
+            })
     }
 }

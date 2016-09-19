@@ -86,6 +86,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setNotifications()
         Metrics.battlesPlayedPerSession()
         Metrics.battlesPlayed = 0
+        ServerManager.sharedInstance.leaveAllRooms()
+        
+        if let gameScene = Control.gameScene as? BattleScene {
+            gameScene.nextState = .mothership
+        }
     }
     
     func setNotifications() {

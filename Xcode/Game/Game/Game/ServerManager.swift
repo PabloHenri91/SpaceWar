@@ -75,7 +75,8 @@ class ServerManager {
                 "http://localhost:8940",
                 "http://Pablos-MacBook-Pro.local:8900",
                 "http://172.16.3.149:8940", //Pablos-MacBook-Pro ip fixo no bepid
-                "http://192.168.1.102:8940"
+                "http://192.168.1.102:8940",
+                "http://192.168.0.4:8940"
             ]
         #else
             let urls = [
@@ -123,13 +124,18 @@ class ServerManager {
     }
     
     func disconnect() {
-        self.room = nil
-        self.socket?.disconnect()
+        if self.socket != nil {
+            self.room = nil
+            self.socket?.disconnect()
+            self.socket = nil
+        }
     }
     
     func leaveAllRooms() {
-        self.room = nil
-        self.socket?.emit("leaveAllRooms")
+        if self.room != nil {
+            self.room = nil
+            self.socket?.emit("leaveAllRooms")
+        }
     }
     
     func getAllRooms() {
@@ -138,7 +144,7 @@ class ServerManager {
     
     func createRoom() {
         self.room = Room(roomId: self.userDisplayInfo.socketId, userDisplayInfo: self.userDisplayInfo)
-        self.socket?.emit("createRoom")
+        //self.socket?.emit("createRoom") // Servidor já criou a sala
     }
     
     func joinRoom(_ room: Room) {

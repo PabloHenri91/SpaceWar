@@ -60,6 +60,8 @@ class BattleScene: GameScene {
     var waitForPlayersTime:Double = 0
     var waitForRoomTimeOut:Double = 3
     var waitForPlayersTimeOut:Double = 10
+    var waitSyncGameDataTime:Double = 0
+    var waitSyncGameDataTimeOut:Double = 10
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -86,6 +88,7 @@ class BattleScene: GameScene {
         
         // Mothership
         self.mothership = Mothership(mothershipData: self.playerData.motherShip)
+        self.mothership.displayName = self.playerData.name
         self.gameWorld.addChild(self.mothership)
         self.mothership.position = CGPoint(x: 0, y: -243)
         
@@ -141,6 +144,8 @@ class BattleScene: GameScene {
         self.botMothership.loadHealthBar(blueTeam: false)
         
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
+        
+        self.updateSpaceshipLevels()
     }
     
     
@@ -149,8 +154,8 @@ class BattleScene: GameScene {
         super.update(currentTime)
         
         //Estado atual
-        if(BattleScene.state == self.nextState) {
-            switch (BattleScene.state) {
+        if BattleScene.state == self.nextState {
+            switch BattleScene.state {
                 
             case .battle, .battleOnline:
                 
@@ -204,14 +209,11 @@ class BattleScene: GameScene {
                 self.mothership.update(enemyMothership: self.botMothership, enemySpaceships: self.botMothership.spaceships)
                 self.botMothership.update(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
                 
-                if self.mothership.health <= 0 ||
-                    self.botMothership.health <= 0
-                {
-                    self.nextState = .battleEnd
-                    return
-                }
-                
                 if BattleScene.state == .battle {
+                    
+                    if self.mothership.health <= 0 || self.botMothership.health <= 0 {
+                        self.nextState = .battleEnd
+                    }
                     
                     if currentTime - self.lastBotUpdate > self.botUpdateInterval {
                         self.lastBotUpdate = currentTime
@@ -261,8 +263,7 @@ class BattleScene: GameScene {
                 self.mothership.update()
                 self.botMothership.update()
                 
-                if currentTime - battleEndTime >= 2 {
-                    self.serverManager.leaveAllRooms()
+                if currentTime - self.battleEndTime >= 2 {
                     self.nextState = states.showBattleResult
                 }
                 break
@@ -293,6 +294,14 @@ class BattleScene: GameScene {
                 break
                 
             case .syncGameData:
+                if currentTime - self.waitSyncGameDataTime > self.waitSyncGameDataTimeOut {
+                    if self.botMothership == nil {
+                        self.loadBots()
+                    }
+                    
+                    self.nextState = .battle
+                    self.serverManager.leaveAllRooms()
+                }
                 break
                 
             default:
@@ -307,8 +316,19 @@ class BattleScene: GameScene {
             
             //Próximo estado
             switch (self.nextState) {
-            case .battle, .battleOnline:
-                self.battleBeginTime = currentTime
+            case .battleOnline:
+                if battleBeginTime == 0 {
+                    self.battleBeginTime = currentTime
+                }
+                if self.botMothership.displayName != "" {
+                    self.showPlayerNames(playAlertSound: (currentTime - self.joinRoomTime > 3))
+                }
+                
+                break
+            case .battle:
+                if battleBeginTime == 0 {
+                    self.battleBeginTime = currentTime
+                }
                 break
             case .battleEnd:
                 //TODO: musica do fim da partida
@@ -427,6 +447,7 @@ class BattleScene: GameScene {
                 break
                 
             case .syncGameData:
+                self.waitSyncGameDataTime = currentTime
                 self.serverManager.socket?.emit(self.mothership)
                 break
                 

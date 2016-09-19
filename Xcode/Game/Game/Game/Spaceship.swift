@@ -33,6 +33,7 @@ class Spaceship: Control {
     
     var type:SpaceshipType!
     var level:Int!
+    var battleMaxLevel:Int!
     
     //Vida e Escudo de Energia
     var health:Int!
@@ -234,7 +235,8 @@ class Spaceship: Control {
         spaceshipLevelBackground.position = CGPoint(x: -(spaceshipLevelBackground.size.width + self.healthBar.fillMaxWidth)/2, y: 0)
         self.healthBar.positionOffset = CGPoint(x: spaceshipLevelBackground.size.width/2, y: self.healthBar.positionOffset.y)
         
-        spaceshipLevelBackground.addChild(Label(color: backColor, text: self.level.description, fontSize: 11, fontName: GameFonts.fontName.museo1000))
+        self.healthBar.labelLevel = Label(color: backColor, text: self.level.description, fontSize: 11, fontName: GameFonts.fontName.museo1000)
+        spaceshipLevelBackground.addChild(self.healthBar.labelLevel)
         
         let spaceshipLevelBorder = SKSpriteNode(imageNamed: "spaceshipLevelBorder")
         spaceshipLevelBorder.texture?.filteringMode = Display.filteringMode
@@ -285,17 +287,46 @@ class Spaceship: Control {
     fileprivate func load(type:Int, level:Int, loadPhysics:Bool) {
         self.type = Spaceship.types[type]
         self.level = level
+        self.battleMaxLevel = level
         self.load(loadPhysics)
     }
     
     fileprivate func load(extraType type:Int, level:Int, loadPhysics:Bool) {
         self.type = Spaceship.extraTypes[type]
         self.level = level
+        self.battleMaxLevel = level
         self.load(loadPhysics)
     }
     
     func loadSoundEffects() {
         self.explosionSoundEffect = SoundEffect(soundType: SoundEffect.effectTypes.explosion, node: self)
+    }
+    
+    func setBattleLevel(level:Int) {
+        
+        self.maxHealth = GameMath.spaceshipMaxHealth(level: level, type: self.type)
+        
+        if level < self.level {
+            self.health = self.maxHealth
+        }
+        
+        if let weapon = self.weapon {
+            weapon.level = level
+            weapon.damage = GameMath.weaponDamage(level: weapon.level, type: weapon.type)
+        }
+        
+        self.level = level
+        
+        if let healthBar = self.healthBar {
+            healthBar.update(self.health, maxHealth: self.maxHealth)
+            healthBar.labelLevel.setText(self.level.description)
+        }
+    }
+    
+    func upgradeOnBattle() {
+        if self.level < self.battleMaxLevel {
+            self.setBattleLevel(level: self.level + 1)
+        }
     }
     
     fileprivate func load(_ loadPhysics:Bool) {
@@ -689,6 +720,9 @@ class Spaceship: Control {
                     
                     if self.health > 0 && self.health - shot.damage <= 0 {
                         self.die()
+                        if let spaceship = shot.shooter as? Spaceship {
+                            spaceship.upgradeOnBattle()
+                        }
                     } else {
                         self.health = self.health - shot.damage
                     }
@@ -698,6 +732,9 @@ class Spaceship: Control {
                 
                 if self.health > 0 && self.health - shot.damage <= 0 {
                     self.die()
+                    if let spaceship = shot.shooter as? Spaceship {
+                        spaceship.upgradeOnBattle()
+                    }
                 } else {
                     self.health = self.health - shot.damage
                 }

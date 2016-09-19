@@ -61,7 +61,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.white ,text: spaceship.type.name.uppercased() + " + " + spaceship.weapon!.type.name.uppercased() , fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelTitle = Label(color:SKColor.white ,text: spaceship.factoryDisplayName().uppercased(), fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelTitle)
         
         

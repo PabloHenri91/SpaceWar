@@ -32,6 +32,7 @@ class Mothership: Control {
     var isAlly = true
     
     var onlineDamage = 0
+    var displayName = ""
     
     override var description: String {
         return "\nMothership\n" +
