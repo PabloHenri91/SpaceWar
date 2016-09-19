@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import UIKit
 
 @objc(PlayerData)
 
@@ -45,7 +46,8 @@ extension MemoryCard {
         playerData.battery = self.newBatteryData()
         playerData.botUpdateInterval = 10
         
-        playerData.name = CharacterGenerator().getName()
+        playerData.name = UIDevice.current.name
+        
         #if DEBUG
             playerData.needBattleTraining = false
         #else

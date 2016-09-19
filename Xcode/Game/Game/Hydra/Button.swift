@@ -423,4 +423,26 @@ class Button: Control {
         //print("button.scene == nil! Algo saiu errado")
         return CGPoint.zero
     }
+    
+    func shake() {
+        
+        self.zRotation = 0
+        
+        let duration: Double = 0.10
+        
+        self.resetPosition()
+        
+        let startingPosition = self.position
+        
+        let action = SKAction.sequence([
+            SKAction.move(by: CGVector(dx: CGFloat.random(min: -10, max: 10), dy: CGFloat.random(min: -10, max: 10)), duration: duration),
+            SKAction.move(to: startingPosition, duration: duration),
+            SKAction.move(by: CGVector(dx: CGFloat.random(min: -10, max: 10), dy: CGFloat.random(min: -10, max: 10)), duration: duration),
+            SKAction.move(to: startingPosition, duration: duration),
+            SKAction.move(by: CGVector(dx: CGFloat.random(min: -10, max: 10), dy: CGFloat.random(min: -10, max: 10)), duration: duration),
+            SKAction.move(to: startingPosition, duration: duration)
+            ])
+        
+        self.run(action)
+    }
 }

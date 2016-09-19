@@ -131,6 +131,10 @@ extension BattleScene {
                 
                 break
                 
+            case "roomId":
+                serverManager.roomId(socketAnyEvent: socketAnyEvent)
+                break
+                
             default:
                 print(BattleScene.state)
                 print(socketAnyEvent.description)
@@ -310,6 +314,8 @@ extension BattleScene {
         for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
             spaceship.setBattleLevel(level: min(maxLevel, spaceship.battleMaxLevel))
         }
+        
+        self.updateMothershipsHealth()
     }
     
     func showPlayerNames(playAlertSound: Bool) {

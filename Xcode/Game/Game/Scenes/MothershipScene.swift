@@ -47,6 +47,8 @@ class MothershipScene: GameScene {
     
     var gameStore: GameStore?
     
+    var lastShake: Double = 0
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         

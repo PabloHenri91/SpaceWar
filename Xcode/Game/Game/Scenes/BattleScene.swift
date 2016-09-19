@@ -135,12 +135,6 @@ class BattleScene: GameScene {
             self.botMothership.spaceships.append(botSpaceship)
         }
         
-        self.mothership.health = GameMath.mothershipMaxHealth(self.mothership, enemyMothership: self.botMothership)
-        self.mothership.maxHealth = self.mothership.health
-        self.mothership.updateHealthBarValue()
-        
-        self.botMothership.health = self.mothership.health
-        self.botMothership.maxHealth = self.mothership.health
         self.botMothership.loadHealthBar(blueTeam: false)
         
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
@@ -148,7 +142,15 @@ class BattleScene: GameScene {
         self.updateSpaceshipLevels()
     }
     
-    
+    func updateMothershipsHealth() {
+        self.mothership.health = GameMath.mothershipMaxHealth(self.mothership, enemyMothership: self.botMothership)
+        self.mothership.maxHealth = self.mothership.health
+        self.mothership.updateHealthBarValue()
+        
+        self.botMothership.health = self.mothership.health
+        self.botMothership.maxHealth = self.mothership.health
+        self.botMothership.updateHealthBarValue()
+    }
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)

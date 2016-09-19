@@ -126,6 +126,8 @@ Player.prototype.createRoom = function() {
     
     //Definindo roomId no Socket para marcar a sala criada.
     this.socket.roomId = this.socket.id;
+    
+    this.game.io.sockets.emit('roomId', [this.socket.roomId, this.socket.name]);
 };
 
 Player.prototype.setUserDisplayInfo = function(userDisplayInfo) {
@@ -178,7 +180,6 @@ Player.prototype.getAllRooms = function() {
         }
         
         if (!foundRoom) {
-            
             this.socket.emit('noRoomsAvailable');
             this.createRoom();
             //console.log(this.socket.name + ' emit noRoomsAvailable');

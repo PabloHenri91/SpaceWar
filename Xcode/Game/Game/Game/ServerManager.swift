@@ -14,6 +14,8 @@
     import Foundation
 #endif
 
+import SpriteKit
+import AudioToolbox
 
 class ServerManager {
     
@@ -51,6 +53,10 @@ class ServerManager {
                 if let mySocketId = socketAnyEvent.items?.first as? String {
                     serverManager.userDisplayInfo.socketId = mySocketId
                 }
+                break
+                
+            case "roomId":
+                serverManager.roomId(socketAnyEvent: socketAnyEvent)
                 break
                 
             default:
@@ -155,6 +161,39 @@ class ServerManager {
     
     func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
         self.room?.addPlayer(socketAnyEvent)
+    }
+    
+    func roomId(socketAnyEvent: SocketAnyEvent) {
+        
+        if let scene = Control.gameScene as? MothershipScene {
+            
+            if GameScene.currentTime - scene.lastShake > 3 {
+                
+                scene.lastShake = GameScene.currentTime
+                
+                if let items = socketAnyEvent.items?.first as? [Any] {
+                    var i = items.makeIterator()
+                    let _ = i.next()
+                    let name = i.next() as! String
+                    
+                    let labelText = "Tap BATTLE now to play with " + name
+                    
+                    let label = Label(color: SKColor.black, text: labelText, fontSize: 10, x: 160, y: 352, xAlign: .center, yAlign: .center)
+                    
+                    scene.addChild(label)
+                    
+                    label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+                        label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
+                            label?.removeFromParent()
+                        })
+                        })
+                    
+                    scene.buttonBattle.shake()
+                    
+                    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+                }
+            }
+        }
     }
 }
 
