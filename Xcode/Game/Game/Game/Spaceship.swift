@@ -550,7 +550,7 @@ class Spaceship: Control {
             } else {
                 if self != Spaceship.selectedSpaceship {
                     if weaponRangeSprite.alpha > 0 {
-                        weaponRangeSprite.alpha -= 0.01666666667
+                        weaponRangeSprite.alpha -= 0.06666666667
                     }
                 }
             }
