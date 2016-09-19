@@ -297,15 +297,18 @@ extension BattleScene {
     }
     
     func updateSpaceshipLevels() {
-        var minLevel = Int.max
+        var maxLevel = Int.max
         for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
-            if spaceship.level < minLevel {
-                minLevel = spaceship.level
+            if spaceship.level < maxLevel {
+                maxLevel = spaceship.level
             }
         }
         
+        //No maximo 2 leveis a mais
+        maxLevel = maxLevel + 2
+        
         for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
-            spaceship.setBattleLevel(level: minLevel)
+            spaceship.setBattleLevel(level: min(maxLevel, spaceship.battleMaxLevel))
         }
     }
     
