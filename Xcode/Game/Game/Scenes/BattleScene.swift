@@ -45,8 +45,7 @@ class BattleScene: GameScene {
     
     var botMothership:Mothership!
     var lastBotUpdate:Double = 0
-    var botUpdateInterval:Double = 10//TODO: deve ser calculado para equilibrar o flow
-    var botLevel:Double = 1
+    var botUpdateInterval:Double = 10
     
     var battleEndTime: Double = 0
     var battleBeginTime: Double = 0
@@ -111,8 +110,6 @@ class BattleScene: GameScene {
         Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
-        self.botLevel = self.playerData.botLevel.doubleValue
-        
         if self.botUpdateInterval < 1 {
             self.botUpdateInterval = 1
         }
@@ -375,6 +372,7 @@ class BattleScene: GameScene {
                         
                         self.playerData.botUpdateInterval = (self.botUpdateInterval - 1) as NSNumber
                         self.playerData.botLevel = (self.playerData.botLevel.intValue + 1) as NSNumber
+                        
                         self.playerData.winCount = (self.playerData.winCount.intValue + 1) as NSNumber
                         self.playerData.winningStreakCurrent = (self.playerData.winningStreakCurrent.intValue + 1) as NSNumber
                         if self.playerData.winningStreakCurrent.intValue > self.playerData.winningStreakBest.intValue {
@@ -391,7 +389,8 @@ class BattleScene: GameScene {
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.ok)
                         alertBox.buttonOK.addHandler({
-                            self.playerData.botUpdateInterval = (self.playerData.botUpdateInterval.intValue + 1) as NSNumber
+                            self.playerData.botUpdateInterval = (self.botUpdateInterval + 1) as NSNumber
+                            self.playerData.botLevel = (self.playerData.botLevel.intValue - 1) as NSNumber
                             self.playerData.winningStreakCurrent = 0
                             self.nextState = states.mothership
                         })

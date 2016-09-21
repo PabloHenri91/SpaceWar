@@ -78,7 +78,23 @@ class GameMath {
     }
     
     static func spaceshipBotSpaceshipLevel() -> Int {
-        return MemoryCard.sharedInstance.playerData!.botLevel.intValue
+        
+        let playerData = MemoryCard.sharedInstance.playerData!
+        
+        var levelSum = 0
+        var spaceshipDataCount = 0
+        for item in playerData.motherShip.spaceships {
+            if let spaceshipData = item as? SpaceshipData {
+                levelSum = levelSum + spaceshipData.level.intValue
+                spaceshipDataCount = spaceshipDataCount + 1
+            }
+        }
+        
+        let botSpaceshipLevel = (playerData.botLevel.intValue + (levelSum/spaceshipDataCount))/2
+        
+        print(botSpaceshipLevel)
+        
+        return botSpaceshipLevel
     }
     
     static func spaceshipUpgradeCost(level:Int, type:SpaceshipType) -> Int {
