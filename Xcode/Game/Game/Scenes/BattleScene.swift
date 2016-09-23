@@ -137,6 +137,8 @@ class BattleScene: GameScene {
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
         
 //        self.updateSpaceshipLevels()
+        
+        self.updateMothershipsHealth()
     }
     
     func updateMothershipsHealth() {
