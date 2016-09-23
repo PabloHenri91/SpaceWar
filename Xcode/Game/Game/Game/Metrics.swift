@@ -16,80 +16,80 @@ class Metrics {
     
     static var battlesPlayed = 0
     
-    static func purchasedPremiumPointsAtGameStore(_ storeItem: StoreItem) {
+    static func purchasedPremiumPointsAtGameStore(storeItem: StoreItem) {
         if Metrics.canSendEvents() {
-            GameAnalytics.addBusinessEvent(withCurrency: "USD", amount: Int(100 * storeItem.price), itemType: "premiumPoints", itemId: storeItem.productIdentifier, cartType: "GameStore", autoFetchReceipt: true)
+            GameAnalytics.addBusinessEventWithCurrency("USD", amount: Int(100 * storeItem.price), itemType: "premiumPoints", itemId: storeItem.productIdentifier, cartType: "GameStore", autoFetchReceipt: true)
         }
     }
     
     static func tryCheat() {
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "tryCheat")
+            GameAnalytics.addDesignEventWithEventId("tryCheat")
         }
     }
     
-    static func killerSpaceship(_ spaceship: String) {
+    static func killerSpaceship(spaceship: String) {
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "Killer:" + spaceship)
+            GameAnalytics.addDesignEventWithEventId("Killer:" + spaceship)
         }
     }
     
-    static func oneHitKillerSpaceship(_ spaceship: String) {
+    static func oneHitKillerSpaceship(spaceship: String) {
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "OneHitKiller:" + spaceship)
+            GameAnalytics.addDesignEventWithEventId("OneHitKiller:" + spaceship)
         }
     }
     
     static func win() {
-        let level = MemoryCard.sharedInstance.playerData!.motherShip.level
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "BattleWin:" + level.description)
+            GameAnalytics.addDesignEventWithEventId("BattleWin:" + level.description)
         }
     }
     
     static func loose() {
-        let level = MemoryCard.sharedInstance.playerData!.motherShip.level
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "BattleLoose:" + level.description)
+            GameAnalytics.addDesignEventWithEventId("BattleLoose:" + level.description)
         }
     }
     
     static func openTheGame() {
         
-        let date = Date()
-        let formatter = DateFormatter()
+        let date = NSDate()
+        let formatter = NSDateFormatter()
         formatter.dateFormat = "HH"
-        formatter.timeZone = TimeZone.autoupdatingCurrent
-        let hour = formatter.string(from: date)
+        formatter.timeZone = NSTimeZone.localTimeZone()
+        let hour = formatter.stringFromDate(date)
         
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "OpenTheGameAtHour:" + hour)
+            GameAnalytics.addDesignEventWithEventId("OpenTheGameAtHour:" + hour)
         }
     }
     
     static func battlesPlayedPerSession() {
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "BattlesPlayed" , value: Metrics.battlesPlayed as NSNumber)
+            GameAnalytics.addDesignEventWithEventId("BattlesPlayed" , value: Metrics.battlesPlayed)
         }
     }
     
-    static func battleTime(_ time:TimeInterval) {
-        let level = MemoryCard.sharedInstance.playerData!.motherShip.level
-        let totalTime = TimeInterval(Int(time))
+    static func battleTime(time:NSTimeInterval) {
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
+        let totalTime = NSTimeInterval(Int(time))
         
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "BattleTime:" + level.description , value: totalTime as NSNumber)
+            GameAnalytics.addDesignEventWithEventId("BattleTime:" + level.description , value: totalTime)
         }
     }
     
     static func levelUp() {
-        let level = MemoryCard.sharedInstance.playerData!.motherShip.level
-        let startDate = MemoryCard.sharedInstance.playerData!.startDate
+        let level = MemoryCard.sharedInstance.playerData.motherShip.level
+        let startDate = MemoryCard.sharedInstance.playerData.startDate
         
-        let time = TimeInterval(Int(startDate!.timeIntervalSinceNow * -1))
+        let time = NSTimeInterval(Int(startDate!.timeIntervalSinceNow * -1))
         
         if Metrics.canSendEvents() {
-            GameAnalytics.addDesignEvent(withEventId: "LevelUp:" + level.description , value: time as NSNumber)
+            GameAnalytics.addDesignEventWithEventId("LevelUp:" + level.description , value: time)
         }
     }
     

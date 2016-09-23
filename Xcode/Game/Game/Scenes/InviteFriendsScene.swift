@@ -16,7 +16,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     var loadingImage:SKSpriteNode!
     
     lazy var deathEffect:SKAction = {
-        return SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(M_PI * 2), duration: 1))
+        return SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI * 2), duration: 1))
     }()
     
     var buttonBack:Button!
@@ -39,8 +39,8 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     var state = states.normal
     var nextState = states.normal
     
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
         
         self.buttonInviteAll = Button(textureName: "button", text: "Invite All", x: 20, y: 466, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonInviteAll)
@@ -55,7 +55,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     }
     
 
-    override func update(_ currentTime: TimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -79,9 +79,9 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                 self.loadingImage.position = CGPoint(x: Display.currentSceneSize.width/2 , y: -(Display.currentSceneSize.height/2))
                 self.addChild(self.loadingImage)
                 
-                self.loadingImage.run(self.deathEffect)
+                self.loadingImage.runAction(self.deathEffect)
                 
-                self.blackSpriteNode.isHidden = false
+                self.blackSpriteNode.hidden = false
                 self.blackSpriteNode.zPosition = 1000
                 self.loadingImage.zPosition = self.blackSpriteNode.zPosition + 1
                 
@@ -96,9 +96,9 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                 self.loadingImage.position = CGPoint(x: Display.currentSceneSize.width/2 , y: -(Display.currentSceneSize.height/2))
                 self.addChild(self.loadingImage)
                 
-                self.loadingImage.run(self.deathEffect)
+                self.loadingImage.runAction(self.deathEffect)
                 
-                self.blackSpriteNode.isHidden = false
+                self.blackSpriteNode.hidden = false
                 self.blackSpriteNode.zPosition = 1000
                 self.loadingImage.zPosition = self.blackSpriteNode.zPosition + 1
                 
@@ -107,7 +107,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
                 break
                 
             case .normal:
-                self.blackSpriteNode.isHidden = true
+                self.blackSpriteNode.hidden = true
                 
                 if let spriteNode = self.loadingImage {
                     spriteNode.removeFromParent()
@@ -123,7 +123,7 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>) {
+    override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -131,17 +131,17 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
             for touch in touches {
                 switch (self.state) {
                 case .normal:
-                    if(self.buttonInviteAll.contains(touch.location(in: self))) {
+                    if(self.buttonInviteAll.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .inviteAll
                         return
                     }
                     
-                    if(self.buttonInviteSome.contains(touch.location(in: self))) {
+                    if(self.buttonInviteSome.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .inviteSomeFriends
                         return
                     }
                     
-                    if(self.buttonBack.contains(touch.location(in: self))) {
+                    if(self.buttonBack.containsPoint(touch.locationInNode(self))) {
                         self.nextState = .mothership
                         return
                     }
@@ -158,21 +158,19 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     
     
     
-    func inviteFriends(_ all: Bool){
+    func inviteFriends(all: Bool){
         
         if all {
             
             FacebookClient.sharedInstance.listInvitablesFriends { (invitableFriends, error) in
                 if error == nil {
                     
-                    var idFriendArray = [Any]()
+                    var idFriendArray = [AnyObject]()
                     
-                    for item in invitableFriends {
-                        
-                        var item = item.value as! Dictionary<String, AnyObject>
-                        
-                        if let idFriend = item.removeValue(forKey: "id") {
-                            idFriendArray.append(idFriend as AnyObject)
+                    for item in invitableFriends
+                    {
+                        if let idFriend = item.objectForKey("id"){
+                            idFriendArray.append(idFriend)
                         }
                     }
                     
@@ -192,13 +190,13 @@ class InviteFriendsScene: GameScene, FacebookGameInviterDelegate {
     }
     
     
-    func alertError(_ error: String) {
+    func alertError(error: String) {
         //print(error)
         self.nextState = .normal
     }
     
     
-    func inviteSucess(_ invitedsCount: Int) {
+    func inviteSucess(invitedsCount: Int) {
         //print("sucess")
         //print(invitedsCount)
     }

@@ -10,30 +10,29 @@ import SpriteKit
 
 class GameMath {
     
-    static func finishDate(timeLeft: Int) -> Date {
-        return Date(timeInterval: TimeInterval(timeLeft), since: Date())
+    static func finishDate(timeLeft: Int) -> NSDate {
+        return NSDate(timeInterval: NSTimeInterval(timeLeft), sinceDate: NSDate())
     }
     
-    static func timeLeftPositional(startDate: Date, duration: Int) -> Int {
-        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
+    static func timeLeftPositional(startDate: NSDate, duration: Int) -> Int {
+        let date = NSDate(timeInterval: NSTimeInterval(duration), sinceDate: startDate)
         return Int(date.timeIntervalSinceNow)
     }
-    
-    static func timeLeft(startDate: Date, duration: Int) -> Int {
-        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
+    static func timeLeft(startDate: NSDate, duration: Int) -> Int {
+        let date = NSDate(timeInterval: NSTimeInterval(duration), sinceDate: startDate)
         return Int(date.timeIntervalSinceNow)
     }
     
     static func timeLeftFormattedPositional(timeLeft: Int) -> String {
-        return GameMath.timeLeftDateComponentsFormatterPositional.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
+        return GameMath.timeLeftDateComponentsFormatterPositional.stringFromDate(NSDate(), toDate: GameMath.finishDate(timeLeft))!
     }
     
     static func timeLeftFormattedAbbreviated(timeLeft: Int) -> String {
-        return GameMath.timeLeftDateComponentsFormatterAbbreviated.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
+        return GameMath.timeLeftDateComponentsFormatterAbbreviated.stringFromDate(NSDate(), toDate: GameMath.finishDate(timeLeft))!
     }
     
     //MARK: Boosts
-    static func applyXPBoosts(_ xp: Int) -> Int {
+    static func applyXPBoosts(xp: Int) -> Int {
         
         Boost.reloadBoosts()//TODO: remover daqui
         
@@ -48,29 +47,31 @@ class GameMath {
         return calculatedXP
     }
     
-    //MARK: Spaceships
+    static func xpForNextLevel(level level:Int) -> Int {
+        return ((100 * level) * level)
+    }
     
     // de 5 a 30, fixo pela nave
-    static func spaceshipSpeedAtribute(level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipSpeedAtribute(level level:Int, type:SpaceshipType) -> Int {
         return type.speedBonus
     }
     
     // Pontos de HP, aumenta 10 por cento por level
-    static func spaceshipMaxHealth(level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipMaxHealth(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.healthBonus * 10) * pow(1.1, Double(level - 1)))
     }
     
     // Pontos de escudo, aumenta 10 por cento por level
-    static func spaceshipShieldPower(level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipShieldPower(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldPowerBonus) * pow(1.1, Double(level - 1)))
     }
     
     // Quantidade de pontos de escudo recarregado por segundo
-    static func spaceshipShieldRecharge(level:Int, type:SpaceshipType) -> Int {
+    static func spaceshipShieldRecharge(level level:Int, type:SpaceshipType) -> Int {
         return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
 
-    static func spaceshipMaxVelocitySquared(speed:Int) -> CGFloat {
+    static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
         let maxVelocity =  CGFloat(speed) * 4
         return CGFloat(maxVelocity * maxVelocity)
     }
@@ -83,12 +84,12 @@ class GameMath {
         var spaceshipDataCount = 0
         for item in playerData.motherShip.spaceships {
             if let spaceshipData = item as? SpaceshipData {
-                levelSum = levelSum + spaceshipData.level.intValue
+                levelSum = levelSum + spaceshipData.level.integerValue
                 spaceshipDataCount = spaceshipDataCount + 1
             }
         }
         
-        let botSpaceshipLevel = (playerData.botLevel.intValue + (levelSum/spaceshipDataCount))/2
+        let botSpaceshipLevel = (playerData.botLevel.integerValue + (levelSum/spaceshipDataCount))/2
         
         print(botSpaceshipLevel)
         
@@ -96,6 +97,11 @@ class GameMath {
     }
     
     static func spaceshipUpgradeCost(level:Int, type:SpaceshipType) -> Int {
+        return MemoryCard.sharedInstance.playerData.botLevel.integerValue
+    }
+    
+    // Spaceship upgrade
+    static func spaceshipUpgradeCost(level level:Int, type:SpaceshipType) -> Int {
         switch type.rarity {
         case .common:
             return Int(100 * pow(1.3, Double(level)))
@@ -108,7 +114,7 @@ class GameMath {
         }
     }
     
-    static func spaceshipPrice(_ type:SpaceshipType) -> Int {
+    static func spaceshipPrice(type:SpaceshipType) -> Int {
         switch type.rarity {
         case .common:
             return 1000
@@ -126,8 +132,9 @@ class GameMath {
     static let weaponMaxFireInterval:Double = 1.0 // seconds
     static let weaponMaxRangeInPoints:CGFloat = 300
     static let weaponMinRangeInPoints:CGFloat = 100
-    
-    static func weaponDamage(level:Int, type:WeaponType) -> Int {
+        
+    // Weapons
+    static func weaponDamage(level level:Int, type:WeaponType) -> Int {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     
@@ -138,7 +145,8 @@ class GameMath {
         return ((100 * level) * level)
     }
     
-    static func mothershipMaxHealth(_ mothership:Mothership , enemyMothership: Mothership) -> Int {
+    static func mothershipMaxHealth(mothership:Mothership , enemyMothership: Mothership) -> Int {
+        
         var dps = 0
         for spaceship in mothership.spaceships {
             dps = dps + Int(Double((spaceship.weapon?.damage)!) / (spaceship.weapon?.fireInterval)!)
@@ -151,9 +159,9 @@ class GameMath {
         let maxHealth = Int((dps / 2) * 5)
         return maxHealth
     }
-    
     //MARK: Battle
-    static func battleXP(mothership:Mothership, enemyMothership:Mothership) -> Int {
+    //Battle
+    static func battleXP(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
         
         var xp = 0
         
@@ -179,7 +187,7 @@ class GameMath {
         return xp
     }
     
-    static func battlePoints(mothership:Mothership, enemyMothership:Mothership) -> Int {
+    static func battlePoints(mothership mothership:Mothership, enemyMothership:Mothership) -> Int {
 
         // win
         if mothership.health > 0 {
@@ -228,35 +236,33 @@ class GameMath {
     static let batteryChargeInterval = 6.0 * 60.0
     static let batteryBoostInterval = 60.0 * 60.0 * 24.0
     
-    static func batteryNextChargeTimeLeft(_ beginChargeDate: Date) -> Int {
-        let date = Date(timeInterval: batteryChargeInterval, since: beginChargeDate)
+    static func batteryNextChargeTimeLeft(beginChargeDate: NSDate) -> Int {
+        let date = NSDate(timeInterval: batteryChargeInterval, sinceDate: beginChargeDate)
         return Int(date.timeIntervalSinceNow)
     }
     
-    static func batteryBoostTimeLeft(_ beginChargeDate: Date) -> Int {
-        let date = Date(timeInterval: batteryBoostInterval, since: beginChargeDate)
+    static func batteryBoostTimeLeft(beginChargeDate: NSDate) -> Int {
+        let date = NSDate(timeInterval: batteryBoostInterval, sinceDate: beginChargeDate)
         return Int(date.timeIntervalSinceNow)
     }
     
     
-    
-    
-    static let timeLeftDateComponentsFormatterPositional: DateComponentsFormatter = {
+    static let timeLeftDateComponentsFormatterPositional: NSDateComponentsFormatter = {
         
-        let dateComponentsFormatter = DateComponentsFormatter()
+        let dateComponentsFormatter = NSDateComponentsFormatter()
         
-        dateComponentsFormatter.unitsStyle = .positional
-        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
+        dateComponentsFormatter.unitsStyle = .Positional
+        dateComponentsFormatter.allowedUnits = NSCalendarUnit(rawValue: NSCalendarUnit.Second.rawValue | NSCalendarUnit.Minute.rawValue | NSCalendarUnit.Hour.rawValue)
         
         return dateComponentsFormatter
     }()
     
-    static let timeLeftDateComponentsFormatterAbbreviated: DateComponentsFormatter = {
+    static let timeLeftDateComponentsFormatterAbbreviated: NSDateComponentsFormatter = {
         
-        let dateComponentsFormatter = DateComponentsFormatter()
+        let dateComponentsFormatter = NSDateComponentsFormatter()
         
-        dateComponentsFormatter.unitsStyle = .abbreviated
-        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
+        dateComponentsFormatter.unitsStyle = .Abbreviated
+        dateComponentsFormatter.allowedUnits = NSCalendarUnit(rawValue: NSCalendarUnit.Second.rawValue | NSCalendarUnit.Minute.rawValue | NSCalendarUnit.Hour.rawValue)
         
         return dateComponentsFormatter
     }()

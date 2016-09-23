@@ -19,14 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
         if let launchOptions = launchOptions {
-            if let localNotification = launchOptions[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification {
+            if let localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
                 if let userInfo = localNotification.userInfo {
                     if let item = userInfo["nextScene"] {
-                        LoadScene.nextScene = (item as AnyObject).description
+                        LoadScene.nextScene = item.description
                     }
                 }
             }
@@ -35,8 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //App launch code
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         //Optionally add to ensure your credentials are valid:
-        
-        FBSDKLoginManager.renewSystemCredentials { (result: ACAccountCredentialRenewResult, error: Error?) in
+        FBSDKLoginManager.renewSystemCredentials { (result:ACAccountCredentialRenewResult, error:NSError!) -> Void in
             //print(result.hashValue)
             FacebookGameInviter.sharedInstance.updateInvitedFriends()
         }
@@ -51,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GameAdManager.sharedInstance
         
         //TODO: remover daqui notificationSettings
-        let notificationSettings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
         
         ABNScheduler.cancelAllNotifications()
@@ -59,18 +58,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         //Even though the Facebook SDK can make this determinitaion on its own,
         //let's make sure that the facebook SDK only sees urls intended for it,
         //facebook has enough info already!
-        guard (url.scheme?.hasPrefix("fb\(FBSDKSettings.appID())"))! && url.host == "authorize" else {
+        guard url.scheme.hasPrefix("fb\(FBSDKSettings.appID())") && url.host == "authorize" else {
             return false
         }
         
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
-    func applicationSignificantTimeChange(_ application: UIApplication) {
+    func applicationSignificantTimeChange(application: UIApplication) {
         //TODO: applicationSignificantTimeChange
         //http://stackoverflow.com/questions/13741585/notify-app-when-ipad-date-time-settings-changed
         //http://stackoverflow.com/questions/12221528/nsdate-get-precise-time-independent-of-device-clock
@@ -79,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Metrics.tryCheat()
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         MemoryCard.sharedInstance.saveGame()
@@ -95,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setNotifications() {
         
-        let playerData = MemoryCard.sharedInstance.playerData!
+        let playerData = MemoryCard.sharedInstance.playerData
         
         let alertBodies = [
             "Mothership is full on charge and ready to engage."
@@ -103,29 +102,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let notification1 = ABNotification(alertBody: alertBodies[Int.random(alertBodies.count)])
         notification1.userInfo = [ "nextScene": EventCard.types.none.rawValue ]
-        notification1.schedule(fireDate: Date().nextDays(1))
+        notification1.schedule(fireDate: NSDate().nextDays(1))
         
         let notification7 = ABNotification(alertBody: alertBodies[Int.random(alertBodies.count)])
         notification7.userInfo = [ "nextScene": EventCard.types.none.rawValue ]
-        notification7.schedule(fireDate: Date().nextDays(7))
+        notification7.schedule(fireDate: NSDate().nextDays(7))
         
         if let battery = playerData.battery {
-            if battery.charge.intValue < GameMath.batteryMaxCharge {
+            if battery.charge.integerValue < GameMath.batteryMaxCharge {
                 //TODO: setar push para bateria totalmente
                 
                 var timeLeft = 0
-                if battery.charge.intValue < GameMath.batteryMaxCharge - 1 {
-                    timeLeft = (GameMath.batteryMaxCharge - (battery.charge.intValue + 1)) * Int(GameMath.batteryChargeInterval)
+                if battery.charge.integerValue < GameMath.batteryMaxCharge - 1 {
+                    timeLeft = (GameMath.batteryMaxCharge - (battery.charge.integerValue + 1)) * Int(GameMath.batteryChargeInterval)
                 }
                 
                 timeLeft += GameMath.batteryNextChargeTimeLeft(battery.lastCharge!)
                 
                 if timeLeft > 1 {
                     
-                    let fireDate = GameMath.finishDate(timeLeft: timeLeft)
+                    let fireDate = GameMath.finishDate(timeLeft)
                     
                     let notification = ABNotification(alertBody: alertBodies[Int.random(alertBodies.count)])
-                    notification.userInfo = [ "nextScene" as NSString: EventCard.types.none.rawValue as NSString]
+                    notification.userInfo = [ "nextScene": EventCard.types.none.rawValue ]
                     notification.schedule(fireDate: fireDate)
                 }
             } else {
@@ -135,17 +134,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         for item in playerData.missionSpaceships {
             if let missionSpaceshipData = item as? MissionSpaceshipData {
-                if missionSpaceshipData.missionType.intValue > -1 {
+                if missionSpaceshipData.missionType.integerValue > -1 {
                     
-                    let missionType = MissionSpaceship.types[missionSpaceshipData.missionType.intValue]
-                    let timeLeft = GameMath.timeLeft(startDate: missionSpaceshipData.startMissionDate!, duration: missionType.duration)
+                    let missionType = MissionSpaceship.types[missionSpaceshipData.missionType.integerValue]
+                    let timeLeft = GameMath.timeLeft(missionSpaceshipData.startMissionDate!, duration: missionType.duration)
                     if timeLeft > 1 {
                         
                         let alertBody = "Mining Spaceship found " + missionType.pointsBonus.description + " fragments at the " + missionType.name
-                        let fireDate = GameMath.finishDate(timeLeft: timeLeft)
+                        let fireDate = GameMath.finishDate(timeLeft)
                         
                         let notification = ABNotification(alertBody: alertBody)
-                        notification.userInfo = [ "nextScene" as NSObject: EventCard.types.missionSpaceshipEvent.rawValue as AnyObject ]
+                        notification.userInfo = [ "nextScene": EventCard.types.missionSpaceshipEvent.rawValue ]
                         notification.schedule(fireDate: fireDate)
                     } else {
                         //TODO: ops, voce esqueceu de coletar missionSpaceship
@@ -158,9 +157,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let researchData = item as? ResearchData {
                 if researchData.done.boolValue == false && researchData.startDate != nil {
                     
-                    let researchType = Research.types[researchData.type.intValue]
+                    let researchType = Research.types[researchData.type.integerValue]
                     
-                    let timeLeft = GameMath.timeLeft(startDate: researchData.startDate!, duration: researchType.duration)
+                    let timeLeft = GameMath.timeLeft(researchData.startDate!, duration: researchType.duration)
                     if timeLeft > 1 {
                         if let spaceshipUnlocked = researchType.spaceshipUnlocked {
                             if let weaponUnlocked = researchType.weaponUnlocked {
@@ -168,11 +167,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 let spaceshipName = Spaceship.types[spaceshipUnlocked].name
                                 let weaponName = Weapon.types[weaponUnlocked].name
                                 
-                                let alertBody = "Research completed. " + spaceshipName + " with " + weaponName! + " is available for construction at the Factory."
-                                let fireDate = GameMath.finishDate(timeLeft: timeLeft)
+                                let alertBody = "Research completed. " + spaceshipName + " with " + weaponName + " is available for construction at the Factory."
+                                let fireDate = GameMath.finishDate(timeLeft)
                                 
                                 let notification = ABNotification(alertBody: alertBody)
-                                notification.userInfo = [ "nextScene" as NSObject: EventCard.types.researchEvent.rawValue as AnyObject ]
+                                notification.userInfo = [ "nextScene": EventCard.types.researchEvent.rawValue ]
                                 notification.schedule(fireDate: fireDate)
                             }
                         }
@@ -184,16 +183,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
         Metrics.openTheGame()
@@ -201,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.applicationIconBadgeNumber = 0
     }
 
-    func applicationWillTerminate(_ application: UIApplication) {
+    func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

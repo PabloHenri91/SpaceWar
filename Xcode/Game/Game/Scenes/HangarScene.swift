@@ -11,7 +11,7 @@ import SpriteKit
 class HangarScene: GameScene {
     
    
-    let playerData = MemoryCard.sharedInstance.playerData!
+    let playerData = MemoryCard.sharedInstance.playerData
     
     var spaceships = [Spaceship]()
     var selectedSpaceship: Spaceship?
@@ -47,8 +47,8 @@ class HangarScene: GameScene {
     
     var gameStore: GameStore?
     
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
         
         let actionDuration = 0.25
         
@@ -57,7 +57,7 @@ class HangarScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(parent: self)
+                node.moveToParent(self)
             }
             break
         case .hangar:
@@ -68,13 +68,13 @@ class HangarScene: GameScene {
         
         self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-                                      size: CGSize(width: self.size.width,
-                                        height: 56), y: 67)
+                                      y: 67, size: CGSize(width: self.size.width,
+                                        height: 56))
         self.addChild(self.headerControl)
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-                               size: CGSize(width: self.size.width,
-                                            height: 3), y: 123))
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "SELECT SPACESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
        
@@ -126,14 +126,14 @@ class HangarScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
             break
         case .hangar:
             break
         }
         
-        self.run({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }
@@ -163,7 +163,7 @@ class HangarScene: GameScene {
         self.playerDataCard.updatePoints()
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -220,7 +220,7 @@ class HangarScene: GameScene {
                 break
                 
             case .hangar:
-                self.blackSpriteNode.isHidden = true
+                self.blackSpriteNode.hidden = true
                 self.gameStore?.removeFromParent()
                 self.changeAlert?.removeFromParent()
                 self.detailsAlert?.removeFromParent()
@@ -228,7 +228,7 @@ class HangarScene: GameScene {
                 
             case .details:
                 if let spaceship = self.selectedSpaceship {
-                    self.blackSpriteNode.isHidden = false
+                    self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
                     self.detailsAlert = HangarSpaceshipDetails(spaceship: spaceship)
                     self.detailsAlert!.zPosition = self.blackSpriteNode.zPosition + 1
@@ -244,7 +244,7 @@ class HangarScene: GameScene {
                 
             case .change:
                 if let spaceship = self.selectedSpaceship {
-                    self.blackSpriteNode.isHidden = false
+                    self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
                     self.changeAlert = HangarSpaceshipChange(spaceship: spaceship)
                     self.changeAlert!.zPosition = self.blackSpriteNode.zPosition + 1
@@ -264,17 +264,17 @@ class HangarScene: GameScene {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>) {
+    override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .hangar:
-                    if self.playerDataCard.contains(point) {
-                        if self.playerDataCard.buttonStore.contains(touch.location(in: self.playerDataCard)) {
+                    if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
                             self.gameStore = GameStore()
                             self.addChild(self.gameStore!)
                             return
@@ -289,7 +289,7 @@ class HangarScene: GameScene {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>) {
+    override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -312,7 +312,7 @@ class HangarScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .hangar:
                     
@@ -320,31 +320,31 @@ class HangarScene: GameScene {
                         return
                     }
                     
-                    if self.headerControl.contains(point) {
+                    if self.headerControl.containsPoint(point) {
                         return
                     }
                     
-                    if self.playerDataCard.contains(point) {
+                    if self.playerDataCard.containsPoint(point) {
                         return
                     }
                     
-                    if self.gameTabBar.contains(point) {
-                        if(self.gameTabBar.buttonResearch.contains(touch.location(in: self.gameTabBar))) {
+                    if self.gameTabBar.containsPoint(point) {
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.research
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMission.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mission
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMothership.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mothership
                             return
                         }
                         
-                        if(self.gameTabBar.buttonFactory.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.factory
                             return
                         }
@@ -352,14 +352,14 @@ class HangarScene: GameScene {
                     }
                     
                     for hangarCard in hangarCardsArray {
-                        if hangarCard.buttonUpgrade.contains(touch.location(in: hangarCard)){
+                        if hangarCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarCard)){
                             self.selectedSpaceship = hangarCard.spaceship
                             self.selectedCard = hangarCard
                             self.nextState = .details
                             return
                         }
                         
-                        if hangarCard.buttonChange.contains(touch.location(in: hangarCard)){
+                        if hangarCard.buttonChange.containsPoint(touch.locationInNode(hangarCard)){
                             self.selectedSpaceship = hangarCard.spaceship
                             self.selectedCard = hangarCard
                             self.nextState = .change
@@ -374,11 +374,11 @@ class HangarScene: GameScene {
                         
                         if let buttonUpgrade = alert.buttonUpgrade {
                             
-                            if buttonUpgrade.contains(touch.location(in: alert)) {
+                            if buttonUpgrade.containsPoint(touch.locationInNode(alert)) {
                                 let upgradeCost = GameMath.spaceshipUpgradeCost(level: self.selectedSpaceship!.level, type: self.selectedSpaceship!.type)
                                 
-                                if self.playerData.points.intValue > upgradeCost {
-                                    self.playerData.points = (self.playerData.points.intValue - upgradeCost) as NSNumber
+                                if self.playerData.points.integerValue > upgradeCost {
+                                    self.playerData.points = self.playerData.points.integerValue - upgradeCost
                                     self.selectedSpaceship!.upgrade()
                                     self.selectedCard?.reloadCard()
                                     self.playerDataCard.updatePoints()
@@ -386,7 +386,7 @@ class HangarScene: GameScene {
                                     
                                 } else {
                                     
-                                    let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.ok)
+                                    let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
                                     alertBox.buttonOK.addHandler({ self.nextState = .hangar
                                     })
                                     self.addChild(alertBox)
@@ -405,7 +405,7 @@ class HangarScene: GameScene {
                         if let scrollNode = alert.scrollNode{
                             
                             if let buttonChoose = alert.buttonChoose {
-                                if buttonChoose.contains(touch.location(in: alert)){
+                                if buttonChoose.containsPoint(touch.locationInNode(alert)){
                                     alert.choose()
                                     self.selectedCard?.spaceship.removeFromParent()
                                     self.selectedCard?.spaceship = alert.selectedCell?.spaceship
@@ -415,13 +415,13 @@ class HangarScene: GameScene {
                                 }
                             }
                             
-                            if scrollNode.contains(touch.location(in: alert.cropBox.cropNode)){
+                            if scrollNode.containsPoint(touch.locationInNode(alert.cropBox.cropNode)){
                                 for item in scrollNode.cells {
-                                    if (item.contains(touch.location(in: scrollNode))) {
+                                    if (item.containsPoint(touch.locationInNode(scrollNode))) {
                                         if let cell = item as? HangarSpaceshipsCell {
                                             if ((cell.position.y < 40.0) && (cell.position.y > -220.0)) {
                                                 for subItem in cell.spaceshipsSubCells {
-                                                    if subItem.contains(touch.location(in: item)){
+                                                    if subItem.containsPoint(touch.locationInNode(item)){
                                                         alert.selectSpaceship(subItem)
                                                         return
                                                     }
@@ -436,7 +436,7 @@ class HangarScene: GameScene {
                             
                         } else {
                             if let buttonFactory = alert.buttonFactory {
-                                if buttonFactory.contains(touch.location(in: alert)){
+                                if buttonFactory.containsPoint(touch.locationInNode(alert)){
                                     self.nextState = .factory
                                 }
                             }
@@ -445,7 +445,7 @@ class HangarScene: GameScene {
                     
                 case .alert:
                     if let gameStore = self.gameStore {
-                        if gameStore.contains(point) {
+                        if gameStore.containsPoint(point) {
                             gameStore.touchEnded(touch)
                         }
                     }

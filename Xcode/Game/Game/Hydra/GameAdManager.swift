@@ -17,16 +17,16 @@ class GameAdManager: UIResponder, AdColonyDelegate, AdColonyAdDelegate {
     
     var zoneIsReady = false
     
-    fileprivate override init() {
+    private override init() {
         super.init()
-        AdColony.configure(withAppID: self.adcolonyAppID, zoneIDs: [self.adcolonyZoneID], delegate: self, logging: false)
+        AdColony.configureWithAppID(self.adcolonyAppID, zoneIDs: [self.adcolonyZoneID], delegate: self, logging: false)
     }
     
     func playVideoAd() {
         if self.zoneIsReady {
             Music.sharedInstance.pause()
             
-            AdColony.playVideoAd(forZone: self.adcolonyZoneID, with: self)
+            AdColony.playVideoAdForZone(self.adcolonyZoneID, withDelegate: self)
         }
     }
     
@@ -39,7 +39,7 @@ class GameAdManager: UIResponder, AdColonyDelegate, AdColonyAdDelegate {
      If the AdColony SDK tells us our zone either has, or doesn't have, ads, we
      need to tell our view controller to update its UI elements appropriately
      */
-    func onAdColonyAdAvailabilityChange(_ available: Bool, inZone zoneID: String) {
+    func onAdColonyAdAvailabilityChange(available: Bool, inZone zoneID: String) {
         self.zoneIsReady = available
         if available {
             Control.gameScene.zoneReady()
@@ -48,12 +48,12 @@ class GameAdManager: UIResponder, AdColonyDelegate, AdColonyAdDelegate {
         }
     }
     
-    func onAdColonyAdAttemptFinished(_ shown: Bool, inZone zoneID: String)  {
+    func onAdColonyAdAttemptFinished(shown: Bool, inZone zoneID: String)  {
         Music.sharedInstance.play()
         
         Control.gameScene.videoAdAttemptFinished(shown)
         
-        if !shown && AdColony.zoneStatus(forZone: self.adcolonyZoneID) != ADCOLONY_ZONE_STATUS.ACTIVE {
+        if !shown && AdColony.zoneStatusForZone(self.adcolonyZoneID) != ADCOLONY_ZONE_STATUS.ACTIVE {
             Control.gameScene.zoneLoading()
         } else if !shown {
             Control.gameScene.zoneReady()
@@ -67,7 +67,7 @@ extension GameScene {
         GameAdManager.sharedInstance.playVideoAd()
     }
     
-    func videoAdAttemptFinished(_ shown: Bool) {
+    func videoAdAttemptFinished(shown: Bool) {
         if let scene = self as? MissionScene {
             scene.videoAdAttemptFinished(shown)
             return

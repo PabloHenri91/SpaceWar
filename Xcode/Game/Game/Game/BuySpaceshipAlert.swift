@@ -30,19 +30,19 @@ class BuySpaceshipAlert: Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.white ,text: "BUY SPACESHIP" , fontSize: 13, x: -127, y: -48, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: "BUY SPACESHIP" , fontSize: 13, x: -127, y: -48, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        let labelLevel = Label(text: spaceship.factoryDisplayName().uppercased(), fontSize: 11, x: -127, y: -8 , horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelLevel = Label(text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelLevel)
         
-        let labelAmount = Label(text: "YOU HAVE ".translation() + count.description + "/4" , fontSize: 11, x: -78, y: 14 , horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelAmount = Label(text: "YOU HAVE ".translation() + count.description + "/4" , fontSize: 11, x: -78, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left)
         self.addChild(labelAmount)
         
-        let labelBuy = Label(text: "BUY" , fontSize: 11, x: 61, y: 14 , horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelBuy = Label(text: "BUY" , fontSize: 11, x: 61, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelBuy)
         
-        self.buttonBuy = Button(textureName: "buttonOrangeFragments", text: GameMath.spaceshipPrice(spaceship.type).description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.white, fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
+        self.buttonBuy = Button(textureName: "buttonOrangeFragments", text: GameMath.spaceshipPrice(spaceship.type).description, fontSize: 13, x: 61, y: 26, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonBuy)
         
         
@@ -90,7 +90,7 @@ class BuySpaceshipAlert: Box {
         
         self.setScale(0)
         
-        self.run(SKAction.sequence([SKAction.scale(to: 1.1, duration: 0.10), SKAction.scale(to: 1, duration: 0.10)]))
+        self.runAction(SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)]))
         
     }
     
@@ -99,7 +99,7 @@ class BuySpaceshipAlert: Box {
     }
     
     func buySpaceship() {
-        let playerData = MemoryCard.sharedInstance.playerData!
+        let playerData = MemoryCard.sharedInstance.playerData
         
         var weaponTypeIndex = Int.random(Weapon.types.count)
         if let weapon = self.spaceship.weapon {
@@ -109,6 +109,6 @@ class BuySpaceshipAlert: Box {
         let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
         spaceshipData.addWeaponData(weaponData)
         playerData.addSpaceshipData(spaceshipData)
-        playerData.points = (playerData.points.intValue - GameMath.spaceshipPrice(self.spaceship.type)) as NSNumber
+        playerData.points = playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceship.type)
     }
 }

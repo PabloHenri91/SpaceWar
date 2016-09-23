@@ -11,8 +11,8 @@ import SpriteKit
 
 class MissionScene: GameScene {
     
-    let playerData = MemoryCard.sharedInstance.playerData!
-    let missionShips = MemoryCard.sharedInstance.playerData!.missionSpaceships
+    let playerData = MemoryCard.sharedInstance.playerData
+    let missionShips = MemoryCard.sharedInstance.playerData.missionSpaceships
     
     var selectedSpaceship: MissionSpaceship?
     var selectedCard: MissionSpaceshipCard?
@@ -54,8 +54,8 @@ class MissionScene: GameScene {
     
     var gameTabBar:GameTabBar!
     
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
         
         let actionDuration = 0.25
         
@@ -64,7 +64,7 @@ class MissionScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(parent: self)
+                node.moveToParent(self)
             }
             break
             
@@ -75,7 +75,7 @@ class MissionScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(parent: self)
+                node.moveToParent(self)
             }
             break
         }
@@ -94,13 +94,13 @@ class MissionScene: GameScene {
         
         self.headerControl = Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-                                      size: CGSize(width: self.size.width,
-                                        height: 56), y: 67)
+                                      y: 67, size: CGSize(width: self.size.width,
+                                        height: 56))
         self.addChild(self.headerControl)
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 12/100), size: CGSize(width: 1, height: 1)),
-                               size: CGSize(width: self.size.width,
-                                            height: 3), y: 123))
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MINING SPACESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         if self.playerData.missionSpaceships.count < 4 {
@@ -114,7 +114,7 @@ class MissionScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
             break
         case .mission:
@@ -123,12 +123,12 @@ class MissionScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
             break
         }
         
-        self.run({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }
@@ -162,7 +162,7 @@ class MissionScene: GameScene {
         
         self.controlArray = Array<MissionSpaceshipCard>()
         
-        for item in MemoryCard.sharedInstance.playerData!.missionSpaceships {
+        for item in MemoryCard.sharedInstance.playerData.missionSpaceships {
             self.controlArray.append(MissionSpaceshipCard(missionSpaceship: MissionSpaceship(missionSpaceshipData: item as! MissionSpaceshipData)))
         }
         
@@ -181,7 +181,7 @@ class MissionScene: GameScene {
         
         self.addChild(self.scrollNode)
         
-        if MemoryCard.sharedInstance.playerData!.missionSpaceships.count == 4 {
+        if MemoryCard.sharedInstance.playerData.missionSpaceships.count == 4 {
             self.buttonBuy?.removeFromParent()
             self.buttonBuy = nil
         }
@@ -189,7 +189,7 @@ class MissionScene: GameScene {
         
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -207,7 +207,7 @@ class MissionScene: GameScene {
                 
             case .speedUp:
                 if let speedUpAlertSafe = self.speedUpAlert {
-                    let time = GameMath.timeLeft(startDate: speedUpAlertSafe.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: speedUpAlertSafe.missionType.duration)
+                    let time = GameMath.timeLeft(speedUpAlertSafe.missionSpaceship.missionspaceshipData!.startMissionDate!, duration: speedUpAlertSafe.missionType.duration)
                     
                     if time > 0 {
                         speedUpAlertSafe.update(currentTime)
@@ -240,7 +240,7 @@ class MissionScene: GameScene {
                 break
                 
             case .mission:
-                self.blackSpriteNode.isHidden = true
+                self.blackSpriteNode.hidden = true
                 self.gameStore?.removeFromParent()
                 self.scrollNode.canScroll = self.scrollNode.cells.count > 2
                 self.chooseAsteroidAlert?.scrollNode?.removeFromParent()
@@ -275,7 +275,7 @@ class MissionScene: GameScene {
                 
             case .chooseMission:
                 if let spaceship = self.selectedSpaceship {
-                    self.blackSpriteNode.isHidden = false
+                    self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
                     self.chooseAsteroidAlert = ChooseAsteroidAlert(minerSpaceship: spaceship)
                     self.chooseAsteroidAlert!.zPosition = self.blackSpriteNode.zPosition + 1
@@ -291,7 +291,7 @@ class MissionScene: GameScene {
                 break
                 
             case .buySpaceship:
-                self.blackSpriteNode.isHidden = false
+                self.blackSpriteNode.hidden = false
                 self.blackSpriteNode.zPosition = 10000
                 self.buyMinnerSpaceshipAlert = BuyMinnerSpaceshipAlert()
                 self.buyMinnerSpaceshipAlert!.zPosition = self.blackSpriteNode.zPosition + 1
@@ -304,7 +304,7 @@ class MissionScene: GameScene {
             case .speedUp:
                 if let spaceship = self.selectedSpaceship {
                     //self.view?.presentScene(ChooseMissionScene(missionSpaceship: spaceship))
-                    self.blackSpriteNode.isHidden = false
+                    self.blackSpriteNode.hidden = false
                     self.blackSpriteNode.zPosition = 10000
                     self.speedUpAlert = SpeedUpMiningAlert(missionSpaceship: spaceship)//TODO: fatal error: Index out of range
                     self.speedUpAlert!.zPosition = self.blackSpriteNode.zPosition + 1
@@ -325,17 +325,17 @@ class MissionScene: GameScene {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>) {
+    override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .mission:
-                    if self.playerDataCard.contains(point) {
-                        if self.playerDataCard.buttonStore.contains(touch.location(in: self.playerDataCard)) {
+                    if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
                             self.gameStore = GameStore()
                             self.addChild(self.gameStore!)
                             return
@@ -350,7 +350,7 @@ class MissionScene: GameScene {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>) {
+    override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -373,7 +373,7 @@ class MissionScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .mission:
                     
@@ -382,49 +382,49 @@ class MissionScene: GameScene {
                     }
                     
                     if let buttonBuy = self.buttonBuy {
-                        if buttonBuy.contains(point) {
+                        if buttonBuy.containsPoint(point) {
                             self.nextState = .buySpaceship
                             return
                         }
                     }
                     
-                    if self.headerControl.contains(point) {
+                    if self.headerControl.containsPoint(point) {
                         return
                     }
                     
-                    if self.playerDataCard.contains(point) {
+                    if self.playerDataCard.containsPoint(point) {
                         return
                     }
                     
-                    if self.gameTabBar.contains(point) {
-                        if(self.gameTabBar.buttonResearch.contains(touch.location(in: self.gameTabBar))) {
+                    if self.gameTabBar.containsPoint(point) {
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.research
                             return
                         }
                         
-                        if(self.gameTabBar.buttonMothership.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonMothership.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mothership
                             return
                         }
                         
-                        if(self.gameTabBar.buttonFactory.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.factory
                             return
                         }
                         
-                        if(self.gameTabBar.buttonHangar.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.hangar
                             return
                         }
                         return
                     }
                     
-                    if self.scrollNode.contains(point) {
+                    if self.scrollNode.containsPoint(point) {
                         for item in self.scrollNode.cells {
-                            if item.contains(touch.location(in: self.scrollNode)) {
+                            if item.containsPoint(touch.locationInNode(self.scrollNode)) {
                                 if let card = item as? MissionSpaceshipCard {
                                         if let buttonBegin = card.buttonBegin {
-                                            if buttonBegin.contains(touch.location(in: card)) {
+                                            if buttonBegin.containsPoint(touch.locationInNode(card)) {
                                                 self.nextState = .chooseMission
                                                 self.selectedSpaceship = card.missionSpaceship
                                                 self.selectedCard = card
@@ -433,7 +433,7 @@ class MissionScene: GameScene {
                                         }
                                         
                                         if let buttonCollect = card.buttonCollect {
-                                            if(buttonCollect.contains(touch.location(in: card))) {
+                                            if(buttonCollect.containsPoint(touch.locationInNode(card))) {
                                                 card.collect()
                                                 self.playerDataCard.updatePoints()
                                                 self.playerDataCard.updateXP()
@@ -443,7 +443,7 @@ class MissionScene: GameScene {
                                         }
                                         
                                         if let buttonSpeedUp = card.buttonSpeedUp {
-                                            if(buttonSpeedUp.contains(touch.location(in: card))) {
+                                            if(buttonSpeedUp.containsPoint(touch.locationInNode(card))) {
                                                 self.selectedSpaceship = card.missionSpaceship
                                                 self.nextState = .speedUp
                                                 return
@@ -452,16 +452,16 @@ class MissionScene: GameScene {
                                         
    
                                         if let buttonUpgrade = card.buttonUpgrade {
-                                            if(buttonUpgrade.contains(touch.location(in: card))) {
+                                            if(buttonUpgrade.containsPoint(touch.locationInNode(card))) {
                                                 
                                                 let price = Int(4000 * pow(4, Double(card.missionSpaceship.level - 1)))
                                                 
-                                                let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", type: AlertBox.messageType.okCancel)
+                                                let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", type: AlertBox.messageType.OKCancel)
                                                 
                                                 alertBox.buttonOK.addHandler(
                                                     {
                                                         if card.upgrade() == false {
-                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.ok)
+                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
                                                             self.addChild(alertBox2)
                                                         } else {
                                                             self.playerDataCard.updatePoints()
@@ -485,11 +485,11 @@ class MissionScene: GameScene {
                     
                     if let scroll = self.chooseAsteroidAlert!.scrollNode {
                         
-                        if scroll.contains(touch.location(in: self.chooseAsteroidAlert!.cropBox.cropNode)) {
+                        if scroll.containsPoint(touch.locationInNode(self.chooseAsteroidAlert!.cropBox.cropNode)) {
                             for item in scroll.cells {
-                                if item.contains(touch.location(in: scroll)) {
+                                if item.containsPoint(touch.locationInNode(scroll)) {
                                     if let missionTypeCard = item as? MissionTypeCard {
-                                        if missionTypeCard.buttonSelect.contains(touch.location(in: missionTypeCard)){
+                                        if missionTypeCard.buttonSelect.containsPoint(touch.locationInNode(missionTypeCard)){
                                             missionTypeCard.selectMission()
                                             self.nextState = .mission
                                         }
@@ -505,10 +505,10 @@ class MissionScene: GameScene {
                     
                 case .buySpaceship:
                     if let buyAlert = self.buyMinnerSpaceshipAlert {
-                        if buyAlert.buttonBuy.contains(touch.location(in: buyAlert)){
+                        if buyAlert.buttonBuy.containsPoint(touch.locationInNode(buyAlert)){
                             if buyAlert.buyMiningSpaceship() == false {
                                 
-                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.ok)
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({ self.nextState = .mission
                                 })
                                 self.addChild(alertBox)
@@ -526,11 +526,11 @@ class MissionScene: GameScene {
                 case .speedUp:
                     if let speedUpAlert = self.speedUpAlert {
                         
-                        let point = touch.location(in: speedUpAlert)
+                        let point = touch.locationInNode(speedUpAlert)
                         
-                        if speedUpAlert.buttonFinish.contains(point) {
+                        if speedUpAlert.buttonFinish.containsPoint(point) {
                             if speedUpAlert.finishWithPremiumPoints() == false {
-                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.ok)
+                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
                                 alertBox.buttonOK.addHandler({self.nextState = .mission
                                 })
                                 self.addChild(alertBox)
@@ -543,7 +543,7 @@ class MissionScene: GameScene {
                         
                         #if os(iOS)
                             if GameAdManager.sharedInstance.zoneIsReady {
-                                if speedUpAlert.buttonWatch.contains(point) {
+                                if speedUpAlert.buttonWatch.containsPoint(point) {
                                     self.playVideoAd()
                                     self.nextState = .mission
                                     return
@@ -556,7 +556,7 @@ class MissionScene: GameScene {
                     
                 case .alert:
                     if let gameStore = self.gameStore {
-                        if gameStore.contains(point) {
+                        if gameStore.containsPoint(point) {
                             gameStore.touchEnded(touch)
                         }
                     }
@@ -570,7 +570,7 @@ class MissionScene: GameScene {
     }
     
     #if os(iOS)
-    override func videoAdAttemptFinished(_ shown: Bool) {
+    override func videoAdAttemptFinished(shown: Bool) {
         if shown {
             if let speedUpAlert = self.speedUpAlert {
                 speedUpAlert.speedUpWithVideoAd()
@@ -580,15 +580,15 @@ class MissionScene: GameScene {
     
     override func zoneLoading() {
         if let speedUpAlert = self.speedUpAlert {
-            speedUpAlert.buttonWatch.run(SKAction.fadeAlpha(to: 0, duration: 1))
-            speedUpAlert.labelWatch.run(SKAction.fadeAlpha(to: 0, duration: 1))
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
         }
     }
     
     override func zoneReady() {
         if let speedUpAlert = self.speedUpAlert {
-            speedUpAlert.buttonWatch.run(SKAction.fadeAlpha(to: 1, duration: 1))
-            speedUpAlert.labelWatch.run(SKAction.fadeAlpha(to: 1, duration: 1))
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
         }
     }
     #endif

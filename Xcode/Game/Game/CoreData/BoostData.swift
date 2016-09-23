@@ -13,7 +13,7 @@ import CoreData
 
 class BoostData: NSManagedObject {
     
-    @NSManaged var lastCharge: Date
+    @NSManaged var lastCharge: NSDate
     @NSManaged var type: NSNumber
     
     @NSManaged var parentPlayer: PlayerData?
@@ -22,12 +22,12 @@ class BoostData: NSManagedObject {
 
 extension MemoryCard {
     
-    func newBoostData(_ type: Int) -> BoostData {
+    func newBoostData(type: Int) -> BoostData {
         
-        let boostData = NSEntityDescription.insertNewObject(forEntityName: "BoostData", into: self.managedObjectContext) as! BoostData
+        let boostData = NSEntityDescription.insertNewObjectForEntityForName("BoostData", inManagedObjectContext: self.managedObjectContext) as! BoostData
         
-        boostData.type = type as NSNumber
-        boostData.lastCharge = Date()
+        boostData.type = type
+        boostData.lastCharge = NSDate()
         
         return boostData
     }

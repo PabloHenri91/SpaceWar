@@ -29,28 +29,28 @@ public protocol SocketLogger : class {
     var log: Bool { get set }
     
     /// Normal log messages
-    func log(_ message: String, type: String, args: Any...)
+    func log(message: String, type: String, args: AnyObject...)
     
     /// Error Messages
-    func error(_ message: String, type: String, args: Any...)
+    func error(message: String, type: String, args: AnyObject...)
 }
 
 public extension SocketLogger {
-    func log(_ message: String, type: String, args: Any...) {
+    func log(message: String, type: String, args: AnyObject...) {
         abstractLog("LOG", message: message, type: type, args: args)
     }
     
-    func error(_ message: String, type: String, args: Any...) {
+    func error(message: String, type: String, args: AnyObject...) {
         abstractLog("ERROR", message: message, type: type, args: args)
     }
     
-    private func abstractLog(_ logType: String, message: String, type: String, args: [Any]) {
+    private func abstractLog(logType: String, message: String, type: String, args: [AnyObject]) {
         guard log else { return }
         
-        let newArgs = args.map({arg -> CVarArg in String(describing: arg)})
-        let messageFormat = String(format: message, arguments: newArgs) 
+        let newArgs = args.map({arg -> CVarArgType in String(arg)})
+        let replaced = String(format: message, arguments: newArgs)
         
-        NSLog("\(logType) \(type): %@", messageFormat)
+        NSLog("%@ %@: %@", logType, type, replaced)
     }
 }
 

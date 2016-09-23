@@ -12,14 +12,14 @@ class CharacterGenerator {
     
     static let sharedInstance = CharacterGenerator()
     
-    struct indexOfNames : OptionSet {
+    struct indexOfNames : OptionSetType {
         typealias RawValue = UInt32
-        fileprivate var value: UInt32 = 0
+        private var value: UInt32 = 0
         init(_ value: UInt32) { self.value = value }
         init(rawValue value: UInt32) { self.value = value }
         init(nilLiteral: ()) { self.value = 0 }
         static var allZeros: indexOfNames { return self.init(0) }
-        static func fromMask(_ raw: UInt32) -> indexOfNames { return self.init(raw) }
+        static func fromMask(raw: UInt32) -> indexOfNames { return self.init(raw) }
         var rawValue: UInt32 { return self.value }
         
         static var random: indexOfNames { return self.init(0) }
@@ -49,14 +49,14 @@ class CharacterGenerator {
         static var SPANISH: indexOfNames { return indexOfNames(23) }
     }
     
-    struct genders : OptionSet {
+    struct genders : OptionSetType {
         typealias RawValue = UInt32
-        fileprivate var value: UInt32 = 0
+        private var value: UInt32 = 0
         init(_ value: UInt32) { self.value = value }
         init(rawValue value: UInt32) { self.value = value }
         init(nilLiteral: ()) { self.value = 0 }
         static var allZeros: genders { return self.init(0) }
-        static func fromMask(_ raw: UInt32) -> genders { return self.init(raw) }
+        static func fromMask(raw: UInt32) -> genders { return self.init(raw) }
         var rawValue: UInt32 { return self.value }
         
         static var random: genders { return self.init(0) }
@@ -217,12 +217,12 @@ class CharacterGenerator {
     
     init() {
         
-        if let path = Bundle.main.path(forResource: "DefaultNameList", ofType: "") {
-            let data = (try! NSString(contentsOfFile: path, encoding: String.Encoding.utf16LittleEndian.rawValue)).components(separatedBy: "\r\n")
+        if let path = NSBundle.mainBundle().pathForResource("DefaultNameList", ofType: "") {
+            let data = (try! NSString(contentsOfFile: path, encoding: NSUTF16LittleEndianStringEncoding)).componentsSeparatedByString("\r\n")
             
             for line in data {
                 
-                let strings = line.components(separatedBy: "=")
+                let strings = line.componentsSeparatedByString("=")
                 
                 if let line0 = strings.first {
                     switch line0 {
@@ -450,7 +450,7 @@ class CharacterGenerator {
         }
     }
     
-    func getName(_ indexOfName:CharacterGenerator.indexOfNames = .random, gender:CharacterGenerator.genders = .random) -> String {
+    func getName(indexOfName:CharacterGenerator.indexOfNames = .random, gender:CharacterGenerator.genders = .random) -> String {
         
         var indexOfName:indexOfNames = indexOfName
         

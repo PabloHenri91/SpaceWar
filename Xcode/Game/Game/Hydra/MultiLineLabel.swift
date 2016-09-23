@@ -17,13 +17,13 @@ class MultiLineLabel: Control {
     var text: String!
     var maxHeight: Int?
     
-    init(text:String, maxWidth: Int = 200, color:SKColor = GameColors.black, fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .center, fontName: String = GameFonts.fontName.museo500, shadowColor:SKColor = SKColor.clear, shadowOffset:CGPoint = CGPoint.zero) {
+    init(text:String, maxWidth: Int = 200, color:SKColor = GameColors.black, fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .Center, fontName: String = GameFonts.fontName.museo500, shadowColor:SKColor = SKColor.clearColor(), shadowOffset:CGPoint = CGPoint.zero) {
         
         super.init()
         self.text = text.translation()
         self.labelMaxWidth = maxWidth
         
-        self.words = self.text.components(separatedBy: " ")
+        self.words = self.text.componentsSeparatedByString(" ")
         var labelIndex = 0
         
         for item in words {

@@ -29,8 +29,7 @@ class ServerManager {
     var room: Room?
     
     init() {
-        
-        let displayName = MemoryCard.sharedInstance.playerData!.name
+        let displayName = MemoryCard.sharedInstance.playerData.name
         self.userDisplayInfo = UserDisplayInfo(displayName: displayName)
     }
     
@@ -50,13 +49,13 @@ class ServerManager {
                 break
                 
             case "mySocketId":
-                if let mySocketId = socketAnyEvent.items?.first as? String {
+                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
                     serverManager.userDisplayInfo.socketId = mySocketId
                 }
                 break
                 
             case "roomId":
-                serverManager.roomId(socketAnyEvent: socketAnyEvent)
+                serverManager.roomId(socketAnyEvent)
                 break
                 
             default:
@@ -66,14 +65,14 @@ class ServerManager {
         })
     }
     
-    func connect(completion block: @escaping () -> Void = {}) {
+    func connect(completion block: () -> Void = {}) {
         
         let startTime = GameScene.currentTime
         
         let config =  SocketIOClientConfiguration(
             arrayLiteral:
-            SocketIOClientOption.reconnectAttempts(30),
-            SocketIOClientOption.reconnectWait(2)
+            SocketIOClientOption.ReconnectAttempts(30),
+            SocketIOClientOption.ReconnectWait(2)
         )
         
         #if DEBUG
@@ -93,15 +92,14 @@ class ServerManager {
         
         
         for url in urls {
-            if let url = URL(string:url) {
-                
-                DispatchQueue.global(qos: .default).async(execute: { [weak self] in
+            if let url = NSURL(string:url) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)) { [weak self] in
                     
                     guard let serverManager = self else { return }
                     
                     let socket = SocketIOClient(socketURL: url, config: config)
                     
-                    socket.on("connect", callback: { (data:[Any], socketAckEmitter:SocketAckEmitter) in
+                    socket.on("connect", callback: { (data:[AnyObject], socketAckEmitter:SocketAckEmitter) in
                         
                         if let _ = serverManager.socket {
                             print("disconnecting from: " + url.description)
@@ -119,12 +117,12 @@ class ServerManager {
                         print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                     })
                     
-                    socket.connect(timeoutAfter: 10, withHandler: {
+                    socket.connect(timeoutAfter: 10, withTimeoutHandler: {
                         print("connection timed out for: " + url.description)
                         print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                         socket.disconnect()
                     })
-                })
+                }
             }
         }
     }
@@ -153,13 +151,13 @@ class ServerManager {
         //self.socket?.emit("createRoom") // Servidor já criou a sala
     }
     
-    func joinRoom(_ room: Room) {
+    func joinRoom(room: Room) {
         self.room = room
         self.room?.addPlayer(self.userDisplayInfo)
         self.socket?.emit("joinRoom", room.roomId)
     }
     
-    func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
+    func addPlayer(socketAnyEvent: SocketAnyEvent) {
         self.room?.addPlayer(socketAnyEvent)
     }
     
@@ -171,19 +169,19 @@ class ServerManager {
                 
                 scene.lastShake = GameScene.currentTime
                 
-                if let items = socketAnyEvent.items?.first as? [Any] {
-                    var i = items.makeIterator()
+                if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
+                    var i = items.generate()
                     let _ = i.next()
                     let name = i.next() as! String
                     
                     let labelText = "Tap BATTLE now to play with " + name
                     
-                    let label = Label(color: SKColor.black, text: labelText, fontSize: 10, x: 160, y: 352, xAlign: .center, yAlign: .center)
+                    let label = Label(color: SKColor.blackColor(), text: labelText, fontSize: 10, x: 160, y: 352, xAlign: .center, yAlign: .center)
                     
                     scene.addChild(label)
                     
-                    label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
-                        label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
+                    label.runAction({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+                        label?.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: {
                             label?.removeFromParent()
                         })
                         })
@@ -199,13 +197,13 @@ class ServerManager {
 
 extension SocketIOClient {
     
-    func emit(_ userDisplayInfo: UserDisplayInfo) {
+    func emit(userDisplayInfo: UserDisplayInfo) {
         self.emit("userDisplayInfo", userDisplayInfo.displayName)
     }
     
-    func emit(_ mothership: Mothership) {
+    func emit(mothership: Mothership) {
         
-        var items = [Any]()
+        var items = [AnyObject]()
         
         items.append("mothership" as AnyObject)
         items.append(mothership.level as AnyObject)

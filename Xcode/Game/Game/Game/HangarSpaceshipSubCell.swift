@@ -47,7 +47,7 @@ class HangarSpaceshipSubCell: Control {
         self.spaceship.screenPosition = CGPoint(x: 0, y: -10)
         self.spaceship.resetPosition()
         
-        let labelLevel = Label(color:SKColor.white ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 0, y: 30, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelLevel = Label(color:SKColor.whiteColor() ,text: "Level ".translation() + self.spaceship.level.description , fontSize: 13, x: 0, y: 30, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelLevel)
         
         

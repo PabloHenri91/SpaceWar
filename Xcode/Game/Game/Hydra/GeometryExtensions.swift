@@ -10,13 +10,13 @@ import CoreGraphics
 
 extension CGPoint {
     
-    static func distance(_ a:CGPoint, _ b:CGPoint) -> CGFloat {
+    static func distance(a:CGPoint, _ b:CGPoint) -> CGFloat {
         let dx = (a.x - b.x)
         let dy = (a.y - b.y)
         return sqrt((dx * dx) + (dy * dy))
     }
     
-    static func distanceSquared(_ a:CGPoint, _ b:CGPoint) -> CGFloat {
+    static func distanceSquared(a:CGPoint, _ b:CGPoint) -> CGFloat {
         let dx = (a.x - b.x)
         let dy = (a.y - b.y)
         return (dx * dx) + (dy * dy)
@@ -27,7 +27,7 @@ public extension Int {
     /**
      Returns a random integer between 0 and n-1.
      */
-    public static func random(_ n: Int) -> Int {
+    public static func random(n: Int) -> Int {
         return Int(arc4random_uniform(UInt32(n)))
     }
     /**
@@ -36,7 +36,7 @@ public extension Int {
      - parameter upper: number Int
      :return: random number Int
      */
-    public static func random(min: Int, max: Int) -> Int {
+    public static func random(min min: Int, max: Int) -> Int {
         return Int(arc4random_uniform(UInt32(max - min + 1))) + min
     }
     
@@ -46,7 +46,7 @@ public extension Int {
      - parameter upper: number CGFloat
      :return: random number Int
      */
-    public static func random(min: CGFloat, max: CGFloat) -> Int {
+    public static func random(min min: CGFloat, max: CGFloat) -> Int {
         return Int(arc4random_uniform(UInt32(max - min + 1))) + Int(min)
     }
 }
@@ -65,7 +65,7 @@ public extension Double {
      - parameter upper: number Double
      :return: random number Double
      */
-    public static func random(min: Double, max: Double) -> Double {
+    public static func random(min min: Double, max: Double) -> Double {
         return Double.random() * (max - min) + min
     }
 }
@@ -83,7 +83,7 @@ public extension Float {
      - parameter upper: number Float
      :return: random number Float
      */
-    public static func random(min: Float, max: Float) -> Float {
+    public static func random(min min: Float, max: Float) -> Float {
         return Float.random() * (max - min) + min
     }
 }
@@ -95,7 +95,30 @@ public extension CGFloat {
     public static func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
-    public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    public static func random(min min: CGFloat, max: CGFloat) -> CGFloat {
         return CGFloat.random() * (max - min) + min
+    }
+}
+
+extension CollectionType {
+    /// Return a copy of `self` with its elements shuffled
+    func shuffle() -> [Generator.Element] {
+        var list = Array(self)
+        list.shuffleInPlace()
+        return list
+    }
+}
+
+extension MutableCollectionType where Index == Int {
+    /// Shuffle the elements of `self` in-place.
+    mutating func shuffleInPlace() {
+        // empty and single-element collections don't shuffle
+        if count < 2 { return }
+        
+        for i in 0..<count - 1 {
+            let j = Int.random(count - i) + i
+            guard i != j else { continue }
+            swap(&self[i], &self[j])
+        }
     }
 }

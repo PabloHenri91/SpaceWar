@@ -13,7 +13,7 @@ import CoreData
 class ResearchData: NSManagedObject {
 
     @NSManaged var done: NSNumber
-    @NSManaged var startDate: Date?
+    @NSManaged var startDate: NSDate?
     @NSManaged var type: NSNumber
     @NSManaged var spaceshipLevel: NSNumber
     @NSManaged var spaceshipMaxLevel: NSNumber
@@ -28,7 +28,7 @@ extension MemoryCard {
     
     func newResearchData() -> ResearchData {
         
-        let researchData = NSEntityDescription.insertNewObject(forEntityName: "ResearchData", into: self.managedObjectContext) as! ResearchData
+        let researchData = NSEntityDescription.insertNewObjectForEntityForName("ResearchData", inManagedObjectContext: self.managedObjectContext) as! ResearchData
         researchData.done = false
         researchData.startDate = nil
         

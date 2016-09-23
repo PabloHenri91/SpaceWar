@@ -19,10 +19,10 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
     
     override init() {
         super.init()
-        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
     }
     
-    func requestProduct(_ productIdentifier: String) {
+    func requestProduct(productIdentifier: String) {
         
         if self.isPurchasing {
             return
@@ -36,7 +36,7 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
         productsRequest.start()
     }
     
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
         print("productsRequest")
         print(request.description)
         print("didReceiveResponse")
@@ -53,32 +53,32 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
             print(product.productIdentifier)
             print("")
             
-            SKPaymentQueue.default().add(SKPayment(product: product))
+            SKPaymentQueue.defaultQueue().addPayment(SKPayment(product: product))
         }
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
         print("queue")
         print(queue.description)
         print("removedTransactions")
         print(transactions.description)
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+    func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
         print("queue")
         print(queue.description)
         print("restoreCompletedTransactionsFailedWithError")
-        print(error.localizedDescription)
+        print(error.description)
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
+    func paymentQueue(queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
         print("queue")
         print(queue.description)
         print("updatedDownloads")
         print(downloads.description)
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         print("queue")
         print(queue.description)
         print("updatedTransactions")
@@ -88,13 +88,13 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
             
             switch transaction.transactionState {
                 
-            case .purchasing: // Transaction is being added to the server queue.
+            case .Purchasing: // Transaction is being added to the server queue.
                 print("Purchasing: \(transaction)")
                 break
                 
-            case .purchased: // Transaction is in queue, user has been charged.  Client should complete the transaction.
+            case .Purchased: // Transaction is in queue, user has been charged.  Client should complete the transaction.
                 print("Purchased: \(transaction)")
-                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 
                 self.isPurchasing = false
                 GameStore.sharedInstance!.storeItensUpdateAvailable()
@@ -102,25 +102,25 @@ class IAPHelper: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserv
                 
                 break
                 
-            case .failed: // Transaction was cancelled or failed before being added to the server queue.
+            case .Failed: // Transaction was cancelled or failed before being added to the server queue.
                 print("Failed: \(transaction)")
-                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 self.isPurchasing = false
                 GameStore.sharedInstance!.storeItensUpdateAvailable()
                 break
                 
-            case .restored: // Transaction was restored from user's purchase history.  Client should complete the transaction.
+            case .Restored: // Transaction was restored from user's purchase history.  Client should complete the transaction.
                 print("Restored: \(transaction)")
                 break
                 
-            case .deferred: // The transaction is in the queue, but its final status is pending external action.
+            case .Deferred: // The transaction is in the queue, but its final status is pending external action.
                 print("Deferred: \(transaction)")
                 break
             }
         }
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
         print("paymentQueueRestoreCompletedTransactionsFinished")
         print(queue.description)
     }

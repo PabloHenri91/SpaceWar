@@ -14,15 +14,15 @@ class AlertBox: Box {
     var buttonOK:Button!
     
     enum messageType {
-        case okCancel
-        case ok
+        case OKCancel
+        case OK
     }
     
     init(title:String, text:String, type:AlertBox.messageType) {
         super.init(textureName: "alertBox")
         
-        let scene = Control.gameScene!
-        scene.blackSpriteNode.isHidden = false
+        let scene = Control.gameScene
+        scene.blackSpriteNode.hidden = false
         scene.blackSpriteNode.zPosition = 100000
         
         self.zPosition = 1000000
@@ -31,27 +31,27 @@ class AlertBox: Box {
         self.addChild(Label(text:text, x:141, y:71))
         
         switch (type) {
-        case messageType.ok:
+        case messageType.OK:
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:93, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
-                scene.blackSpriteNode.isHidden = true
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
             })
             break
-        case messageType.okCancel:
+        case messageType.OKCancel:
             
             self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:43, y:102)
             self.addChild(self.buttonOK)
             self.buttonOK.addHandler({ [weak self] in
-                scene.blackSpriteNode.isHidden = true
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
                 })
             
             self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:163, y:102)
             self.addChild(self.buttonCancel)
             self.buttonCancel.addHandler({ [weak self] in
-                scene.blackSpriteNode.isHidden = true
+                scene.blackSpriteNode.hidden = true
                 self?.removeFromParent()
                 })
             break

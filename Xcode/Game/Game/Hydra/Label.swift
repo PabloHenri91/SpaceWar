@@ -13,7 +13,7 @@ class Label: Control {
     var labelNode:SKLabelNode!
     var shadowLabelNode:SKLabelNode!
     
-    init(color:SKColor = GameColors.black, text:String, fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .center, fontName: String = GameFonts.fontName.museo500, shadowColor:SKColor = SKColor.clear, shadowOffset:CGPoint = CGPoint.zero) {
+    init(color:SKColor = GameColors.black, text:String, fontSize:CGFloat = 16, x:Int = 0, y:Int = 0, xAlign:Control.xAlignments = .left, yAlign:Control.yAlignments = .up , verticalAlignmentMode:SKLabelVerticalAlignmentMode = .Center, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode = .Center, fontName: String = GameFonts.fontName.museo500, shadowColor:SKColor = SKColor.clearColor(), shadowOffset:CGPoint = CGPoint.zero) {
         super.init()
         self.load(color, text:text, fontSize:fontSize, x:x, y:y, xAlign:xAlign, yAlign:yAlign, verticalAlignmentMode:verticalAlignmentMode, horizontalAlignmentMode:horizontalAlignmentMode, fontName: fontName, shadowColor: shadowColor, shadowOffset: shadowOffset)
     }
@@ -22,7 +22,7 @@ class Label: Control {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(_ color:SKColor, text:String, fontSize:CGFloat, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments, verticalAlignmentMode:SKLabelVerticalAlignmentMode, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode, fontName: String, shadowColor:SKColor, shadowOffset:CGPoint) {
+    func load(color:SKColor, text:String, fontSize:CGFloat, x:Int, y:Int, xAlign:Control.xAlignments, yAlign:Control.yAlignments, verticalAlignmentMode:SKLabelVerticalAlignmentMode, horizontalAlignmentMode:SKLabelHorizontalAlignmentMode, fontName: String, shadowColor:SKColor, shadowOffset:CGPoint) {
         self.screenPosition = CGPoint(x: x, y: y)
         self.yAlign = yAlign
         self.xAlign = xAlign
@@ -58,12 +58,12 @@ class Label: Control {
         }
     }
     
-    func setText(_ text:String) {
+    func setText(text:String) {
         self.labelNode.text = text.translation()
         self.shadowLabelNode.text = self.labelNode.text
     }
     
-    func setText(_ text:String, color:SKColor) {
+    func setText(text:String, color:SKColor) {
         self.labelNode.fontColor = color
         self.labelNode.text = text.translation()
         self.shadowLabelNode.text = self.labelNode.text

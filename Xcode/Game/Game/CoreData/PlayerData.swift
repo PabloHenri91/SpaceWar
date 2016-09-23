@@ -28,7 +28,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var weapons: NSSet
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
-    @NSManaged var startDate: Date?
+    @NSManaged var startDate: NSDate?
     @NSManaged var winCount: NSNumber
     @NSManaged var winningStreakBest: NSNumber
     @NSManaged var winningStreakCurrent: NSNumber
@@ -41,17 +41,17 @@ extension MemoryCard {
     
     func newPlayerData() -> PlayerData {
         
-        let playerData = NSEntityDescription.insertNewObject(forEntityName: "PlayerData", into: self.managedObjectContext) as! PlayerData
+        let playerData = NSEntityDescription.insertNewObjectForEntityForName("PlayerData", inManagedObjectContext: self.managedObjectContext) as! PlayerData
         
         playerData.battery = self.newBatteryData()
-        playerData.botUpdateInterval = 10
-        
-        playerData.name = UIDevice.current.name
+        playerData.botUpdateInterval = NSNumber(double: 10)
+    
+        playerData.name = UIDevice.currentDevice().name
         
         #if DEBUG
-            playerData.needBattleTraining = false
+            playerData.needBattleTraining = NSNumber(bool: false)
         #else
-            playerData.needBattleTraining = true
+            playerData.needBattleTraining = NSNumber(bool: true)
         #endif
         
         playerData.points = 0
@@ -131,7 +131,7 @@ extension MemoryCard {
         playerData.invitedFriends = NSSet()
         playerData.addFriendData(self.newFriendData(id: "1312123213231"))
         
-        playerData.startDate = Date()
+        playerData.startDate = NSDate()
         
         playerData.winCount = 0
         playerData.winningStreakCurrent = 0
@@ -149,73 +149,73 @@ extension MemoryCard {
 
 extension PlayerData {
     
-    func removeBoostData(_ value: BoostData) {
-        let items = self.mutableSetValue(forKey: "boosts")
-        items.remove(value)
+    func removeBoostData(value: BoostData) {
+        let items = self.mutableSetValueForKey("boosts")
+        items.removeObject(value)
     }
     
-    func addBoostData(_ value: BoostData) {
-        let items = self.mutableSetValue(forKey: "boosts")
-        items.add(value)
+    func addBoostData(value: BoostData) {
+        let items = self.mutableSetValueForKey("boosts")
+        items.addObject(value)
     }
     
-    func addResearchData(_ value: ResearchData) {
-        let items = self.mutableSetValue(forKey: "researches")
-        items.add(value)
+    func addResearchData(value: ResearchData) {
+        let items = self.mutableSetValueForKey("researches")
+        items.addObject(value)
     }
     
-    func removeResearchData(_ value: ResearchData) {
-        let items = self.mutableSetValue(forKey: "researches")
-        items.remove(value)
+    func removeResearchData(value: ResearchData) {
+        let items = self.mutableSetValueForKey("researches")
+        items.removeObject(value)
     }
     
-    func addSpaceshipData(_ value: SpaceshipData) {
-        let items = self.mutableSetValue(forKey: "spaceships")
-        items.add(value)
+    func addSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("spaceships")
+        items.addObject(value)
     }
     
-    func unlockSpaceshipData(_ value: SpaceshipData) {
-        let items = self.mutableSetValue(forKey: "unlockedSpaceships")
-        items.add(value)
+    func unlockSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("unlockedSpaceships")
+        items.addObject(value)
     }
     
-    func addMissionSpaceshipData(_ value: MissionSpaceshipData) {
-        let items = self.mutableOrderedSetValue(forKey: "missionSpaceships")
-        items.add(value)
+    func addMissionSpaceshipData(value: MissionSpaceshipData) {
+        let items = self.mutableOrderedSetValueForKey("missionSpaceships")
+        items.addObject(value)
     }
     
-    func removeSpaceshipData(_ value: SpaceshipData) {
-        let items = self.mutableSetValue(forKey: "spaceships")
-        items.remove(value)
+    func removeSpaceshipData(value: SpaceshipData) {
+        let items = self.mutableSetValueForKey("spaceships")
+        items.removeObject(value)
     }
     
-    func addWeaponData(_ value: WeaponData) {
-        let items = self.mutableSetValue(forKey: "weapons")
-        items.add(value)
+    func addWeaponData(value: WeaponData) {
+        let items = self.mutableSetValueForKey("weapons")
+        items.addObject(value)
     }
     
-    func removeWeaponData(_ value: WeaponData) {
-        let items = self.mutableSetValue(forKey: "weapons")
-        items.remove(value)
+    func removeWeaponData(value: WeaponData) {
+        let items = self.mutableSetValueForKey("weapons")
+        items.removeObject(value)
     }
     
-    func addFriendData(_ value: FriendData) {
-        let items = self.mutableSetValue(forKey: "invitedFriends")
-        items.add(value)
+    func addFriendData(value: FriendData) {
+        let items = self.mutableSetValueForKey("invitedFriends")
+        items.addObject(value)
     }
     
-    func removeFriendData(_ value: FriendData) {
-        let items = self.mutableSetValue(forKey: "invitedFriends")
-        items.remove(value)
+    func removeFriendData(value: FriendData) {
+        let items = self.mutableSetValueForKey("invitedFriends")
+        items.removeObject(value)
     }
     
-    func updateInvitedFriend(id:String, name: String, photoURL: String, accepted: Bool) {
+    func updateInvitedFriend(id id:String, name: String, photoURL: String, accepted: Bool) {
         for item in self.invitedFriends {
             if let friend = item as? FriendData {
                 if friend.id == id {
                     friend.name = name
                     friend.photoURL = photoURL
-                    friend.acceptedInvite = NSNumber(value: accepted)
+                    friend.acceptedInvite = NSNumber(bool: accepted)
                     return
                 }
             }

@@ -35,14 +35,14 @@ class CropBox: Box {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func addChild(_ node: SKNode) {
+    override func addChild(node: SKNode) {
         self.cropNode.addChild(node)
     }
 }
 
 extension GameScene {
     
-    override func addChild(_ node: SKNode) {
+    override func addChild(node: SKNode) {
         if let box = node as? CropBox {
             super.addChild(box.cropNode)
         } else {

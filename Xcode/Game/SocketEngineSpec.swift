@@ -29,79 +29,79 @@ import Foundation
     weak var client: SocketEngineClient? { get set }
     var closed: Bool { get }
     var connected: Bool { get }
-    var connectParams: [String: Any]? { get set }
+    var connectParams: [String: AnyObject]? { get set }
     var doubleEncodeUTF8: Bool { get }
-    var cookies: [HTTPCookie]? { get }
+    var cookies: [NSHTTPCookie]? { get }
     var extraHeaders: [String: String]? { get }
     var fastUpgrade: Bool { get }
     var forcePolling: Bool { get }
     var forceWebsockets: Bool { get }
-    var parseQueue: DispatchQueue { get }
+    var parseQueue: dispatch_queue_t! { get }
     var polling: Bool { get }
     var probing: Bool { get }
-    var emitQueue: DispatchQueue { get }
-    var handleQueue: DispatchQueue { get }
+    var emitQueue: dispatch_queue_t! { get }
+    var handleQueue: dispatch_queue_t! { get }
     var sid: String { get }
     var socketPath: String { get }
-    var urlPolling: URL { get }
-    var urlWebSocket: URL { get }
+    var urlPolling: NSURL { get }
+    var urlWebSocket: NSURL { get }
     var websocket: Bool { get }
     var ws: WebSocket? { get }
     
-    init(client: SocketEngineClient, url: URL, options: NSDictionary?)
+    init(client: SocketEngineClient, url: NSURL, options: NSDictionary?)
     
     func connect()
-    func didError(reason: String)
+    func didError(error: String)
     func disconnect(reason: String)
     func doFastUpgrade()
     func flushWaitingForPostToWebSocket()
-    func parseEngineData(_ data: Data)
-    func parseEngineMessage(_ message: String, fromPolling: Bool)
-    func write(_ msg: String, withType type: SocketEnginePacketType, withData data: [Data])
+    func parseEngineData(data: NSData)
+    func parseEngineMessage(message: String, fromPolling: Bool)
+    func write(msg: String, withType type: SocketEnginePacketType, withData data: [NSData])
 }
 
 extension SocketEngineSpec {
-    var urlPollingWithSid: URL {
-        var com = URLComponents(url: urlPolling, resolvingAgainstBaseURL: false)!
+    var urlPollingWithSid: NSURL {
+        let com = NSURLComponents(URL: urlPolling, resolvingAgainstBaseURL: false)!
         com.percentEncodedQuery = com.percentEncodedQuery! + "&sid=\(sid.urlEncode()!)"
         
-        return com.url!
+        return com.URL!
     }
     
-    var urlWebSocketWithSid: URL {
-        var com = URLComponents(url: urlWebSocket, resolvingAgainstBaseURL: false)!
+    var urlWebSocketWithSid: NSURL {
+        let com = NSURLComponents(URL: urlWebSocket, resolvingAgainstBaseURL: false)!
         com.percentEncodedQuery = com.percentEncodedQuery! + (sid == "" ? "" : "&sid=\(sid.urlEncode()!)")
         
-        return com.url!
+        return com.URL!
     }
     
-    func createBinaryDataForSend(using data: Data) -> Either<Data, String> {
+    func createBinaryDataForSend(data: NSData) -> Either<NSData, String> {
         if websocket {
-            var byteArray = [UInt8](repeating: 0x4, count: 1)
+            var byteArray = [UInt8](count: 1, repeatedValue: 0x4)
             let mutData = NSMutableData(bytes: &byteArray, length: 1)
             
-            mutData.append(data)
+            mutData.appendData(data)
             
-            return .left(mutData as Data)
+            return .Left(mutData)
         } else {
-            let str = "b4" + data.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+            let str = "b4" + data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
             
-            return .right(str)
+            return .Right(str)
         }
     }
     
-    func doubleEncodeUTF8(_ string: String) -> String {
-        if let latin1 = string.data(using: String.Encoding.utf8),
-            let utf8 = NSString(data: latin1, encoding: String.Encoding.isoLatin1.rawValue) {
+    func doubleEncodeUTF8(string: String) -> String {
+        if let latin1 = string.dataUsingEncoding(NSUTF8StringEncoding),
+            utf8 = NSString(data: latin1, encoding: NSISOLatin1StringEncoding) {
                 return utf8 as String
         } else {
             return string
         }
     }
     
-    func fixDoubleUTF8(_ string: String) -> String {
-        if let utf8 = string.data(using: String.Encoding.isoLatin1),
-            let latin1 = NSString(data: utf8, encoding: String.Encoding.utf8.rawValue) {
+    func fixDoubleUTF8(string: String) -> String {
+        if let utf8 = string.dataUsingEncoding(NSISOLatin1StringEncoding),
+            latin1 = NSString(data: utf8, encoding: NSUTF8StringEncoding) {
                 return latin1 as String
         } else {
             return string
@@ -109,7 +109,7 @@ extension SocketEngineSpec {
     }
     
     /// Send an engine message (4)
-    func send(_ msg: String, withData datas: [Data]) {
-        write(msg, withType: .message, withData: datas)
+    func send(msg: String, withData datas: [NSData]) {
+        write(msg, withType: .Message, withData: datas)
     }
 }

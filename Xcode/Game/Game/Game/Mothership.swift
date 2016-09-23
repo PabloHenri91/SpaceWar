@@ -22,7 +22,7 @@ class Mothership: Control {
     
     var spaceships = [Spaceship]()
     
-    fileprivate var healthBar:HealthBar!
+    private var healthBar:HealthBar!
     var labelHealth:Label!
     
     var explosionSoundEffect:SoundEffect!
@@ -56,7 +56,7 @@ class Mothership: Control {
         
         self.load(level: 1, blueTeam: false)
         
-        if let items = socketAnyEvent.items?.first as? [Any] {
+        if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
             
             var i = 0
             for item in items {
@@ -92,7 +92,7 @@ class Mothership: Control {
     init(mothershipData:MothershipData) {
         super.init()
         self.mothershipData = mothershipData
-        self.load(level: mothershipData.level.intValue, blueTeam: true)
+        self.load(level: mothershipData.level.integerValue, blueTeam: true)
         
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
@@ -101,7 +101,7 @@ class Mothership: Control {
         }
     }
     
-    fileprivate func load(level:Int, blueTeam: Bool) {
+    private func load(level level:Int, blueTeam: Bool) {
         self.zPosition = GameWorld.zPositions.mothership.rawValue
         
         self.level = level
@@ -155,17 +155,17 @@ class Mothership: Control {
     }
     
     func loadPhysics(rectangleOfSize size:CGSize) {
-        self.physicsBody = SKPhysicsBody(rectangleOf: size)
-        self.physicsBody?.isDynamic = false
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        self.physicsBody?.dynamic = false
         
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.mothership.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mothership
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
     
-    func loadHealthBar(blueTeam:Bool = true) {
+    func loadHealthBar(blueTeam blueTeam:Bool = true) {
         
-        var fillColor = SKColor.green
+        var fillColor = SKColor.greenColor()
         
         if blueTeam {
             fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
@@ -183,7 +183,7 @@ class Mothership: Control {
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
         
-        self.labelHealth = Label(color: SKColor.white, text: "100/100", fontSize: 11, x: 0, y: -39, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: -39, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.labelHealth.zRotation = self.zRotation
         
         self.addChild(self.labelHealth)
@@ -192,7 +192,7 @@ class Mothership: Control {
         
     }
     
-    func loadSpaceship(_ spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
+    func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
         
         let mothershipSpaceshipSlot = SKSpriteNode(imageNamed: "mothershipSpaceshipSlot")
         mothershipSpaceshipSlot.texture?.filteringMode = Display.filteringMode
@@ -200,21 +200,21 @@ class Mothership: Control {
         
         switch i {
         case 0:
-            spaceship.position = self.convert(CGPoint(x: -103, y: -5), to: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -103, y: -5), toNode: gameWorld)
             break
         case 1:
-            spaceship.position = self.convert(CGPoint(x: -34, y: -5), to: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -34, y: -5), toNode: gameWorld)
             break
         case 2:
-            spaceship.position = self.convert(CGPoint(x: 34, y: -5), to: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 34, y: -5), toNode: gameWorld)
             break
         case 3:
-            spaceship.position = self.convert(CGPoint(x: 103, y: -5), to: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 103, y: -5), toNode: gameWorld)
             break
         default:
             break
         }
-        mothershipSpaceshipSlot.position = gameWorld.convert(spaceship.position, to: self)
+        mothershipSpaceshipSlot.position = gameWorld.convertPoint(spaceship.position, toNode: self)
         
         if let weapon = spaceship.weapon {
             mothershipSpaceshipSlot.color = weapon.type.color
@@ -226,7 +226,7 @@ class Mothership: Control {
         spaceshipShadow.setScale(spaceship.type.scale)
         spaceshipShadow.color = SKColor(red: 0, green: 0, blue: 0, alpha: 12/100)
         spaceshipShadow.colorBlendFactor = 1
-        spaceshipShadow.position = gameWorld.convert(CGPoint(x: spaceship.position.x, y: spaceship.position.y - (5 * cos(self.zRotation))), to: self)
+        spaceshipShadow.position = gameWorld.convertPoint(CGPoint(x: spaceship.position.x, y: spaceship.position.y - (5 * cos(self.zRotation))), toNode: self)
         self.addChild(spaceshipShadow)
         
         spaceship.startingPosition = spaceship.position
@@ -246,7 +246,7 @@ class Mothership: Control {
         spaceship.loadWeaponDetail()
     }
 
-    func loadSpaceships(_ gameWorld:GameWorld, isAlly:Bool = true) {
+    func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
         
         var i = 0
         for spaceship in self.spaceships {
@@ -260,7 +260,7 @@ class Mothership: Control {
         self.labelHealth.setText(self.health.description + "/" + self.maxHealth.description)
     }
     
-    func canBeTarget(_ spaceship:Spaceship) -> Bool {
+    func canBeTarget(spaceship:Spaceship) -> Bool {
         
         if let spaceshipWeapon = spaceship.weapon {
             let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.size.height/2
@@ -278,7 +278,7 @@ class Mothership: Control {
         return true
     }
     
-    func getShot(_ shot:Shot?, contact: SKPhysicsContact?) {
+    func getShot(shot:Shot?, contact: SKPhysicsContact?) {
         if let shot = shot {
             
             if BattleScene.state == .battleOnline {
@@ -351,24 +351,24 @@ class Mothership: Control {
             
             let action = SKAction()
             action.duration = 1
-            particles.run(action, completion: { [weak particles] in
+            particles.runAction(action, completion: { [weak particles] in
                 particles?.removeFromParent()
                 })
         }
         
-        self.isHidden = true
+        self.hidden = true
         self.physicsBody = nil
-        self.healthBar.isHidden = true
+        self.healthBar.hidden = true
         self.health = 0
     }
     
-    func update(enemyMothership:Mothership? = nil, enemySpaceships:[Spaceship] = [Spaceship]()) {
+    func update(enemyMothership enemyMothership:Mothership? = nil, enemySpaceships:[Spaceship] = [Spaceship]()) {
         for spaceship in self.spaceships {
             spaceship.update(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: self.spaceships)
         }
     }
     
-    func damageEffect(_ points:Int, contactPoint: CGPoint, contact: SKPhysicsContact?) {
+    func damageEffect(points:Int, contactPoint: CGPoint, contact: SKPhysicsContact?) {
         
         let duration = 0.5
         var distance:CGFloat = 32
@@ -383,9 +383,9 @@ class Mothership: Control {
         
         let label = SKLabelNode(text: points.description)
         label.position = contactPoint
-        label.fontColor = SKColor.white
+        label.fontColor = SKColor.whiteColor()
         self.parent?.addChild(label)
-        label.run(SKAction.move(by: vector, duration: duration))
+        label.runAction(SKAction.moveBy(vector, duration: duration))
         
         let particles = SKEmitterNode(fileNamed: "spark.sks")!
         particles.position = contactPoint
@@ -393,10 +393,10 @@ class Mothership: Control {
         particles.emissionAngle = CGFloat(-atan2(vector.dx, vector.dy)) + CGFloat(M_PI/2)
         self.parent?.addChild(particles)
         
-        label.run({ let a = SKAction(); a.duration = duration; return a }(), completion: { [weak label, weak particles] in
+        label.runAction({ let a = SKAction(); a.duration = duration; return a }()) { [weak label, weak particles] in
             label?.removeFromParent()
             particles?.removeFromParent()
-        }) 
+        }
     }
     
     override func removeFromParent() {

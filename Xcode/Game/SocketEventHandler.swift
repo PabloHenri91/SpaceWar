@@ -26,10 +26,10 @@ import Foundation
 
 struct SocketEventHandler {
     let event: String
-    let id: UUID
+    let id: NSUUID
     let callback: NormalCallback
     
-    func executeCallback(with items: [Any], withAck ack: Int, withSocket socket: SocketIOClient) {
+    func executeCallback(items: [AnyObject], withAck ack: Int, withSocket socket: SocketIOClient) {
         callback(items, SocketAckEmitter(socket: socket, ackNum: ack))
     }
 }

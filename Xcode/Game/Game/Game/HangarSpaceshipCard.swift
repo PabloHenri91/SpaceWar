@@ -51,17 +51,17 @@ class HangarSpaceshipCard: Control {
             self.spaceship.setScale(2)
         }
             
-        self.buttonUpgrade = Button(textureName: "buttonGreen92x25", text: "UPGRADE", fontSize: 13 ,  x: 31, y: 120, fontColor: SKColor.white, fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.buttonUpgrade = Button(textureName: "buttonGreen92x25", text: "UPGRADE", fontSize: 13 ,  x: 31, y: 120, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonUpgrade)
 
-        self.labelLevel = Label(color: SKColor.white, text: "Level ".translation() + self.spaceship.level.description , fontSize: 13 ,  x: 75, y: 100, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), shadowOffset:CGPoint(x: 0, y: -1))
+        self.labelLevel = Label(color: SKColor.whiteColor(), text: "Level ".translation() + self.spaceship.level.description , fontSize: 13 ,  x: 75, y: 100, shadowColor: SKColor(red: 75/255, green: 87/255, blue: 98/255, alpha: 1), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
         
         
-        self.labelName = Label(color: SKColor.white, text: (self.spaceship.factoryDisplayName()).uppercased() , fontSize: 12 ,  x: 76, y: 14, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+        self.labelName = Label(color: SKColor.whiteColor(), text: (self.spaceship.factoryDisplayName()).uppercaseString , fontSize: 12 ,  x: 76, y: 14, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelName)
         
-        self.buttonChange = Button(textureName: "buttonBlue92x25", text: "CHANGE", fontSize: 13 ,  x: 31, y: 150, fontColor: SKColor.white, fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+        self.buttonChange = Button(textureName: "buttonBlue92x25", text: "CHANGE", fontSize: 13 ,  x: 31, y: 150, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.buttonChange)
 
         
@@ -82,7 +82,7 @@ class HangarSpaceshipCard: Control {
             self.spaceship = Spaceship(spaceshipData: spaceshipData)
             
             self.labelLevel.setText("Level ".translation() + self.spaceship.level.description)
-            self.labelName.setText((self.spaceship.factoryDisplayName()).uppercased())
+            self.labelName.setText((self.spaceship.factoryDisplayName()).uppercaseString)
             
             self.addChild(self.spaceship)
             self.spaceship.screenPosition = CGPoint(x: 74, y: 62)

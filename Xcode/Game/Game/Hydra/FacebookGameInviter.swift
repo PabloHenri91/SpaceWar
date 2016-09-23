@@ -9,38 +9,41 @@
 import FBSDKShareKit
 
 protocol FacebookGameInviterDelegate {
-    func alertError(_ error:String)
-    func inviteSucess(_ invitedsCount:Int)
+    func alertError(error:String)
+    func inviteSucess(invitedsCount:Int)
     func inviteFinished()
 }
 
 class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     
     static let sharedInstance = FacebookGameInviter()
-    var idFriendArray = [Any]()
-    var inviteNow = [Any]()
+    var idFriendArray = [AnyObject]()
+    var inviteNow = [AnyObject]()
     var gameInviterDelegate:FacebookGameInviterDelegate!
     
-    let friends = MemoryCard.sharedInstance.playerData!.invitedFriends as! Set<FriendData>
+    let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
     
-    func gameRequestDialogDidCancel(_ gameRequestDialog: FBSDKGameRequestDialog!) {
+    func gameRequestDialogDidCancel(gameRequestDialog: FBSDKGameRequestDialog!) {
         //print("cancel")
         self.inviteNow.removeAll()
         self.gameInviterDelegate.alertError("User cancel")
+        
     }
     
     
-    public func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: Error!) {
+    func gameRequestDialog(gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: NSError!) {
         //print("fail")
         //print(error)
         self.inviteNow.removeAll()
-        self.gameInviterDelegate.alertError(error.localizedDescription)
+        self.gameInviterDelegate.alertError(error.description)
+        
     }
     
-    func gameRequestDialog(_ gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [AnyHashable: Any]!) {
+    func gameRequestDialog(gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
         //print("complete")
         //print(results)
         //print((results["to"] as! NSArray).count)
+        
         
      if let inviteds = results["to"] as? [String] {
         var needAdd = true
@@ -54,7 +57,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             }
             
             if needAdd {
-                MemoryCard.sharedInstance.playerData!.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
+                MemoryCard.sharedInstance.playerData.addFriendData(MemoryCard.sharedInstance.newFriendData(id: friend))
             }
             
         }
@@ -72,7 +75,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         
     }
     
-    func invite(_ friendList: [Any]?) {
+    func invite(friendList: [AnyObject]?) {
         
         FacebookClient.sharedInstance.loginToFacebookWithSuccess({
             let gameRequestContent : FBSDKGameRequestContent = FBSDKGameRequestContent()
@@ -81,10 +84,10 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
             if friendList != nil {
                 gameRequestContent.recipients = friendList
             } else {
-            gameRequestContent.filters = FBSDKGameRequestFilter.appNonUsers
+            gameRequestContent.filters = FBSDKGameRequestFilter.AppNonUsers
             }
             
-            gameRequestContent.actionType = FBSDKGameRequestActionType.turn
+            gameRequestContent.actionType = FBSDKGameRequestActionType.Turn
             
             let dialog : FBSDKGameRequestDialog = FBSDKGameRequestDialog()
             dialog.frictionlessRequestsEnabled = true
@@ -100,7 +103,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         }
     }
     
-    func inviteAllFriends(_ delegate:FacebookGameInviterDelegate ,idFriendArray:[Any]) {
+    func inviteAllFriends(delegate:FacebookGameInviterDelegate ,idFriendArray:[AnyObject]) {
         self.gameInviterDelegate = delegate
         self.idFriendArray = idFriendArray
         self.sliceFriendList()
@@ -108,7 +111,7 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         self.invite(self.inviteNow)
     }
     
-    func inviteSomeFriends(_ delegate:FacebookGameInviterDelegate) {
+    func inviteSomeFriends(delegate:FacebookGameInviterDelegate) {
         self.gameInviterDelegate = delegate
         self.invite(nil)
     }
@@ -129,35 +132,24 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     func updateInvitedFriends() {
         
         
-        if FBSDKAccessToken.current() != nil {
-            
-            FacebookClient.sharedInstance.listGameFriends({ (meFriends:[AnyHashable : Any], error: Error?) in
-                
-                var meFriends = meFriends as! Dictionary<String, AnyObject>
-                
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            FacebookClient.sharedInstance.listGameFriends({ (meFriends, error) in
                 if meFriends.count > 0 {
                     
-                    let playerData = MemoryCard.sharedInstance.playerData!
+                    let playerData = MemoryCard.sharedInstance.playerData
                     
                     for item in meFriends {
-                        
-                        var item = item.value as! Dictionary<String, AnyObject>
-                        
-                        let id = item.removeValue(forKey: "id") as! String
-                        
+                        let id = item.objectForKey("id") as! String
                         for friend in self.friends {
                             if id == friend.id {
                                 //print(item)
-                                let name = item.removeValue(forKey: "name") as! String
-                                var picture = item.removeValue(forKey: "picture") as! Dictionary<String, AnyObject>
-                                
-                                var data = picture.removeValue(forKey: "data") as! Dictionary<String, AnyObject>
-                                
-                                let photoURL = data.removeValue(forKey: "url") as! String
-                                
+                                let name = item.objectForKey("name") as! String
+                                let picture = item.objectForKey("picture")
+                                let data = picture?.objectForKey("data")
+                                let photoURL = data?.objectForKey("url") as! String
                                 playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
                                 //print("I invited you and update")
-                                //print(MemoryCard.sharedInstance.playerData!.invitedFriends)
+                                //print(MemoryCard.sharedInstance.playerData.invitedFriends)
                                 return
                             }
                         }

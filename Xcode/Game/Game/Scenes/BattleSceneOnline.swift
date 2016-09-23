@@ -42,7 +42,7 @@ extension BattleScene {
                 break
                 
             case "mySocketId":
-                if let mySocketId = socketAnyEvent.items?.first as? String {
+                if let mySocketId = socketAnyEvent.items?.firstObject as? String {
                     serverManager.userDisplayInfo.socketId = mySocketId
                 } else {
                     
@@ -62,8 +62,8 @@ extension BattleScene {
                 break
                 
             case "someData":
-                if let message = socketAnyEvent.items?.first as? [Any] {
-                    var i = message.makeIterator()
+                if let message = socketAnyEvent.items?.firstObject as? [AnyObject] {
+                    var i = message.generate()
                     
                     switch (i.next() as! String) {
                         
@@ -132,7 +132,7 @@ extension BattleScene {
                 break
                 
             case "roomId":
-                serverManager.roomId(socketAnyEvent: socketAnyEvent)
+                serverManager.roomId(socketAnyEvent)
                 break
                 
             default:
@@ -144,10 +144,10 @@ extension BattleScene {
         
     }
     
-    func updateOnline(_ socketAnyEvent: SocketAnyEvent) {
+    func updateOnline(socketAnyEvent: SocketAnyEvent) {
         
-        if let items = socketAnyEvent.items?.first as? [Any] {
-            var i = items.makeIterator()
+        if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
+            var i = items.generate()
             
             if let i = i.next() as? Int {
                 if self.mothership.health > 0 && self.mothership.health - i <= 0 {
@@ -210,7 +210,7 @@ extension BattleScene {
                             physicsBody.categoryBitMask = UInt32(i.next() as! Int) //3
                             physicsBody.collisionBitMask = UInt32(i.next() as! Int)  //4
                             physicsBody.contactTestBitMask = UInt32(i.next() as! Int) //5
-                            physicsBody.isDynamic = (i.next() as! Bool) //6
+                            physicsBody.dynamic = Bool(i.next() as! Int) //6
                         } else {
                             for _ in 0..<7 {
                                 i.next()
@@ -235,20 +235,20 @@ extension BattleScene {
         if GameScene.currentTime - self.lastOnlineUpdate > self.emitInterval {
             self.lastOnlineUpdate = GameScene.currentTime
             
-            var items = [Any]()
+            var items = [AnyObject]()
             
             if self.botMothership.onlineDamage == 0 {
-                items.append(false as AnyObject)
+                items.append(false)
             } else {
-                items.append(self.botMothership.onlineDamage as AnyObject)
+                items.append(self.botMothership.onlineDamage)
             }
             self.botMothership.onlineDamage = 0
             
             for spaceship in self.botMothership.spaceships {
                 if spaceship.onlineDamage == 0 {
-                    items.append(false as AnyObject)
+                    items.append(false)
                 } else {
-                    items.append(spaceship.onlineDamage as AnyObject)
+                    items.append(spaceship.onlineDamage)
                 }
                 spaceship.onlineDamage = 0
             }
@@ -256,36 +256,36 @@ extension BattleScene {
             for spaceship in self.mothership.spaceships {
                 
                 if spaceship.onlineHeal == 0 {
-                    items.append(false as AnyObject)
+                    items.append(false)
                 } else {
-                    items.append(spaceship.onlineHeal as AnyObject)
+                    items.append(spaceship.onlineHeal)
                 }
                 spaceship.onlineHeal = 0
                 
-                items.append(spaceship.needToMove as AnyObject)
-                items.append(spaceship.isInsideAMothership as AnyObject)
+                items.append(spaceship.needToMove)
+                items.append(spaceship.isInsideAMothership)
                 
-                items.append(Int(-spaceship.destination.x * 1000000) as AnyObject)
-                items.append(Int(-spaceship.destination.y * 1000000) as AnyObject)
-                    
+                items.append(Int(-spaceship.destination.x * 1000000))
+                items.append(Int(-spaceship.destination.y * 1000000))
+                
                 items.append(Int(-spaceship.position.x * 1000000) as AnyObject)
                 items.append(Int(-spaceship.position.y * 1000000) as AnyObject)
                 
-                items.append(spaceship.level as AnyObject)
+                items.append(spaceship.level)
                 
                 if let physicsBody = spaceship.physicsBody {
-                    items.append(true as AnyObject)
+                    items.append(true)
                     
-                    items.append(Int(-physicsBody.velocity.dx * 1000000) as AnyObject)
-                    items.append(Int(-physicsBody.velocity.dy * 1000000) as AnyObject)
-                    items.append(Int(physicsBody.angularVelocity * 1000000) as AnyObject)
+                    items.append(Int(-physicsBody.velocity.dx * 1000000))
+                    items.append(Int(-physicsBody.velocity.dy * 1000000))
+                    items.append(Int(physicsBody.angularVelocity * 1000000))
                     
-                    items.append(Int(physicsBody.categoryBitMask) as AnyObject)
-                    items.append(Int(physicsBody.collisionBitMask) as AnyObject)
-                    items.append(Int(physicsBody.contactTestBitMask) as AnyObject)
-                    items.append(physicsBody.isDynamic)
+                    items.append(Int(physicsBody.categoryBitMask))
+                    items.append(Int(physicsBody.collisionBitMask))
+                    items.append(Int(physicsBody.contactTestBitMask))
+                    items.append(Int(physicsBody.dynamic))
                 } else {
-                    items.append(false as AnyObject)
+                    items.append(false)
                 }
             }
             
@@ -296,6 +296,7 @@ extension BattleScene {
             if self.mothership.health <= 0 || self.botMothership.health <= 0 {
                 self.nextState = .battle
                 self.serverManager.leaveAllRooms()
+                
             }
         }
     }
@@ -312,7 +313,7 @@ extension BattleScene {
         maxLevel = maxLevel + 2
         
         for spaceship in self.botMothership.spaceships + self.mothership.spaceships {
-            spaceship.setBattleLevel(level: min(maxLevel, spaceship.battleMaxLevel))
+            spaceship.setBattleLevel(min(maxLevel, spaceship.battleMaxLevel))
         }
         
         self.updateMothershipsHealth()
@@ -330,12 +331,12 @@ extension BattleScene {
         labelText += " x "
         labelText += self.mothership.displayName
         
-        let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.white, fontSize: 32)
+        let label = MultiLineLabel(text: labelText, maxWidth: 10, color: SKColor.whiteColor(), fontSize: 32)
         
         self.gameWorld.addChild(label)
         
-        label.run({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
-            label?.run(SKAction.fadeAlpha(to: 0, duration: 1), completion: {
+        label.runAction({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+            label?.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: {
                 label?.removeFromParent()
             })
             })

@@ -22,10 +22,10 @@ class Research: Control {
         super.init()
         
         self.researchData = researchData
-        self.load(researchData.type.intValue)
+        self.load(researchData.type.integerValue)
     }
     
-    func load(_ type:Int) {
+    func load(type:Int) {
         self.researchType = Research.types[type]
     }
     
@@ -35,12 +35,12 @@ class Research: Control {
     
     func isUnlocked() -> Bool {
         
-        let playerData = MemoryCard.sharedInstance.playerData!
+        let playerData = MemoryCard.sharedInstance.playerData
         
         for item in self.researchType.researchesNeeded {
             for subItem in playerData.researches {
                 if let researchData = subItem as? ResearchData {
-                    if researchData.type.intValue == item {
+                    if researchData.type == item {
                         if researchData.done == 0 {
                             return false
                         }
@@ -54,7 +54,7 @@ class Research: Control {
     
     func start() -> Bool {
         
-        let playerData = MemoryCard.sharedInstance.playerData!
+        let playerData = MemoryCard.sharedInstance.playerData
         
         for research in playerData.researches {
             let researchData = research as! ResearchData
@@ -65,7 +65,7 @@ class Research: Control {
         
         
         if let researchData = self.researchData {
-            researchData.startDate = Date()
+            researchData.startDate = NSDate()
         }
         
         return true
@@ -79,9 +79,9 @@ class Research: Control {
             
             // se o level da nave for 0 ta liberando, se nao aumentando o level maximo
             
-            researchData.spaceshipLevel = (researchData.spaceshipLevel.intValue + 10) as NSNumber
+            researchData.spaceshipLevel = NSNumber(integer: researchData.spaceshipLevel.integerValue + 10)
             
-            if researchData.spaceshipLevel.intValue == 10 {
+            if researchData.spaceshipLevel.integerValue == 10 {
                 
                 if let spaceship = self.researchType.spaceshipUnlocked {
                     
@@ -90,8 +90,9 @@ class Research: Control {
                         
                         let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
                         spaceshipData.addWeaponData(weaponData)
+                        spaceshipData
                         
-                        MemoryCard.sharedInstance.playerData!.unlockSpaceshipData(spaceshipData)
+                        MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
                     }
                 }
             }
@@ -105,7 +106,7 @@ class Research: Control {
         // Chance de ganhar uma pesquisa >=90 ( 10% de chance)
         if (winSpaceship >= 75) {
             
-            let playerData = MemoryCard.sharedInstance.playerData!
+let playerData = MemoryCard.sharedInstance.playerData!
             var researchTypes = [ResearchType]()
             
             let diceRoll = Int.random(101)
@@ -126,9 +127,9 @@ class Research: Control {
                 for item in playerData.researches {
                     if let researchData = item as? ResearchData {
                         
-                        if researchData.type.intValue == researchTypes[index].index {
+                        if researchData.type.integerValue == researchTypes[index].index {
                             
-                            researchData.spaceshipMaxLevel = (researchData.spaceshipMaxLevel.intValue + 10) as NSNumber
+                            researchData.spaceshipMaxLevel = researchData.spaceshipMaxLevel.integerValue + 10
                             
                             return researchData
                         }
@@ -136,7 +137,7 @@ class Research: Control {
                 }
                 
                 let newResearch = MemoryCard.sharedInstance.newResearchData()
-                newResearch.type = (researchTypes[index]).index as NSNumber
+                newResearch.type = researchTypes[index].index
                 playerData.addResearchData(newResearch)
                 
                 return newResearch
@@ -201,14 +202,14 @@ extension Research {
     
     static func cheatUnlockAll() {
         
-        MemoryCard.sharedInstance.playerData!.researches = NSSet()
+        MemoryCard.sharedInstance.playerData.researches = NSSet()
         
         for researchType in Research.types {
             let newResearch = MemoryCard.sharedInstance.newResearchData()
-            newResearch.type = researchType.index as NSNumber
+            newResearch.type = researchType.index
             newResearch.spaceshipLevel = 10
             newResearch.spaceshipMaxLevel = 1000
-            MemoryCard.sharedInstance.playerData!.addResearchData(newResearch)
+            MemoryCard.sharedInstance.playerData.addResearchData(newResearch)
         }
     }
     

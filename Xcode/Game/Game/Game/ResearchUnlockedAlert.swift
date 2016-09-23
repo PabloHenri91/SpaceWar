@@ -18,7 +18,7 @@ class ResearchUnlockedAlert:Box {
         
         var rarityColor:SKColor!
         
-        let researchType = Research.types[researchData.type.intValue]
+        let researchType = Research.types[researchData.type.integerValue]
         
         if let spaceshipUnlocked = researchType.spaceshipUnlocked {
             
@@ -51,21 +51,21 @@ class ResearchUnlockedAlert:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color: SKColor.white, text: "RESEARCH UNLOCKED", fontSize: 12 ,  x: 14, y: 21, horizontalAlignmentMode: .left , fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+        let labelTitle = Label(color: SKColor.whiteColor(), text: "RESEARCH UNLOCKED", fontSize: 12 ,  x: 14, y: 21, horizontalAlignmentMode: .Left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        let labelGreat = Label(color: SKColor.black, text: "Great!", fontSize: 14 ,  x: 141, y: 66, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+        let labelGreat = Label(color: SKColor.blackColor(), text: "Great!", fontSize: 14 ,  x: 141, y: 66, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelGreat)
         
-        let labelUnlocked = Label(color: SKColor.black, text: "You unlocked a new research:", fontSize: 11 ,  x: 141, y: 81, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+        let labelUnlocked = Label(color: SKColor.blackColor(), text: "You unlocked a new research:", fontSize: 11 ,  x: 141, y: 81, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(labelUnlocked)
         
         
         if researchData.spaceshipMaxLevel == 10 {
             
-             let labelResearch = Label(color: rarityColor, text: researchType.name + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+             let labelResearch = Label(color: rarityColor, text: researchType.name + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             
-            let labelResearchDescription = Label(color: SKColor.black, text: "Unlock ", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+            let labelResearchDescription = Label(color: SKColor.blackColor(), text: "Unlock ", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
             
             let x = 141 - Int((labelResearch.calculateAccumulatedFrame().width + labelResearchDescription.calculateAccumulatedFrame().width)/2)
             
@@ -82,11 +82,11 @@ class ResearchUnlockedAlert:Box {
         
         else {
             
-            let labelResearch = Label(color: rarityColor, text: researchType.name, fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+            let labelResearch = Label(color: rarityColor, text: researchType.name, fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             
-            let improvementNumber = (researchData.spaceshipMaxLevel.intValue/10).description
+            let improvementNumber = (researchData.spaceshipMaxLevel.integerValue/10).description
             
-            let labelResearchDescription = Label(color: SKColor.black, text: "improvement " + improvementNumber + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
+            let labelResearchDescription = Label(color: SKColor.blackColor(), text: "improvement " + improvementNumber + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
             
             let x = 141 - Int((labelResearch.calculateAccumulatedFrame().width + labelResearchDescription.calculateAccumulatedFrame().width)/2)
             
@@ -106,7 +106,7 @@ class ResearchUnlockedAlert:Box {
         let fontShadowOffset = CGPoint(x: 0, y: -2)
         let fontName = GameFonts.fontName.museo1000
         
-        self.buttonGoToResearch = Button(textureName: "buttonDarkBlue131x30", text: "GO TO RESEARCHES", fontSize: 11, x: 77, y: 159, fontColor: SKColor.white, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+        self.buttonGoToResearch = Button(textureName: "buttonDarkBlue131x30", text: "GO TO RESEARCHES", fontSize: 11, x: 77, y: 159, fontColor: SKColor.whiteColor(), fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
         self.addChild(self.buttonGoToResearch)
 
         

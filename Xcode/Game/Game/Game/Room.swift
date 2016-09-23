@@ -18,7 +18,7 @@ class Room {
     }
     
     init(socketAnyEvent: SocketAnyEvent) {
-        if let message = socketAnyEvent.items?.first as? [String : AnyObject] {
+        if let message = socketAnyEvent.items?.firstObject as? [String : AnyObject] {
             if let roomId = message["roomId"] as? String {
                 
                 self.roomId = roomId
@@ -33,7 +33,7 @@ class Room {
         }
     }
     
-    func addPlayer(_ newUserDisplayInfo: UserDisplayInfo) {
+    func addPlayer(newUserDisplayInfo: UserDisplayInfo) {
         
         var containsNewUserDisplayInfo = false
         
@@ -49,9 +49,9 @@ class Room {
         }
     }
     
-    func addPlayer(_ socketAnyEvent: SocketAnyEvent) {
+    func addPlayer(socketAnyEvent: SocketAnyEvent) {
         
-        if let message = socketAnyEvent.items?.first as? [String] {
+        if let message = socketAnyEvent.items?.firstObject as? [String] {
             self.addPlayer(UserDisplayInfo(socketId: message[0], displayName: message[1]))
         }
     }

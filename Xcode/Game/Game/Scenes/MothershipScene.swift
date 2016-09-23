@@ -45,12 +45,11 @@ class MothershipScene: GameScene {
     
     var spaceshipSlots = [SpaceshipSlot]()
     
-    var gameStore: GameStore?
-    
     var lastShake: Double = 0
     
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
+    var gameStore: GameStore?
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
         
         let actionDuration = 0.25
         
@@ -59,7 +58,7 @@ class MothershipScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(parent: self)
+                node.moveToParent(self)
             }
             break
             
@@ -70,23 +69,23 @@ class MothershipScene: GameScene {
             for node in GameScene.lastChildren {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.moveToParent(parent: self)
+                node.moveToParent(self)
             }
             break
         }
         
         Music.sharedInstance.playMusicWithType(Music.musicTypes.menu)
         
-        self.playerData = MemoryCard.sharedInstance.playerData!
+        self.playerData = MemoryCard.sharedInstance.playerData
         
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 246/255, green: 251/255, blue: 255/255,
-                                                                                     alpha: 100/100), size: CGSize(width: 1, height: 1)),
-                               size: CGSize(width: self.size.width,
-                                            height: 56), y: 67))
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+            y: 67, size: CGSize(width: self.size.width,
+                height: 56)))
         self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
-                                                                                     alpha: 12/100), size: CGSize(width: 1, height: 1)),
-                               size: CGSize(width: self.size.width,
-                                            height: 3), y: 123))
+            alpha: 12/100), size: CGSize(width: 1, height: 1)),
+            y: 123, size: CGSize(width: self.size.width,
+                height: 3)))
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "BATTLESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         self.batteryControl = BatteryControl(x: 75, y: 231, xAlign: .center, yAlign: .center)
@@ -94,9 +93,9 @@ class MothershipScene: GameScene {
         
         self.buttonSocial = Button(textureName: "button", text: "Social", x: 96, y: 250, xAlign: .center, yAlign: .center)
         self.addChild(self.buttonSocial)
-        self.buttonSocial.isHidden = true
+        self.buttonSocial.hidden = true
         
-        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 289, xAlign: .center, yAlign: .down, fontColor: SKColor.white, fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
+        self.buttonBattle = Button(textureName: "buttonBattle", text: "BATTLE", x: 74, y: 289, xAlign: .center, yAlign: .down, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset:CGPoint(x: 0, y: 1))
         self.addChild(self.buttonBattle)
         
         
@@ -126,7 +125,7 @@ class MothershipScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
             break
         case .mothership:
@@ -135,12 +134,12 @@ class MothershipScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.run(SKAction.move(to: nodePosition, duration: actionDuration))
+                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
             }
             break
         }
         
-        self.run({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }
@@ -170,7 +169,7 @@ class MothershipScene: GameScene {
         self.playerDataCard.updatePoints()
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         if(self.state == self.nextState) {
@@ -206,7 +205,7 @@ class MothershipScene: GameScene {
                 break
                 
             case .mothership:
-                self.blackSpriteNode.isHidden = true
+                self.blackSpriteNode.hidden = true
                 self.gameStore?.removeFromParent()
                 break
                 
@@ -243,17 +242,17 @@ class MothershipScene: GameScene {
         
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>) {
+    override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 switch (self.state) {
                 case .mothership:
-                    if self.playerDataCard.contains(point) {
-                        if self.playerDataCard.buttonStore.contains(touch.location(in: self.playerDataCard)) {
+                    if self.playerDataCard.containsPoint(point) {
+                        if self.playerDataCard.buttonStore.containsPoint(touch.locationInNode(self.playerDataCard)) {
                             self.gameStore = GameStore()
                             self.addChild(self.gameStore!)
                             return
@@ -269,7 +268,7 @@ class MothershipScene: GameScene {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>) {
+    override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         
@@ -295,7 +294,7 @@ class MothershipScene: GameScene {
         //Estado atual
         if(self.state == self.nextState) {
             for touch in touches {
-                let point = touch.location(in: self)
+                let point = touch.locationInNode(self)
                 
                 switch (self.state) {
                 case .mothership:
@@ -308,27 +307,27 @@ class MothershipScene: GameScene {
 //                        return
 //                    }
                     
-                    if self.playerDataCard.contains(touch.location(in: self)) {
+                    if self.playerDataCard.containsPoint(touch.locationInNode(self)) {
                         return
                     }
                     
-                    if self.gameTabBar.contains(touch.location(in: self)) {
-                        if(self.gameTabBar.buttonMission.contains(touch.location(in: self.gameTabBar))) {
+                    if self.gameTabBar.containsPoint(touch.locationInNode(self)) {
+                        if(self.gameTabBar.buttonMission.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.mission
                             return
                         }
                         
-                        if(self.gameTabBar.buttonHangar.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonHangar.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.hangar
                             return
                         }
                         
-                        if(self.gameTabBar.buttonResearch.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonResearch.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.research
                             return
                         }
                         
-                        if(self.gameTabBar.buttonFactory.contains(touch.location(in: self.gameTabBar))) {
+                        if(self.gameTabBar.buttonFactory.containsPoint(touch.locationInNode(self.gameTabBar))) {
                             self.nextState = states.factory
                             return
                         }
@@ -336,16 +335,16 @@ class MothershipScene: GameScene {
                     }
                     
                     for spaceshipSlot in self.spaceshipSlots {
-                        if spaceshipSlot.contains(touch.location(in: self)) {
+                        if spaceshipSlot.containsPoint(touch.locationInNode(self)) {
                             self.nextState = states.hangar
                         }
                     }
                     
                     
-                    if self.nextEvents.contains(point) {
-                        let point = touch.location(in: self.nextEvents)
+                    if self.nextEvents.containsPoint(point) {
+                        let point = touch.locationInNode(self.nextEvents)
                         for event in self.nextEvents.upcomingEvents {
-                            if event.contains(point) {
+                            if event.containsPoint(point) {
                                 switch event.type {
                                 case .missionSpaceshipEvent:
                                     self.nextState = .mission
@@ -360,10 +359,10 @@ class MothershipScene: GameScene {
                         }
                     }
                     
-                    if self.buttonBattle.contains(point) {
+                    if self.buttonBattle.containsPoint(point) {
                         
                         if self.playerData.motherShip.spaceships.count != 4 {
-                            let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .ok)
+                            let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .OK)
                             self.addChild(alertBox)
                             alertBox.buttonOK.addHandler {
                                 self.nextState = .hangar
@@ -373,7 +372,7 @@ class MothershipScene: GameScene {
                         }
                         
                         if !self.batteryControl.useCharge() {
-                            let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .ok)
+                            let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .OK)
                             self.addChild(alertBox)
                             alertBox.buttonOK.addHandler {
                                 self.nextState = .mothership
@@ -390,7 +389,7 @@ class MothershipScene: GameScene {
                     
                 case .alert:
                     if let gameStore = self.gameStore {
-                        if gameStore.contains(point) {
+                        if gameStore.containsPoint(point) {
                             gameStore.touchEnded(touch)
                         }
                     }

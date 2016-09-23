@@ -52,10 +52,10 @@ class SoundEffect {
         case .noEffect:
             break
         case .explosion:
-            soundFiles.append(contentsOf: fileNames.explosion)
+            soundFiles.appendContentsOf(fileNames.explosion)
             break
         case .laser:
-            soundFiles.append(contentsOf: fileNames.laser)
+            soundFiles.appendContentsOf(fileNames.laser)
             break
         }
         
@@ -66,10 +66,10 @@ class SoundEffect {
     
     func play() {
         if self.actions.count > 1 {
-            self.node.run(self.actions[Int.random(self.actions.count)])
+            self.node.runAction(self.actions[Int.random(self.actions.count)])
         } else {
             for action in self.actions {
-                self.node.run(action)
+                self.node.runAction(action)
             }
         }
     }

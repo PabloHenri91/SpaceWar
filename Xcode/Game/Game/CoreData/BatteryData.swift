@@ -12,7 +12,7 @@ import CoreData
 
 class BatteryData: NSManagedObject {
     
-    @NSManaged var lastCharge: Date?
+    @NSManaged var lastCharge: NSDate?
     @NSManaged var charge: NSNumber
 
 }
@@ -22,10 +22,10 @@ extension MemoryCard {
     
     func newBatteryData() -> BatteryData {
         
-        let batteryData = NSEntityDescription.insertNewObject(forEntityName: "BatteryData", into: self.managedObjectContext) as! BatteryData
+        let batteryData = NSEntityDescription.insertNewObjectForEntityForName("BatteryData", inManagedObjectContext: self.managedObjectContext) as! BatteryData
         
         batteryData.charge = 4
-        batteryData.lastCharge = Date()
+        batteryData.lastCharge = NSDate()
         
         return batteryData
     }

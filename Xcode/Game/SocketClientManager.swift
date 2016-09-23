@@ -43,12 +43,12 @@ import Foundation
  manager["room1"]?.emit("hello")
  ```
  */
-open class SocketClientManager : NSObject {
-    open static let sharedManager = SocketClientManager()
+public final class SocketClientManager : NSObject {
+    public static let sharedManager = SocketClientManager()
     
     private var sockets = [String: SocketIOClient]()
     
-    open subscript(string: String) -> SocketIOClient? {
+    public subscript(string: String) -> SocketIOClient? {
         get {
             return sockets[string]
         }
@@ -58,25 +58,25 @@ open class SocketClientManager : NSObject {
         }
     }
     
-    open func addSocket(_ socket: SocketIOClient, labeledAs label: String) {
+    public func addSocket(socket: SocketIOClient, labeledAs label: String) {
         sockets[label] = socket
     }
     
-    open func removeSocket(withLabel label: String) -> SocketIOClient? {
-        return sockets.removeValue(forKey: label)
+    public func removeSocket(withLabel label: String) -> SocketIOClient? {
+        return sockets.removeValueForKey(label)
     }
 
-    open func removeSocket(_ socket: SocketIOClient) -> SocketIOClient? {
+    public func removeSocket(socket: SocketIOClient) -> SocketIOClient? {
         var returnSocket: SocketIOClient?
         
         for (label, dictSocket) in sockets where dictSocket === socket {
-            returnSocket = sockets.removeValue(forKey: label)
+            returnSocket = sockets.removeValueForKey(label)
         }
         
         return returnSocket
     }
     
-    open func removeSockets() {
+    public func removeSockets() {
         sockets.removeAll()
     }
 }

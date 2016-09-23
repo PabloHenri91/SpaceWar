@@ -20,7 +20,7 @@ class Boost {
         
         Boost.activeBoosts = [Boost]()
         
-        let playerData = MemoryCard.sharedInstance.playerData!
+        let playerData = MemoryCard.sharedInstance.playerData
         
         var inactiveBoostData = [BoostData]()
         
@@ -45,17 +45,17 @@ class Boost {
     init(boostData: BoostData) {
         self.boostData = boostData
         
-        self.load(boostData.type.intValue)
+        self.load(boostData.type.integerValue)
     }
     
-    func load(_ type: Int) {
+    func load(type: Int) {
         self.type = Boost.types[type]
     }
     
     func isActive() -> Bool {
-        let timeLeft = GameMath.timeLeft(startDate: self.boostData.lastCharge, duration: self.type.duration)
+        let timeLeft = GameMath.timeLeft(self.boostData.lastCharge, duration: self.type.duration)
         
-        print("Boost timeLeft: " + GameMath.timeLeftFormattedAbbreviated(timeLeft: timeLeft))
+        print("Boost timeLeft: " + GameMath.timeLeftFormattedAbbreviated(timeLeft))
         
         return timeLeft > 0
     }

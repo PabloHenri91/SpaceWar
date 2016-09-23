@@ -12,7 +12,7 @@ class MemoryCard {
     
     static let sharedInstance = MemoryCard()
     
-    fileprivate var autoSave:Bool = false
+    private var autoSave:Bool = false
     
     var playerData:PlayerData!
     
@@ -63,7 +63,7 @@ class MemoryCard {
         }
         
         if self.playerData.startDate == nil {
-            self.playerData.startDate = Date()
+            self.playerData.startDate = NSDate()
         }
         
         //nova estrutura de pesquisas
@@ -79,7 +79,7 @@ class MemoryCard {
             
             for research in Research.types {
                 let newResearch = self.newResearchData()
-                newResearch.type = research.index as NSNumber
+                newResearch.type = research.index
                 self.playerData.addResearchData(newResearch)
             }
             
@@ -97,9 +97,9 @@ class MemoryCard {
                     
                     for research in researches {
                         let researchData = research as! ResearchData
-                        let researchType = Research.types[Int(researchData.type.int32Value)]
+                        let researchType = Research.types[Int(researchData.type.integerValue)]
                         
-                        if researchType.weaponUnlocked == weaponData.type.intValue && researchType.spaceshipUnlocked == spaceshipData.type.intValue {
+                        if researchType.weaponUnlocked == weaponData.type.integerValue && researchType.spaceshipUnlocked == spaceshipData.type.integerValue {
                             researchData.done = 1
                         }
                     }
@@ -109,7 +109,7 @@ class MemoryCard {
         
         // ALTERACAO DE PESQUISAS PARA VERSAO 6 DO DATA MODEL
         
-        if self.playerData.datamodelVersion.intValue < 6 {
+        if self.playerData.datamodelVersion.integerValue < 6 {
             
             self.playerData.datamodelVersion = 6
             
@@ -132,13 +132,13 @@ class MemoryCard {
                     
                     var unlocked = true
                     
-                    let researchType = Research.types[researchData.type.intValue]
+                    let researchType = Research.types[researchData.type.integerValue]
                     
                     for item in researchType.researchesNeeded {
                         for subItem in researches {
                             if let researchData = subItem as? ResearchData {
-                                if researchData.type.intValue == item {
-                                    if researchData.done.boolValue == false {
+                                if researchData.type == item {
+                                    if researchData.done == 0 {
                                         unlocked = false
                                         print(researchType.researchDescription)
                                     }
@@ -169,24 +169,24 @@ class MemoryCard {
             
         }
         
-        if self.playerData.datamodelVersion.intValue < 8 {
+        if self.playerData.datamodelVersion.integerValue < 8 {
             self.playerData.datamodelVersion = 8
             
             var levelSum = 0
             var spaceshipDataCount = 0
             for item in self.playerData.spaceships {
                 if let spaceshipData = item as? SpaceshipData {
-                    levelSum = levelSum + spaceshipData.level.intValue
+                    levelSum = levelSum + spaceshipData.level.integerValue
                     spaceshipDataCount = spaceshipDataCount + 1
                 }
             }
             
             if spaceshipDataCount > 0 {
-                self.playerData.botLevel = (levelSum/spaceshipDataCount) as NSNumber
+                self.playerData.botLevel = levelSum/spaceshipDataCount
             }
         }
         
-        if self.playerData.datamodelVersion.intValue < 9 {
+        if self.playerData.datamodelVersion.integerValue < 9 {
             self.playerData.datamodelVersion = 9
             
             for item in self.playerData.spaceships {
@@ -195,7 +195,7 @@ class MemoryCard {
                         
                     } else {
                         let weaponData = self.newWeaponData()
-                        weaponData.level = spaceshipData.level.intValue as NSNumber
+                        weaponData.level = spaceshipData.level.integerValue
                         spaceshipData.addWeaponData(weaponData)
                     }
                 }
@@ -209,7 +209,7 @@ class MemoryCard {
         let fetchRequestData:NSArray = fetchRequest()
         
         for item in fetchRequestData {
-            self.managedObjectContext.delete(item as! NSManagedObject)
+            self.managedObjectContext.deleteObject(item as! NSManagedObject)
         }
         
         self.playerData = nil
@@ -219,42 +219,42 @@ class MemoryCard {
     }
     
     func fetchRequest() -> NSArray {
-        let fetchRequest = self.managedObjectModel.fetchRequestTemplate(forName: "FetchRequest")!
-        let fetchRequestData: NSArray! = try? self.managedObjectContext.fetch(fetchRequest) as NSArray!
+        let fetchRequest = self.managedObjectModel.fetchRequestTemplateForName("FetchRequest")!
+        let fetchRequestData: NSArray! = try? self.managedObjectContext.executeFetchRequest(fetchRequest)
         return fetchRequestData
     }
     
     // MARK: - Core Data stack
     
-    lazy var applicationCachesDirectory: URL = {
+    lazy var applicationCachesDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "PabloHenri91.SpaceWar" in the application's caches Application Support directory.
-        let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
     
-    lazy var applicationDocumentDirectory: URL = {
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    lazy var applicationDocumentDirectory: NSURL = {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.url(forResource: "SpaceWar", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
+        let modelURL = NSBundle.mainBundle().URLForResource("SpaceWar", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         
-        let fileManager = FileManager.default
+        let fileManager = NSFileManager.defaultManager()
         
         var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         #if DEBUG
-            let url = self.applicationDocumentDirectory.appendingPathComponent("SpaceWarDebug.sqlite")
+            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
         #else
-            let url = self.applicationDocumentDirectory.appendingPathComponent("SpaceWar.sqlite")
+            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
         #endif
         
         
@@ -265,18 +265,18 @@ class MemoryCard {
             (NSInferMappingModelAutomaticallyOption , true))
         
         do {
-            if fileManager.fileExists(atPath: self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite").path) {
+            if fileManager.fileExistsAtPath(self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
                 
-                let cachesUrl = self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite")
+                let cachesUrl = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
                 
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cachesUrl, options: options)
+                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: cachesUrl, options: options)
                 
                 for persistentStore in coordinator.persistentStores {
-                    try! coordinator.migratePersistentStore(persistentStore, to: url, options: options, withType: NSSQLiteStoreType)
+                    try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
                 }
-                try! fileManager.removeItem(at: cachesUrl)
+                try! fileManager.removeItemAtURL(cachesUrl)
             } else {
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
             }
             
         } catch {
@@ -292,7 +292,7 @@ class MemoryCard {
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
@@ -322,7 +322,7 @@ class MemoryCard {
 //            if let research = item as? ResearchData {
 //                if research.done == 0 {
 //                    if research.startDate != nil {
-//                        research.startDate = Date()
+//                        research.startDate = NSDate()
 //                    }
 //                }
 //            }
@@ -331,11 +331,11 @@ class MemoryCard {
 //        for item in missionShips {
 //            if let missionShip = item as? MissionSpaceshipData {
 //                if missionShip.missionType.int32Value >= 0 {
-//                    missionShip.startMissionDate = Date()
+//                    missionShip.startMissionDate = NSDate()
 //                }
 //            }
 //        }
 //        
-//        battery?.lastCharge = Date()  
+//        battery?.lastCharge = NSDate()
     }
 }

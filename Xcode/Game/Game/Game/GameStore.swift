@@ -27,21 +27,21 @@ class GameStore: Box {
         super.init(textureName: "gameStoreBackground")
         
         let gameScene = Control.gameScene
-        gameScene?.blackSpriteNode.isHidden = false
-        gameScene?.blackSpriteNode.alpha = 1
-        gameScene?.blackSpriteNode.zPosition = 100000
+        gameScene.blackSpriteNode.hidden = false
+        gameScene.blackSpriteNode.alpha = 1
+        gameScene.blackSpriteNode.zPosition = 100000
         self.zPosition = 1000000
-        gameScene?.setAlertState()
+        gameScene.setAlertState()
         
         
         self.buttonClose = Button(textureName: "buttonStoreClose", x: 250, y: 10, touchArea:CGSize(width: 64,height: 64))
         self.addChild(self.buttonClose)
         
-        self.addChild(Label(color: SKColor.white, text: "SPACE SHOP" , fontSize: 12, x: 16, y: 23, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor.whiteColor(), text: "SPACE SHOP" , fontSize: 12, x: 16, y: 23, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left))
         
-        self.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "Welcome to the SPACE SHOP!" , fontSize: 12, x: 73, y: 65, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "Welcome to the SPACE SHOP!" , fontSize: 12, x: 73, y: 65, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left))
         
-        self.addChild(MultiLineLabel(text: "This is the best market in the galaxy. Use your resources wisely and strategically.", color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), fontSize: 12, x: 73, y: 82, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2)))
+        self.addChild(MultiLineLabel(text: "This is the best market in the galaxy. Use your resources wisely and strategically.", color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), fontSize: 12, x: 73, y: 82, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left))
         
         self.box = CropBox(textureName: "mask282x370", x: 1, y: 126, xAlign: .left, yAlign: .up)
         self.addChild(self.box.cropNode)
@@ -64,14 +64,14 @@ class GameStore: Box {
         self.storeItens.append(StoreItem(iconImageNamed: "iconEnergyPack1", type: StoreItem.types.energy, x: 100, y: 409, price: 2, amount: Int(4 * 1.0)))
         self.storeItens.append(StoreItem(iconImageNamed: "iconEnergyPack2", type: StoreItem.types.energy, x: 188, y: 409, price: 25, amount: Int(-1 * 1.0)))
         
-        self.scrollNode.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "FRAGMENTS AND DIAMONDS" , fontSize: 12, x: 13, y: 17, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2)))
+        self.scrollNode.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "FRAGMENTS AND DIAMONDS" , fontSize: 12, x: 13, y: 17, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left))
         
         self.scrollNode.addChild(Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 236/255, green: 236/255, blue: 236/255,
             alpha: 100/100), size: CGSize(width: 1, height: 1)),
-            size: CGSize(width: self.size.width,
-                height: 1), y: 259))
+            y: 259, size: CGSize(width: self.size.width,
+                height: 1)))
         
-        self.scrollNode.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "BOOSTS AND ENERGY" , fontSize: 12, x: 13, y: 282, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2)))
+        self.scrollNode.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: "BOOSTS AND ENERGY" , fontSize: 12, x: 13, y: 282, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left))
         
         for storeItem in self.storeItens {
             self.scrollNode.addChild(storeItem)
@@ -85,8 +85,8 @@ class GameStore: Box {
         
         let control = Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 11/100), size: CGSize(width: 1, height: 1)),
-                        size: CGSize(width: self.size.width - 2,
-                            height: 2), y: 126)
+                        y: 126, size: CGSize(width: self.size.width - 2,
+                            height: 2))
         control.position.x = 1
         self.addChild(control)
         
@@ -99,16 +99,16 @@ class GameStore: Box {
         let duration:Double = 0.10
         
         let action1 = SKAction.group([
-            SKAction.scale(to: 1.1, duration: duration),
-            SKAction.move(to: CGPoint(x: x, y: y), duration: duration)
+            SKAction.scaleTo(1.1, duration: duration),
+            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
             ])
         
         let action2 = SKAction.group([
-            SKAction.scale(to: 1, duration: duration),
-            SKAction.move(to: self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+            SKAction.scaleTo(1, duration: duration),
+            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
             ])
         
-        self.run(SKAction.sequence([action1, action2]))
+        self.runAction(SKAction.sequence([action1, action2]))
         
         GameStore.sharedInstance = self
     }
@@ -126,32 +126,32 @@ class GameStore: Box {
         Control.gameScene.setDefaultState()
     }
     
-    func touchEnded(_ touch: UITouch) {
-        var point = touch.location(in: self)
+    func touchEnded(touch: UITouch) {
+        var point = touch.locationInNode(self)
         
-        if self.buttonClose.contains(point) {
+        if self.buttonClose.containsPoint(point) {
             if GameScene.currentTime - self.initTime > 0.5 {
                 self.close()
             }
             return
         }
         
-        point = touch.location(in: self.scrollNode)
+        point = touch.locationInNode(self.scrollNode)
         for storeItem in self.storeItens {
-            if storeItem.contains(point) {
+            if storeItem.containsPoint(point) {
                 
                 storeItem.jump()
                 
-                let playerData = MemoryCard.sharedInstance.playerData!
+                let playerData = MemoryCard.sharedInstance.playerData
                 
                 switch storeItem.type {
                 case .points:
                     
                     if playerData.premiumPoints.doubleValue >= storeItem.price {
-                        playerData.premiumPoints = (playerData.premiumPoints.doubleValue - storeItem.price) as NSNumber
+                        playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                         Control.gameScene.updatePremiumPoints()
                         
-                        playerData.points = (playerData.points.intValue + storeItem.amount) as NSNumber
+                        playerData.points = playerData.points.integerValue + storeItem.amount
                         Control.gameScene.updatePoints()
                         self.feedback(storeItem)
                     } else {
@@ -188,17 +188,17 @@ class GameStore: Box {
                             
                             if battery.charge != -1 {
                                 if storeItem.amount > 0 {
-                                    playerData.premiumPoints = (playerData.premiumPoints.doubleValue - storeItem.price) as NSNumber
+                                    playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                                     Control.gameScene.updatePremiumPoints()
                                     
-                                    battery.charge = (battery.charge.intValue + storeItem.amount) as NSNumber
+                                    battery.charge = battery.charge.integerValue + storeItem.amount
                                     self.feedback(storeItem)
                                 } else {
-                                    playerData.premiumPoints = (playerData.premiumPoints.doubleValue - storeItem.price) as NSNumber
+                                    playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                                     Control.gameScene.updatePremiumPoints()
                                     
                                     battery.charge = -1
-                                    battery.lastCharge = Date()
+                                    battery.lastCharge = NSDate()
                                     
                                     self.feedback(storeItem)
                                 }
@@ -239,23 +239,23 @@ class GameStore: Box {
         }
     }
     
-    func purchasedItem(_ productIdentifier: String) {
+    func purchasedItem(productIdentifier: String) {
         
         for storeItem in self.storeItens {
             
             if productIdentifier == storeItem.productIdentifier {
                 
-                let playerData = MemoryCard.sharedInstance.playerData!
+                let playerData = MemoryCard.sharedInstance.playerData
                 
                 switch storeItem.type {
                     
                 case .premiumPoints:
-                    playerData.premiumPoints = (playerData.premiumPoints.intValue + storeItem.amount) as NSNumber
+                    playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
                     Control.gameScene.updatePremiumPoints()
                     
                     Metrics.purchasedPremiumPointsAtGameStore(storeItem)
                     
-                    self.run({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak self] in
+                    self.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak self] in
                         self?.feedback(storeItem)
                     })
                     
@@ -275,7 +275,7 @@ class GameStore: Box {
         #endif
     }
     
-    func feedback(_ storeItem: StoreItem) {
+    func feedback(storeItem: StoreItem) {
         self.explosionSoundEffect.play()
         let particles = SKEmitterNode(fileNamed: "explosion.sks")!
         
@@ -283,7 +283,7 @@ class GameStore: Box {
         
         particles.zPosition = self.zPosition + 1000000
         
-        particles.particleBlendMode = .alpha
+        particles.particleBlendMode = .Alpha
         
         switch storeItem.type {
         case .points:
@@ -309,7 +309,7 @@ class GameStore: Box {
         
         if let parent = self.parent {
             
-            particles.position = parent.convert(storeItem.position, from: storeItem.parent!)
+            particles.position = parent.convertPoint(storeItem.position, fromNode: storeItem.parent!)
             particles.position.x = particles.position.x + storeItem.size.width/2
             particles.position.y = particles.position.y - storeItem.size.height/2
             
@@ -318,7 +318,7 @@ class GameStore: Box {
             let action = SKAction()
             action.duration = 1
             
-            particles.run(action, completion: { [weak particles] in
+            particles.runAction(action, completion: { [weak particles] in
                 particles?.removeFromParent()
                 })
             
@@ -334,13 +334,13 @@ class GameStore: Box {
                 
                 let duration:Double = 1
                 
-                label.run(SKAction.group([
-                    SKAction.move(by: CGVector(dx: Int.random(min: -100, max: 100), dy: 100), duration: duration),
-                    SKAction.fadeAlpha(to: 0, duration: duration),
-                    SKAction.rotate(byAngle: CGFloat.random(min: CGFloat(-M_PI), max: CGFloat(M_PI)), duration: duration)
-                    ]), completion: {
+                label.runAction(SKAction.group([
+                    SKAction.moveBy(CGVector(dx: Int.random(min: -100, max: 100), dy: 100), duration: duration),
+                    SKAction.fadeAlphaTo(0, duration: duration),
+                    SKAction.rotateByAngle(CGFloat.random(min: CGFloat(-M_PI), max: CGFloat(M_PI)), duration: duration)
+                    ])) {
                     label.removeFromParent()
-                }) 
+                }
                 
                 break
                 
@@ -386,7 +386,7 @@ class StoreItem: Control {
         self.productIdentifier = productIdentifier
         self.iconImageNamed = iconImageNamed
         
-        var borderColor = SKColor.black
+        var borderColor = SKColor.blackColor()
         var priceText = ""
         var amountText = ""
         let labelPriceX = 40
@@ -427,7 +427,7 @@ class StoreItem: Control {
         spriteNode.colorBlendFactor = 1
         self.addChild(Control(spriteNode: spriteNode))
         
-        let labelPrice = Label(color: SKColor.white, text: priceText, fontSize: 12, x: labelPriceX, y: 86, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 11/100), shadowOffset: CGPoint(x: 0, y: -2))
+        let labelPrice = Label(color: SKColor.whiteColor(), text: priceText, fontSize: 12, x: labelPriceX, y: 86, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 11/100), shadowOffset: CGPoint(x: 0, y: -2))
         self.addChild(labelPrice)
         
         self.addChild(Label(color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), text: amountText, fontSize: 12, x: labelPriceX, y: 62, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0, green: 0, blue: 0, alpha: 11/100), shadowOffset: CGPoint(x: 0, y: -2)))
@@ -448,8 +448,8 @@ class StoreItem: Control {
         }
         
         self.unavailableEffect = SKSpriteNode(texture: SKTexture(imageNamed: "storeItemBackground"))
-        self.unavailableEffect.isHidden = true
-        self.unavailableEffect.color = SKColor.black
+        self.unavailableEffect.hidden = true
+        self.unavailableEffect.color = SKColor.blackColor()
         self.unavailableEffect.alpha = 0.5
         self.unavailableEffect.colorBlendFactor = 1
         self.addChild(Control(spriteNode: self.unavailableEffect))
@@ -463,7 +463,7 @@ class StoreItem: Control {
         if self.productIdentifier != "" {
             //if Metrics.canSendEvents() {
                 #if os(iOS)
-                    self.unavailableEffect.isHidden = !IAPHelper.sharedInstance.isPurchasing
+                    self.unavailableEffect.hidden = !IAPHelper.sharedInstance.isPurchasing
                 #endif
             //}
         }
@@ -480,17 +480,17 @@ class StoreItem: Control {
         let duration:Double = 0.10
         
         let action1 = SKAction.group([
-            SKAction.scale(to: 1.1, duration: duration),
-            SKAction.move(to: CGPoint(x: x, y: y), duration: duration)
+            SKAction.scaleTo(1.1, duration: duration),
+            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
             ])
         
         let action2 = SKAction.group([
-            SKAction.scale(to: 1, duration: duration),
-            SKAction.move(to: self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+            SKAction.scaleTo(1, duration: duration),
+            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
             ])
         
         
-        self.run(SKAction.sequence([action1, action2]))
+        self.runAction(SKAction.sequence([action1, action2]))
     }
     
     override func removeFromParent() {

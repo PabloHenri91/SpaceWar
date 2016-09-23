@@ -33,15 +33,15 @@ public final class SocketAckEmitter : NSObject {
         self.ackNum = ackNum
     }
     
-    public func with(_ items: SocketData...) {
+    public func with(items: AnyObject...) {
         guard ackNum != -1 else { return }
         
-        socket.emitAck(ackNum, with: items)
+        socket.emitAck(ackNum, withItems: items)
     }
     
-    public func with(_ items: [Any]) {
+    public func with(items: [AnyObject]) {
         guard ackNum != -1 else { return }
         
-        socket.emitAck(ackNum, with: items)
+        socket.emitAck(ackNum, withItems: items)
     }
 }

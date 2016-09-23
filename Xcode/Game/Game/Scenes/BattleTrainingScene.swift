@@ -56,8 +56,8 @@ class BattleTrainingScene: GameScene {
     
     var enemySpaceships = [Spaceship]()
     
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
         
         self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
         
@@ -98,7 +98,7 @@ class BattleTrainingScene: GameScene {
         self.nextState = .askToStart
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         super.update(currentTime)
         
         //Estado atual
@@ -269,10 +269,10 @@ class BattleTrainingScene: GameScene {
                 self.tutorialControl = Control(textureName: "darkBlueBox281x92", x:20, y:238, xAlign: .center, yAlign: .center)
                 self.addChild(self.tutorialControl!)
                 
-                let labelTitle = Label(color:SKColor.white ,text: "TUTORIAL" , fontSize: 14, x: 141, y: 26, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2))
+                let labelTitle = Label(color:SKColor.whiteColor() ,text: "TUTORIAL" , fontSize: 14, x: 141, y: 26, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                 self.tutorialControl!.addChild(labelTitle)
                 
-                let labelDescription = Label(text: "Touch a ship to select it" , fontSize: 12, x: 141, y: 68 , fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
+                let labelDescription = Label(text: "Touch a ship to select it" , fontSize: 12, x: 141, y: 68 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                 self.tutorialControl!.addChild(labelDescription)
                 
                 self.touchImage = Control(textureName: "touchImage", x:18, y:442, xAlign: .center, yAlign: .center)
@@ -307,13 +307,13 @@ class BattleTrainingScene: GameScene {
                     let startPosition = tutorialControl.position
                     
                     let action = SKAction.sequence([
-                        SKAction.move(to: finalPosition, duration: 1),
+                        SKAction.moveTo(finalPosition, duration: 1),
                         {let a = SKAction(); a.duration = 1; return a}(),
-                        SKAction.move(to: startPosition, duration: 0),
+                        SKAction.moveTo(startPosition, duration: 0),
                         {let a = SKAction(); a.duration = 1; return a}()
                         ])
                     
-                    tutorialControl.run(SKAction.repeatForever(action))
+                    tutorialControl.runAction(SKAction.repeatActionForever(action))
                     
                     self.addChild(tutorialControl)
                 }
@@ -322,7 +322,7 @@ class BattleTrainingScene: GameScene {
             case .askToSelectOther:
                 
                 //TODO: definir tempo. duration = ?
-                self.run({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak self] in
+                self.runAction({let a = SKAction(); a.duration = 1; return a}(), completion: { [weak self] in
                     
                     guard let scene = self else { return }
                     
@@ -334,10 +334,10 @@ class BattleTrainingScene: GameScene {
                     scene.tutorialControl = Control(textureName: "darkBlueBox281x92", x:20, y:238, xAlign: .center, yAlign: .center)
                     scene.addChild(scene.tutorialControl!)
                     
-                    let labelTitle = Label(color:SKColor.white ,text: "TUTORIAL" , fontSize: 14, x: 141, y: 26, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2))
+                    let labelTitle = Label(color:SKColor.whiteColor() ,text: "TUTORIAL" , fontSize: 14, x: 141, y: 26, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                     scene.tutorialControl!.addChild(labelTitle)
                     
-                    let labelDescription = Label(text: "Touch a battleship to select it" , fontSize: 12, x: 141, y: 68 , fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2))
+                    let labelDescription = Label(text: "Touch a battleship to select it" , fontSize: 12, x: 141, y: 68 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                     scene.tutorialControl!.addChild(labelDescription)
                     
                     scene.touchImage = Control(textureName: "touchImage", x:85, y:442, xAlign: .center, yAlign: .center)
@@ -364,7 +364,7 @@ class BattleTrainingScene: GameScene {
                 meteor.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor.position = CGPoint(x: 0, y: 200)
                 meteor.updateHealthBarPosition()
-                meteor.physicsBody?.isDynamic = true
+                meteor.physicsBody?.dynamic = true
                 meteor.isInsideAMothership = false
                 
                 self.gameWorld.addChild(meteor)
@@ -398,7 +398,7 @@ class BattleTrainingScene: GameScene {
                 meteor.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor.position = CGPoint(x: -100, y: -116)
                 meteor.updateHealthBarPosition()
-                meteor.physicsBody?.isDynamic = true
+                meteor.physicsBody?.dynamic = true
                 meteor.isInsideAMothership = false
                 self.gameWorld.addChild(meteor)
                 self.enemySpaceships.append(meteor)
@@ -408,7 +408,7 @@ class BattleTrainingScene: GameScene {
                 meteor2.loadHealthBar(self.gameWorld, blueTeam: false)
                 meteor2.position = CGPoint(x: 100, y: -116)
                 meteor2.updateHealthBarPosition()
-                meteor2.physicsBody?.isDynamic = true
+                meteor2.physicsBody?.dynamic = true
                 meteor2.isInsideAMothership = false
                 self.gameWorld.addChild(meteor2)
                 self.enemySpaceships.append(meteor2)
@@ -491,7 +491,7 @@ class BattleTrainingScene: GameScene {
                         botSpaceship.weapon?.damage = 1
                         botSpaceship.addChild(botSpaceship.weapon!)
                         
-                        botSpaceship.run( { let a = SKAction(); a.duration = Double(i*3); return a }(), completion:
+                        botSpaceship.runAction( { let a = SKAction(); a.duration = Double(i*3); return a }(), completion:
                             { [weak botSpaceship] in
                                 
                                 guard let someBotSpaceship = botSpaceship else { return }
@@ -499,7 +499,7 @@ class BattleTrainingScene: GameScene {
                                 someBotSpaceship.destination = CGPoint(x: someBotSpaceship.startingPosition.x,
                                     y: someBotSpaceship.startingPosition.y - 200)
                                 someBotSpaceship.needToMove = true
-                                someBotSpaceship.physicsBody?.isDynamic = true
+                                someBotSpaceship.physicsBody?.dynamic = true
                             })
                         i += 1
                     }
@@ -539,7 +539,7 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .mothership:
-                MemoryCard.sharedInstance.playerData!.needBattleTraining = false as NSNumber
+                MemoryCard.sharedInstance.playerData.needBattleTraining = NSNumber(bool: false)
                 self.view?.presentScene(MothershipScene())
                 break
                 
@@ -552,7 +552,7 @@ class BattleTrainingScene: GameScene {
                 break
                 
             case .showBattleResult:
-                let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji(), type: AlertBox.messageType.ok)
+                let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji(), type: AlertBox.messageType.OK)
                 alertBox.buttonOK.addHandler({
                     self.nextState = states.mothership
                 })
@@ -578,7 +578,7 @@ class BattleTrainingScene: GameScene {
         self.gameCamera.update()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>) {
+    override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
         //Estado atual
@@ -593,7 +593,7 @@ class BattleTrainingScene: GameScene {
                     
                     for spaceship in self.mothership.spaceships {
                         if let parent = spaceship.parent {
-                            if spaceship.contains(touch.location(in: parent)) {
+                            if spaceship.containsPoint(touch.locationInNode(parent)) {
                                 spaceship.touchEnded()
                                 self.tutorialControl?.removeFromParent()
                                 self.touchImage?.removeFromParent()
@@ -686,7 +686,7 @@ class BattleTrainingScene: GameScene {
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>) {
+    override func touchesMoved(touches: Set<UITouch>) {
         super.touchesMoved(touches)
         
         //Estado atual
@@ -772,7 +772,7 @@ class BattleTrainingScene: GameScene {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>) {
+    override func touchesEnded(touches: Set<UITouch>) {
         super.touchesEnded(touches)
         
         //Estado atual
@@ -792,7 +792,7 @@ class BattleTrainingScene: GameScene {
                 case .move:
                     if let tutorialControl = self.tutorialControl {
                         if let parent = tutorialControl.parent {
-                            if tutorialControl.contains(touch.location(in: parent)) {
+                            if tutorialControl.containsPoint(touch.locationInNode(parent)) {
                                 tutorialControl.removeFromParent()
                                 self.nextState = .askToSelectOther
                             }
@@ -804,7 +804,7 @@ class BattleTrainingScene: GameScene {
                 case .askToSelectOther:
                     if let spaceship = self.mothership.spaceships.last {
                         if let parent = spaceship.parent {
-                            if spaceship.contains(touch.location(in: parent)) {
+                            if spaceship.containsPoint(touch.locationInNode(parent)) {
                                 spaceship.touchEnded()
                                 self.tutorialControl!.removeFromParent()
                                 self.touchImage?.removeFromParent()
@@ -874,7 +874,7 @@ class BattleTrainingScene: GameScene {
         }
     }
     
-    func battleTouchesBegan(_ touch:UITouch) {
+    func battleTouchesBegan(touch:UITouch) {
         
         if self.dangerAlert?.parent != nil {
             return
@@ -883,7 +883,7 @@ class BattleTrainingScene: GameScene {
         
         for asteroid in self.enemySpaceships {
             if let parent = asteroid.parent {
-                if asteroid.contains(touch.location(in: parent)) {                    
+                if asteroid.containsPoint(touch.locationInNode(parent)) {                    
                     return
                 }
             }
@@ -893,7 +893,7 @@ class BattleTrainingScene: GameScene {
         if let botMothership = self.botMothership {
             for enemyShip in botMothership.spaceships {
                 if let parent = enemyShip.parent {
-                    if enemyShip.contains(touch.location(in: parent)) {
+                    if enemyShip.containsPoint(touch.locationInNode(parent)) {
                         return
                     }
                 }
@@ -902,7 +902,7 @@ class BattleTrainingScene: GameScene {
         
         for spaceship in self.mothership.spaceships {
             if let parent = spaceship.parent {
-                if spaceship.contains(touch.location(in: parent)) {
+                if spaceship.containsPoint(touch.locationInNode(parent)) {
                     spaceship.touchEnded()
                     return
                 }
@@ -911,14 +911,14 @@ class BattleTrainingScene: GameScene {
         
         if let botMothership = self.botMothership {
             if let parent = botMothership.parent {
-                if botMothership.contains(touch.location(in: parent)) {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
         if let parent = self.mothership.parent {
-            if self.mothership.contains(touch.location(in: parent)) {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 Spaceship.retreatSelectedSpaceship()
                 return
             }
@@ -927,7 +927,7 @@ class BattleTrainingScene: GameScene {
         Spaceship.touchEnded(touch)
     }
     
-    func battleTouchesMoved(_ touch:UITouch) {
+    func battleTouchesMoved(touch:UITouch) {
         
         if self.dangerAlert?.parent != nil {
             return
@@ -935,14 +935,14 @@ class BattleTrainingScene: GameScene {
         
         if let botMothership = self.botMothership {
             if let parent = botMothership.parent {
-                if botMothership.contains(touch.location(in: parent)) {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
         if let parent = self.mothership.parent {
-            if self.mothership.contains(touch.location(in: parent)) {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 return
             }
         }
@@ -950,7 +950,7 @@ class BattleTrainingScene: GameScene {
         Spaceship.touchEnded(touch)
     }
     
-    func battleTouchesEnded(_ touch:UITouch) {
+    func battleTouchesEnded(touch:UITouch) {
         
         if self.dangerAlert?.parent != nil {
             return
@@ -958,7 +958,7 @@ class BattleTrainingScene: GameScene {
         
         for asteroid in self.enemySpaceships {
             if let parent = asteroid.parent {
-                if asteroid.contains(touch.location(in: parent)) {
+                if asteroid.containsPoint(touch.locationInNode(parent)) {
                     self.dangerAlert = TutorialDangerAlert()
                     self.addChild(self.dangerAlert!)
                     
@@ -971,7 +971,7 @@ class BattleTrainingScene: GameScene {
         if let botMothership = self.botMothership {
             for enemyShip in botMothership.spaceships {
                 if let parent = enemyShip.parent {
-                    if enemyShip.contains(touch.location(in: parent)) {
+                    if enemyShip.containsPoint(touch.locationInNode(parent)) {
                         self.dangerAlert = TutorialDangerAlert()
                         self.addChild(self.dangerAlert!)
                         
@@ -983,7 +983,7 @@ class BattleTrainingScene: GameScene {
         
         for spaceship in self.mothership.spaceships {
             if let parent = spaceship.parent {
-                if spaceship.contains(touch.location(in: parent)) {
+                if spaceship.containsPoint(touch.locationInNode(parent)) {
                     spaceship.touchEnded()
                     return
                 }
@@ -993,14 +993,14 @@ class BattleTrainingScene: GameScene {
         
         if let botMothership = self.botMothership {
             if let parent = botMothership.parent {
-                if botMothership.contains(touch.location(in: parent)) {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
                     return
                 }
             }
         }
         
         if let parent = self.mothership.parent {
-            if self.mothership.contains(touch.location(in: parent)) {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
                 Spaceship.retreatSelectedSpaceship()
                 return
             }
