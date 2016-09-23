@@ -295,7 +295,7 @@ class MissionSpaceshipCard: Control {
     
     func upgrade() -> Bool {
         
-        let price = Int(2000 * pow(2, Double(self.missionSpaceship.level + 1)))
+        let price = Int(4000 * pow(4, Double(self.missionSpaceship.level - 1)))
         
         let playerData = MemoryCard.sharedInstance.playerData
         
