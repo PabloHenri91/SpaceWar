@@ -35,6 +35,7 @@ class LoadScene: GameScene {
 //            MemoryCard.sharedInstance.playerData!.premiumPoints = 1000000
 //            Research.cheatDuration()
 //            Research.cheatUnlockAll()
+//            Spaceship.cheatUnlockAll()
 //            MemoryCard.sharedInstance.playerData!.needBattleTraining = true
         #endif
         

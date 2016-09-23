@@ -136,7 +136,7 @@ class BattleScene: GameScene {
         
         self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
         
-        self.updateSpaceshipLevels()
+//        self.updateSpaceshipLevels()
     }
     
     func updateMothershipsHealth() {
@@ -214,8 +214,7 @@ class BattleScene: GameScene {
                         self.nextState = .battleEnd
                     }
                     
-                    if currentTime - self.lastBotUpdate > self.botUpdateInterval {
-                        self.lastBotUpdate = currentTime
+                    if currentTime - self.lastBotUpdate > self.botUpdateInterval/2 {
                         
                         var aliveBotSpaceships = [Spaceship]()
                         
@@ -230,6 +229,7 @@ class BattleScene: GameScene {
                             let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
                             
                             if botSpaceship.isInsideAMothership {
+                                self.lastBotUpdate = currentTime
                                 if botSpaceship.health == botSpaceship.maxHealth {
                                     botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
                                                                        y: botSpaceship.startingPosition.y - 150)
@@ -237,18 +237,20 @@ class BattleScene: GameScene {
                                     botSpaceship.physicsBody?.isDynamic = true
                                 }
                             } else {
-                                
-                                if botSpaceship.health <= botSpaceship.maxHealth/10 {
-                                    botSpaceship.retreat()
-                                } else {
-                                    botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
-                                    
-                                    if let _ = botSpaceship.targetNode {
-                                        botSpaceship.needToMove = false
+                                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
+                                    self.lastBotUpdate = currentTime
+                                    if botSpaceship.health <= botSpaceship.maxHealth/10 {
+                                        botSpaceship.retreat()
                                     } else {
-                                        botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                                           y: botSpaceship.position.y - 100)
-                                        botSpaceship.needToMove = true
+                                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                                        
+                                        if let _ = botSpaceship.targetNode {
+                                            botSpaceship.needToMove = false
+                                        } else {
+                                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                               y: botSpaceship.position.y - 100)
+                                            botSpaceship.needToMove = true
+                                        }
                                     }
                                 }
                             }

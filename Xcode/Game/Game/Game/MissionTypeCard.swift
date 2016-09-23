@@ -26,7 +26,7 @@ class MissionTypeCard: Control {
         let iconTime = Control(textureName: "timeIcon", x: 13, y: 26)
         self.addChild(iconTime)
         
-        let labelTime = Label(text: GameMath.timeLeftFormatted(timeLeft: missionType.duration) , fontSize: 10, x: 30, y: 26, xAlign: .left , verticalAlignmentMode: .top, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100),  shadowOffset:CGPoint(x: 0, y: -2))
+        let labelTime = Label(text: GameMath.timeLeftFormattedAbbreviated(timeLeft: missionType.duration) , fontSize: 10, x: 30, y: 26, xAlign: .left , verticalAlignmentMode: .top, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo500, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100),  shadowOffset:CGPoint(x: 0, y: -2))
         self.addChild(labelTime)
         
         

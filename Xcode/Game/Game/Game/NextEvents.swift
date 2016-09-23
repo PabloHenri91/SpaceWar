@@ -213,7 +213,7 @@ class EventCard: Control {
         let timeLeft = self.timeLeft()
         var text = "Finished"
         if timeLeft > 0 {
-            text = GameMath.timeLeftFormatted(timeLeft: timeLeft)
+            text = GameMath.timeLeftFormattedPositional(timeLeft: timeLeft)
         }
         
         let color = SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1)
@@ -234,7 +234,7 @@ class EventCard: Control {
         let timeLeft = self.timeLeft()
         var text = "Finished"
         if timeLeft > 0 {
-            text = GameMath.timeLeftFormatted(timeLeft: timeLeft)
+            text = GameMath.timeLeftFormattedPositional(timeLeft: timeLeft)
         }
         
         self.timeBar.update(startDate: self.startDate()!, duration: self.duration)

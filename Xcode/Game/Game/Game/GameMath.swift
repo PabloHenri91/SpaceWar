@@ -10,19 +10,13 @@ import SpriteKit
 
 class GameMath {
     
-    static let dateComponentsFormatter: DateComponentsFormatter = {
-        
-        let dateComponentsFormatter = DateComponentsFormatter()
-        
-        dateComponentsFormatter.unitsStyle = .abbreviated
-        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
-        
-        return dateComponentsFormatter
-    }()
-    
-    
     static func finishDate(timeLeft: Int) -> Date {
         return Date(timeInterval: TimeInterval(timeLeft), since: Date())
+    }
+    
+    static func timeLeftPositional(startDate: Date, duration: Int) -> Int {
+        let date = Date(timeInterval: TimeInterval(duration), since: startDate)
+        return Int(date.timeIntervalSinceNow)
     }
     
     static func timeLeft(startDate: Date, duration: Int) -> Int {
@@ -30,8 +24,12 @@ class GameMath {
         return Int(date.timeIntervalSinceNow)
     }
     
-    static func timeLeftFormatted(timeLeft: Int) -> String {
-        return GameMath.dateComponentsFormatter.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
+    static func timeLeftFormattedPositional(timeLeft: Int) -> String {
+        return GameMath.timeLeftDateComponentsFormatterPositional.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
+    }
+    
+    static func timeLeftFormattedAbbreviated(timeLeft: Int) -> String {
+        return GameMath.timeLeftDateComponentsFormatterAbbreviated.string(from: Date(), to: GameMath.finishDate(timeLeft: timeLeft))!
     }
     
     //MARK: Boosts
@@ -240,4 +238,26 @@ class GameMath {
         return Int(date.timeIntervalSinceNow)
     }
     
+    
+    
+    
+    static let timeLeftDateComponentsFormatterPositional: DateComponentsFormatter = {
+        
+        let dateComponentsFormatter = DateComponentsFormatter()
+        
+        dateComponentsFormatter.unitsStyle = .positional
+        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
+        
+        return dateComponentsFormatter
+    }()
+    
+    static let timeLeftDateComponentsFormatterAbbreviated: DateComponentsFormatter = {
+        
+        let dateComponentsFormatter = DateComponentsFormatter()
+        
+        dateComponentsFormatter.unitsStyle = .abbreviated
+        dateComponentsFormatter.allowedUnits = NSCalendar.Unit(rawValue: NSCalendar.Unit.second.rawValue | NSCalendar.Unit.minute.rawValue | NSCalendar.Unit.hour.rawValue)
+        
+        return dateComponentsFormatter
+    }()
 }

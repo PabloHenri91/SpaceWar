@@ -314,28 +314,28 @@ class MemoryCard {
     }
     
     func resetTimers() {
-        let researches = playerData.researches
-        let missionShips = playerData.missionSpaceships
-        let battery = playerData.battery
-        
-        for item in researches {
-            if let research = item as? ResearchData {
-                if research.done == 0 {
-                    if research.startDate != nil {
-                        research.startDate = Date()
-                    }
-                }
-            }
-        }
-        
-        for item in missionShips {
-            if let missionShip = item as? MissionSpaceshipData {
-                if missionShip.missionType.int32Value >= 0 {
-                    missionShip.startMissionDate = Date()
-                }
-            }
-        }
-        
-        battery?.lastCharge = Date()  
+//        let researches = playerData.researches
+//        let missionShips = playerData.missionSpaceships
+//        let battery = playerData.battery
+//        
+//        for item in researches {
+//            if let research = item as? ResearchData {
+//                if research.done == 0 {
+//                    if research.startDate != nil {
+//                        research.startDate = Date()
+//                    }
+//                }
+//            }
+//        }
+//        
+//        for item in missionShips {
+//            if let missionShip = item as? MissionSpaceshipData {
+//                if missionShip.missionType.int32Value >= 0 {
+//                    missionShip.startMissionDate = Date()
+//                }
+//            }
+//        }
+//        
+//        battery?.lastCharge = Date()  
     }
 }

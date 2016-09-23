@@ -61,8 +61,6 @@ class ResearchUnlockedAlert:Box {
         self.addChild(labelUnlocked)
         
         
-       
-        
         if researchData.spaceshipMaxLevel == 10 {
             
              let labelResearch = Label(color: rarityColor, text: researchType.name + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1))
