@@ -419,6 +419,7 @@
 		840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 5.xcdatamodel"; sourceTree = "<group>"; };
 		84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipSlot.swift; sourceTree = "<group>"; };
 		84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuySpaceshipAlert.swift; sourceTree = "<group>"; };
+		841406201D9566560096C3AC /* SpaceWar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceWar.entitlements; sourceTree = "<group>"; };
 		841B8B121D901F3C0083ED9E /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		842AD41D1D74CDA3002C4AFE /* Jet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Jet.sks; sourceTree = "<group>"; };
@@ -791,6 +792,13 @@
 			name = Tutorial;
 			sourceTree = "<group>";
 		};
+		841406211D95665B0096C3AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		842AD4201D74CDFC002C4AFE /* Jet */ = {
 			isa = PBXGroup;
 			children = (
@@ -815,9 +823,11 @@
 		843CB48C1CDD131A00674F48 = {
 			isa = PBXGroup;
 			children = (
+				841406201D9566560096C3AC /* SpaceWar.entitlements */,
 				844CF27C1CE77BE80032F6AA /* Game */,
 				84A767A61D5BBF3200A8D808 /* SpaceWarTests */,
 				843CB4961CDD131A00674F48 /* Products */,
+				841406211D95665B0096C3AC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1180,6 +1190,12 @@
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -1782,6 +1798,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SpaceWar.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1810,6 +1827,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SpaceWar.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (

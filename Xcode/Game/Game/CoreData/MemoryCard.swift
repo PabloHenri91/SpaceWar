@@ -252,7 +252,16 @@ class MemoryCard {
         var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         #if DEBUG
-            let url = self.applicationDocumentDirectory.appendingPathComponent("SpaceWarDebug.sqlite")
+            let url: URL = {
+                if let url = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
+                    print("url iCloud " + url.path.description)
+                    return url.appendingPathComponent("SpaceWarDebug.sqlite")
+                } else {
+                    let url = self.applicationDocumentDirectory
+                    print("url local " + url.path.description)
+                    return url.appendingPathComponent("SpaceWarDebug.sqlite")
+                }
+            }()
         #else
             let url = self.applicationDocumentDirectory.appendingPathComponent("SpaceWar.sqlite")
         #endif
@@ -266,6 +275,20 @@ class MemoryCard {
         
         do {
             if fileManager.fileExists(atPath: self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite").path) {
+                
+                let cachesUrl = self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite")
+                
+                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cachesUrl, options: options)
+                
+                for persistentStore in coordinator.persistentStores {
+                    try! coordinator.migratePersistentStore(persistentStore, to: url, options: options, withType: NSSQLiteStoreType)
+                }
+                try! fileManager.removeItem(at: cachesUrl)
+            } else {
+                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+            }
+            
+            if fileManager.fileExists(atPath: self.applicationDocumentDirectory.appendingPathComponent("SpaceWar.sqlite").path) {
                 
                 let cachesUrl = self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite")
                 
