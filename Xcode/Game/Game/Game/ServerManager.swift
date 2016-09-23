@@ -118,8 +118,8 @@ class ServerManager {
                     })
                     
                     socket.connect(timeoutAfter: 10, withTimeoutHandler: {
-                        print("connection timed out for: " + url.description)
-                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
+//                        print("connection timed out for: " + url.description)
+//                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                         socket.disconnect()
                     })
                 }

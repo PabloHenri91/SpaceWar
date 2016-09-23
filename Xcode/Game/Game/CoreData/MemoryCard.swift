@@ -8,15 +8,16 @@
 
 import CoreData
 
-class MemoryCard {
+@objc class MemoryCard: NSObject {
     
     static let sharedInstance = MemoryCard()
     
-    private var autoSave:Bool = false
+    private var autoSave: Bool = false
     
-    var playerData:PlayerData!
+    var playerData: PlayerData!
     
-    init() {
+    override init() {
+        super.init()
         self.loadGame()
     }
     
@@ -247,14 +248,26 @@ class MemoryCard {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager: NSFileManager = NSFileManager.defaultManager()
         
         var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         #if DEBUG
-            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+            let url: NSURL = {
+                if let url: NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("iCloud.com.PabloHenri91.GameIV") {
+                    return url.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+                } else {
+                    return self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+                }
+            }()
         #else
-            let url = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+            let url: NSURL = {
+                if let url: NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("iCloud.com.PabloHenri91.GameIV") {
+                    return url.URLByAppendingPathComponent("SpaceWar.sqlite")
+                } else {
+                    return self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                }
+            }()
         #endif
         
         
@@ -264,19 +277,21 @@ class MemoryCard {
             (NSMigratePersistentStoresAutomaticallyOption, true),
             (NSInferMappingModelAutomaticallyOption , true))
         
+        
+        var addPersistentStoreWithType = false
+        
         do {
             if fileManager.fileExistsAtPath(self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
                 
-                let cachesUrl = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                let cachesUrl: NSURL = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
                 
                 try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: cachesUrl, options: options)
+                addPersistentStoreWithType = true
                 
                 for persistentStore in coordinator.persistentStores {
                     try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
                 }
                 try! fileManager.removeItemAtURL(cachesUrl)
-            } else {
-                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
             }
             
         } catch {
@@ -284,6 +299,33 @@ class MemoryCard {
                 //try! NSFileManager.defaultManager().removeItemAtURL(url)
             #endif
             fatalError()
+        }
+        
+        if !addPersistentStoreWithType {
+            do {
+                if fileManager.fileExistsAtPath(self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
+                    
+                    let documentUrl: NSURL = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                    
+                    try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: documentUrl, options: options)
+                    addPersistentStoreWithType = true
+                    
+                    for persistentStore in coordinator.persistentStores {
+                        try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                    }
+                    try! fileManager.removeItemAtURL(documentUrl)
+                }
+                
+            } catch {
+                #if DEBUG
+                    //try! NSFileManager.defaultManager().removeItemAtURL(url)
+                #endif
+                fatalError()
+            }
+        }
+        
+        if !addPersistentStoreWithType {
+            try! coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
         }
         
         return coordinator
@@ -294,6 +336,7 @@ class MemoryCard {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }()
     
