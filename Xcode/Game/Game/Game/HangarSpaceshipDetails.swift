@@ -36,7 +36,9 @@ class HangarSpaceshipDetails: Box {
         
         self.spaceship = spaceship
         
-        for item in MemoryCard.sharedInstance.playerData.researches {
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        for item in playerData.researches {
             if let researchData = item as? ResearchData {
                 let researchType = Research.types[researchData.type.integerValue]
 
