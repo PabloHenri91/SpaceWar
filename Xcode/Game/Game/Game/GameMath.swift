@@ -91,8 +91,6 @@ class GameMath {
         
         let botSpaceshipLevel = (playerData.botLevel.integerValue + (levelSum/spaceshipDataCount))/2
         
-        print(botSpaceshipLevel)
-        
         return botSpaceshipLevel
     }
     

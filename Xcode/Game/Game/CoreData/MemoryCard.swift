@@ -253,19 +253,21 @@ import CoreData
         var coordinator:NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         #if DEBUG
+            let fileName = "SpaceWarDebug.sqlite"
             let url: NSURL = {
                 if let url: NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("iCloud.com.PabloHenri91.GameIV") {
-                    return url.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+                    return url.URLByAppendingPathComponent(fileName)
                 } else {
-                    return self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWarDebug.sqlite")
+                    return self.applicationDocumentDirectory.URLByAppendingPathComponent(fileName)
                 }
             }()
         #else
+            let fileName = "SpaceWar.sqlite"
             let url: NSURL = {
                 if let url: NSURL = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("iCloud.com.PabloHenri91.GameIV") {
-                    return url.URLByAppendingPathComponent("SpaceWar.sqlite")
+                    return url.URLByAppendingPathComponent(fileName)
                 } else {
-                    return self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                    return self.applicationDocumentDirectory.URLByAppendingPathComponent(fileName)
                 }
             }()
         #endif
@@ -281,9 +283,9 @@ import CoreData
         var addPersistentStoreWithType = false
         
         do {
-            if fileManager.fileExistsAtPath(self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
+            if fileManager.fileExistsAtPath(self.applicationCachesDirectory.URLByAppendingPathComponent(fileName).path!) {
                 
-                let cachesUrl: NSURL = self.applicationCachesDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                let cachesUrl: NSURL = self.applicationCachesDirectory.URLByAppendingPathComponent(fileName)
                 
                 try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: cachesUrl, options: options)
                 addPersistentStoreWithType = true
@@ -303,9 +305,9 @@ import CoreData
         
         if !addPersistentStoreWithType {
             do {
-                if fileManager.fileExistsAtPath(self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite").path!) {
+                if fileManager.fileExistsAtPath(self.applicationDocumentDirectory.URLByAppendingPathComponent(fileName).path!) {
                     
-                    let documentUrl: NSURL = self.applicationDocumentDirectory.URLByAppendingPathComponent("SpaceWar.sqlite")
+                    let documentUrl: NSURL = self.applicationDocumentDirectory.URLByAppendingPathComponent(fileName)
                     
                     try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: documentUrl, options: options)
                     addPersistentStoreWithType = true

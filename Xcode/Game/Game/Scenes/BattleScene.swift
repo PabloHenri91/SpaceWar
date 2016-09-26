@@ -139,6 +139,9 @@ class BattleScene: GameScene {
 //        self.updateSpaceshipLevels()
         
         self.updateMothershipsHealth()
+        
+        print("botUpdateInterval " + self.botUpdateInterval.description)
+        print("botLevel " + self.playerData.botLevel.integerValue.description)
     }
     
     func updateMothershipsHealth() {
@@ -373,15 +376,17 @@ class BattleScene: GameScene {
                         Metrics.win()
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
-
-                        self.playerData.botUpdateInterval = self.botUpdateInterval - 1
-                        self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
+                        
+                        if self.battleEndTime - self.battleBeginTime < 60 * 3 {
+                            self.updateBotOnWin()
+                        } else {
+                            self.updateBotOnLose()
+                        }
                         
                         self.playerData.winCount = self.playerData.winCount.integerValue + 1
                         self.playerData.winningStreakCurrent = self.playerData.winningStreakCurrent.integerValue + 1
                         if self.playerData.winningStreakCurrent.integerValue > self.playerData.winningStreakBest.integerValue {
                             self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.integerValue
-
                         }
                         
                         alertBox.buttonOK.addHandler({
@@ -393,10 +398,11 @@ class BattleScene: GameScene {
                         Metrics.loose()
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        
+                        self.updateBotOnLose()
+                        
+                        self.playerData.winningStreakCurrent = 0
                         alertBox.buttonOK.addHandler({
-                            self.playerData.botUpdateInterval = self.botUpdateInterval + 1
-                            self.playerData.botLevel = self.playerData.botLevel.integerValue - 1
-                            self.playerData.winningStreakCurrent = 0
                             self.nextState = states.mothership
                         })
                         self.addChild(alertBox)
@@ -467,6 +473,16 @@ class BattleScene: GameScene {
         }
         
         Shot.update()
+    }
+    
+    func updateBotOnLose() {
+        self.playerData.botUpdateInterval = self.botUpdateInterval + 1
+        self.playerData.botLevel = self.playerData.botLevel.integerValue - 1
+    }
+    
+    func updateBotOnWin() {
+        self.playerData.botUpdateInterval = self.botUpdateInterval - 1
+        self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
     }
     
     override func didSimulatePhysics() {
