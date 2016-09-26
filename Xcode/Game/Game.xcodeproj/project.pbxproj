@@ -280,6 +280,7 @@
 		84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B4E6A81CEE4F76007CFC2B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */; };
 		84B7501C1D06FD8100F2BE3B /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
+		84B7A8C81D99A940000A392F /* RateAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B7A8C71D99A940000A392F /* RateAlert.swift */; };
 		84BF04941D50B8EF00F49792 /* museosansrounded-100-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84BF04901D50B8EF00F49792 /* museosansrounded-100-webfont.ttf */; };
 		84BF04951D50B8EF00F49792 /* museosansrounded-100-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84BF04901D50B8EF00F49792 /* museosansrounded-100-webfont.ttf */; };
 		84BF04961D50B8EF00F49792 /* museosansrounded-300-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84BF04911D50B8EF00F49792 /* museosansrounded-300-webfont.ttf */; };
@@ -326,6 +327,7 @@
 		84C011961D4659B800EC7080 /* laser9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011841D4659B800EC7080 /* laser9.mp3 */; };
 		84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
 		84C14B211D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
+		84C8C26A1D99815E006481EC /* RateMyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8C2691D99815E006481EC /* RateMyApp.swift */; };
 		84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
 		84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
 		84C8E7931D6206DB00B7605F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF2681CE77B400032F6AA /* AppDelegate.swift */; };
@@ -581,6 +583,7 @@
 		84B22F041D47D7D30034C03F /* PlayerDataCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDataCard.swift; sourceTree = "<group>"; };
 		84B4475D1D7847FD006211F4 /* GameStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
 		84B4E6A61CEE4F76007CFC2B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
+		84B7A8C71D99A940000A392F /* RateAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAlert.swift; sourceTree = "<group>"; };
 		84BF04901D50B8EF00F49792 /* museosansrounded-100-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-100-webfont.ttf"; sourceTree = "<group>"; };
 		84BF04911D50B8EF00F49792 /* museosansrounded-300-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-300-webfont.ttf"; sourceTree = "<group>"; };
 		84BF04921D50B8EF00F49792 /* museosansrounded-700-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-700-webfont.ttf"; sourceTree = "<group>"; };
@@ -604,6 +607,7 @@
 		84C011831D4659B800EC7080 /* laser8.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser8.mp3; sourceTree = "<group>"; };
 		84C011841D4659B800EC7080 /* laser9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser9.mp3; sourceTree = "<group>"; };
 		84C14B1F1D412DA600D20D4D /* BatteryControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryControl.swift; sourceTree = "<group>"; };
+		84C8C2691D99815E006481EC /* RateMyApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateMyApp.swift; sourceTree = "<group>"; };
 		84C8D5561CF4C233007C1ED6 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		84D621211D258EC4005D550C /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
 		84D6212A1D259021005D550C /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
@@ -912,6 +916,7 @@
 				843620581CEB77400082A9D7 /* Label.swift */,
 				3A4065F91D2D902200B886DB /* MultiLineLabel.swift */,
 				843620591CEB77400082A9D7 /* Music.swift */,
+				84C8C2691D99815E006481EC /* RateMyApp.swift */,
 				8436205A1CEB77400082A9D7 /* ScrollNode.swift */,
 				8436205B1CEB77400082A9D7 /* ScrollNodeExtensions.swift */,
 				84C011791D46442B00EC7080 /* SoundEffect.swift */,
@@ -938,6 +943,7 @@
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				849162A21D5DF9CF0064958C /* NextEvents.swift */,
 				84B22F041D47D7D30034C03F /* PlayerDataCard.swift */,
+				84B7A8C71D99A940000A392F /* RateAlert.swift */,
 				3A4065F01D2C54E600B886DB /* Research.swift */,
 				8437BCE01D95952C00525DD2 /* Room.swift */,
 				84656D9F1D7F434500930157 /* ServerManager.swift */,
@@ -1357,6 +1363,7 @@
 				3AD2619E1D26B0BC00189671 /* MissionSpaceshipData.swift in Sources */,
 				84C0117A1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				845FDA251D61DE9400A2C7CE /* GameAdManager.swift in Sources */,
+				84C8C26A1D99815E006481EC /* RateMyApp.swift in Sources */,
 				84656DE01D7F48E200930157 /* SocketLogger.swift in Sources */,
 				3AB58AE71D6B530E00E7B228 /* HangarSpaceshipChange.swift in Sources */,
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
@@ -1449,6 +1456,7 @@
 				3A7E60D21D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */,
 				84AF821A1D26B6C100801D0E /* BattleTrainingScene.swift in Sources */,
 				3A3B7B4D1CFF4DA500C85D91 /* FacebookGameInviter.swift in Sources */,
+				84B7A8C81D99A940000A392F /* RateAlert.swift in Sources */,
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
 				84656DDC1D7F48E200930157 /* SocketIOClientSpec.swift in Sources */,

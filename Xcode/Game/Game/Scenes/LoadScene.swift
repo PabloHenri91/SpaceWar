@@ -40,6 +40,11 @@ class LoadScene: GameScene {
         #endif
         
         self.nextState = .connect
+        
+        let rateMyApp = RateMyApp.sharedInstance
+        rateMyApp.appID = "1111665762"
+        
+        rateMyApp.trackAppUsage()
     }
     
     override func update(currentTime: NSTimeInterval) {

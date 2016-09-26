@@ -481,6 +481,7 @@ class BattleScene: GameScene {
     }
     
     func updateBotOnWin() {
+        RateMyApp.sharedInstance.trackEventUsage()
         self.playerData.botUpdateInterval = self.botUpdateInterval - 1
         self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
     }

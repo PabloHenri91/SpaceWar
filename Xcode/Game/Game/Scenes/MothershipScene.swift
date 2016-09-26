@@ -120,6 +120,8 @@ class MothershipScene: GameScene {
         self.nextEvents = NextEvents()
         self.addChild(nextEvents)
         
+        RateMyApp.sharedInstance.showRatingAlert()
+        
         switch GameTabBar.lastState {
         case .research, .mission:
             for node in self.children {
