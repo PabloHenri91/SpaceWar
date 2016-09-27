@@ -21,22 +21,19 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     var inviteNow = [AnyObject]()
     var gameInviterDelegate:FacebookGameInviterDelegate!
     
-    let friends = MemoryCard.sharedInstance.playerData.invitedFriends as! Set<FriendData>
+    let playerData = MemoryCard.sharedInstance.playerData
     
     func gameRequestDialogDidCancel(gameRequestDialog: FBSDKGameRequestDialog!) {
         //print("cancel")
         self.inviteNow.removeAll()
         self.gameInviterDelegate.alertError("User cancel")
-        
     }
-    
     
     func gameRequestDialog(gameRequestDialog: FBSDKGameRequestDialog!, didFailWithError error: NSError!) {
         //print("fail")
         //print(error)
         self.inviteNow.removeAll()
         self.gameInviterDelegate.alertError(error.description)
-        
     }
     
     func gameRequestDialog(gameRequestDialog: FBSDKGameRequestDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
@@ -49,10 +46,12 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
         var needAdd = true
         
         for friend in inviteds {
-            for item in self.friends {
-                if item.id == friend {
-                    needAdd = false
-                    break
+            for item in self.playerData.invitedFriends {
+                if let friendData = item as? FriendData {
+                    if friendData.id == friend {
+                        needAdd = false
+                        break
+                    }
                 }
             }
             
@@ -140,17 +139,19 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
                     
                     for item in meFriends {
                         let id = item.objectForKey("id") as! String
-                        for friend in self.friends {
-                            if id == friend.id {
-                                //print(item)
-                                let name = item.objectForKey("name") as! String
-                                let picture = item.objectForKey("picture")
-                                let data = picture?.objectForKey("data")
-                                let photoURL = data?.objectForKey("url") as! String
-                                playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
-                                //print("I invited you and update")
-                                //print(MemoryCard.sharedInstance.playerData.invitedFriends)
-                                return
+                        for item in self.playerData.invitedFriends {
+                            if let friendData = item as? FriendData {
+                                if id == friendData.id {
+                                    //print(item)
+                                    let name = item.objectForKey("name") as! String
+                                    let picture = item.objectForKey("picture")
+                                    let data = picture?.objectForKey("data")
+                                    let photoURL = data?.objectForKey("url") as! String
+                                    playerData.updateInvitedFriend(id: id, name: name, photoURL: photoURL, accepted: true)
+                                    //print("I invited you and update")
+                                    //print(MemoryCard.sharedInstance.playerData.invitedFriends)
+                                    return
+                                }
                             }
                         }
                     }
@@ -162,9 +163,12 @@ class FacebookGameInviter:NSObject, FBSDKGameRequestDialogDelegate {
     
     func countInvitesAccept() -> Int {
         var count = 0
-        for friend in self.friends {
-            if friend.acceptedInvite == true {
-                count = count + 1
+        for item in self.playerData.invitedFriends {
+            
+            if let friendData = item as? FriendData {
+                if friendData.acceptedInvite == true {
+                    count = count + 1
+                }
             }
         }
         return count

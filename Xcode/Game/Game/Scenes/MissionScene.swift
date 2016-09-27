@@ -162,7 +162,7 @@ class MissionScene: GameScene {
         
         self.controlArray = Array<MissionSpaceshipCard>()
         
-        for item in MemoryCard.sharedInstance.playerData.missionSpaceships {
+        for item in self.playerData.missionSpaceships {
             self.controlArray.append(MissionSpaceshipCard(missionSpaceship: MissionSpaceship(missionSpaceshipData: item as! MissionSpaceshipData)))
         }
         
