@@ -350,14 +350,12 @@ class BattleTrainingScene: GameScene {
             case .askWeaponRange:
               
                 
-                let alert = TutorialBigAlertBox(text: "This white circle around your ship is the range of the shot. The ship only shot on enemys after stops moving.", buttonText: "LETS SHOOT!", imageName: "rangeImage")
+                let alert = TutorialBigAlertBox(text: "This white circle around your ship is the range of the shot. The ship only shoots at an enemy after stopping.", buttonText: "LETS SHOOT!", imageName: "rangeImage")
                 self.addChild(alert)
                 
                 alert.buttonOk.addHandler({
                     self.nextState = .battleWithOneMeteor
                 })
-            
-                
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
@@ -386,7 +384,7 @@ class BattleTrainingScene: GameScene {
                 
             case .askNearestTarget:
                 
-                let alert = TutorialBigAlertBox(text: "Your spaceship will always shoot the nearest enemy. The ship only shot on enemys after stops moving.", buttonText: "EASY, LETS TRY!", imageName: "rangeImage2")
+                let alert = TutorialBigAlertBox(text: "Your spaceship will always shoot the nearest enemy. The ship only shoots at an enemy after stopping.", buttonText: "EASY, LETS TRY!", imageName: "rangeImage2")
                 self.addChild(alert)
                 
                 alert.buttonOk.addHandler({

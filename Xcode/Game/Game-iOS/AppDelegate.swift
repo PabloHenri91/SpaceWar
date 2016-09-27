@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let missionSpaceshipData = item as? MissionSpaceshipData {
                 if missionSpaceshipData.missionType.integerValue > -1 {
                     
-                    let missionType = MissionSpaceship.types[missionSpaceshipData.missionType.integerValue]
+                    let missionType = Mission.types[missionSpaceshipData.missionType.integerValue]
                     let timeLeft = GameMath.timeLeft(missionSpaceshipData.startMissionDate!, duration: missionType.duration)
                     if timeLeft > 1 {
                         

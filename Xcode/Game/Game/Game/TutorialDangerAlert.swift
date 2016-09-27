@@ -19,7 +19,7 @@ class TutorialDangerAlert:Box {
         let labelTitle = Label(color:SKColor.whiteColor() ,text: "DANGER" , fontSize: 14, x: 141, y: 26, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        self.addChild(MultiLineLabel(text: "Dont click on enemy to atack, click near. The ship only shot on enemys after stops moving.", maxWidth: 240, color: SKColor.blackColor(), fontSize: 12, x: 141, y: 75, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000))
+        self.addChild(MultiLineLabel(text: "Dont click on enemy to atack, click near. The ship only shoots at an enemy after stopping.", maxWidth: 240, color: SKColor.blackColor(), fontSize: 12, x: 141, y: 75, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000))
         
         
         let fontShadowColor = SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 1)

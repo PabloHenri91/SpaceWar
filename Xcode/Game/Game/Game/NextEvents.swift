@@ -128,7 +128,7 @@ class EventCard: Control {
         super.init(textureName: EventCard.backgroundTextureName)
         self.missionSpaceshipData = missionSpaceshipData
         self.type = .missionSpaceshipEvent
-        self.duration = MissionSpaceship.types[self.missionSpaceshipData!.missionType.integerValue].duration
+        self.duration = Mission.types[self.missionSpaceshipData!.missionType.integerValue].duration
     }
     
     init(researchData: ResearchData) {

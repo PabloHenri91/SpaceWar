@@ -59,12 +59,18 @@ class TimeBar: CropBox {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update(missionSpaceshipData missionSpaceshipData:MissionSpaceshipData) {
+        if let startDate = missionSpaceshipData.startMissionDate {
+            let duration = Mission.types[missionSpaceshipData.missionType.integerValue].duration
+            self.update(startDate: startDate, duration: duration)
+        }
+    }
     
-    func update(missionShip:MissionSpaceship) {
-        let startDate = missionShip.missionspaceshipData!.startMissionDate
-        let mission = MissionSpaceship.types[Int(missionShip.missionspaceshipData!.missionType.integerValue)]
-        let duration = mission.duration
-        self.update(startDate: startDate!, duration: duration)
+    func update(researchData researchData:ResearchData) {
+        if let startDate = researchData.startDate {
+            let duration = Research.types[researchData.type.integerValue].duration
+            self.update(startDate: startDate, duration: duration)
+        }
     }
     
     func update(startDate startDate:NSDate, duration:Int) {

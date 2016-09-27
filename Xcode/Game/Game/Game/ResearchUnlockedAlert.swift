@@ -78,13 +78,11 @@ class ResearchUnlockedAlert:Box {
             labelResearch.screenPosition = CGPoint(x: labelResearchDescription.position.x + labelResearchDescription.calculateAccumulatedFrame().width, y: 104)
             labelResearch.resetPosition()
             
-        }
-        
-        else {
+        } else {
             
             let labelResearch = Label(color: rarityColor, text: researchType.name, fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
             
-            let improvementNumber = (researchData.spaceshipMaxLevel.integerValue/10).description
+            let improvementNumber = ((researchData.spaceshipMaxLevel.integerValue-10)/10).description
             
             let labelResearchDescription = Label(color: SKColor.blackColor(), text: "improvement " + improvementNumber + "!", fontSize: 11 ,  x: 0, y: 104, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
             

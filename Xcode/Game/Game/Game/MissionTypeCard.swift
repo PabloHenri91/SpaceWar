@@ -18,7 +18,7 @@ class MissionTypeCard: Control {
         
         super.init(textureName: "asteroidTypeCard")
         self.missionSpaceship = missionSpaceship
-        self.missionType = MissionSpaceship.types[index]
+        self.missionType = Mission.types[index]
         
         let labelTitle = Label(text: missionType.name , fontSize: 10, x: 14, y: 9, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2),  verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
@@ -58,11 +58,9 @@ class MissionTypeCard: Control {
     }
     
     func selectMission() {
-        if let missionSpaceshipData = self.missionSpaceship.missionspaceshipData {
-            missionSpaceshipData.startMissionDate = NSDate()
-            missionSpaceshipData.missionType = NSNumber(integer: missionType.index)
-        }
-        
+        let missionSpaceshipData = self.missionSpaceship.missionspaceshipData
+        missionSpaceshipData.startMissionDate = NSDate()
+        missionSpaceshipData.missionType = NSNumber(integer: missionType.index)
     }
     
 

@@ -12,16 +12,11 @@ class MissionSpaceship: Control {
     
     var missionType:Int = -1
     var level:Int = 1
-    var missionspaceshipData:MissionSpaceshipData?
-    
-    init(type:Int, level:Int) {
-        super.init()
-        self.load(type, level: level)
-    }
+    var missionspaceshipData:MissionSpaceshipData
     
     init(missionSpaceshipData:MissionSpaceshipData) {
-        super.init()
         self.missionspaceshipData = missionSpaceshipData
+        super.init()
         self.load(missionSpaceshipData.missionType.integerValue, level: missionSpaceshipData.level.integerValue)
     }
     
@@ -30,11 +25,6 @@ class MissionSpaceship: Control {
         if type >= 0 {
             self.missionType = type
         }
-    }
-    
-    func speedUp(seconds:NSTimeInterval) {
-        let date = NSDate(timeInterval: seconds * -1, sinceDate: self.missionspaceshipData!.startMissionDate!)
-        self.missionspaceshipData!.startMissionDate! = date
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,10 +54,10 @@ class MissionType {
 }
 
 
-extension MissionSpaceship {
+class Mission {
     
     static func cheatDuration() {
-        for missionType in MissionSpaceship.types {
+        for missionType in Mission.types {
             missionType.duration = 3
         }
     }

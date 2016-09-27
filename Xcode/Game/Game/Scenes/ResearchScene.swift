@@ -24,7 +24,7 @@ class ResearchScene: GameScene {
     
     var gameStore: GameStore?
     
-    enum states : String {
+    enum states: String {
         
         //Estado de alertBox
         case alert
@@ -36,6 +36,9 @@ class ResearchScene: GameScene {
         case mothership
         case factory
         case hangar
+        
+        case speedUp
+        
     }
     
     //Estados iniciais
@@ -44,6 +47,8 @@ class ResearchScene: GameScene {
     
     var playerDataCard:PlayerDataCard!
     var gameTabBar:GameTabBar!
+    
+    var speedUpAlert: SpeedUpAlert?
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -159,6 +164,24 @@ class ResearchScene: GameScene {
         if(self.state == self.nextState) {
             //Estado atual
             switch (self.state) {
+                
+            case .speedUp:
+                if let researchCard = self.currentResearchCard {
+                    
+                    let researchData = researchCard.research.researchData
+                    
+                    let timeLeft = GameMath.timeLeft(researchData)
+                    if timeLeft > 0 {
+                        self.speedUpAlert?.update(currentTime)
+                    } else {
+                        self.speedUpAlert?.removeFromParent()
+                        self.setDefaultState()
+                    }
+                    
+                } else {
+                    self.setDefaultState()
+                }
+                break
             case .research:
                 
                 self.playerDataCard.update()
@@ -182,10 +205,31 @@ class ResearchScene: GameScene {
             //Próximo estado
             switch (self.nextState) {
                 
+            case .speedUp:
+                
+                if let currentResearchCard = self.currentResearchCard {
+                    self.blackSpriteNode.hidden = false
+                    self.blackSpriteNode.zPosition = 10000
+                    self.speedUpAlert = SpeedUpAlert(researchData: currentResearchCard.research.researchData)
+                    self.speedUpAlert!.zPosition = self.blackSpriteNode.zPosition + 1
+                    self.scrollNode?.canScroll = false
+                    self.speedUpAlert!.buttonCancel.addHandler({
+                        self.nextState = .research
+                    })
+                    self.addChild(self.speedUpAlert!)
+                } else {
+                    #if DEBUG
+                        fatalError()
+                    #endif
+                }
+                
+                break
+                
             case .research:
                 self.blackSpriteNode.hidden = true
                 self.scrollNode?.canScroll = true
                 self.gameStore?.removeFromParent()
+                self.speedUpAlert?.removeFromParent()
                 break
                 
             case .mission:
@@ -376,6 +420,39 @@ class ResearchScene: GameScene {
             for touch in touches {
                 let point = touch.locationInNode(self)
                 switch (self.state) {
+                    
+                case .speedUp:
+                    
+                    if let speedUpAlert = self.speedUpAlert {
+                        
+                        let point = touch.locationInNode(speedUpAlert)
+                        
+                        if speedUpAlert.buttonFinish.containsPoint(point) {
+                            if speedUpAlert.finishWithPremiumPoints() == false {
+                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
+                                alertBox.buttonOK.addHandler({ [weak self] in
+                                    self?.setDefaultState()
+                                })
+                                self.addChild(alertBox)
+                            } else {
+                                self.playerDataCard.updatePremiumPoints()
+                                self.setDefaultState()
+                                return
+                            }
+                        }
+                        
+                        #if os(iOS)
+                            if GameAdManager.sharedInstance.zoneIsReady {
+                                if speedUpAlert.buttonWatch.containsPoint(point) {
+                                    self.playVideoAd()
+                                    self.setDefaultState()
+                                    return
+                                }
+                            }
+                        #endif
+                    }
+                    
+                    break
                 case .research:
                     
                     if self.playerDataCard.statistics.isOpen {
@@ -412,7 +489,7 @@ class ResearchScene: GameScene {
                     if let researchCard = self.currentResearchCard {
                         if let buttonSpeedup = researchCard.buttonSpeedUp {
                             if(buttonSpeedup.containsPoint(touch.locationInNode(researchCard))) {
-                                // TODO:buttonSpeedup.containsPoint
+                                self.nextState = .speedUp
                                 return
                             }
                         }
@@ -431,7 +508,7 @@ class ResearchScene: GameScene {
                                     
                                     self.scrollNode?.canScroll = false
                                     
-                                    if researchCard.research.researchData!.spaceshipLevel.integerValue > 10 {
+                                    if researchCard.research.researchData.spaceshipLevel.integerValue > 10 {
                                         
                                         let detailsAlert = ResearchUpgradeSpaceshipAlert(research: researchCard.research)
                                         detailsAlert.zPosition = self.blackSpriteNode.zPosition + 1
@@ -521,5 +598,29 @@ class ResearchScene: GameScene {
         }
         
     }
+    
+    #if os(iOS)
+    override func videoAdAttemptFinished(shown: Bool) {
+        if shown {
+            if let speedUpAlert = self.speedUpAlert {
+                speedUpAlert.speedUpWithVideoAd()
+            }
+        }
+    }
+    
+    override func zoneLoading() {
+        if let speedUpAlert = self.speedUpAlert {
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(0, duration: 1))
+        }
+    }
+    
+    override func zoneReady() {
+        if let speedUpAlert = self.speedUpAlert {
+            speedUpAlert.buttonWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+            speedUpAlert.labelWatch.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+        }
+    }
+    #endif
     
 }

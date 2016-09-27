@@ -10,23 +10,13 @@ import SpriteKit
 
 class Research: Control {
     
-    var researchType:ResearchType!
-    var researchData:ResearchData?
-    
-    init(type:Int) {
-        super.init()
-        self.load(type)
-    }
+    var researchType:ResearchType
+    var researchData:ResearchData
     
     init(researchData:ResearchData) {
-        super.init()
-        
         self.researchData = researchData
-        self.load(researchData.type.integerValue)
-    }
-    
-    func load(type:Int) {
-        self.researchType = Research.types[type]
+        self.researchType = Research.types[researchData.type.integerValue]
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,37 +53,33 @@ class Research: Control {
             }
         }
         
-        
-        if let researchData = self.researchData {
-            researchData.startDate = NSDate()
-        }
+        self.researchData.startDate = NSDate()
         
         return true
         
     }
     
     func collect() {
-        self.researchData?.startDate = nil
-        if let researchData = self.researchData {
-            researchData.done = true
+        
+        self.researchData.startDate = nil
+        self.researchData.done = true
+        
+        // se o level da nave for 0 ta liberando, se nao aumentando o level maximo
+        
+        self.researchData.spaceshipLevel = NSNumber(integer: self.researchData.spaceshipLevel.integerValue + 10)
+        
+        if self.researchData.spaceshipLevel.integerValue == 10 {
             
-            // se o level da nave for 0 ta liberando, se nao aumentando o level maximo
-            
-            researchData.spaceshipLevel = NSNumber(integer: researchData.spaceshipLevel.integerValue + 10)
-            
-            if researchData.spaceshipLevel.integerValue == 10 {
+            if let spaceship = self.researchType.spaceshipUnlocked {
                 
-                if let spaceship = self.researchType.spaceshipUnlocked {
+                if let weapon = self.researchType.weaponUnlocked {
+                    let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
                     
-                    if let weapon = self.researchType.weaponUnlocked {
-                        let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
-                        
-                        let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
-                        spaceshipData.addWeaponData(weaponData)
-                        spaceshipData
-                        
-                        MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
-                    }
+                    let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
+                    spaceshipData.addWeaponData(weaponData)
+                    spaceshipData
+                    
+                    MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
                 }
             }
         }

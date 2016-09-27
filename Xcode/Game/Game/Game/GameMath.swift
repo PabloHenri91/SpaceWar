@@ -31,6 +31,15 @@ class GameMath {
         return GameMath.timeLeftDateComponentsFormatterAbbreviated.stringFromDate(NSDate(), toDate: GameMath.finishDate(timeLeft))!
     }
     
+    static func timeLeft(missionSpaceshipData: MissionSpaceshipData) -> Int {
+        if let startDate = missionSpaceshipData.startMissionDate {
+            let duration = Mission.types[missionSpaceshipData.missionType.integerValue].duration
+            return GameMath.timeLeft(startDate, duration: duration)
+        } else {
+            return -1
+        }
+    }
+    
     //MARK: Boosts
     static func applyXPBoosts(xp: Int) -> Int {
         
@@ -210,6 +219,15 @@ class GameMath {
     }
     
     //MARK: Researches
+    
+    static func timeLeft(researchData: ResearchData) -> Int {
+        if let startDate = researchData.startDate {
+            let duration = Research.types[researchData.type.integerValue].duration
+            return GameMath.timeLeft(startDate, duration: duration)
+        } else {
+            return -1
+        }
+    }
     
     static func getRandomResearch() {
         let winSpaceship = Int(arc4random_uniform(101) + 1)

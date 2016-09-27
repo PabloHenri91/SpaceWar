@@ -95,8 +95,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
         let levelUpIcon = Control(textureName: "levelUpIcon", x: 18, y: 184)
         self.addChild(levelUpIcon)
         
-        
-        let maxLevel = research.researchData!.spaceshipLevel.integerValue - 10
+        let maxLevel = research.researchData.spaceshipMaxLevel.integerValue - 10
         
         let labelMaxLevel = Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MAX LEVEL: " + maxLevel.description , fontSize: 12, x: 35, y: 190, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2))
         
