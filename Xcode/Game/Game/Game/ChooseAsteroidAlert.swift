@@ -24,7 +24,7 @@ class ChooseAsteroidAlert:Box {
         
         spriteNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        self.buttonCancel = Button(textureName: "cancelButtonGray", x: 105, y: -233,  top: 10, bottom: 10, left: 10, right: 10)
+        self.buttonCancel = Button(textureName: "cancelButtonGray", x: 105, y: -233, top: 10, bottom: 10, left: 10, right: 10)
         self.addChild(self.buttonCancel)
         
         self.buttonCancel.addHandler({ [weak self] in

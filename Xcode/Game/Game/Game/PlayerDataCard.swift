@@ -72,7 +72,7 @@ class PlayerDataCard: Control {
         
         self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
         
-        self.buttonStore = Button(textureName: "buttonTakeMyMoney", x: 343, y: 19, touchArea:CGSize(width: 64,height: 64))
+        self.buttonStore = Button(textureName: "buttonTakeMyMoney", x: 343, y: 19, top: 64, bottom: 0, left: 100, right: 10)
         self.addChild(self.buttonStore)
         
     }

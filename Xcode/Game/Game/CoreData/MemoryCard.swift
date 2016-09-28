@@ -291,10 +291,12 @@ import CoreData
                 try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: cachesUrl, options: options)
                 addPersistentStoreWithType = true
                 
-                for persistentStore in coordinator.persistentStores {
-                    try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                if url != cachesUrl {
+                    for persistentStore in coordinator.persistentStores {
+                        try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                    }
+                    try! fileManager.removeItemAtURL(cachesUrl)
                 }
-                try! fileManager.removeItemAtURL(cachesUrl)
             }
             
         } catch {
@@ -313,10 +315,12 @@ import CoreData
                     try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: documentUrl, options: options)
                     addPersistentStoreWithType = true
                     
-                    for persistentStore in coordinator.persistentStores {
-                        try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                    if url != documentUrl {
+                        for persistentStore in coordinator.persistentStores {
+                            try! coordinator.migratePersistentStore(persistentStore, toURL: url, options: options, withType: NSSQLiteStoreType)
+                        }
+                        try! fileManager.removeItemAtURL(documentUrl)
                     }
-                    try! fileManager.removeItemAtURL(documentUrl)
                 }
                 
             } catch {

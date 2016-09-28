@@ -249,6 +249,8 @@
 		8481A2791D5BC460006DD7DD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C8891CFDB3B4008EE628 /* FBSDKShareKit.framework */; };
 		84828AEA1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */; };
 		84828AEB1D808D37008E22A7 /* BattleSceneOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */; };
+		84870F341D9C0657008B848A /* AlertBoxLowBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84870F331D9C0657008B848A /* AlertBoxLowBattery.swift */; };
+		84870F351D9C0657008B848A /* AlertBoxLowBattery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84870F331D9C0657008B848A /* AlertBoxLowBattery.swift */; };
 		848A7D2F1D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */; };
 		848F8B791D0602BE00434FFB /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F8B771D06022500434FFB /* Shot.swift */; };
@@ -563,6 +565,7 @@
 		848021051D0ADB220078320A /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
 		84828AE91D808D37008E22A7 /* BattleSceneOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleSceneOnline.swift; sourceTree = "<group>"; };
 		84828AEC1D819827008E22A7 /* SpaceWar 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 8.xcdatamodel"; sourceTree = "<group>"; };
+		84870F331D9C0657008B848A /* AlertBoxLowBattery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBoxLowBattery.swift; sourceTree = "<group>"; };
 		848A7D2C1D3FF5A700AC72F1 /* BatteryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryData.swift; sourceTree = "<group>"; };
 		848A7D341D40034500AC72F1 /* SpaceWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpaceWar-Bridging-Header.h"; sourceTree = "<group>"; };
 		848A7D351D40034500AC72F1 /* Game-OSX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game-OSX-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -928,6 +931,7 @@
 			isa = PBXGroup;
 			children = (
 				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
+				84870F331D9C0657008B848A /* AlertBoxLowBattery.swift */,
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
 				84A11BBF1D7DE54600913413 /* Boost.swift */,
 				84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */,
@@ -1405,6 +1409,7 @@
 				3AAA93421D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				843620781CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				843620801CEB77400082A9D7 /* ScrollNodeExtensions.swift in Sources */,
+				84870F341D9C0657008B848A /* AlertBoxLowBattery.swift in Sources */,
 				84656DE81D7F48E200930157 /* SocketTypes.swift in Sources */,
 				84656DC61D7F48E200930157 /* SocketEngine.swift in Sources */,
 				3A4F2F4D1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */,
@@ -1511,6 +1516,7 @@
 				84656DC71D7F48E200930157 /* SocketEngine.swift in Sources */,
 				84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */,
 				848A7D301D3FF5A700AC72F1 /* BatteryData.swift in Sources */,
+				84870F351D9C0657008B848A /* AlertBoxLowBattery.swift in Sources */,
 				3A4F2F4E1D7F39D00062AE43 /* TutorialDangerAlert.swift in Sources */,
 				8436206F1CEB77400082A9D7 /* GameCamera.swift in Sources */,
 				3AF476231D638EFE00839BBC /* HangarSpaceshipDetails.swift in Sources */,

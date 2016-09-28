@@ -374,12 +374,25 @@ class MothershipScene: GameScene {
                         }
                         
                         if !self.batteryControl.useCharge() {
-                            let alertBox = AlertBox(title: "Alert!", text: "Battery Critically Low.", type: .OK)
+                            let alertBox = AlertBoxLowBattery()
                             self.addChild(alertBox)
-                            alertBox.buttonOK.addHandler {
-                                self.nextState = .mothership
+                            alertBox.buttonOK.addHandler { [weak self, weak alertBox] in
+                                guard let scene = self else { return }
+                                guard let alertBox = alertBox else { return }
+                                
+                                alertBox.removeFromParent()
+                                scene.gameStore = GameStore()
+                                scene.addChild(scene.gameStore!)
                             }
-                            self.nextState = .alert
+                            
+                            alertBox.buttonCancel.addHandler { [weak self, weak alertBox] in
+                                guard let scene = self else { return }
+                                guard let alertBox = alertBox else { return }
+                                
+                                alertBox.removeFromParent()
+                                scene.setDefaultState()
+                            }
+                            
                             return
                         }
                         
