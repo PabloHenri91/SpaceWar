@@ -59,11 +59,21 @@ class SpeedUpAlert:Box {
         
         if researchData.spaceshipLevel.integerValue == 0 {
             labelReward = "ATTRIBUTES:"
-            icon0TextureName = "lifeIcon"
-            icon1TextureName = "damageIcon"
+            icon0TextureName = "" //"lifeIcon"
+            icon1TextureName = "" //"damageIcon"
             
-            label0Text = spaceship.maxHealth.description
-            label1Text = spaceship.weapon!.damage.description
+            label0Text = "" //spaceship.maxHealth.description
+            label1Text = "" //spaceship.weapon!.damage.description
+            
+            let icon0 = Control(textureName: "lifeIcon", x: -78, y: -41)
+            self.addChild(icon0)
+            let label0 = Label(text: spaceship.maxHealth.description, fontSize: 10, x: -60, y: -40, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
+            self.addChild(label0)
+            
+            let icon1 = Control(textureName: "damageIcon", x: -29, y: -43)
+            self.addChild(icon1)
+            let label1 = Label(text: spaceship.weapon!.damage.description, fontSize: 10, x: -10, y: -40, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
+            self.addChild(label1)
             
             labelNameText = spaceship.displayName()
             
@@ -188,9 +198,10 @@ class SpeedUpAlert:Box {
         let labelReward = Label(text: labelReward, fontSize: 11, x: -78, y: -53 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelReward)
         
-        let icon0 = Control(textureName: icon0TextureName, x: -78, y: -36)
-        self.addChild(icon0)
-        
+        if icon0TextureName != "" {
+            let icon0 = Control(textureName: icon0TextureName, x: -78, y: -36)
+            self.addChild(icon0)
+        }
         let label0 = Label(text: label0Text, fontSize: 10, x: -60, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(label0)
         
@@ -198,7 +209,6 @@ class SpeedUpAlert:Box {
             let icon1 = Control(textureName: icon1TextureName, x: -22, y: -36)
             self.addChild(icon1)
         }
-        
         let label1 = Label(text: label1Text, fontSize: 10, x: -10, y: -35, xAlign: .left , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), verticalAlignmentMode: .Top, horizontalAlignmentMode: .Left,  fontName: GameFonts.fontName.museo500)
         self.addChild(label1)
         

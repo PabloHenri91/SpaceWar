@@ -276,6 +276,7 @@ import CoreData
         var failureReason = "There was an error creating or loading the application's saved data."
         
         let options = Dictionary(dictionaryLiteral:
+            (NSPersistentStoreRemoveUbiquitousMetadataOption, true),
             (NSMigratePersistentStoresAutomaticallyOption, true),
             (NSInferMappingModelAutomaticallyOption , true))
         
