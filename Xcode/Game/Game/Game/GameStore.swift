@@ -22,6 +22,9 @@ class GameStore: Box {
     var scrollNode:SKNode = SKNode()
     
     var storeItens = [StoreItem]()
+    
+    var labelPoints:Label!
+    var labelPremiumPoints:Label!
 
     init() {
         super.init(textureName: "gameStoreBackground")
@@ -43,7 +46,7 @@ class GameStore: Box {
         
         self.addChild(MultiLineLabel(text: "This is the best market in the galaxy. Use your resources wisely and strategically.", color: SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1), fontSize: 12, x: 73, y: 82, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left))
         
-        self.box = CropBox(textureName: "mask282x370", x: 1, y: 126, xAlign: .left, yAlign: .up)
+        self.box = CropBox(textureName: "mask282x370", x: 1, y: 166, xAlign: .left, yAlign: .up)
         self.addChild(self.box.cropNode)
         self.box.addChild(self.scrollNode)
         
@@ -85,10 +88,13 @@ class GameStore: Box {
         
         let control = Control(spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 0/255, green: 0/255, blue: 0/255,
             alpha: 11/100), size: CGSize(width: 1, height: 1)),
-                        y: 126, size: CGSize(width: self.size.width - 2,
+                        y: 166, size: CGSize(width: self.size.width - 2,
                             height: 2))
         control.position.x = 1
         self.addChild(control)
+        
+        let playerData = MemoryCard.sharedInstance.playerData
+        self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
         
         let x = self.position.x - (self.size.width/2) * 0.1
         let y = self.position.y + (self.size.height/2) * 0.1
@@ -115,6 +121,59 @@ class GameStore: Box {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updatePoints() {
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        let text = playerData.points.description
+        
+        self.labelPoints.setText(text)
+        
+        let duration:Double = 0.10
+        var actions = [SKAction]()
+        actions.append(SKAction.scaleTo(1.5, duration: duration))
+        actions.append(SKAction.scaleTo(1.0, duration: duration))
+        let action = SKAction.sequence(actions)
+        
+        self.labelPoints.runAction(action)
+    }
+    
+    func updatePremiumPoints() {
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        let text = playerData.premiumPoints.description
+        
+        if playerData.premiumPoints.integerValue > Int(self.labelPremiumPoints.getText()) {
+            let duration:Double = 0.10
+            var actions = [SKAction]()
+            actions.append(SKAction.scaleTo(1.5, duration: duration))
+            actions.append(SKAction.scaleTo(1.0, duration: duration))
+            let action = SKAction.sequence(actions)
+            
+            self.labelPremiumPoints.runAction(action)
+        }
+        
+        self.labelPremiumPoints.setText(text)
+    }
+    
+    func loadResourcesLabels(points:Int, premiumPoints:Int) {
+        let valueFontName = GameFonts.fontName.museo1000
+        let fontSize = CGFloat(12)
+        let pointsColor = SKColor(red: 255/255, green: 162/255, blue: 87/255, alpha: 1)
+        let premiumPointsColor = SKColor(red: 119/255, green: 97/255, blue: 174/255, alpha: 1)
+        let shadowOffset = CGPoint(x: 0, y: -2)
+        let shadowColor = SKColor(red: 0, green: 0, blue: 0, alpha: 11/100)
+        
+        let labelPointsValuePosition = CGPoint(x: 43, y: 147)
+        
+        let labelPremiumPointsValuePosition = CGPoint(x: 166, y: 147)
+        
+        self.labelPoints = Label(color: pointsColor, text: points.description, fontSize: fontSize, x: Int(labelPointsValuePosition.x), y: Int(labelPointsValuePosition.y), verticalAlignmentMode: .Center, horizontalAlignmentMode: .Left, fontName: valueFontName, shadowOffset: shadowOffset, shadowColor: shadowColor)
+        self.addChild(self.labelPoints)
+        
+        self.labelPremiumPoints = Label(color: premiumPointsColor, text: premiumPoints.description, fontSize: fontSize, x: Int(labelPremiumPointsValuePosition.x), y: Int(labelPremiumPointsValuePosition.y), verticalAlignmentMode: .Center, horizontalAlignmentMode: .Left, fontName: valueFontName, shadowOffset: shadowOffset, shadowColor: shadowColor)
+        self.addChild(self.labelPremiumPoints)
     }
     
     func loadSoundEffects() {
@@ -150,9 +209,11 @@ class GameStore: Box {
                     if playerData.premiumPoints.doubleValue >= storeItem.price {
                         playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                         Control.gameScene.updatePremiumPoints()
+                        self.updatePremiumPoints()
                         
                         playerData.points = playerData.points.integerValue + storeItem.amount
                         Control.gameScene.updatePoints()
+                        self.updatePoints()
                         self.feedback(storeItem)
                     } else {
                         //TODO: não tem diamantes para comprar
@@ -190,12 +251,14 @@ class GameStore: Box {
                                 if storeItem.amount > 0 {
                                     playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                                     Control.gameScene.updatePremiumPoints()
+                                    self.updatePremiumPoints()
                                     
                                     battery.charge = battery.charge.integerValue + storeItem.amount
                                     self.feedback(storeItem)
                                 } else {
                                     playerData.premiumPoints = playerData.premiumPoints.doubleValue - storeItem.price
                                     Control.gameScene.updatePremiumPoints()
+                                    self.updatePremiumPoints()
                                     
                                     battery.charge = -1
                                     battery.lastCharge = NSDate()
@@ -252,6 +315,7 @@ class GameStore: Box {
                 case .premiumPoints:
                     playerData.premiumPoints = playerData.premiumPoints.integerValue + storeItem.amount
                     Control.gameScene.updatePremiumPoints()
+                    self.updatePremiumPoints()
                     
                     Metrics.purchasedPremiumPointsAtGameStore(storeItem)
                     
