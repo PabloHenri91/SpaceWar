@@ -88,8 +88,6 @@ class FactorySpaceshipCard: Control {
         
         self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
-        self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
-        
         let textTypeCount = self.typeCount.description + "/4"
         fontColor = SKColor(red: 96/255, green: 96/255, blue: 96/255, alpha: 1)
         
@@ -115,6 +113,8 @@ class FactorySpaceshipCard: Control {
         self.addChild(Label(color: fontColor, text: spaceship.maxHealth.description, fontSize: 11, x: 97 + 15 + Int(labelAlrmorLabel.calculateAccumulatedFrame().size.width), y: 68, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: GameFonts.fontName.museo500, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         if let weapon = spaceship.weapon {
+            
+            self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
             
             let damageIcon = Control(textureName: "damageIcon", x: 191, y: 54 - 11)
             damageIcon.setScale(min(11/damageIcon.size.width, 11/damageIcon.size.height))

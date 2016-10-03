@@ -365,7 +365,7 @@ class BattleScene: GameScene {
                 self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
-                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                    let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw)
                     alertBox.buttonOK.addHandler({
                         self.nextState = states.mothership
                     })
@@ -375,7 +375,7 @@ class BattleScene: GameScene {
                         
                         Metrics.win()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win)
                         
                         if self.battleEndTime - self.battleBeginTime < 60 * 3 {
                             self.updateBotOnWin()
@@ -397,7 +397,7 @@ class BattleScene: GameScene {
                         
                         Metrics.loose()
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + battleXP.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose)
                         
                         self.updateBotOnLose()
                         

@@ -117,7 +117,11 @@ class Spaceship: Control {
     }
     
     func factoryDisplayName() -> String {
-        return Spaceship.displayName(self.type.index, weaponType: self.weapon!.type.index)
+        if let weapon = self.weapon {
+            return Spaceship.displayName(self.type.index, weaponType: weapon.type.index)
+        } else {
+            return self.type.name
+        }
     }
     
     override init() {

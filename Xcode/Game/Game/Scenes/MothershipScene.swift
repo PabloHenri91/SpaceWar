@@ -117,8 +117,17 @@ class MothershipScene: GameScene {
             i += 1
         }
         
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 173/255, green: 177/255, blue: 180/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+            y: 352, size: CGSize(width: self.size.width,
+                height: 2)))
+        self.addChild(Control( spriteNode: SKSpriteNode(texture: nil, color: SKColor(red: 232/255, green: 237/255, blue: 241/255,
+            alpha: 100/100), size: CGSize(width: 1, height: 1)),
+            y: 354, size: CGSize(width: self.size.width,
+                height: 168)))
+        
         self.nextEvents = NextEvents()
-        self.addChild(nextEvents)
+        self.addChild(self.nextEvents)
         
         RateMyApp.sharedInstance.showRatingAlert()
         

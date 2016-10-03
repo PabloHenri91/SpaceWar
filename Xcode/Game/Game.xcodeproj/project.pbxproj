@@ -92,6 +92,9 @@
 		84110C161D521DAD004C8C82 /* SpaceshipSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */; };
 		84126A8F1D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */; };
 		84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */; };
+		842311431D9D8FF200A2D43E /* battleWin.sks in Resources */ = {isa = PBXBuildFile; fileRef = 842311421D9D8FF200A2D43E /* battleWin.sks */; };
+		842311451D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842311441D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift */; };
+		842311461D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842311441D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift */; };
 		842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842640EC1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */; };
 		842AD41E1D74CDA3002C4AFE /* Jet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 842AD41D1D74CDA3002C4AFE /* Jet.sks */; };
@@ -423,6 +426,8 @@
 		840DCC841D625EE500951E83 /* SpaceWar 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 5.xcdatamodel"; sourceTree = "<group>"; };
 		84110C141D521DAD004C8C82 /* SpaceshipSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipSlot.swift; sourceTree = "<group>"; };
 		84126A8E1D65FA63004B961F /* BuySpaceshipAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuySpaceshipAlert.swift; sourceTree = "<group>"; };
+		842311421D9D8FF200A2D43E /* battleWin.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = battleWin.sks; sourceTree = "<group>"; };
+		842311441D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBoxBattleEnd.swift; sourceTree = "<group>"; };
 		842640EA1D521C8E000A7868 /* ChooseAsteroidAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAsteroidAlert.swift; sourceTree = "<group>"; };
 		842AD41D1D74CDA3002C4AFE /* Jet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Jet.sks; sourceTree = "<group>"; };
 		842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpaceWar.xcdatamodel; sourceTree = "<group>"; };
@@ -931,6 +936,7 @@
 			isa = PBXGroup;
 			children = (
 				3A7E60D41D1869FA00D00590 /* AlertBox.swift */,
+				842311441D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift */,
 				84870F331D9C0657008B848A /* AlertBoxLowBattery.swift */,
 				84C14B1F1D412DA600D20D4D /* BatteryControl.swift */,
 				84A11BBF1D7DE54600913413 /* Boost.swift */,
@@ -1098,6 +1104,7 @@
 				842AD4201D74CDFC002C4AFE /* Jet */,
 				8495A35C1D4684F400A4205F /* Spark */,
 				848742351D25925500A8082D /* Explosion */,
+				842311421D9D8FF200A2D43E /* battleWin.sks */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1282,6 +1289,7 @@
 				848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */,
 				84C0118F1D4659B800EC7080 /* laser6.mp3 in Resources */,
 				842AD41E1D74CDA3002C4AFE /* Jet.sks in Resources */,
+				842311431D9D8FF200A2D43E /* battleWin.sks in Resources */,
 				844CF2721CE77B400032F6AA /* Main.storyboard in Resources */,
 				843620841CEB77400082A9D7 /* DefaultNameList in Resources */,
 				84C011911D4659B800EC7080 /* laser7.mp3 in Resources */,
@@ -1373,6 +1381,7 @@
 				84F855DD1CECCE2A00FB63D2 /* LoadScene.swift in Sources */,
 				84656DE61D7F48E200930157 /* SocketStringReader.swift in Sources */,
 				8437BCE11D95952C00525DD2 /* Room.swift in Sources */,
+				842311451D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift in Sources */,
 				84BF0FC61D4A758F00145F5B /* GameTabBar.swift in Sources */,
 				84656DE21D7F48E200930157 /* SocketPacket.swift in Sources */,
 				3A3307971D414F2A005CCB4F /* Metrics.swift in Sources */,
@@ -1594,6 +1603,7 @@
 				3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				84656DD71D7F48E200930157 /* SocketIOClient.swift in Sources */,
 				843620651CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
+				842311461D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift in Sources */,
 				84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

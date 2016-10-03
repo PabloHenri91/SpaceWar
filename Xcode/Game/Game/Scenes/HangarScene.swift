@@ -19,7 +19,7 @@ class HangarScene: GameScene {
     var detailsAlert: HangarSpaceshipDetails?
     var changeAlert: HangarSpaceshipChange?
     
-    var hangarCardsArray:Array<HangarSpaceshipCard>!
+    var hangarSpaceshipCards:[HangarSpaceshipCard]!
     
     enum states : String {
         
@@ -78,7 +78,7 @@ class HangarScene: GameScene {
         self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "SELECT SPACESHIPS", fontSize: 14, x: 160, y: 101, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
        
-        self.hangarCardsArray = Array<HangarSpaceshipCard>()
+        self.hangarSpaceshipCards = [HangarSpaceshipCard]()
         
         var index = 0
         for item in self.playerData.motherShip.spaceships  {
@@ -113,10 +113,10 @@ class HangarScene: GameScene {
                     break
                 }
                 
-                let card = HangarSpaceshipCard(spaceshipData: spaceshipData, x: x, y: y)
-                self.addChild(card)
+                let hangarSpaceshipCard = HangarSpaceshipCard(spaceshipData: spaceshipData, x: x, y: y)
+                self.addChild(hangarSpaceshipCard)
                 
-                self.hangarCardsArray.append(card)
+                self.hangarSpaceshipCards.append(hangarSpaceshipCard)
                 index += 1
             }
         }
@@ -351,17 +351,17 @@ class HangarScene: GameScene {
                         return
                     }
                     
-                    for hangarCard in hangarCardsArray {
-                        if hangarCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarCard)){
-                            self.selectedSpaceship = hangarCard.spaceship
-                            self.selectedCard = hangarCard
+                    for hangarSpaceshipCard in self.hangarSpaceshipCards {
+                        if hangarSpaceshipCard.buttonUpgrade.containsPoint(touch.locationInNode(hangarSpaceshipCard)){
+                            self.selectedSpaceship = hangarSpaceshipCard.spaceship
+                            self.selectedCard = hangarSpaceshipCard
                             self.nextState = .details
                             return
                         }
                         
-                        if hangarCard.buttonChange.containsPoint(touch.locationInNode(hangarCard)){
-                            self.selectedSpaceship = hangarCard.spaceship
-                            self.selectedCard = hangarCard
+                        if hangarSpaceshipCard.buttonChange.containsPoint(touch.locationInNode(hangarSpaceshipCard)){
+                            self.selectedSpaceship = hangarSpaceshipCard.spaceship
+                            self.selectedCard = hangarSpaceshipCard
                             self.nextState = .change
                         }
                     }

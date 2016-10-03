@@ -296,7 +296,6 @@ extension BattleScene {
             if self.mothership.health <= 0 || self.botMothership.health <= 0 {
                 self.nextState = .battle
                 self.serverManager.leaveAllRooms()
-                
             }
         }
     }

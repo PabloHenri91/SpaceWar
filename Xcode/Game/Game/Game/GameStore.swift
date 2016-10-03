@@ -96,25 +96,7 @@ class GameStore: Box {
         let playerData = MemoryCard.sharedInstance.playerData
         self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
         
-        let x = self.position.x - (self.size.width/2) * 0.1
-        let y = self.position.y + (self.size.height/2) * 0.1
-        
-        self.setScale(0)
-        self.position = CGPoint(x: Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2)
-        
-        let duration:Double = 0.10
-        
-        let action1 = SKAction.group([
-            SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
-            ])
-        
-        let action2 = SKAction.group([
-            SKAction.scaleTo(1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
-            ])
-        
-        self.runAction(SKAction.sequence([action1, action2]))
+        self.jump()
         
         GameStore.sharedInstance = self
     }
@@ -531,30 +513,6 @@ class StoreItem: Control {
                 #endif
             //}
         }
-    }
-    
-    func jump() {
-        
-        self.resetPosition()
-        self.setScale(1)
-        
-        let x = self.position.x - (self.size.width/2) * 0.1
-        let y = self.position.y + (self.size.height/2) * 0.1
-        
-        let duration:Double = 0.10
-        
-        let action1 = SKAction.group([
-            SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
-            ])
-        
-        let action2 = SKAction.group([
-            SKAction.scaleTo(1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
-            ])
-        
-        
-        self.runAction(SKAction.sequence([action1, action2]))
     }
     
     override func removeFromParent() {

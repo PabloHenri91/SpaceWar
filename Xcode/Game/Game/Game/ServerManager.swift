@@ -85,8 +85,8 @@ class ServerManager {
             ]
         #else
             let urls = [
-                "http://ec2-52-53-213-35.us-west-1.compute.amazonaws.com:8940", //
-                "http://181.41.197.181:8940", //Host1Plus
+                "http://ec2-52-53-213-35.us-west-1.compute.amazonaws.com:8941", //
+                "http://181.41.197.181:8941", //Host1Plus
             ]
         #endif
         

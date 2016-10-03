@@ -38,8 +38,6 @@ class HangarSpaceshipCard: Control {
         }
 
         super.init(textureName: imageName, x: x, y: y, xAlign: .center, yAlign: .center)
-       
-
         
         self.addChild(self.spaceship)
         self.spaceship.screenPosition = CGPoint(x: 74, y: 62)
