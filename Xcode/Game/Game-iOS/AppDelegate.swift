@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notification7.schedule(fireDate: NSDate().nextDays(7))
         
         if let battery = playerData.battery {
-            if battery.charge.integerValue < GameMath.batteryMaxCharge {
+            if battery.charge.integerValue < GameMath.batteryMaxCharge && battery.charge.integerValue >= 0 {
                 //TODO: setar push para bateria totalmente
                 
                 var timeLeft = 0
