@@ -68,27 +68,32 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     }
     
     //hides leaderboard screen
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
-    {
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
     //initiate gamecenter
-    func authenticateLocalPlayer(){
+    func authenticateLocalPlayer(completion block: () -> Void = {}) {
         
         let localPlayer = GKLocalPlayer.localPlayer()
         
-        localPlayer.authenticateHandler = {(viewController, error) in
-            if viewController != nil {
-                self.presentViewController(viewController!, animated: true, completion: nil)
-            } else {
-                //print("GKLocalPlayer.authenticated: " + GKLocalPlayer.localPlayer().authenticated.description)
-            }
+        if localPlayer.authenticated {
+            block()
             
-            if localPlayer.authenticated {
-                if let name = localPlayer.alias {
-                    MemoryCard.sharedInstance.playerData.name = name
+        } else {
+            
+            localPlayer.authenticateHandler = {(viewController: UIViewController?, error: NSError?) in
+                
+                if viewController != nil {
+                    self.presentViewController(viewController!, animated: true, completion: nil)
+                }
+                
+                if localPlayer.authenticated {
+                    block()
+                    
+                    if let name = localPlayer.alias {
+                        MemoryCard.sharedInstance.playerData.name = name
+                    }
                 }
             }
         }
@@ -96,6 +101,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     
     
     func saveLevel(level:Int) {
+        
+        self.authenticateLocalPlayer()
         
         if Metrics.canSendEvents() {
             
@@ -112,6 +119,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
                     if error != nil {
                         //print("error")
                     }
+                })
+            } else {
+                self.authenticateLocalPlayer(completion: { [weak self] in
+                    self?.saveLevel(level)
                 })
             }
         }

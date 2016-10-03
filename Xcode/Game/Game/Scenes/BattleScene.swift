@@ -215,6 +215,8 @@ class BattleScene: GameScene {
                 
                 if BattleScene.state == .battle {
                     
+                     self.botMothership.health = 0
+                    
                     if self.mothership.health <= 0 || self.botMothership.health <= 0 {
                         self.nextState = .battleEnd
                     }
@@ -356,18 +358,24 @@ class BattleScene: GameScene {
                 break
             case .showBattleResult:
                 
-                let battleXP:Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
-                let battlePoints:Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
+                let xp: Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
+                let points: Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
                 
-                self.playerData.points = self.playerData.points.integerValue + battlePoints
-                self.playerData.pointsSum = self.playerData.pointsSum.integerValue + battlePoints
+                self.playerData.points = self.playerData.points.integerValue + points
+                self.playerData.pointsSum = self.playerData.pointsSum.integerValue + points
+                self.playerData.motherShip.xp = self.playerData.motherShip.xp.integerValue + xp
                 
-                self.playerData.motherShip.xp = NSNumber(integer: self.playerData.motherShip.xp.integerValue + battleXP)
+                self.mothership.health = 1
+                let xpMax: Int = GameMath.battleXP(mothership: self.mothership, enemyMothership: self.botMothership)
+                let pointsMax: Int = GameMath.battlePoints(mothership: self.mothership, enemyMothership: self.botMothership)
+                
+                
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
-                    let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw)
-                    alertBox.buttonOK.addHandler({
-                        self.nextState = states.mothership
+                    let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                    alertBox.buttonOK.addHandler({ [weak self, weak alertBox] in
+                        self?.nextState = states.mothership
+                        alertBox?.removeFromParent()
                     })
                     self.addChild(alertBox)
                 } else {
@@ -375,7 +383,7 @@ class BattleScene: GameScene {
                         
                         Metrics.win()
                         
-                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win)
+                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
                         
                         if self.battleEndTime - self.battleBeginTime < 60 * 3 {
                             self.updateBotOnWin()
@@ -389,21 +397,23 @@ class BattleScene: GameScene {
                             self.playerData.winningStreakBest = self.playerData.winningStreakCurrent.integerValue
                         }
                         
-                        alertBox.buttonOK.addHandler({
-                            self.nextState = states.unlockResearch
+                        alertBox.buttonOK.addHandler({[weak self, weak alertBox] in
+                            self?.nextState = states.unlockResearch
+                            alertBox?.removeFromParent()
                         })
                         self.addChild(alertBox)
                     } else {
                         
                         Metrics.loose()
                         
-                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose)
+                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
                         
                         self.updateBotOnLose()
                         
                         self.playerData.winningStreakCurrent = 0
-                        alertBox.buttonOK.addHandler({
-                            self.nextState = states.mothership
+                        alertBox.buttonOK.addHandler({ [weak self, weak alertBox] in
+                            self?.nextState = states.mothership
+                            alertBox?.removeFromParent()
                         })
                         self.addChild(alertBox)
                     }
