@@ -197,8 +197,8 @@ extension BattleScene {
                     
                     let level = i.next() as! Int
                     
-                    if spaceship.level < level {
-                        spaceship.upgradeOnBattle()
+                    if level > spaceship.level {
+                        spaceship.setBattleLevel(spaceship.level + 1)
                     }
                     
                     if i.next() as! Bool {

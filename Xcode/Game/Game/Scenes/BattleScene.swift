@@ -215,8 +215,6 @@ class BattleScene: GameScene {
                 
                 if BattleScene.state == .battle {
                     
-                     self.botMothership.health = 0
-                    
                     if self.mothership.health <= 0 || self.botMothership.health <= 0 {
                         self.nextState = .battleEnd
                     }

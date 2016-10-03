@@ -30,12 +30,12 @@ class LoadScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         #if DEBUG
-            MemoryCard.sharedInstance.reset()
-            MemoryCard.sharedInstance.playerData!.points = 1000000
-            MemoryCard.sharedInstance.playerData!.premiumPoints = 1000000
+//            MemoryCard.sharedInstance.reset()
+//            MemoryCard.sharedInstance.playerData!.points = 1000000
+//            MemoryCard.sharedInstance.playerData!.premiumPoints = 1000000
 //            Research.cheatDuration()
-            Research.cheatUnlockAll()
-            Spaceship.cheatUnlockAll()
+//            Research.cheatUnlockAll()
+//            Spaceship.cheatUnlockAll()
 //            MemoryCard.sharedInstance.playerData!.needBattleTraining = true
         #endif
         

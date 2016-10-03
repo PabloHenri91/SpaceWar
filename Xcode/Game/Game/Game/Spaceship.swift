@@ -725,7 +725,9 @@ class Spaceship: Control {
                     if self.health > 0 && self.health - shot.damage <= 0 {
                         self.die()
                         if let spaceship = shot.shooter as? Spaceship {
-                            spaceship.upgradeOnBattle()
+                            if spaceship.isAlly {
+                                spaceship.upgradeOnBattle()
+                            }
                         }
                     } else {
                         self.health = self.health - shot.damage

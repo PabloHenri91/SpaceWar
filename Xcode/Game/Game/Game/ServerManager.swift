@@ -211,7 +211,7 @@ extension SocketIOClient {
         for spaceship in mothership.spaceships {
             items.append(
                 [
-                    spaceship.level as AnyObject,
+                    spaceship.battleMaxLevel as AnyObject,
                     spaceship.type.index as AnyObject,
                     spaceship.weapon!.type.index as AnyObject
                 ])
