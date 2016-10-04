@@ -42,9 +42,13 @@ class Research: Control {
         return true
     }
     
-    func start() -> Bool {
+    func forceStart() {
+        self.researchData.startDate = NSDate()
+    }
+    
+    static func canStart() -> Bool {
         
-        let playerData = MemoryCard.sharedInstance.playerData
+         let playerData = MemoryCard.sharedInstance.playerData
         
         for research in playerData.researches {
             let researchData = research as! ResearchData
@@ -53,10 +57,7 @@ class Research: Control {
             }
         }
         
-        self.researchData.startDate = NSDate()
-        
         return true
-        
     }
     
     func collect() {

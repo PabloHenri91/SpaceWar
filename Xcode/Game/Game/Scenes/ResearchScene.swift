@@ -565,7 +565,9 @@ class ResearchScene: GameScene {
                                         
                                         if let buttonBegin = researchCard.buttonBegin {
                                             if(buttonBegin.containsPoint(touch.locationInNode(researchCard))) {
-                                                if researchCard.research.start() {
+                                                
+                                                if self.currentResearchCard == nil {
+                                                    researchCard.research.forceStart()
                                                     self.updateResearches()
                                                 } else {
                                                     let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
