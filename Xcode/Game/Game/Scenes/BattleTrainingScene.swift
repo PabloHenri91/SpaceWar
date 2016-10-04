@@ -366,6 +366,7 @@ class BattleTrainingScene: GameScene {
                 meteor.isInsideAMothership = false
                 
                 self.gameWorld.addChild(meteor)
+                meteor.isAlly = false
                 self.enemySpaceships.append(meteor)
                 break
               
@@ -399,6 +400,7 @@ class BattleTrainingScene: GameScene {
                 meteor.physicsBody?.dynamic = true
                 meteor.isInsideAMothership = false
                 self.gameWorld.addChild(meteor)
+                meteor.isAlly = false
                 self.enemySpaceships.append(meteor)
                 
                 let meteor2 = Spaceship(extraType: 1, level: 1, loadPhysics: true)
@@ -409,6 +411,7 @@ class BattleTrainingScene: GameScene {
                 meteor2.physicsBody?.dynamic = true
                 meteor2.isInsideAMothership = false
                 self.gameWorld.addChild(meteor2)
+                meteor2.isAlly = false
                 self.enemySpaceships.append(meteor2)
             
                 
@@ -474,7 +477,9 @@ class BattleTrainingScene: GameScene {
                     botMothership.loadHealthBar(blueTeam: false)
                     
                     for _ in 0 ..< 4 {
-                        botMothership.spaceships.append(Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true))
+                        let spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
+                        spaceship.isAlly = false
+                        botMothership.spaceships.append(spaceship)
                     }
                     
                     self.gameWorld.addChild(botMothership)
@@ -518,7 +523,7 @@ class BattleTrainingScene: GameScene {
                 
             case .askDestroyEnemyMothership:
                 
-                let alert = TutorialAlertBox(text: "You destroyed all enemy battleships! Atack the mothership to explode everything now!" , buttonText: "DEATH TIME!")
+                let alert = TutorialAlertBox(text: "You destroyed all enemy battleships! Attack the mothership to explode everything now!" , buttonText: "DEATH TIME!")
                 self.addChild(alert)
                 
                 alert.buttonOk.addHandler({
@@ -589,15 +594,14 @@ class BattleTrainingScene: GameScene {
                     
                 case .askToSelect:
                     
-                    for spaceship in self.mothership.spaceships {
-                        if let parent = spaceship.parent {
-                            if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                spaceship.touchEnded()
-                                self.tutorialControl?.removeFromParent()
-                                self.touchImage?.removeFromParent()
-                                self.nextState = .askToMove
-                            }
-                        }
+                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
+                        nearestSpaceship.touchEnded()
+                        
+                        self.tutorialControl?.removeFromParent()
+                        self.touchImage?.removeFromParent()
+                        self.nextState = .askToMove
+                        
+                        return
                     }
                     
                     break
@@ -877,33 +881,27 @@ class BattleTrainingScene: GameScene {
         if self.dangerAlert?.parent != nil {
             return
         }
-
-        
-        for asteroid in self.enemySpaceships {
-            if let parent = asteroid.parent {
-                if asteroid.containsPoint(touch.locationInNode(parent)) {                    
-                    return
-                }
-            }
-        }
-        
         
         if let botMothership = self.botMothership {
-            for enemyShip in botMothership.spaceships {
-                if let parent = enemyShip.parent {
-                    if enemyShip.containsPoint(touch.locationInNode(parent)) {
-                        return
-                    }
+            
+            if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + botMothership.spaceships + self.enemySpaceships, touch: touch) {
+                if nearestSpaceship.isAlly {
+                    nearestSpaceship.touchEnded()
+                } else {
+                    self.dangerAlert = TutorialDangerAlert()
+                    self.addChild(self.dangerAlert!)
                 }
+                return
             }
-        }
-        
-        for spaceship in self.mothership.spaceships {
-            if let parent = spaceship.parent {
-                if spaceship.containsPoint(touch.locationInNode(parent)) {
-                    spaceship.touchEnded()
-                    return
+        } else {
+            if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.enemySpaceships, touch: touch) {
+                if nearestSpaceship.isAlly {
+                    nearestSpaceship.touchEnded()
+                } else {
+                    self.dangerAlert = TutorialDangerAlert()
+                    self.addChild(self.dangerAlert!)
                 }
+                return
             }
         }
         
@@ -950,44 +948,57 @@ class BattleTrainingScene: GameScene {
     
     func battleTouchesEnded(touch:UITouch) {
         
-        if self.dangerAlert?.parent != nil {
-            return
-        }
-        
-        for asteroid in self.enemySpaceships {
-            if let parent = asteroid.parent {
-                if asteroid.containsPoint(touch.locationInNode(parent)) {
-                    self.dangerAlert = TutorialDangerAlert()
-                    self.addChild(self.dangerAlert!)
-                    
-                    return
+        if let dangerAlert = self.dangerAlert {
+            if let parent = dangerAlert.parent {
+                if dangerAlert.containsPoint(touch.locationInNode(parent)) {
+                    if dangerAlert.buttonOk.containsPoint(touch.locationInNode(dangerAlert)) {
+                        dangerAlert.removeFromParent()
+                    }
                 }
+                return
             }
         }
         
-        
         if let botMothership = self.botMothership {
-            for enemyShip in botMothership.spaceships {
-                if let parent = enemyShip.parent {
-                    if enemyShip.containsPoint(touch.locationInNode(parent)) {
-                        self.dangerAlert = TutorialDangerAlert()
-                        self.addChild(self.dangerAlert!)
-                        
+            if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.enemySpaceships + botMothership.spaceships, touch: touch) {
+                if nearestSpaceship.isAlly {
+                    if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
+                        nearestSpaceship.targetNode = nil
+                        nearestSpaceship.needToMove = false
+                        nearestSpaceship.setBitMasksToSpaceship()
+                    }
+                } else {
+                    self.dangerAlert = TutorialDangerAlert()
+                    self.addChild(self.dangerAlert!)
+                }
+                return
+            }
+        } else {
+            if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.enemySpaceships, touch: touch) {
+                if nearestSpaceship.isAlly {
+                    if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
+                        nearestSpaceship.targetNode = nil
+                        nearestSpaceship.needToMove = false
+                        nearestSpaceship.setBitMasksToSpaceship()
+                    }
+                } else {
+                    self.dangerAlert = TutorialDangerAlert()
+                    self.addChild(self.dangerAlert!)
+                }
+                return
+            }
+        }
+        
+        if let parent = self.mothership.parent {
+            if self.mothership.containsPoint(touch.locationInNode(parent)) {
+                if let spaceship = Spaceship.selectedSpaceship {
+                    if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                        Spaceship.retreatSelectedSpaceship()
                         return
                     }
                 }
             }
         }
-        
-        for spaceship in self.mothership.spaceships {
-            if let parent = spaceship.parent {
-                if spaceship.containsPoint(touch.locationInNode(parent)) {
-                    spaceship.touchEnded()
-                    return
-                }
-            }
-        }
-        
         
         if let botMothership = self.botMothership {
             if let parent = botMothership.parent {
@@ -997,13 +1008,46 @@ class BattleTrainingScene: GameScene {
             }
         }
         
-        if let parent = self.mothership.parent {
-            if self.mothership.containsPoint(touch.locationInNode(parent)) {
-                Spaceship.retreatSelectedSpaceship()
-                return
+        if let spaceship = Spaceship.selectedSpaceship {
+            if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                Spaceship.touchEnded(touch)
+            }
+        }
+    }
+    
+    func nearestSpaceship(spaceships: [Spaceship], touch: UITouch) -> Spaceship? {
+        
+        var spaceshipsAtPoint = [Spaceship]()
+        
+        for spaceship in spaceships {
+            if spaceship.health > 0 {
+                if let parent = spaceship.parent {
+                    if spaceship.containsPoint(touch.locationInNode(parent)) {
+                        spaceshipsAtPoint.append(spaceship)
+                    }
+                }
             }
         }
         
-        Spaceship.touchEnded(touch)
+        var nearestSpaceship:Spaceship? = nil
+        
+        for spaceship in spaceshipsAtPoint {
+            
+            if let parent = spaceship.parent {
+                
+                let touchPosition = touch.locationInNode(parent)
+                
+                if nearestSpaceship != nil {
+                    
+                    if CGPoint.distanceSquared(touchPosition, spaceship.position) < CGPoint.distanceSquared(touchPosition, nearestSpaceship!.position) {
+                        nearestSpaceship = spaceship
+                    }
+                } else {
+                    nearestSpaceship = spaceship
+                }
+            }
+        }
+        
+        return nearestSpaceship
     }
 }
