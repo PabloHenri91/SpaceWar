@@ -99,10 +99,31 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         }
     }
     
+    func saveSkillLevel(level:Int) {
+        
+        if Metrics.canSendEvents() {
+            
+            if GKLocalPlayer.localPlayer().authenticated {
+                
+                let score = GKScore(leaderboardIdentifier: "com.Spacewar.SkillRank")
+                score.value = Int64(level)
+                
+                GKScore.reportScores([score], withCompletionHandler: { (error: NSError?) in
+                    if error != nil {
+                        //print("error")
+                    }
+                })
+                
+            } else {
+                self.authenticateLocalPlayer(completion: { [weak self] in
+                    self?.saveSkillLevel(level)
+                })
+            }
+        }
+    }
+    
     
     func saveLevel(level:Int) {
-        
-        self.authenticateLocalPlayer()
         
         if Metrics.canSendEvents() {
             

@@ -54,9 +54,6 @@ class Boost {
     
     func isActive() -> Bool {
         let timeLeft = GameMath.timeLeft(self.boostData.lastCharge, duration: self.type.duration)
-        
-        print("Boost timeLeft: " + GameMath.timeLeftFormattedAbbreviated(timeLeft))
-        
         return timeLeft > 0
     }
     

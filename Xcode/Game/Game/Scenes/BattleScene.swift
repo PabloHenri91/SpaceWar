@@ -489,6 +489,20 @@ class BattleScene: GameScene {
     }
     
     func updateBotOnWin() {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        let viewController = appDelegate?.window?.rootViewController
+        
+        if let gameViewController = viewController as? GameViewController {
+            
+            var level = 0
+            for spaceship in self.botMothership.spaceships {
+                level = level + spaceship.battleMaxLevel
+            }
+            
+            gameViewController.saveSkillLevel(level)
+        }
+        
         RateMyApp.sharedInstance.trackEventUsage()
         self.playerData.botUpdateInterval = self.botUpdateInterval - 1
         self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
