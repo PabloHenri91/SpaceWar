@@ -180,6 +180,10 @@ extension BattleScene {
                     
                     spaceship.health = spaceship.health + (i.next() as! Int)
                     
+                    if spaceship.health > 0 {
+                        spaceship.updateHealthBarValue()
+                    }
+                    
                     spaceship.needToMove = i.next() as! Bool
                     
                     spaceship.isInsideAMothership = i.next() as! Bool

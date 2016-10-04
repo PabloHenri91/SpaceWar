@@ -746,9 +746,9 @@ class Spaceship: Control {
                 }
             }
             
-            self.healthBar.update(self.health, maxHealth: self.maxHealth)
-            
             if self.health < 0 { self.health = 0 }
+            self.updateHealthBarValue()
+            
             if shot.damage > 0 {
                 self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
             }
@@ -758,21 +758,21 @@ class Spaceship: Control {
     }
     
     func respawn() {
-        self.loadPhysics(rectangleOfSize: self.spriteNode.size)
         
-        if Spaceship.selectedSpaceship == self {
-            Spaceship.retreatSelectedSpaceship()
+        if BattleScene.state == .battleOnline {
+            if self.isAlly {
+                self.onlineHeal = self.onlineHeal + self.maxHealth
+                self.health = self.health + self.maxHealth
+            } else {
+                return
+                // o outro jogador me avisa quando ele estiver recupesando vida
+            }
         } else {
-            self.retreat()
+            self.health = self.health + self.maxHealth
         }
-        self.resetToStartingPosition()
         
-        self.hidden = false
-        
-        self.health = self.maxHealth
-        self.healthBar.update(1, maxHealth: 1)
+        self.updateHealthBarValue()
         self.updateHealthBarPosition()
-        self.healthBar.hidden = false
     }
     
     func die() {
@@ -799,11 +799,19 @@ class Spaceship: Control {
             })
         }
         
-        self.hidden = true
-        self.physicsBody = nil
-        self.healthBar.hidden = true
-        self.position = self.startingPosition
+        
         self.health = 0
+        
+        self.updateHealthBarValue()
+        
+        if Spaceship.selectedSpaceship == self {
+            Spaceship.retreatSelectedSpaceship()
+        } else {
+            self.retreat()
+        }
+        
+        self.physicsBody = nil
+        self.resetToStartingPosition()
     }
     
     func heal() {
@@ -814,6 +822,7 @@ class Spaceship: Control {
                     self.onlineHeal = self.onlineHeal + self.healPerFrame
                     self.health = self.health + self.healPerFrame
                 } else {
+                    return
                    // o outro jogador me avisa quando ele estiver recupesando vida
                 }
             } else {
@@ -823,7 +832,8 @@ class Spaceship: Control {
             if self.health > self.maxHealth {
                 self.health = self.maxHealth
             }
-            self.healthBar.update(self.health, maxHealth: self.maxHealth)
+            
+            self.updateHealthBarValue()
         }
     }
     
@@ -833,6 +843,15 @@ class Spaceship: Control {
     
     func updateHealthBarValue() {
         self.healthBar.update(self.health, maxHealth: self.maxHealth)
+        
+        self.hidden = self.health <= 0
+        self.healthBar.hidden = self.hidden
+        
+        if !self.hidden {
+            if self.physicsBody == nil {
+                self.loadPhysics(rectangleOfSize: self.spriteNode.size)
+            }
+        }
     }
     
     func move(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
@@ -1163,7 +1182,6 @@ class Spaceship: Control {
         self.selectedSpriteNode = nil
         self.spriteNode = nil
         Spaceship.spaceshipList.remove(self)
-        self.hidden = true
         super.removeFromParent()
     }
     

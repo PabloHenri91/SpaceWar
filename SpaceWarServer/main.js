@@ -5,6 +5,8 @@ app.listen(8940);
 
 var roomSize = 2;
 
+var latestGameVersion = '1.3';
+
 function Game() {
     console.log('Game()');
     this.io = require('socket.io')(app);
@@ -73,9 +75,9 @@ function Player(game, socket) {
         player.leaveAllRooms();
     });
     
-    this.socket.on('getAllRooms', function() {
+    this.socket.on('getAllRooms', function(version) {
         console.log(socket.name + ' on getAllRooms');
-        player.getAllRooms();
+        player.getAllRooms(version);
     });
     
     this.socket.on('getRoomInfo', function(roomId) {
@@ -119,7 +121,7 @@ Player.prototype.leaveRoom = function(roomId) {
     this.socket.leave(roomId);
 };
 
-Player.prototype.createRoom = function() {
+Player.prototype.createRoom = function(version) {
     
     // Criando e entrando em uma sala.
     this.socket.join(this.socket.id);
@@ -127,7 +129,9 @@ Player.prototype.createRoom = function() {
     //Definindo roomId no Socket para marcar a sala criada.
     this.socket.roomId = this.socket.id;
     
-    this.game.io.sockets.emit('roomId', [this.socket.roomId, this.socket.name]);
+    this.game.allRooms[this.socket.id].version = version;
+    
+    this.game.io.sockets.emit('roomId', [this.socket.roomId, this.socket.name, version]);
 };
 
 Player.prototype.setUserDisplayInfo = function(userDisplayInfo) {
@@ -158,7 +162,7 @@ Player.prototype.someData = function(data) {
     }
 };
 
-Player.prototype.getAllRooms = function() {
+Player.prototype.getAllRooms = function(version) {
     
     if (Object.keys(this.game.connectedSockets).length <= 1) {
         
@@ -174,14 +178,16 @@ Player.prototype.getAllRooms = function() {
             var room = this.game.allRooms[roomId];
 
             if (Object.keys(room.sockets).length < roomSize && roomId !== this.socket.id) {
-                this.getRoomInfo(roomId);
-                foundRoom = true;
+                if (version === room.version) {
+                    this.getRoomInfo(roomId);
+                    foundRoom = true;
+                }
             }
         }
         
         if (!foundRoom) {
             this.socket.emit('noRoomsAvailable');
-            this.createRoom();
+            this.createRoom(version);
             //console.log(this.socket.name + ' emit noRoomsAvailable');
         }
     }
