@@ -88,16 +88,34 @@ class Research: Control {
     
     
     static func unlockRandomResearch() -> ResearchData? {
-        let winSpaceship = Int.random(101)
+        
+        let playerData = MemoryCard.sharedInstance.playerData
+        
+        var needNewResearch = true
+        
+        for item in playerData.researches {
+            if let researchData = item as? ResearchData {
+                if researchData.spaceshipLevel != researchData.spaceshipMaxLevel {
+                    needNewResearch = false
+                    break
+                }
+            }
+        }
+        
+        var winSpaceship = 0
+        
+        if needNewResearch {
+            winSpaceship = 100
+        } else {
+            winSpaceship = Int.random(101)
+        }
         
         // Chance de ganhar uma pesquisa >=90 ( 10% de chance)
         if (winSpaceship >= 75) {
             
-let playerData = MemoryCard.sharedInstance.playerData!
             var researchTypes = [ResearchType]()
             
             let diceRoll = Int.random(101)
-            
             
             // Commom <85 ( 85 % de chance de ser comum)
             if (diceRoll <= 100) {
@@ -129,6 +147,7 @@ let playerData = MemoryCard.sharedInstance.playerData!
                 
                 return newResearch
             }
+            
             //            } else if (diceRoll <= 95) {
             //                print("rare")
             //            } else if (diceRoll <= 99) {
@@ -141,9 +160,6 @@ let playerData = MemoryCard.sharedInstance.playerData!
         return nil
         
     }
-
-    
-
 }
 
 

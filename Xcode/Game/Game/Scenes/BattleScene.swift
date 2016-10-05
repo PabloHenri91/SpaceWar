@@ -110,9 +110,6 @@ class BattleScene: GameScene {
         Music.sharedInstance.playMusicWithType(Music.musicTypes.battle)
         
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
-        if self.botUpdateInterval < 1 {
-            self.botUpdateInterval = 1
-        }
         
         // BotMothership
         self.botMothership = Mothership(level: self.mothership.level)
@@ -396,7 +393,7 @@ class BattleScene: GameScene {
                         }
                         
                         alertBox.buttonOK.addHandler({[weak self, weak alertBox] in
-                            self?.nextState = states.unlockResearch
+                            self?.nextState = .unlockResearch
                             alertBox?.removeFromParent()
                         })
                         self.addChild(alertBox)
@@ -422,8 +419,8 @@ class BattleScene: GameScene {
             case .unlockResearch:
                 
                 let research = Research.unlockRandomResearch()
-                if research != nil {
-                    let researchUnlockedAlert = ResearchUnlockedAlert(researchData: research!)
+                if let research = research {
+                    let researchUnlockedAlert = ResearchUnlockedAlert(researchData: research)
                     
                     self.addChild(researchUnlockedAlert)
                     
@@ -484,7 +481,9 @@ class BattleScene: GameScene {
     }
     
     func updateBotOnLose() {
-        self.playerData.botUpdateInterval = self.botUpdateInterval + 1
+        if self.playerData.botUpdateInterval.integerValue < 10 {
+            self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue + 1
+        }
         self.playerData.botLevel = self.playerData.botLevel.integerValue - 1
     }
     
@@ -504,7 +503,10 @@ class BattleScene: GameScene {
         }
         
         RateMyApp.sharedInstance.trackEventUsage()
-        self.playerData.botUpdateInterval = self.botUpdateInterval - 1
+        
+        if self.playerData.botUpdateInterval.integerValue > 1 {
+            self.playerData.botUpdateInterval = self.playerData.botUpdateInterval.integerValue - 1
+        }
         self.playerData.botLevel = self.playerData.botLevel.integerValue + 1
     }
     
