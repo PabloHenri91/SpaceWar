@@ -367,7 +367,9 @@ class BattleScene: GameScene {
                 
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
-                    let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                    //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + xp.description, type: AlertBox.messageType.OK)
+                    
                     alertBox.buttonOK.addHandler({ [weak self, weak alertBox] in
                         self?.nextState = states.mothership
                         alertBox?.removeFromParent()
@@ -378,7 +380,9 @@ class BattleScene: GameScene {
                         
                         Metrics.win()
                         
-                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                        //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                        
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + xp.description, type: AlertBox.messageType.OK)
                         
                         if self.battleEndTime - self.battleBeginTime < 60 * 3 {
                             self.updateBotOnWin()
@@ -401,7 +405,9 @@ class BattleScene: GameScene {
                         
                         Metrics.loose()
                         
-                        let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                        //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
+                        
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + xp.description, type: AlertBox.messageType.OK)
                         
                         self.updateBotOnLose()
                         
