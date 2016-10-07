@@ -77,7 +77,7 @@ class Weapon: Control {
     
     func fire(bonusRange:CGFloat) {
         
-        if GameScene.currentTime - self.lastFire > self.fireInterval {
+        if GameScene.currentTime - self.lastFire >= self.fireInterval {
             
             if let parentSpaceship = self.parent {
                 if let parentSpaceshipPhysicsBody = parentSpaceship.physicsBody {

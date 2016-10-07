@@ -90,7 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ServerManager.sharedInstance.leaveAllRooms()
         
         if let gameScene = Control.gameScene as? BattleScene {
-            gameScene.nextState = .mothership
+            if BattleScene.state == .battleOnline {
+                gameScene.nextState = .mothership
+            }
         }
     }
     

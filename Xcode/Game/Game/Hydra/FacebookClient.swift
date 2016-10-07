@@ -32,6 +32,16 @@ class FacebookClient {
             successBlock()
             return
         }
+            
+        if let viewController = (UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.rootViewController {
+            FBSDKLoginManager().logInWithReadPermissions(facebookReadPermissions, fromViewController: viewController) { (loginManagerLoginResult :FBSDKLoginManagerLoginResult!, erro: NSError!) in
+                
+                //TODO: testa isso Paulo
+                //O metodo de baixo ta deprecated
+                //public func logInWithReadPermissions(permissions: [AnyObject]!, handler: FBSDKLoginManagerRequestTokenHandler!)
+                
+            }
+        }
         
         FBSDKLoginManager().logInWithReadPermissions(facebookReadPermissions, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
             if error != nil {

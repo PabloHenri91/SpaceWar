@@ -409,7 +409,12 @@ class BattleScene: GameScene {
                         
                         let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + xp.description, type: AlertBox.messageType.OK)
                         
-                        self.updateBotOnLose()
+                        if self.battleEndTime - self.battleBeginTime < 60 * 3 {
+                            self.updateBotOnLose()
+                        } else {
+                            self.updateBotOnLose()
+                            self.updateBotOnLose()
+                        }
                         
                         self.playerData.winningStreakCurrent = 0
                         alertBox.buttonOK.addHandler({ [weak self, weak alertBox] in
