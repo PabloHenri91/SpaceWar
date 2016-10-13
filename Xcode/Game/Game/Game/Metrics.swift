@@ -91,6 +91,8 @@ class Metrics {
         if Metrics.canSendEvents() {
             GameAnalytics.addDesignEventWithEventId("LevelUp:" + level.description , value: time)
         }
+        
+        
     }
     
     static func canSendEvents() -> Bool {
