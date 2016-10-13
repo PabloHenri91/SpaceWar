@@ -129,8 +129,6 @@ class MothershipScene: GameScene {
         self.nextEvents = NextEvents()
         self.addChild(self.nextEvents)
         
-        RateMyApp.sharedInstance.showRatingAlert()
-        
         switch GameTabBar.lastState {
         case .research, .mission:
             for node in self.children {
@@ -162,6 +160,8 @@ class MothershipScene: GameScene {
         
         self.gameTabBar = GameTabBar(state: GameTabBar.states.mothership)
         self.addChild(self.gameTabBar)
+        
+        RateMyApp.sharedInstance.showRatingAlert()
     }
     
     override func setAlertState() {
