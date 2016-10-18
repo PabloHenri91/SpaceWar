@@ -310,7 +310,7 @@ class BattleScene: GameScene {
             default:
                 print(BattleScene.state)
                 #if DEBUG
-                    fatalError()
+                    //fatalError()
                 #endif
                 break
             }

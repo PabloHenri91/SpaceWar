@@ -44,4 +44,5 @@ class Display {
             height: Int(viewBoundsSize.height / scale))
         
         return Display.currentSceneSize
-    }}
+    }
+}

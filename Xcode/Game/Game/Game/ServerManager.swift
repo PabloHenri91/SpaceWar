@@ -176,25 +176,26 @@ class ServerManager {
                     let _ = i.next()
                     let name = i.next() as! String
                     
-                    let version = i.next() as! String
-                    
-                    if self.version == version {
+                    if let version = i.next() as? String {
                         
-                        let labelText = "Tap BATTLE now to play with " + name
-                        
-                        let label = Label(color: SKColor.blackColor(), text: labelText, fontSize: 10, x: 160, y: 352, xAlign: .center, yAlign: .center)
-                        
-                        scene.addChild(label)
-                        
-                        label.runAction({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
-                            label?.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: {
-                                label?.removeFromParent()
-                            })
-                            })
-                        
-                        scene.buttonBattle.shake()
-                        
-                        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+                        if self.version == version {
+                            
+                            let labelText = "Tap BATTLE now to play with " + name
+                            
+                            let label = Label(color: SKColor.blackColor(), text: labelText, fontSize: 10, x: 160, y: 352, xAlign: .center, yAlign: .center)
+                            
+                            scene.addChild(label)
+                            
+                            label.runAction({ let a = SKAction(); a.duration = 3; return a }(), completion: { [weak label] in
+                                label?.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: {
+                                    label?.removeFromParent()
+                                })
+                                })
+                            
+                            scene.buttonBattle.shake()
+                            
+                            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+                        }
                     }
                 }
             }

@@ -25,13 +25,13 @@ class SoundEffect {
             "explosion6.wav"
         ]
         static var laser = [
-            "laser1.wav",
-            "laser2.wav",
-            "laser3.wav",
-            "laser4.wav",
-            "laser5.wav",
-            "laser6.wav",
-            "laser7.wav"
+            "laser1",
+            "laser2",
+            "laser3",
+            "laser4",
+            "laser5",
+            "laser6",
+            "laser7"
         ]
     }
     

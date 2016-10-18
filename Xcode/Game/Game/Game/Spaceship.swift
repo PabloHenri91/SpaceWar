@@ -71,7 +71,7 @@ class Spaceship: Control {
     var isInsideAMothership = true
     
     private var healthBar:HealthBar!
-    var weaponRangeSprite:SKShapeNode!
+    var weaponRangeSprite:SKShapeNode?
     
     //Respawn
     var canRespawn = true
@@ -259,18 +259,20 @@ class Spaceship: Control {
     func loadWeaponRangeSprite(gameWorld:GameWorld) {
         if let weapon = self.weapon {
             self.weaponRangeSprite = SKShapeNode(circleOfRadius: weapon.rangeInPoints)
-            self.weaponRangeSprite.strokeColor = SKColor.whiteColor()
-            self.weaponRangeSprite.fillColor = SKColor.clearColor()
-            self.weaponRangeSprite.position = self.position
-            self.weaponRangeSprite.alpha = 0
+            self.weaponRangeSprite?.strokeColor = SKColor.whiteColor()
+            self.weaponRangeSprite?.fillColor = SKColor.clearColor()
+            self.weaponRangeSprite?.position = self.position
+            self.weaponRangeSprite?.alpha = 0
             
-            gameWorld.addChild(self.weaponRangeSprite)
+            if let weaponRangeSprite = self.weaponRangeSprite {
+                gameWorld.addChild(weaponRangeSprite)
+            }
         }
     }
     
     func showWeaponRangeSprite() {
         if let _ = self.weapon {
-            self.weaponRangeSprite.alpha = 1
+            self.weaponRangeSprite?.alpha = 1
         }
     }
     

@@ -174,6 +174,15 @@
 		844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844CF28F1CE789AA0032F6AA /* MainMenu.xib */; };
 		844CF29A1CE78BFB0032F6AA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2991CE78BFB0032F6AA /* Media.xcassets */; };
 		844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844CF2991CE78BFB0032F6AA /* Media.xcassets */; };
+		8450840B1DB6524D00F90C72 /* laser1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084021DB6524D00F90C72 /* laser1.mp3 */; };
+		8450840C1DB6524D00F90C72 /* laser2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084031DB6524D00F90C72 /* laser2.mp3 */; };
+		8450840D1DB6524D00F90C72 /* laser3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084041DB6524D00F90C72 /* laser3.mp3 */; };
+		8450840E1DB6524D00F90C72 /* laser4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084051DB6524D00F90C72 /* laser4.mp3 */; };
+		8450840F1DB6524D00F90C72 /* laser5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084061DB6524D00F90C72 /* laser5.mp3 */; };
+		845084101DB6524D00F90C72 /* laser6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084071DB6524D00F90C72 /* laser6.mp3 */; };
+		845084111DB6524D00F90C72 /* laser7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084081DB6524D00F90C72 /* laser7.mp3 */; };
+		845084121DB6524D00F90C72 /* laser8.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 845084091DB6524D00F90C72 /* laser8.mp3 */; };
+		845084131DB6524D00F90C72 /* laser9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8450840A1DB6524D00F90C72 /* laser9.mp3 */; };
 		845FDA251D61DE9400A2C7CE /* GameAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FDA241D61DE9400A2C7CE /* GameAdManager.swift */; };
 		8461B4F71D47CAF900BB6B27 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8461B4F91D47CAF900BB6B27 /* Localizable.strings */; };
 		84629EE61D79EB4400888F44 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84629EE51D79EB4400888F44 /* IAPHelper.swift */; };
@@ -312,24 +321,6 @@
 		84C011671D46433400EC7080 /* explosion7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C011511D46433400EC7080 /* explosion7.wav */; };
 		84C0117A1D46442B00EC7080 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C011791D46442B00EC7080 /* SoundEffect.swift */; };
 		84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C011791D46442B00EC7080 /* SoundEffect.swift */; };
-		84C011851D4659B800EC7080 /* laser1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117C1D4659B800EC7080 /* laser1.mp3 */; };
-		84C011861D4659B800EC7080 /* laser1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117C1D4659B800EC7080 /* laser1.mp3 */; };
-		84C011871D4659B800EC7080 /* laser2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117D1D4659B800EC7080 /* laser2.mp3 */; };
-		84C011881D4659B800EC7080 /* laser2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117D1D4659B800EC7080 /* laser2.mp3 */; };
-		84C011891D4659B800EC7080 /* laser3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117E1D4659B800EC7080 /* laser3.mp3 */; };
-		84C0118A1D4659B800EC7080 /* laser3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117E1D4659B800EC7080 /* laser3.mp3 */; };
-		84C0118B1D4659B800EC7080 /* laser4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117F1D4659B800EC7080 /* laser4.mp3 */; };
-		84C0118C1D4659B800EC7080 /* laser4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C0117F1D4659B800EC7080 /* laser4.mp3 */; };
-		84C0118D1D4659B800EC7080 /* laser5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011801D4659B800EC7080 /* laser5.mp3 */; };
-		84C0118E1D4659B800EC7080 /* laser5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011801D4659B800EC7080 /* laser5.mp3 */; };
-		84C0118F1D4659B800EC7080 /* laser6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011811D4659B800EC7080 /* laser6.mp3 */; };
-		84C011901D4659B800EC7080 /* laser6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011811D4659B800EC7080 /* laser6.mp3 */; };
-		84C011911D4659B800EC7080 /* laser7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011821D4659B800EC7080 /* laser7.mp3 */; };
-		84C011921D4659B800EC7080 /* laser7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011821D4659B800EC7080 /* laser7.mp3 */; };
-		84C011931D4659B800EC7080 /* laser8.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011831D4659B800EC7080 /* laser8.mp3 */; };
-		84C011941D4659B800EC7080 /* laser8.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011831D4659B800EC7080 /* laser8.mp3 */; };
-		84C011951D4659B800EC7080 /* laser9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011841D4659B800EC7080 /* laser9.mp3 */; };
-		84C011961D4659B800EC7080 /* laser9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84C011841D4659B800EC7080 /* laser9.mp3 */; };
 		84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
 		84C14B211D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
 		84C8C26A1D99815E006481EC /* RateMyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8C2691D99815E006481EC /* RateMyApp.swift */; };
@@ -483,6 +474,15 @@
 		844CF28D1CE789AA0032F6AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		844CF2921CE789AA0032F6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		844CF2991CE78BFB0032F6AA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		845084021DB6524D00F90C72 /* laser1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser1.mp3; sourceTree = "<group>"; };
+		845084031DB6524D00F90C72 /* laser2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser2.mp3; sourceTree = "<group>"; };
+		845084041DB6524D00F90C72 /* laser3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser3.mp3; sourceTree = "<group>"; };
+		845084051DB6524D00F90C72 /* laser4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser4.mp3; sourceTree = "<group>"; };
+		845084061DB6524D00F90C72 /* laser5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser5.mp3; sourceTree = "<group>"; };
+		845084071DB6524D00F90C72 /* laser6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser6.mp3; sourceTree = "<group>"; };
+		845084081DB6524D00F90C72 /* laser7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser7.mp3; sourceTree = "<group>"; };
+		845084091DB6524D00F90C72 /* laser8.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser8.mp3; sourceTree = "<group>"; };
+		8450840A1DB6524D00F90C72 /* laser9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser9.mp3; sourceTree = "<group>"; };
 		845FDA241D61DE9400A2C7CE /* GameAdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAdManager.swift; sourceTree = "<group>"; };
 		8461B4FA1D47CB2000BB6B27 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8461B4FB1D47CB2000BB6B27 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -605,15 +605,6 @@
 		84C011501D46433400EC7080 /* explosion6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion6.wav; sourceTree = "<group>"; };
 		84C011511D46433400EC7080 /* explosion7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion7.wav; sourceTree = "<group>"; };
 		84C011791D46442B00EC7080 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
-		84C0117C1D4659B800EC7080 /* laser1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser1.mp3; sourceTree = "<group>"; };
-		84C0117D1D4659B800EC7080 /* laser2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser2.mp3; sourceTree = "<group>"; };
-		84C0117E1D4659B800EC7080 /* laser3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser3.mp3; sourceTree = "<group>"; };
-		84C0117F1D4659B800EC7080 /* laser4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser4.mp3; sourceTree = "<group>"; };
-		84C011801D4659B800EC7080 /* laser5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser5.mp3; sourceTree = "<group>"; };
-		84C011811D4659B800EC7080 /* laser6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser6.mp3; sourceTree = "<group>"; };
-		84C011821D4659B800EC7080 /* laser7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser7.mp3; sourceTree = "<group>"; };
-		84C011831D4659B800EC7080 /* laser8.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser8.mp3; sourceTree = "<group>"; };
-		84C011841D4659B800EC7080 /* laser9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser9.mp3; sourceTree = "<group>"; };
 		84C14B1F1D412DA600D20D4D /* BatteryControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryControl.swift; sourceTree = "<group>"; };
 		84C8C2691D99815E006481EC /* RateMyApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateMyApp.swift; sourceTree = "<group>"; };
 		84C8D5561CF4C233007C1ED6 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
@@ -1085,15 +1076,15 @@
 		84C011521D46433400EC7080 /* lasers */ = {
 			isa = PBXGroup;
 			children = (
-				84C0117C1D4659B800EC7080 /* laser1.mp3 */,
-				84C0117D1D4659B800EC7080 /* laser2.mp3 */,
-				84C0117E1D4659B800EC7080 /* laser3.mp3 */,
-				84C0117F1D4659B800EC7080 /* laser4.mp3 */,
-				84C011801D4659B800EC7080 /* laser5.mp3 */,
-				84C011811D4659B800EC7080 /* laser6.mp3 */,
-				84C011821D4659B800EC7080 /* laser7.mp3 */,
-				84C011831D4659B800EC7080 /* laser8.mp3 */,
-				84C011841D4659B800EC7080 /* laser9.mp3 */,
+				845084021DB6524D00F90C72 /* laser1.mp3 */,
+				845084031DB6524D00F90C72 /* laser2.mp3 */,
+				845084041DB6524D00F90C72 /* laser3.mp3 */,
+				845084051DB6524D00F90C72 /* laser4.mp3 */,
+				845084061DB6524D00F90C72 /* laser5.mp3 */,
+				845084071DB6524D00F90C72 /* laser6.mp3 */,
+				845084081DB6524D00F90C72 /* laser7.mp3 */,
+				845084091DB6524D00F90C72 /* laser8.mp3 */,
+				8450840A1DB6524D00F90C72 /* laser9.mp3 */,
 			);
 			path = lasers;
 			sourceTree = "<group>";
@@ -1254,45 +1245,45 @@
 				84399E2D1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
 				84C011641D46433400EC7080 /* explosion6.wav in Resources */,
 				84BF049A1D50B8EF00F49792 /* museosansrounded-900-webfont.ttf in Resources */,
+				845084131DB6524D00F90C72 /* laser9.mp3 in Resources */,
+				8450840B1DB6524D00F90C72 /* laser1.mp3 in Resources */,
 				3AA0C97F1CFDB3B5008EE628 /* FacebookSDK-4_12-for-iOS.docset in Resources */,
 				84C011661D46433400EC7080 /* explosion7.wav in Resources */,
 				848FD6CB1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */,
 				8478D48A1D4678E9000E09DD /* spark.png in Resources */,
 				844CF29A1CE78BFB0032F6AA /* Media.xcassets in Resources */,
-				84C011931D4659B800EC7080 /* laser8.mp3 in Resources */,
 				8478D4891D4678E9000E09DD /* spark.sks in Resources */,
-				84C0118D1D4659B800EC7080 /* laser5.mp3 in Resources */,
+				845084121DB6524D00F90C72 /* laser8.mp3 in Resources */,
 				844CF2771CE77B400032F6AA /* LaunchScreen.storyboard in Resources */,
-				84C0118B1D4659B800EC7080 /* laser4.mp3 in Resources */,
 				84C0115C1D46433400EC7080 /* explosion2.wav in Resources */,
 				844CF2741CE77B400032F6AA /* Assets.xcassets in Resources */,
 				3AA0C97E1CFDB3B5008EE628 /* FacebookMessengerShareKitSDK-1_3-for-iOS.docset in Resources */,
 				3AA0C97D1CFDB3B5008EE628 /* FacebookAudienceNetworkSDK-4_12-for-iOS.docset in Resources */,
+				845084111DB6524D00F90C72 /* laser7.mp3 in Resources */,
+				845084101DB6524D00F90C72 /* laser6.mp3 in Resources */,
+				8450840D1DB6524D00F90C72 /* laser3.mp3 in Resources */,
 				84D621231D258EC4005D550C /* explosion.sks in Resources */,
 				3AA0C9801CFDB3B5008EE628 /* install_docsets.sh in Resources */,
-				84C011951D4659B800EC7080 /* laser9.mp3 in Resources */,
 				84C011601D46433400EC7080 /* explosion4.wav in Resources */,
-				84C011871D4659B800EC7080 /* laser2.mp3 in Resources */,
-				84C011851D4659B800EC7080 /* laser1.mp3 in Resources */,
 				84BF04941D50B8EF00F49792 /* museosansrounded-100-webfont.ttf in Resources */,
-				84C011891D4659B800EC7080 /* laser3.mp3 in Resources */,
 				84D6212B1D259021005D550C /* explosion.png in Resources */,
 				848FD6C91D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */,
 				3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */,
 				84C0115A1D46433400EC7080 /* explosion1.wav in Resources */,
 				3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
 				84C011621D46433400EC7080 /* explosion5.wav in Resources */,
+				8450840C1DB6524D00F90C72 /* laser2.mp3 in Resources */,
 				8461B4F71D47CAF900BB6B27 /* Localizable.strings in Resources */,
 				84C0115E1D46433400EC7080 /* explosion3.wav in Resources */,
 				84BF04981D50B8EF00F49792 /* museosansrounded-700-webfont.ttf in Resources */,
 				848FD6CF1D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */,
 				848FD6D31D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */,
-				84C0118F1D4659B800EC7080 /* laser6.mp3 in Resources */,
 				842AD41E1D74CDA3002C4AFE /* Jet.sks in Resources */,
 				842311431D9D8FF200A2D43E /* battleWin.sks in Resources */,
 				844CF2721CE77B400032F6AA /* Main.storyboard in Resources */,
+				8450840F1DB6524D00F90C72 /* laser5.mp3 in Resources */,
 				843620841CEB77400082A9D7 /* DefaultNameList in Resources */,
-				84C011911D4659B800EC7080 /* laser7.mp3 in Resources */,
+				8450840E1DB6524D00F90C72 /* laser4.mp3 in Resources */,
 				3AA0C9811CFDB3B5008EE628 /* FacebookSDKStrings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1310,30 +1301,21 @@
 				84D6212C1D259021005D550C /* explosion.png in Resources */,
 				84C0115D1D46433400EC7080 /* explosion2.wav in Resources */,
 				8495A35D1D4686BF00A4205F /* spark.sks in Resources */,
-				84C011881D4659B800EC7080 /* laser2.mp3 in Resources */,
 				84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */,
-				84C0118C1D4659B800EC7080 /* laser4.mp3 in Resources */,
 				843620851CEB77400082A9D7 /* DefaultNameList in Resources */,
 				84314BFF1D707C5A00B7E7C7 /* Localizable.strings in Resources */,
 				844CF29B1CE78BFB0032F6AA /* Media.xcassets in Resources */,
 				848FD6D01D42A4BA0002D4F5 /* klamm_space-life.mp3 in Resources */,
 				84BF049B1D50B8EF00F49792 /* museosansrounded-900-webfont.ttf in Resources */,
 				3A696E781D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
-				84C011861D4659B800EC7080 /* laser1.mp3 in Resources */,
-				84C011961D4659B800EC7080 /* laser9.mp3 in Resources */,
-				84C011901D4659B800EC7080 /* laser6.mp3 in Resources */,
 				848FD6D41D42A4BA0002D4F5 /* pandamindset_pandamindset---space-sleepers.mp3 in Resources */,
-				84C011921D4659B800EC7080 /* laser7.mp3 in Resources */,
 				8495A35E1D4686BF00A4205F /* spark.png in Resources */,
 				84BF04951D50B8EF00F49792 /* museosansrounded-100-webfont.ttf in Resources */,
 				844CF2911CE789AA0032F6AA /* MainMenu.xib in Resources */,
-				84C011941D4659B800EC7080 /* laser8.mp3 in Resources */,
 				84C0115B1D46433400EC7080 /* explosion1.wav in Resources */,
 				842AD41F1D74CDA3002C4AFE /* Jet.sks in Resources */,
 				84C011671D46433400EC7080 /* explosion7.wav in Resources */,
-				84C0118A1D4659B800EC7080 /* laser3.mp3 in Resources */,
 				848FD6CC1D42A4BA0002D4F5 /* jredd_magma-crystal-falls.mp3 in Resources */,
-				84C0118E1D4659B800EC7080 /* laser5.mp3 in Resources */,
 				84BF04991D50B8EF00F49792 /* museosansrounded-700-webfont.ttf in Resources */,
 				84BF04971D50B8EF00F49792 /* museosansrounded-300-webfont.ttf in Resources */,
 				84C0115F1D46433400EC7080 /* explosion3.wav in Resources */,

@@ -67,7 +67,6 @@ class Music {
             try self.audioPlayer = AVAudioPlayer(contentsOfURL: backgroundMusicURL!)
             self.audioPlayer.volume = 0.3
             self.audioPlayer.numberOfLoops = -1
-            self.audioPlayer.prepareToPlay()
             self.play()
             //print("Music: " + name)
         } catch {

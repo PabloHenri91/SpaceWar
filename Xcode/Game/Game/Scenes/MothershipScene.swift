@@ -237,6 +237,16 @@ class MothershipScene: GameScene {
                 break
                 
             case .battle:
+                
+                self.playerDataCard.removeFromParent()
+                self.gameTabBar.removeFromParent()
+                
+                GameScene.lastChildren = self.children
+                for node in GameScene.lastChildren {
+                    node.removeFromParent()
+                }
+                GameScene.lastChildren = [SKNode]()
+                
                 self.view?.presentScene(BattleScene())
                 break
                 
@@ -405,7 +415,7 @@ class MothershipScene: GameScene {
                             return
                         }
                         
-                        self.nextState = states.battle
+                        self.nextState = .battle
                         return
                     }
                     

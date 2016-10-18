@@ -20,7 +20,7 @@ class PlayerDataCard: Control {
     var labelPoints:Label!
     var labelPremiumPoints:Label!
     
-    var xpBarCircle:SKShapeNode!
+    var xpBarCircle:SKShapeNode?
     var xpBarSpriteNode:SKSpriteNode?
     
     var statistics:PlayerDataCardStatistics!
@@ -143,9 +143,9 @@ class PlayerDataCard: Control {
         let positionY:CGFloat = -26
         
         self.xpBarCircle = SKShapeNode(circleOfRadius: CGFloat(height/2))
-        self.xpBarCircle.fillColor = color
-        self.xpBarCircle.strokeColor = SKColor.clearColor()
-        self.xpBarCircle.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
+        self.xpBarCircle?.fillColor = color
+        self.xpBarCircle?.strokeColor = SKColor.clearColor()
+        self.xpBarCircle?.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
         
         if width > height/2 {
             let anchorPoint = CGPoint(x: 1, y: 1)
@@ -163,7 +163,9 @@ class PlayerDataCard: Control {
             self.addChild(self.xpBarSpriteNode!)
         }
         
-        self.addChild(self.xpBarCircle)
+        if let xpBarCircle = self.xpBarCircle {
+            self.addChild(xpBarCircle)
+        }
     }
     
     private func updateLevel() {
@@ -233,7 +235,7 @@ class PlayerDataCard: Control {
         let width:CGFloat = 103 * (CGFloat(playerData.motherShip.xp.integerValue)/CGFloat(xpForNextLevel))
         let height:CGFloat = 17
         
-        self.xpBarCircle.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
+        self.xpBarCircle?.position = CGPoint(x: (positionX - width) + (height/2), y: positionY - (height/2))
         
         if let xpBarSpriteNode = self.xpBarSpriteNode {
             if width > height/2 {

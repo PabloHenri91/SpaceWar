@@ -22,4 +22,18 @@ class BlackSpriteNode: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func moveToParent(parent: SKNode) {
+        super.removeFromParent()
+        parent.addChild(self)
+    }
+    
+    override func removeFromParent() {
+        self.removeAllActions()
+        
+        for node in self.children {
+            node.removeFromParent()
+        }
+        super.removeFromParent()
+    }
 }
