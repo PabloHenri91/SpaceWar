@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0">
+    <entity name="BatteryData" representedClassName="BatteryData" syncable="YES">
+        <attribute name="charge" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastCharge" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="battery" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="BoostData" representedClassName="BoostData" syncable="YES">
+        <attribute name="lastCharge" attributeType="Date" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="boosts" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="FriendData" representedClassName="FriendData" syncable="YES">
+        <attribute name="acceptedInvite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="invitedFriends" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="MissionSpaceshipData" representedClassName="MissionSpaceshipData" syncable="YES">
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="missionType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="startMissionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="missionSpaceships" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="MothershipData" representedClassName="MothershipData" syncable="YES">
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="xp" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="motherShip" inverseEntity="PlayerData" syncable="YES"/>
+        <relationship name="spaceships" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SpaceshipData" inverseName="parentMothership" inverseEntity="SpaceshipData" syncable="YES"/>
+        <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="parentMothership" inverseEntity="WeaponData" syncable="YES"/>
+    </entity>
+    <entity name="PlayerData" representedClassName="PlayerData" syncable="YES">
+        <attribute name="botLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="botUpdateInterval" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="datamodelVersion" attributeType="Integer 16" defaultValueString="5" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="needBattleTraining" attributeType="Boolean" syncable="YES"/>
+        <attribute name="points" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="pointsSum" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="premiumPoints" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="winCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="winningStreakBest" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="winningStreakCurrent" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="battery" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BatteryData" inverseName="parentPlayer" inverseEntity="BatteryData" syncable="YES"/>
+        <relationship name="boosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BoostData" inverseName="parentPlayer" inverseEntity="BoostData" syncable="YES"/>
+        <relationship name="invitedFriends" toMany="YES" deletionRule="Nullify" destinationEntity="FriendData" inverseName="parentPlayer" inverseEntity="FriendData" syncable="YES"/>
+        <relationship name="missionSpaceships" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MissionSpaceshipData" inverseName="parentPlayer" inverseEntity="MissionSpaceshipData" syncable="YES"/>
+        <relationship name="motherShip" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="parentPlayer" inverseEntity="MothershipData" syncable="YES"/>
+        <relationship name="researches" toMany="YES" deletionRule="Nullify" destinationEntity="ResearchData" inverseName="parentPlayer" inverseEntity="ResearchData" syncable="YES"/>
+        <relationship name="sectorMissions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SectorMissionData" inverseName="parentPlayer" inverseEntity="SectorMissionData" syncable="YES"/>
+        <relationship name="spaceships" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="parentPlayer" inverseEntity="SpaceshipData" syncable="YES"/>
+        <relationship name="unlockedSpaceships" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceshipData" syncable="YES"/>
+        <relationship name="weapons" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="parentPlayer" inverseEntity="WeaponData" syncable="YES"/>
+    </entity>
+    <entity name="ResearchData" representedClassName="ResearchData" syncable="YES">
+        <attribute name="done" attributeType="Boolean" syncable="YES"/>
+        <attribute name="spaceshipLevel" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spaceshipMaxLevel" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="researches" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="SectorMissionData" representedClassName="SectorMissionData" syncable="YES">
+        <attribute name="sectorIndex" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sectorMissionIndex" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="stars" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="sectorMissions" inverseEntity="PlayerData" syncable="YES"/>
+    </entity>
+    <entity name="SpaceshipData" representedClassName="SpaceshipData" syncable="YES">
+        <attribute name="crashDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="killCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="xp" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentMothership" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="spaceships" inverseEntity="MothershipData" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="spaceships" inverseEntity="PlayerData" syncable="YES"/>
+        <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponData" inverseName="parentSpaceship" inverseEntity="WeaponData" syncable="YES"/>
+    </entity>
+    <entity name="WeaponData" representedClassName="WeaponData" syncable="YES">
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentMothership" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MothershipData" inverseName="weapons" inverseEntity="MothershipData" syncable="YES"/>
+        <relationship name="parentPlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayerData" inverseName="weapons" inverseEntity="PlayerData" syncable="YES"/>
+        <relationship name="parentSpaceship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceshipData" inverseName="weapons" inverseEntity="SpaceshipData" syncable="YES"/>
+    </entity>
+    <fetchRequest name="FetchRequest" entity="PlayerData"/>
+    <elements>
+        <element name="BatteryData" positionX="-288" positionY="-54" width="128" height="90"/>
+        <element name="BoostData" positionX="-288" positionY="-54" width="128" height="90"/>
+        <element name="FriendData" positionX="-279" positionY="-45" width="128" height="120"/>
+        <element name="MissionSpaceshipData" positionX="-279" positionY="-45" width="128" height="105"/>
+        <element name="MothershipData" positionX="-488" positionY="-198" width="128" height="120"/>
+        <element name="PlayerData" positionX="-225" positionY="-171" width="128" height="375"/>
+        <element name="ResearchData" positionX="-11" positionY="-154" width="128" height="135"/>
+        <element name="SpaceshipData" positionX="-56" positionY="117" width="128" height="165"/>
+        <element name="WeaponData" positionX="-459" positionY="45" width="128" height="28"/>
+        <element name="SectorMissionData" positionX="-279" positionY="-45" width="128" height="105"/>
+    </elements>
+</model>

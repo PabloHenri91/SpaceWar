@@ -1202,7 +1202,18 @@ public enum TargetType:Int {
     case towers
 }
 
+enum SpaceshipIndex: Int {
+    case intrepid
+    case tanker
+    case speeder
+}
+
 class SpaceshipType {
+    
+    static func random() -> SpaceshipType { return Spaceship.types[Int.random(Spaceship.types.count)] }
+    static let intrepid = Spaceship.types[SpaceshipIndex.intrepid.rawValue]
+    static let tanker = Spaceship.types[SpaceshipIndex.tanker.rawValue]
+    static let speeder = Spaceship.types[SpaceshipIndex.speeder.rawValue]
     
     enum rarityTypes:String {
         case common
@@ -1305,7 +1316,7 @@ extension Spaceship {
             spaceshipType.name = "Intrepid"
             spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
             spaceshipType.rarity = .common
-            spaceshipType.index = 0
+            spaceshipType.index = SpaceshipIndex.intrepid.rawValue
             spaceshipType.centerJet = true
             return spaceshipType
         }(),
@@ -1321,7 +1332,7 @@ extension Spaceship {
             spaceshipType.name = "Tanker"
             spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
             spaceshipType.rarity = .common
-            spaceshipType.index = 1
+            spaceshipType.index = SpaceshipIndex.tanker.rawValue
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
             spaceshipType.jetBorderOffset = -5
@@ -1339,7 +1350,7 @@ extension Spaceship {
             spaceshipType.name = "Speeder"
             spaceshipType.spaceshipDescription = "Flies at the speed of light."
             spaceshipType.rarity = .common
-            spaceshipType.index = 2
+            spaceshipType.index = SpaceshipIndex.speeder.rawValue
             spaceshipType.centerJet = true
             return spaceshipType
         }()

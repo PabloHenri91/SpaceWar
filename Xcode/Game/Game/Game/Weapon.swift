@@ -98,8 +98,20 @@ class Weapon: Control {
     }
 }
 
+enum WeaponIndex: Int {
+    case blaster
+    case striker
+    case destroyer
+    case sniper
+}
 
 class WeaponType {
+    
+    static func random() -> WeaponType { return Weapon.types[Int.random(Weapon.types.count)] }
+    static var blaster = Weapon.types[WeaponIndex.blaster.rawValue]
+    static var striker = Weapon.types[WeaponIndex.striker.rawValue]
+    static var destroyer = Weapon.types[WeaponIndex.destroyer.rawValue]
+    static var sniper = Weapon.types[WeaponIndex.sniper.rawValue]
     
     var color = SKColor.whiteColor()
     var shotSkin = ""
@@ -141,7 +153,7 @@ extension Weapon {
             weaponType.name = "Blaster"
             weaponType.initSoundFileName = "laser5.mp3"
             weaponType.weaponDescription = "A normal weapon."
-            weaponType.index = 0
+            weaponType.index = WeaponIndex.blaster.rawValue
             return weaponType
         }(),
         
@@ -154,7 +166,7 @@ extension Weapon {
             weaponType.name = "Striker"
             weaponType.initSoundFileName = "laser3.mp3"
             weaponType.weaponDescription = "A thousand shots."
-            weaponType.index = 1
+            weaponType.index = WeaponIndex.striker.rawValue
             return weaponType
         }(),
         
@@ -167,7 +179,7 @@ extension Weapon {
             weaponType.name = "Destroyer"
             weaponType.initSoundFileName = "laser1.mp3"
             weaponType.weaponDescription = "Close death."
-            weaponType.index = 2
+            weaponType.index = WeaponIndex.destroyer.rawValue
             return weaponType
         }(),
         
@@ -180,7 +192,7 @@ extension Weapon {
             weaponType.name = "Sniper"
             weaponType.initSoundFileName = "laser9.mp3"
             weaponType.weaponDescription = "Kill enemies from other side of the universe."
-            weaponType.index = 3
+            weaponType.index = WeaponIndex.sniper.rawValue
             return weaponType
         }()
     ]

@@ -149,6 +149,16 @@ extension MemoryCard {
 
 extension PlayerData {
     
+    func removeSectorMissionData(value: SectorMissionData) {
+        let items = self.mutableSetValueForKey("sectorMissions")
+        items.removeObject(value)
+    }
+    
+    func addSectorMissionData(value: SectorMissionData) {
+        let items = self.mutableSetValueForKey("sectorMissions")
+        items.addObject(value)
+    }
+    
     func removeBoostData(value: BoostData) {
         let items = self.mutableSetValueForKey("boosts")
         items.removeObject(value)
