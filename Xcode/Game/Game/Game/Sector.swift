@@ -17,10 +17,10 @@ class Sector {
         types.append(
             Sector(missions: [ // Sector 0
                 SectorMission(enemies: [ // SectorMission 0
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster)
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue])
                     ],
                     sectorMissionRewards: [
                         SectorMissionReward(points: 100, premiumPoints: 1),
@@ -29,16 +29,16 @@ class Sector {
                     ]),
                 
                 SectorMission(enemies: [ // SectorMission 1
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster)
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue])
                     ],
                     sectorMissionRewards: [
                         SectorMissionReward(points: 100, premiumPoints: 1),
                         SectorMissionReward(points: 100, premiumPoints: 1),
                         SectorMissionReward(points: 100, premiumPoints: 1,
-                        spaceship: (spaceshipType: SpaceshipType.tanker, weaponType: WeaponType.blaster))
+                        spaceshipType: Spaceship.types[SpaceshipIndex.tankerBlaster.rawValue])
                     ])
                 ]
             )
@@ -48,10 +48,10 @@ class Sector {
         types.append(
             Sector(missions: [ // Sector 1
                 SectorMission(enemies: [  // SectorMission 0
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster)
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue])
                     ],
                     sectorMissionRewards: [
                         SectorMissionReward(points: 100, premiumPoints: 1),
@@ -60,16 +60,16 @@ class Sector {
                     ]),
                 
                 SectorMission(enemies: [ // SectorMission 1
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster),
-                    SectorMissionEnemy(level: 1, spaceshipType: SpaceshipType.intrepid, weaponType: WeaponType.blaster)
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue]),
+                    SectorMissionEnemy(level: 1, spaceshipType: Spaceship.types[SpaceshipIndex.intrepidBlaster.rawValue])
                     ],
                     sectorMissionRewards: [
                         SectorMissionReward(points: 100, premiumPoints: 1),
                         SectorMissionReward(points: 100, premiumPoints: 1),
                         SectorMissionReward(points: 100, premiumPoints: 1,
-                        spaceship: (spaceshipType: SpaceshipType.speeder, weaponType: WeaponType.blaster))
+                        spaceshipType: Spaceship.types[SpaceshipIndex.speederBlaster.rawValue])
                     ])
                 ]
             )
@@ -117,12 +117,10 @@ class SectorMissionEnemy {
     
     var level: Int
     var spaceshipType: SpaceshipType
-    var weaponType: WeaponType
     
-    init(level: Int, spaceshipType: SpaceshipType, weaponType: WeaponType) {
+    init(level: Int, spaceshipType: SpaceshipType) {
         self.level = level
         self.spaceshipType = spaceshipType
-        self.weaponType = weaponType
     }
 }
 
@@ -130,12 +128,12 @@ class SectorMissionReward {
     
     var points: Int = 0
     var premiumPoints: Int = 0
-    var spaceship: (spaceshipType: SpaceshipType, weaponType: WeaponType)?
+    var spaceshipType: SpaceshipType?
     
-    init(points: Int, premiumPoints: Int, spaceship: (spaceshipType: SpaceshipType, weaponType: WeaponType)? = nil) {
+    init(points: Int, premiumPoints: Int, spaceshipType: SpaceshipType? = nil) {
         self.points = points
         self.premiumPoints = premiumPoints
-        self.spaceship = spaceship
+        self.spaceshipType = spaceshipType
     }
 }
 

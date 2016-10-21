@@ -220,8 +220,7 @@ extension SocketIOClient {
             items.append(
                 [
                     spaceship.battleMaxLevel as AnyObject,
-                    spaceship.type.index as AnyObject,
-                    spaceship.weapon!.type.index as AnyObject
+                    spaceship.type.index as AnyObject
                 ])
         }
         

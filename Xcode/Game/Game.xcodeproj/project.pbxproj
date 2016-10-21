@@ -239,6 +239,8 @@
 		84656DEB1D7F48E200930157 /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84656DBC1D7F48E200930157 /* SSLSecurity.swift */; };
 		84656DEC1D7F48E200930157 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84656DBD1D7F48E200930157 /* WebSocket.swift */; };
 		84656DED1D7F48E200930157 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84656DBD1D7F48E200930157 /* WebSocket.swift */; };
+		846850351DBA47EB00461C80 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846850341DBA47EB00461C80 /* WeaponType.swift */; };
+		846850361DBA47EB00461C80 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846850341DBA47EB00461C80 /* WeaponType.swift */; };
 		846ECB131D61FBDC001C0FF0 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F31441D410C2900FDFBFE /* Metrics.swift */; };
 		846F65D01CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
 		846F65D11CF4777B00A2E69F /* Mothership.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65CF1CF4777B00A2E69F /* Mothership.swift */; };
@@ -342,8 +344,6 @@
 		84F855DE1CECCE2A00FB63D2 /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */; };
 		84F855DF1CECCE2A00FB63D2 /* MothershipScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */; };
 		84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */; };
-		84F855EB1CECCE5C00FB63D2 /* WeaponData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E11CECCE5C00FB63D2 /* WeaponData.swift */; };
-		84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E11CECCE5C00FB63D2 /* WeaponData.swift */; };
 		84F855EF1CECCE5C00FB63D2 /* MothershipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E31CECCE5C00FB63D2 /* MothershipData.swift */; };
 		84F855F01CECCE5C00FB63D2 /* MothershipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E31CECCE5C00FB63D2 /* MothershipData.swift */; };
 		84F855F31CECCE5C00FB63D2 /* SpaceshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F855E51CECCE5C00FB63D2 /* SpaceshipData.swift */; };
@@ -567,6 +567,7 @@
 		84656DBB1D7F48E200930157 /* SocketTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTypes.swift; sourceTree = "<group>"; };
 		84656DBC1D7F48E200930157 /* SSLSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLSecurity.swift; sourceTree = "<group>"; };
 		84656DBD1D7F48E200930157 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		846850341DBA47EB00461C80 /* WeaponType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		846F65CF1CF4777B00A2E69F /* Mothership.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mothership.swift; sourceTree = "<group>"; };
 		8478D4871D4678E9000E09DD /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		8478D4881D4678E9000E09DD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -623,7 +624,6 @@
 		84F855D81CECCE1100FB63D2 /* MemoryCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCard.swift; sourceTree = "<group>"; };
 		84F855DB1CECCE2A00FB63D2 /* LoadScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScene.swift; sourceTree = "<group>"; };
 		84F855DC1CECCE2A00FB63D2 /* MothershipScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MothershipScene.swift; sourceTree = "<group>"; };
-		84F855E11CECCE5C00FB63D2 /* WeaponData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponData.swift; sourceTree = "<group>"; };
 		84F855E31CECCE5C00FB63D2 /* MothershipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MothershipData.swift; sourceTree = "<group>"; };
 		84F855E51CECCE5C00FB63D2 /* SpaceshipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipData.swift; sourceTree = "<group>"; };
 		84F855E71CECCE5C00FB63D2 /* PlayerData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
@@ -962,6 +962,7 @@
 				3A5984511D4B6CB6009FDA6D /* TimeBar.swift */,
 				84656DA21D7F475600930157 /* UserDisplayInfo.swift */,
 				843803D01CEF3A54007152BC /* Weapon.swift */,
+				846850341DBA47EB00461C80 /* WeaponType.swift */,
 				3AF476251D638F0900839BBC /* Hangar */,
 				3AD1E5DE1D5A64EA00FD4BEF /* Minner */,
 				3AF9D2001D786D9D0068E737 /* Research */,
@@ -1122,7 +1123,6 @@
 				84F855E91CECCE5C00FB63D2 /* ResearchData.swift */,
 				849BD9871DB8FF3C0091C7D3 /* SectorMissionData.swift */,
 				84F855E51CECCE5C00FB63D2 /* SpaceshipData.swift */,
-				84F855E11CECCE5C00FB63D2 /* WeaponData.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1379,7 +1379,6 @@
 				3AD73F361D6B7ADF009674B1 /* HangarSpaceshipSubCell.swift in Sources */,
 				84F855FB1CECCE5C00FB63D2 /* ResearchData.swift in Sources */,
 				84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */,
-				84F855EB1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				84656DD41D7F48E200930157 /* SocketExtensions.swift in Sources */,
 				3ABECDC21D5BBAD000661C0D /* SpeedUpAlert.swift in Sources */,
 				84F855EF1CECCE5C00FB63D2 /* MothershipData.swift in Sources */,
@@ -1396,6 +1395,7 @@
 				84656DDE1D7F48E200930157 /* SocketIOClientStatus.swift in Sources */,
 				84656DD61D7F48E200930157 /* SocketIOClient.swift in Sources */,
 				842640EB1D521C8E000A7868 /* ChooseAsteroidAlert.swift in Sources */,
+				846850351DBA47EB00461C80 /* WeaponType.swift in Sources */,
 				84656DCC1D7F48E200930157 /* SocketEnginePollable.swift in Sources */,
 				843620721CEB77400082A9D7 /* GameFonts.swift in Sources */,
 				84656DCA1D7F48E200930157 /* SocketEnginePacketType.swift in Sources */,
@@ -1549,13 +1549,13 @@
 				3AD73F3D1D6E244E009674B1 /* ResearchUpgradeSpaceshipAlert.swift in Sources */,
 				3A4065F21D2C54E600B886DB /* Research.swift in Sources */,
 				84656DE31D7F48E200930157 /* SocketPacket.swift in Sources */,
+				846850361DBA47EB00461C80 /* WeaponType.swift in Sources */,
 				843620691CEB77400082A9D7 /* CropBox.swift in Sources */,
 				844CF2881CE789AA0032F6AA /* AppDelegate.swift in Sources */,
 				3AAA93431D22BF1900DD4757 /* FactoryScene.swift in Sources */,
 				84656DC91D7F48E200930157 /* SocketEngineClient.swift in Sources */,
 				84126A901D65FA63004B961F /* BuySpaceshipAlert.swift in Sources */,
 				84F855E01CECCE2A00FB63D2 /* MothershipScene.swift in Sources */,
-				84F855EC1CECCE5C00FB63D2 /* WeaponData.swift in Sources */,
 				84BF0FC71D4A758F00145F5B /* GameTabBar.swift in Sources */,
 				843620791CEB77400082A9D7 /* GeometryExtensions.swift in Sources */,
 				3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */,

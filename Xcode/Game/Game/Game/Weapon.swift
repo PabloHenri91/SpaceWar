@@ -10,7 +10,7 @@ import SpriteKit
 
 class Weapon: Control {
     
-    var type:WeaponType!
+    var type: WeaponType!
     var weaponShotTexture:SKTexture!
     var level:Int!
     
@@ -19,8 +19,6 @@ class Weapon: Control {
     var fireInterval:Double!
     var lastFire:Double = 0
     var rangeInPoints:CGFloat!
-    
-    var weaponData:WeaponData?
     
     var initShotSoundEffect:SoundEffect!
     
@@ -32,15 +30,9 @@ class Weapon: Control {
             "range: " + range.description  + "\n"
     }
     
-    init(type:Int, level:Int, loadSoundEffects: Bool) {
+    init(weaponType: WeaponType, level:Int, loadSoundEffects: Bool) {
         super.init()
-        self.load(type, level: level, loadSoundEffects: loadSoundEffects)
-    }
-    
-    init(weaponData:WeaponData, loadSoundEffects: Bool) {
-        super.init()
-        self.weaponData = weaponData
-        self.load(weaponData.type.integerValue, level: weaponData.level.integerValue, loadSoundEffects: loadSoundEffects)
+        self.load(weaponType, level: level, loadSoundEffects: loadSoundEffects)
     }
     
     override init() {
@@ -51,9 +43,9 @@ class Weapon: Control {
         self.initShotSoundEffect = SoundEffect(soundFile: self.type.initSoundFileName, node: self)
     }
     
-    private func load(type:Int, level:Int, loadSoundEffects: Bool) {
+    private func load(weaponType: WeaponType, level: Int, loadSoundEffects: Bool) {
         
-        self.type = Weapon.types[type]
+        self.type = weaponType
         
         self.level = level
         
@@ -96,104 +88,4 @@ class Weapon: Control {
         }
         
     }
-}
-
-enum WeaponIndex: Int {
-    case blaster
-    case striker
-    case destroyer
-    case sniper
-}
-
-class WeaponType {
-    
-    static func random() -> WeaponType { return Weapon.types[Int.random(Weapon.types.count)] }
-    static var blaster = Weapon.types[WeaponIndex.blaster.rawValue]
-    static var striker = Weapon.types[WeaponIndex.striker.rawValue]
-    static var destroyer = Weapon.types[WeaponIndex.destroyer.rawValue]
-    static var sniper = Weapon.types[WeaponIndex.sniper.rawValue]
-    
-    var color = SKColor.whiteColor()
-    var shotSkin = ""
-    
-    var maxLevel:Int
-    
-    var damage:Int
-    var range:Int
-    var fireRate:Double
-    var name:String!
-    var weaponDescription:String!
-
-    var index:Int!
-    
-    var initSoundFileName = ""
-    
-    init(maxLevel:Int,
-         damage:Int, range:Int, fireRate:Double) {
-        
-        self.maxLevel = maxLevel
-        
-        self.damage = damage
-        self.range = range
-        self.fireRate = fireRate
-
-    }
-}
-
-extension Weapon {
-    
-    static var types:[WeaponType] = [
-        
-        {
-            let weaponType = WeaponType(maxLevel: 2,
-                damage: 10, range: 100, fireRate: 1)
-            weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
-            weaponType.shotSkin = "shotBA"
-            
-            weaponType.name = "Blaster"
-            weaponType.initSoundFileName = "laser5.mp3"
-            weaponType.weaponDescription = "A normal weapon."
-            weaponType.index = WeaponIndex.blaster.rawValue
-            return weaponType
-        }(),
-        
-        {
-            let weaponType = WeaponType(maxLevel: 2,
-                damage: 2, range: 150, fireRate: 0.25)
-            weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
-            weaponType.shotSkin = "shotCA"
-            
-            weaponType.name = "Striker"
-            weaponType.initSoundFileName = "laser3.mp3"
-            weaponType.weaponDescription = "A thousand shots."
-            weaponType.index = WeaponIndex.striker.rawValue
-            return weaponType
-        }(),
-        
-        {
-            let weaponType = WeaponType(maxLevel: 2,
-                damage: 40, range: 50, fireRate: 2)
-            weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
-            weaponType.shotSkin = "shotAA"
-            
-            weaponType.name = "Destroyer"
-            weaponType.initSoundFileName = "laser1.mp3"
-            weaponType.weaponDescription = "Close death."
-            weaponType.index = WeaponIndex.destroyer.rawValue
-            return weaponType
-        }(),
-        
-        {
-            let weaponType = WeaponType(maxLevel: 2,
-                damage: 15, range: 200, fireRate: 4)
-            weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
-            weaponType.shotSkin = "shotDA"
-            
-            weaponType.name = "Sniper"
-            weaponType.initSoundFileName = "laser9.mp3"
-            weaponType.weaponDescription = "Kill enemies from other side of the universe."
-            weaponType.index = WeaponIndex.sniper.rawValue
-            return weaponType
-        }()
-    ]
 }

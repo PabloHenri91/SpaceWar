@@ -81,7 +81,7 @@ class HangarSpaceshipChange:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: self.spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: self.spaceship.displayName().uppercaseString, fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         
         self.addChild(labelTitle)
         
@@ -129,7 +129,7 @@ class HangarSpaceshipChange:Box {
         self.addChild(rangeIcon)
         
         
-        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
+        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, bodyType: self.spaceship.type.bodyType)
         self.labelLifeValue = Label(text: life.description , fontSize: 11, x: 116, y: 70, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelLifeValue)
         
@@ -145,7 +145,7 @@ class HangarSpaceshipChange:Box {
         self.labelFirerateValue = Label(text: fireRate.description + "/s" , fontSize: 11, x: 210, y: 93, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelFirerateValue)
         
-        self.labelSpeedValue = Label(text: GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, type: self.spaceship.type).description, fontSize: 11, x: 116, y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
+        self.labelSpeedValue = Label(text: GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, bodyType: self.spaceship.type.bodyType).description, fontSize: 11, x: 116, y: 119, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelSpeedValue)
         
         self.labelRangeValue = Label(text: self.spaceship.weapon!.type.range.description , fontSize: 11, x: 210, y: 120, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
@@ -271,8 +271,8 @@ class HangarSpaceshipChange:Box {
         self.backgroundSpeedDif?.removeFromParent()
         self.backgroundRespawnDif?.removeFromParent()
         
-        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, type: self.spaceship.type)
-        let newLife = GameMath.spaceshipMaxHealth(level: cell.spaceship.level, type: cell.spaceship.type)
+        let life = GameMath.spaceshipMaxHealth(level: self.spaceship.level, bodyType: self.spaceship.type.bodyType)
+        let newLife = GameMath.spaceshipMaxHealth(level: cell.spaceship.level, bodyType: cell.spaceship.type.bodyType)
         let lifeDif = newLife - life
         if lifeDif > 0 {
             
@@ -364,8 +364,8 @@ class HangarSpaceshipChange:Box {
         
         //speed
         
-        let speed = GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, type: self.spaceship.type)
-        let newSpeed = GameMath.spaceshipSpeedAtribute(level: cell.spaceship.level, type: cell.spaceship.type)
+        let speed = GameMath.spaceshipSpeedAtribute(level: self.spaceship.level, bodyType: self.spaceship.type.bodyType)
+        let newSpeed = GameMath.spaceshipSpeedAtribute(level: cell.spaceship.level, bodyType: cell.spaceship.type.bodyType)
         let speedDif = newSpeed - speed
         
         if speedDif > 0 {

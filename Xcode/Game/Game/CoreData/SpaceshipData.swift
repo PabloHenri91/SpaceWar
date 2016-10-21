@@ -20,7 +20,6 @@ class SpaceshipData: NSManagedObject {
     
     @NSManaged var parentMothership: MothershipData?
     @NSManaged var parentPlayer: PlayerData?
-    @NSManaged var weapons: NSSet
 }
 
 extension MemoryCard {
@@ -39,22 +38,6 @@ extension MemoryCard {
         spaceshipData.type = type
         spaceshipData.xp = 0
         
-        spaceshipData.weapons = NSSet()
-        
         return spaceshipData
     }
-}
-
-extension SpaceshipData {
-    
-    func addWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
-        items.addObject(value)
-    }
-    
-    func removeWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
-        items.removeObject(value)
-    }
-    
 }

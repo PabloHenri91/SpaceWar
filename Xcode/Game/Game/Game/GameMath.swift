@@ -61,23 +61,23 @@ class GameMath {
     }
     
     // de 5 a 30, fixo pela nave
-    static func spaceshipSpeedAtribute(level level:Int, type:SpaceshipType) -> Int {
-        return type.speedBonus
+    static func spaceshipSpeedAtribute(level level:Int, bodyType: BodyType) -> Int {
+        return bodyType.speedBonus
     }
     
     // Pontos de HP, aumenta 10 por cento por level
-    static func spaceshipMaxHealth(level level:Int, type:SpaceshipType) -> Int {
-        return Int(Double(type.healthBonus * 10) * pow(1.1, Double(level - 1)))
+    static func spaceshipMaxHealth(level level:Int, bodyType: BodyType) -> Int {
+        return Int(Double(bodyType.healthBonus * 10) * pow(1.1, Double(level - 1)))
     }
     
     // Pontos de escudo, aumenta 10 por cento por level
-    static func spaceshipShieldPower(level level:Int, type:SpaceshipType) -> Int {
-        return Int(Double(type.shieldPowerBonus) * pow(1.1, Double(level - 1)))
+    static func spaceshipShieldPower(level level:Int, bodyType: BodyType) -> Int {
+        return Int(Double(bodyType.shieldPowerBonus) * pow(1.1, Double(level - 1)))
     }
     
     // Quantidade de pontos de escudo recarregado por segundo
-    static func spaceshipShieldRecharge(level level:Int, type:SpaceshipType) -> Int {
-        return Int(Double(type.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
+    static func spaceshipShieldRecharge(level level:Int, bodyType: BodyType) -> Int {
+        return Int(Double(bodyType.shieldRechargeBonus) * pow(1.1, Double(level - 1)))
     }
 
     static func spaceshipMaxVelocitySquared(speed speed:Int) -> CGFloat {
@@ -141,7 +141,7 @@ class GameMath {
     static let weaponMinRangeInPoints:CGFloat = 100
         
     // Weapons
-    static func weaponDamage(level level:Int, type:WeaponType) -> Int {
+    static func weaponDamage(level level:Int, type: WeaponType) -> Int {
         return Int(Double(type.damage) * pow(1.1, Double(level - 1)))
     }
     

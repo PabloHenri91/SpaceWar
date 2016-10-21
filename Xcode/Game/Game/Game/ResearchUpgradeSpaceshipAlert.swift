@@ -19,9 +19,9 @@ class ResearchUpgradeSpaceshipAlert:Box {
         var imageName = ""
         var rarityColor:SKColor!
         
-        if let spaceshipUnlocked = research.researchType.spaceshipUnlocked {
+        if let spaceshipUnlockedIndex = research.researchType.spaceshipUnlockedIndex {
             
-            let spaceshipType = Spaceship.types[spaceshipUnlocked]
+            let spaceshipType = Spaceship.types[spaceshipUnlockedIndex]
             
             switch spaceshipType.rarity {
                 case .common:
@@ -42,12 +42,8 @@ class ResearchUpgradeSpaceshipAlert:Box {
                 break
                 }
             
-            if let weaponUnlocked = research.researchType.weaponUnlocked {
-                self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
-                let weapon = Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false)
-                self.spaceship?.addWeapon(weapon)
+                self.spaceship = Spaceship(type: spaceshipType.index, level: 1)
                 self.spaceship?.position = CGPoint(x:33, y: -33)
-            }
         }
         
        
@@ -61,7 +57,7 @@ class ResearchUpgradeSpaceshipAlert:Box {
             self?.removeFromParent()
             })
         
-        let labelTitle = Label(color:SKColor.whiteColor() ,text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: spaceship.displayName().uppercaseString, fontSize: 11, x: 93, y: 22, horizontalAlignmentMode: .Left, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -2))
         
         self.addChild(labelTitle)
         
@@ -74,9 +70,6 @@ class ResearchUpgradeSpaceshipAlert:Box {
             spaceshipImage = Spaceship(spaceshipData: spaceshipData, loadPhysics: false)
         } else {
             spaceshipImage = Spaceship(type: spaceship.type.index, level: spaceship.level)
-            if let weapon = spaceship.weapon {
-                spaceshipImage.addWeapon(Weapon(type: weapon.type.index, level: spaceship.level, loadSoundEffects: false))
-            }
         }
         self.addChild(spaceshipImage)
         spaceshipImage.screenPosition = CGPoint(x: 50, y: 90)

@@ -30,13 +30,7 @@ class FactorySpaceshipCard: Control {
         for item in playerData.spaceships {
             if let spaceshipData = item as? SpaceshipData {
                 if spaceshipData.type.integerValue == spaceship.type.index {
-                    if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-                        if let weapon = spaceship.weapon {
-                            if weaponData.type.integerValue == weapon.type.index {
-                                self.typeCount += 1
-                            }
-                        }
-                    }
+                    self.typeCount += 1
                 }
             }
         }
@@ -114,7 +108,7 @@ class FactorySpaceshipCard: Control {
         
         if let weapon = spaceship.weapon {
             
-            self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            self.addChild(Label(color: SKColor.whiteColor(), text: spaceship.displayName().uppercaseString, fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
             
             let damageIcon = Control(textureName: "damageIcon", x: 191, y: 54 - 11)
             damageIcon.setScale(min(11/damageIcon.size.width, 11/damageIcon.size.height))

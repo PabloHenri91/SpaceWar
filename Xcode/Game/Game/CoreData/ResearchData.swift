@@ -30,6 +30,8 @@ extension MemoryCard {
         
         let researchData = NSEntityDescription.insertNewObjectForEntityForName("ResearchData", inManagedObjectContext: self.managedObjectContext) as! ResearchData
         researchData.done = false
+        researchData.spaceshipLevel = 0
+        researchData.spaceshipMaxLevel = 10
         researchData.startDate = nil
         
         return researchData

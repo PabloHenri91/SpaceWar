@@ -20,9 +20,9 @@ class ResearchUnlockedAlert:Box {
         
         let researchType = Research.types[researchData.type.integerValue]
         
-        if let spaceshipUnlocked = researchType.spaceshipUnlocked {
+        if let spaceshipUnlockedIndex = researchType.spaceshipUnlockedIndex {
             
-            let spaceshipType = Spaceship.types[spaceshipUnlocked]
+            let spaceshipType = Spaceship.types[spaceshipUnlockedIndex]
             
             switch spaceshipType.rarity {
             case .common:

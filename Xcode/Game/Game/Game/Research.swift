@@ -27,14 +27,10 @@ class Research: Control {
         
         let playerData = MemoryCard.sharedInstance.playerData
         
-        for item in self.researchType.researchesNeeded {
-            for subItem in playerData.researches {
-                if let researchData = subItem as? ResearchData {
-                    if researchData.type == item {
-                        if researchData.done == 0 {
-                            return false
-                        }
-                    }
+        for item in playerData.researches {
+            if let researchData = item as? ResearchData {
+                if researchData.done == false {
+                    return false
                 }
             }
         }
@@ -71,17 +67,11 @@ class Research: Control {
         
         if self.researchData.spaceshipLevel.integerValue == 10 {
             
-            if let spaceship = self.researchType.spaceshipUnlocked {
-                
-                if let weapon = self.researchType.weaponUnlocked {
-                    let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weapon)
+            if let spaceshipIndex = self.researchType.spaceshipUnlockedIndex {
                     
-                    let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceship)
-                    spaceshipData.addWeaponData(weaponData)
-                    spaceshipData
+                    let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: spaceshipIndex)
                     
                     MemoryCard.sharedInstance.playerData.unlockSpaceshipData(spaceshipData)
-                }
             }
         }
     }
@@ -121,7 +111,7 @@ class Research: Control {
             if (diceRoll <= 100) {
                 
                 for researchType in Research.types {
-                    let spaceshipType = Spaceship.types[researchType.spaceshipUnlocked!]
+                    let spaceshipType = Spaceship.types[researchType.spaceshipUnlockedIndex!]
                     if spaceshipType.rarity == .common {
                         researchTypes.append(researchType)
                     }
@@ -162,36 +152,20 @@ class Research: Control {
     }
 }
 
-
-public enum ResearchLineType:Int {
-    case general
-    case spaceships
-    case weapons
-    case spaceshipsImproves
-    case weaponsImproves
-    
-}
-
 class ResearchType {
-    var index: Int!
-    var name: String!
-    var researchDescription: String!
-    var duration: Int!
-    var cost: Int!
-    var lineType: ResearchLineType!
-    var requisites: [String] = []
-    var researchesNeeded: [Int] = []
-    var weaponUnlocked: Int?
-    var spaceshipUnlocked: Int?
     
-    init(index:Int, name:String, duration:Int, cost: Int, lineType:ResearchLineType) {
+    var index: Int = -1
+    var name: String = ""
+    var researchDescription: String = ""
+    var duration: Int = 0
+    
+    var spaceshipUnlockedIndex: Int?
+    
+    init(index:Int, name:String, duration:Int) {
         self.index = index
         self.name = name
         self.duration = duration
-        self.cost = cost
-        self.lineType = lineType
     }
-    
 }
 
 
@@ -216,128 +190,19 @@ extension Research {
         }
     }
     
-    static var types:[ResearchType] = [
+    static var types: [ResearchType] = {
         
-        {
-            let research = ResearchType(index:0, name:"Intrepid Striker", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A common spaceship with a fast Striker."
-            research.weaponUnlocked = 1
-            research.spaceshipUnlocked = 0
-            research.researchesNeeded = []
-            research.requisites = []
-            return research
-        }(),
+        var types = [ResearchType]()
         
-        {
-            let research = ResearchType(index:1, name:"Intrepid Destroyer", duration:43200, cost:0, lineType: .weapons)
-            research.researchDescription = "A common spaceship with a powerfull and low range gun."
-            research.weaponUnlocked = 2
-            research.spaceshipUnlocked = 0
-            research.researchesNeeded = [0]
-            research.requisites = []
-            return research
-        }(),
+        var index = 0
         
-        {
-            let research = ResearchType(index:2, name:"Intrepid Sniper", duration:86400, cost:0, lineType: .weapons)
-            research.researchDescription = "A common spaceship with a long range gun."
-            research.weaponUnlocked = 3
-            research.spaceshipUnlocked = 0
-            research.researchesNeeded = [1]
-            research.requisites = []
-            return research
-        }(),
+        for spaceshipType in Spaceship.types {
+            let researchType = ResearchType(index: index, name: spaceshipType.name, duration: 7200)
+            researchType.spaceshipUnlockedIndex = spaceshipType.index
+            types.append(researchType)
+            index = index + 1
+        }
         
-        
-        {
-            let research = ResearchType(index:3, name:"Tanker Blaster", duration:14400, cost:0, lineType: .general)
-            research.researchDescription = "A resistant spaceship with a common gun."
-            research.weaponUnlocked = 0
-            research.spaceshipUnlocked = 1
-            research.researchesNeeded = []
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:4, name:"Tanker Striker", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A resistant spaceship with a fast Striker."
-            research.weaponUnlocked = 1
-            research.spaceshipUnlocked = 1
-            research.researchesNeeded = [3]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:5, name:"Tanker Destroyer", duration:43200, cost:0, lineType: .weapons)
-            research.researchDescription = "A resistante spaceship with a powerfull and low range gun."
-            research.weaponUnlocked = 2
-            research.spaceshipUnlocked = 1
-            research.researchesNeeded = [4]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:6, name:"Tanker Sniper", duration:86400, cost:0, lineType: .weapons)
-            research.researchDescription = "A resistant spaceship with a long range gun."
-            research.weaponUnlocked = 3
-            research.spaceshipUnlocked = 1
-            research.researchesNeeded = [5]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:7, name:"Speedy Blaster", duration:14400, cost:0, lineType: .general)
-            research.researchDescription = "A fast spaceship with a common gun."
-            research.weaponUnlocked = 0
-            research.spaceshipUnlocked = 2
-            research.researchesNeeded = []
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:8, name:"Speedy Striker", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = "A fast spaceship with a fast Striker."
-            research.weaponUnlocked = 1
-            research.spaceshipUnlocked = 2
-            research.researchesNeeded = [7]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:9, name:"Speedy Destroyer", duration:43200, cost:0, lineType: .weapons)
-            research.researchDescription = "A fast spaceship with a powerfull and low range gun."
-            research.weaponUnlocked = 2
-            research.spaceshipUnlocked = 2
-            research.researchesNeeded = [8]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:10, name:"Speedy Sniper", duration:86400, cost:0, lineType: .weapons)
-            research.researchDescription = "A fast spaceship with a long range gun."
-            research.weaponUnlocked = 3
-            research.spaceshipUnlocked = 2
-            research.researchesNeeded = [9]
-            research.requisites = []
-            return research
-        }(),
-        
-        {
-            let research = ResearchType(index:11, name:"Spaceship Blaster", duration:28800, cost:0, lineType: .general)
-            research.researchDescription = ""
-            research.weaponUnlocked = 0
-            research.spaceshipUnlocked = 0
-            research.researchesNeeded = [99]
-            research.requisites = []
-            return research
-        }(),
-
-    ]
+        return types
+    }()
 }

@@ -71,7 +71,6 @@ class Mothership: Control {
                     let spaceshipData = item as! [Int]
                     let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
                     spaceship.isAlly = false
-                    spaceship.addWeapon(Weapon(type: spaceshipData[2], level: spaceshipData[0], loadSoundEffects: true))
                     self.spaceships.append(spaceship)
                     break
                     
@@ -221,9 +220,9 @@ class Mothership: Control {
             mothershipSpaceshipSlot.colorBlendFactor = 1
         }
         
-        let spaceshipShadow = SKSpriteNode(imageNamed: spaceship.type.skin + "Mask")
+        let spaceshipShadow = SKSpriteNode(imageNamed: spaceship.type.bodyType.skin + "Mask")
         spaceshipShadow.texture?.filteringMode = Display.filteringMode
-        spaceshipShadow.setScale(spaceship.type.scale)
+        spaceshipShadow.setScale(spaceship.type.bodyType.scale)
         spaceshipShadow.color = SKColor(red: 0, green: 0, blue: 0, alpha: 12/100)
         spaceshipShadow.colorBlendFactor = 1
         spaceshipShadow.position = gameWorld.convertPoint(CGPoint(x: spaceship.position.x, y: spaceship.position.y - (5 * cos(self.zRotation))), toNode: self)

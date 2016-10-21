@@ -165,19 +165,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     let timeLeft = GameMath.timeLeft(researchData.startDate!, duration: researchType.duration)
                     if timeLeft > 1 {
-                        if let spaceshipUnlocked = researchType.spaceshipUnlocked {
-                            if let weaponUnlocked = researchType.weaponUnlocked {
+                        if let spaceshipUnlockedIndex = researchType.spaceshipUnlockedIndex {
                                 
-                                let spaceshipName = Spaceship.types[spaceshipUnlocked].name
-                                let weaponName = Weapon.types[weaponUnlocked].name
+                                let spaceshipName = Spaceship.types[spaceshipUnlockedIndex].name
                                 
-                                let alertBody = "Research completed. " + spaceshipName + " with " + weaponName + " is available for construction at the Factory."
+                                let alertBody = "Research completed. " + spaceshipName + " is available for construction at the Factory."
                                 let fireDate = GameMath.finishDate(timeLeft)
                                 
                                 let notification = ABNotification(alertBody: alertBody)
                                 notification.userInfo = [ "nextScene": EventCard.types.researchEvent.rawValue ]
                                 notification.schedule(fireDate: fireDate)
-                            }
                         }
                     } else {
                         //TODO: ops, voce esqueceu de coletar research

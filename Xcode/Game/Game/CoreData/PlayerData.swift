@@ -25,7 +25,6 @@ class PlayerData: NSManagedObject {
     @NSManaged var researches: NSSet
     @NSManaged var spaceships: NSSet
     @NSManaged var missionSpaceships: NSOrderedSet
-    @NSManaged var weapons: NSSet
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
     @NSManaged var startDate: NSDate?
@@ -65,52 +64,38 @@ extension MemoryCard {
         
         
         //adicionei a nave 0 a nave mae
-        var spaceshipData = self.newSpaceshipData(type: 0)
+        var spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
-        var weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
 
         
         
         //adicionei a nave 1 a nave mae
-        spaceshipData = self.newSpaceshipData(type: 0)
+        spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
         
 
         
         //adicionei a nave 2 na nave mae 2 vezes
-        spaceshipData = self.newSpaceshipData(type: 0)
+        spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
         
      
         
         // adicionei a nave 3 na nave mae
-        spaceshipData = self.newSpaceshipData(type: 0)
+        spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
         
         
         // unlocked spaceships
         playerData.unlockedSpaceships = NSSet()
         
-        spaceshipData = self.newSpaceshipData(type: 0)
-        weaponData = self.newWeaponData(type: 0)
-        spaceshipData.addWeaponData(weaponData)
+        spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
         playerData.unlockSpaceshipData(spaceshipData)
-        
 
-        
-        // weapons
-        playerData.weapons = NSSet()
         
         // mission spaceships
         playerData.missionSpaceships = NSOrderedSet()
@@ -122,7 +107,7 @@ extension MemoryCard {
         playerData.researches = NSSet()
         
         let newResearch = self.newResearchData()
-        newResearch.type = 11
+        newResearch.type = SpaceshipIndex.intrepidBlaster.rawValue
         newResearch.spaceshipLevel = 10
         playerData.addResearchData(newResearch)
         
@@ -196,16 +181,6 @@ extension PlayerData {
     
     func removeSpaceshipData(value: SpaceshipData) {
         let items = self.mutableSetValueForKey("spaceships")
-        items.removeObject(value)
-    }
-    
-    func addWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
-        items.addObject(value)
-    }
-    
-    func removeWeaponData(value: WeaponData) {
-        let items = self.mutableSetValueForKey("weapons")
         items.removeObject(value)
     }
     

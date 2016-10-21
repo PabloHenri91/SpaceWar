@@ -31,8 +31,11 @@ class Spaceship: Control {
         case touchAreaEffect
     }
     
-    var type:SpaceshipType!
     var level:Int!
+    var type: SpaceshipType!
+    
+    var weapon:Weapon!
+    
     var battleMaxLevel:Int!
     
     //Vida e Escudo de Energia
@@ -46,7 +49,6 @@ class Spaceship: Control {
     var shieldPower:Int!
     var shieldRecharge:Int!
     
-    var weapon:Weapon?
     var weaponRangeBonus:CGFloat = 0
     
     var spaceshipData:SpaceshipData?
@@ -103,37 +105,28 @@ class Spaceship: Control {
             "shieldRecharge: " + shieldRecharge.description  + "\n"
     }
     
-    static func displayName(type:Int, level:Int = 0, weaponType:Int) -> String {
-        //TODO: displayName
-        let name = Spaceship.types[type].name + " " + Weapon.types[weaponType].name
-//        if level > 0 {
-//            name += " Level: " + level.description
-//        }
-        return name
+    static func displayName(type:Int, level:Int = 0) -> String {
+        return Spaceship.types[type].name
     }
     
     func displayName() -> String {
-        return Spaceship.displayName(self.type.index, level: self.level, weaponType: self.weapon!.type.index)
-    }
-    
-    func factoryDisplayName() -> String {
-        if let weapon = self.weapon {
-            return Spaceship.displayName(self.type.index, weaponType: weapon.type.index)
-        } else {
-            return self.type.name
-        }
+        return Spaceship.displayName(self.type.index, level: self.level)
     }
     
     override init() {
         fatalError("NÃO IMPLEMENTADO")
     }
     
-    init(type:Int, level:Int, loadPhysics:Bool = false) {
+    init(type: Int, level: Int, loadPhysics: Bool = false) {
         super.init()
         self.load(type: type, level: level, loadPhysics:loadPhysics)
+        
+        self.weapon = Weapon(weaponType: self.type.weaponType, level: self.level, loadSoundEffects: loadPhysics)
+        self.addChild(weapon)
+        self.loadWeaponDetail()
     }
     
-    init(extraType:Int, level:Int, loadPhysics:Bool = false) {
+    init(extraType: Int, level: Int, loadPhysics: Bool = false) {
         super.init()
         self.load(extraType: extraType, level: level, loadPhysics: loadPhysics)
     }
@@ -143,14 +136,9 @@ class Spaceship: Control {
         self.spaceshipData = spaceshipData
         self.load(type: spaceshipData.type.integerValue, level: spaceshipData.level.integerValue, loadPhysics: loadPhysics)
         
-        if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-            self.weapon = (Weapon(weaponData: weaponData, loadSoundEffects: loadPhysics))
-        }
-        
-        if let weapon = self.weapon {
-            self.addChild(weapon)
-            self.loadWeaponDetail()
-        }
+        self.weapon = Weapon(weaponType: self.type.weaponType, level: self.level, loadSoundEffects: loadPhysics)
+        self.addChild(weapon)
+        self.loadWeaponDetail()
     }
     
     func loadJetEffect(targetNode: SKNode?, color: SKColor) {
@@ -159,19 +147,19 @@ class Spaceship: Control {
         
         var emitterNodes = [SKEmitterNode]()
         
-        if self.type.centerJet {
+        if self.type.bodyType.centerJet {
             self.emitterNode = SKEmitterNode(fileNamed: "Jet.sks")
             if let emitterNode = self.emitterNode {
                 emitterNodes.append(emitterNode)
             }
         }
-        if self.type.leftJet {
+        if self.type.bodyType.leftJet {
             self.emitterNodeLeft = SKEmitterNode(fileNamed: "Jet.sks")
             if let emitterNode = self.emitterNodeLeft {
                 emitterNodes.append(emitterNode)
             }
         }
-        if self.type.rightJet {
+        if self.type.bodyType.rightJet {
             self.emitterNodeRight = SKEmitterNode(fileNamed: "Jet.sks")
             if let emitterNode = self.emitterNodeRight {
                 emitterNodes.append(emitterNode)
@@ -297,8 +285,8 @@ class Spaceship: Control {
         self.load(loadPhysics)
     }
     
-    private func load(extraType type:Int, level:Int, loadPhysics:Bool) {
-        self.type = Spaceship.extraTypes[type]
+    private func load(extraType extraType:Int, level:Int, loadPhysics:Bool) {
+        self.type = Spaceship.extraTypes[extraType]
         self.level = level
         self.battleMaxLevel = level
         self.load(loadPhysics)
@@ -310,7 +298,7 @@ class Spaceship: Control {
     
     func setBattleLevel(level:Int) {
         
-        self.maxHealth = GameMath.spaceshipMaxHealth(level: level, type: self.type)
+        self.maxHealth = GameMath.spaceshipMaxHealth(level: level, bodyType: self.type.bodyType)
         
         if level < self.level {
             self.health = self.maxHealth
@@ -337,11 +325,11 @@ class Spaceship: Control {
     
     private func load(loadPhysics:Bool) {
         
-        self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, type: self.type)
-        self.health = GameMath.spaceshipMaxHealth(level: self.level, type: self.type)
+        self.speedAtribute = GameMath.spaceshipSpeedAtribute(level: self.level, bodyType: self.type.bodyType)
+        self.health = GameMath.spaceshipMaxHealth(level: self.level, bodyType: self.type.bodyType)
         self.maxHealth = health
-        self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
-        self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, type: self.type)
+        self.shieldPower = GameMath.spaceshipShieldPower(level: self.level, bodyType: self.type.bodyType)
+        self.shieldRecharge = GameMath.spaceshipShieldRecharge(level: self.level, bodyType: self.type.bodyType)
         
         //TODO: GameMath.calculatedHealPerFrame
         let calculatedHealPerFrame = Int(self.maxHealth/5/60)
@@ -349,32 +337,32 @@ class Spaceship: Control {
             self.healPerFrame = calculatedHealPerFrame
         }
         
-        self.energyShield = GameMath.spaceshipShieldPower(level: self.level, type: self.type)
+        self.energyShield = GameMath.spaceshipShieldPower(level: self.level, bodyType: self.type.bodyType)
         self.maxEnergyShield = energyShield
         
         //Gráfico
-        self.spriteNode = SKSpriteNode(imageNamed: self.type.skin)
+        self.spriteNode = SKSpriteNode(imageNamed: self.type.bodyType.skin)
         self.spriteNode.texture?.filteringMode = Display.filteringMode
-        self.spriteNode.setScale(self.type.scale)
+        self.spriteNode.setScale(self.type.bodyType.scale)
         self.spriteNode.texture?.filteringMode = Display.filteringMode
         self.spriteNode.zPosition = zPositions.skin.rawValue
         self.addChild(self.spriteNode)
         
-        if self.type.glassSkin != "" {
-            let spriteNode = SKSpriteNode(imageNamed: self.type.glassSkin)
+        if self.type.bodyType.glassSkin != "" {
+            let spriteNode = SKSpriteNode(imageNamed: self.type.bodyType.glassSkin)
             spriteNode.texture?.filteringMode = Display.filteringMode
-            spriteNode.setScale(self.type.scale)
+            spriteNode.setScale(self.type.bodyType.scale)
             spriteNode.texture?.filteringMode = Display.filteringMode
             spriteNode.zPosition = zPositions.glassSkin.rawValue
-            spriteNode.color = self.type.glassColor
+            spriteNode.color = self.type.bodyType.glassColor
             spriteNode.colorBlendFactor = 1
-            spriteNode.position = self.type.glassPosition
+            spriteNode.position = self.type.bodyType.glassPosition
             self.addChild(spriteNode)
         }
         
-        self.selectedSpriteNode = SKSpriteNode(imageNamed: self.type.skin + "Mask")
+        self.selectedSpriteNode = SKSpriteNode(imageNamed: self.type.bodyType.skin + "Mask")
         self.selectedSpriteNode.texture?.filteringMode = Display.filteringMode
-        self.selectedSpriteNode.setScale(self.type.scale)
+        self.selectedSpriteNode.setScale(self.type.bodyType.scale)
         self.selectedSpriteNode.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         self.selectedSpriteNode.colorBlendFactor = 1
         self.selectedSpriteNode.hidden = true
@@ -525,8 +513,8 @@ class Spaceship: Control {
             emitterNode.particleSpeed = self.emitterNodeLeftParticleBirthRate
             emitterNode.particleSpeedRange = self.emitterNodeLeftParticleBirthRate/2
             
-            let auxX = -sin(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
-            let auxY = cos(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            let auxX = -sin(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.bodyType.jetBorderOffset)
+            let auxY = cos(self.zRotation + CGFloat(M_PI/2)) * (self.size.width/2 + self.type.bodyType.jetBorderOffset)
             emitterNode.position = CGPoint( x: self.position.x + auxX, y: self.position.y + auxY)
             
             emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
@@ -537,8 +525,8 @@ class Spaceship: Control {
             emitterNode.particleSpeed = self.emitterNodeRightParticleBirthRate
             emitterNode.particleSpeedRange = self.emitterNodeRightParticleBirthRate/2
             
-            let auxX = -sin(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
-            let auxY = cos(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.jetBorderOffset)
+            let auxX = -sin(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.bodyType.jetBorderOffset)
+            let auxY = cos(self.zRotation - CGFloat(M_PI/2)) * (self.size.width/2 + self.type.bodyType.jetBorderOffset)
             emitterNode.position = CGPoint( x: self.position.x + auxX, y: self.position.y + auxY)
             
             emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
@@ -610,7 +598,7 @@ class Spaceship: Control {
         
         var currentTarget:SKNode? = nil
         
-        for targetPriorityType in self.type.targetPriority {
+        for targetPriorityType in self.type.bodyType.targetPriority {
             switch targetPriorityType {
             case TargetType.spaceships:
                 for enemySpaceship in enemySpaceships {
@@ -708,9 +696,9 @@ class Spaceship: Control {
                 if let spaceship = shot.shooter as? Spaceship {
                     if let spaceshipData = spaceship.spaceshipData {
                         spaceshipData.killCount = spaceshipData.killCount.integerValue + 1
-                        Metrics.killerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                        Metrics.killerSpaceship(spaceship.type.name)
                         if shot.damage > self.maxHealth {
-                            Metrics.oneHitKillerSpaceship(spaceship.type.name + " " + spaceship.weapon!.type.name)
+                            Metrics.oneHitKillerSpaceship(spaceship.type.name)
                         }
                     }
                 }
@@ -1098,32 +1086,14 @@ class Spaceship: Control {
         }
     }
     
-    func addWeapon(weapon:Weapon) {
+    private func addWeapon(weapon:Weapon) {
         self.weapon = weapon
         self.loadWeaponDetail()
         self.addChild(weapon)
-        
-        if let spaceshipData = self.spaceshipData {
-            if let weaponData = weapon.weaponData {
-                spaceshipData.addWeaponData(weaponData)
-                if let player = spaceshipData.parentPlayer {
-                    player.removeWeaponData(weaponData)
-                }
-            }
-        }
     }
     
     func removeWeapon(weapon:Weapon) {
         self.weapon = nil
-        
-        if let spaceshipData = self.spaceshipData {
-            if let weaponData = weapon.weaponData {
-                spaceshipData.removeWeaponData(weaponData)
-                if let player = spaceshipData.parentPlayer {
-                    player.addWeaponData(weaponData)
-                }
-            }
-        }
     }
     
     func updateSpaceshipData() {
@@ -1137,11 +1107,6 @@ class Spaceship: Control {
             
             spaceshipData.level = NSNumber(integer: spaceshipData.level.integerValue + 1)
             self.level = spaceshipData.level.integerValue
-            for item in spaceshipData.weapons {
-                if let weaponData = item as? WeaponData {
-                    weaponData.level = NSNumber(integer: weaponData.level.integerValue + 1)
-                }
-            }
         }
     }
     
@@ -1202,27 +1167,50 @@ public enum TargetType:Int {
     case towers
 }
 
+enum rarityType: String {
+    case common
+    case rare
+    case epic
+    case legendary
+}
+
 enum SpaceshipIndex: Int {
-    case intrepid
-    case tanker
-    case speeder
+    
+    case intrepidBlaster
+    case intrepidStriker
+    case intrepidDestroyer
+    case intrepidSniper
+    
+    case tankerBlaster
+    case tankerStriker
+    case tankerDestroyer
+    case tankerSniper
+    
+    case speederBlaster
+    case speederStriker
+    case speederDestroyer
+    case speederSniper
 }
 
 class SpaceshipType {
     
-    static func random() -> SpaceshipType { return Spaceship.types[Int.random(Spaceship.types.count)] }
-    static let intrepid = Spaceship.types[SpaceshipIndex.intrepid.rawValue]
-    static let tanker = Spaceship.types[SpaceshipIndex.tanker.rawValue]
-    static let speeder = Spaceship.types[SpaceshipIndex.speeder.rawValue]
+    var name:String = ""
+    var index: Int
+    var bodyType: BodyType
+    var weaponType: WeaponType
     
-    enum rarityTypes:String {
-        case common
-        case rare
-        case epic
-        case legendary
+    var rarity: rarityType = .common
+    
+    init(index: Int, name: String, bodyType: BodyType, weaponType: WeaponType) {
+        self.index = index
+        self.name = name
+        self.bodyType = bodyType
+        self.weaponType = weaponType
     }
     
-    var rarity:rarityTypes = .common
+}
+
+class BodyType {
     
     var skin = ""
     var glassSkin = ""
@@ -1230,28 +1218,19 @@ class SpaceshipType {
     var glassPosition = CGPoint.zero
     var scale:CGFloat = 1.0
     
-    var maxLevel:Int
-    
     var targetPriority:[TargetType]
-    
-    var name:String = ""
-    var spaceshipDescription:String = ""
     
     var speedBonus:Int
     var healthBonus:Int
     var shieldPowerBonus:Int
     var shieldRechargeBonus:Int
     
-    var index:Int!
-    
     var centerJet = false
     var leftJet = false
     var rightJet = false
     var jetBorderOffset:CGFloat = 0
     
-    init(maxLevel:Int, targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
-        
-        self.maxLevel = maxLevel
+    init(targetPriorityType:Int, speed:Int, health:Int, shieldPower:Int, shieldRecharge:Int) {
         
         self.targetPriority = Spaceship.targetPriorityTypes[targetPriorityType]
         
@@ -1271,88 +1250,281 @@ extension Spaceship {
         playerData.unlockedSpaceships = NSSet()
         
         for spaceshipType in Spaceship.types {
-            for weaponType in Weapon.types {
-                let spaceshipData = memoryCard.newSpaceshipData(type: spaceshipType.index)
-                let weaponData = memoryCard.newWeaponData(type: weaponType.index)
-                spaceshipData.addWeaponData(weaponData)
-                playerData.unlockSpaceshipData(spaceshipData)
-            }
+            let spaceshipData = memoryCard.newSpaceshipData(type: spaceshipType.index)
+            playerData.unlockSpaceshipData(spaceshipData)
         }
     }
     
-    static var extraTypes:[SpaceshipType] = [
-        {
-            let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
-                speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
-            spaceshipType.skin = "tutorialMeteor"
-            spaceshipType.index = 0
-            return spaceshipType
-        }(),
-        
-        {
-            let spaceshipType = SpaceshipType(maxLevel: 2, targetPriorityType: 0,
-                speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
-            spaceshipType.skin = "tutorialMeteor2"
-            spaceshipType.index = 1
-            return spaceshipType
-        }()
-    ]
-    
     static var targetPriorityTypes = [
         [TargetType.spaceships, TargetType.towers, TargetType.mothership],
-        
         [TargetType.towers, TargetType.mothership]
     ]
     
-    static var types:[SpaceshipType] = [
-        {
-            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
+    static var types: [SpaceshipType] = [
+        SpaceshipType(index: SpaceshipIndex.intrepidBlaster.rawValue, name: "Intrepid Blaster",
+            bodyType: {
+                let spaceshipType = BodyType(targetPriorityType: 0,
+                    speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                spaceshipType.skin = "spaceshipAA"
+                spaceshipType.glassSkin = "spaceshipAAGlass"
+                spaceshipType.scale = 0.5
+                spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
+                
+                spaceshipType.centerJet = true
+                return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 10, range: 100, fireRate: 1)
+                weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
+                weaponType.shotSkin = "shotBA"
+                
+                weaponType.initSoundFileName = "laser5.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.intrepidStriker.rawValue, name: "Intrepid Striker", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipAA"
             spaceshipType.glassSkin = "spaceshipAAGlass"
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
             
-            spaceshipType.name = "Intrepid"
-            spaceshipType.spaceshipDescription = "The firs battle spaceship invented"
-            spaceshipType.rarity = .common
-            spaceshipType.index = SpaceshipIndex.intrepid.rawValue
             spaceshipType.centerJet = true
             return spaceshipType
-        }(),
+            }(), weaponType: {
+                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.25)
+                weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
+                weaponType.shotSkin = "shotCA"
+                
+                weaponType.initSoundFileName = "laser3.mp3"
+                return weaponType
+            }()),
+        SpaceshipType(index: SpaceshipIndex.intrepidDestroyer.rawValue, name: "Intrepid Destroyer",
+            bodyType: {
+                let spaceshipType = BodyType(targetPriorityType: 0,
+                    speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                spaceshipType.skin = "spaceshipAA"
+                spaceshipType.glassSkin = "spaceshipAAGlass"
+                spaceshipType.scale = 0.5
+                spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
+                
+                spaceshipType.centerJet = true
+                return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 40, range: 50, fireRate: 2)
+                weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
+                weaponType.shotSkin = "shotAA"
+                
+                weaponType.initSoundFileName = "laser1.mp3"
+                return weaponType
+            }()),
+        SpaceshipType(index: SpaceshipIndex.intrepidSniper.rawValue, name: "Intrepid Sniper", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipAA"
+            spaceshipType.glassSkin = "spaceshipAAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
+            
+            spaceshipType.centerJet = true
+            return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 15, range: 200, fireRate: 4)
+                weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
+                weaponType.shotSkin = "shotDA"
+                
+                weaponType.initSoundFileName = "laser9.mp3"
+                return weaponType
+            }()),
         
-        {
-            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+        SpaceshipType(index: SpaceshipIndex.tankerBlaster.rawValue, name: "Tanker Blaster",
+            bodyType: {
+                let spaceshipType = BodyType(targetPriorityType: 0,
+                    speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+                spaceshipType.skin = "spaceshipBA"
+                spaceshipType.glassSkin = "spaceshipBAGlass"
+                spaceshipType.scale = 0.5
+                spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
+                
+                spaceshipType.leftJet = true
+                spaceshipType.rightJet = true
+                spaceshipType.jetBorderOffset = -5
+                return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 10, range: 100, fireRate: 1)
+                weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
+                weaponType.shotSkin = "shotBA"
+                
+                weaponType.initSoundFileName = "laser5.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.tankerStriker.rawValue, name: "Tanker Striker", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipBA"
             spaceshipType.glassSkin = "spaceshipBAGlass"
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
             
-            spaceshipType.name = "Tanker"
-            spaceshipType.spaceshipDescription = "Can hold a great amount of damage."
-            spaceshipType.rarity = .common
-            spaceshipType.index = SpaceshipIndex.tanker.rawValue
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
             spaceshipType.jetBorderOffset = -5
             return spaceshipType
-        }(),
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.25)
+                weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
+                weaponType.shotSkin = "shotCA"
+                
+                weaponType.initSoundFileName = "laser3.mp3"
+                return weaponType
+            }()),
         
-        {
-            let spaceshipType = SpaceshipType(maxLevel: 100, targetPriorityType: 0,
-            speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+        SpaceshipType(index: SpaceshipIndex.tankerDestroyer.rawValue, name: "Tanker Destroyer", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipBA"
+            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
+            
+            spaceshipType.leftJet = true
+            spaceshipType.rightJet = true
+            spaceshipType.jetBorderOffset = -5
+            return spaceshipType
+            }(), weaponType: {
+                let weaponType = WeaponType(damage: 40, range: 50, fireRate: 2)
+                weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
+                weaponType.shotSkin = "shotAA"
+                
+                weaponType.initSoundFileName = "laser1.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.tankerSniper.rawValue, name: "Tanker Sniper", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipBA"
+            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
+            
+            spaceshipType.leftJet = true
+            spaceshipType.rightJet = true
+            spaceshipType.jetBorderOffset = -5
+            return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 15, range: 200, fireRate: 4)
+                weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
+                weaponType.shotSkin = "shotDA"
+                
+                weaponType.initSoundFileName = "laser9.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.speederBlaster.rawValue, name: "Speeder Blaster", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipCA"
             spaceshipType.glassSkin = "spaceshipCAGlass"
             spaceshipType.scale = 0.5
             spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
-            spaceshipType.name = "Speeder"
-            spaceshipType.spaceshipDescription = "Flies at the speed of light."
-            spaceshipType.rarity = .common
-            spaceshipType.index = SpaceshipIndex.speeder.rawValue
             spaceshipType.centerJet = true
             return spaceshipType
-        }()
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 10, range: 100, fireRate: 1)
+                weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
+                weaponType.shotSkin = "shotBA"
+                
+                weaponType.initSoundFileName = "laser5.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.speederStriker.rawValue, name: "Speeder Striker", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipCA"
+            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
+            
+            spaceshipType.centerJet = true
+            return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.25)
+                weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
+                weaponType.shotSkin = "shotCA"
+                
+                weaponType.initSoundFileName = "laser3.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.speederDestroyer.rawValue, name: "Speeder Destroyer", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipCA"
+            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
+            
+            spaceshipType.centerJet = true
+            return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 40, range: 50, fireRate: 2)
+                weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
+                weaponType.shotSkin = "shotAA"
+                
+                weaponType.initSoundFileName = "laser1.mp3"
+                return weaponType
+            }()),
+        
+        SpaceshipType(index: SpaceshipIndex.speederSniper.rawValue, name: "Speeder Sniper", bodyType: {
+            let spaceshipType = BodyType(targetPriorityType: 0,
+                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+            spaceshipType.skin = "spaceshipCA"
+            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.scale = 0.5
+            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
+            
+            spaceshipType.centerJet = true
+            return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 15, range: 200, fireRate: 4)
+                weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
+                weaponType.shotSkin = "shotDA"
+                
+                weaponType.initSoundFileName = "laser9.mp3"
+                return weaponType
+            }())
+    ]
+    
+    static var extraTypes: [SpaceshipType] = [
+        SpaceshipType(index: 0, name: "Tutorial Meteor 2",
+            bodyType: {
+                let spaceshipType = BodyType(targetPriorityType: 0,
+                    speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
+                spaceshipType.skin = "tutorialMeteor2"
+                spaceshipType.scale = 1
+                
+                spaceshipType.centerJet = true
+                return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 0, range: 100, fireRate: 1)
+                return weaponType
+            }()
+        )
+        
     ]
 }

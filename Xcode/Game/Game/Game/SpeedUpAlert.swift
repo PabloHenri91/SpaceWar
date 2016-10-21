@@ -38,8 +38,7 @@ class SpeedUpAlert:Box {
         
         let researchType = Research.types[researchData.type.integerValue]
         
-        let spaceship = Spaceship(type: researchType.spaceshipUnlocked!, level: 1)
-        spaceship.addWeapon(Weapon(type: researchType.weaponUnlocked!, level: spaceship.level, loadSoundEffects: false))
+        let spaceship = Spaceship(type: researchType.spaceshipUnlockedIndex!, level: 1)
         
         self.researchData = researchData
         self.playerData = MemoryCard.sharedInstance.playerData

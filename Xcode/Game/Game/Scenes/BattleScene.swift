@@ -125,7 +125,6 @@ class BattleScene: GameScene {
                 level = 1
             }
             let botSpaceship = Spaceship(type: Int.random(Spaceship.types.count), level: level, loadPhysics: true)
-            botSpaceship.addWeapon(Weapon(type: Int.random(Weapon.types.count), level: botSpaceship.level, loadSoundEffects: true))
             self.botMothership.spaceships.append(botSpaceship)
         }
         

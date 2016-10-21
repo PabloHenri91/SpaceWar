@@ -72,11 +72,6 @@ class FactoryScene: GameScene {
         for item in self.playerData.unlockedSpaceships {
             if let spaceshipData = item as? SpaceshipData {
                 let spaceship = Spaceship(type: spaceshipData.type.integerValue, level: 1)
-                if let weaponData = spaceshipData.weapons.anyObject() as? WeaponData {
-                    let weapon = Weapon(type: weaponData.type.integerValue, level: 1, loadSoundEffects: false)
-                    spaceship.addWeapon(weapon)
-                }
-                
                 cells.append(FactorySpaceshipCard(spaceship: spaceship))
             }
         }

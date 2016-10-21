@@ -33,7 +33,7 @@ class BuySpaceshipAlert: Box {
         let labelTitle = Label(color:SKColor.whiteColor() ,text: "BUY SPACESHIP" , fontSize: 13, x: -127, y: -48, horizontalAlignmentMode: .Left, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
         self.addChild(labelTitle)
         
-        let labelLevel = Label(text: spaceship.factoryDisplayName().uppercaseString, fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
+        let labelLevel = Label(text: spaceship.displayName().uppercaseString, fontSize: 11, x: -127, y: -8 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left)
         self.addChild(labelLevel)
         
         let labelAmount = Label(text: "YOU HAVE ".translation() + count.description + "/4" , fontSize: 11, x: -78, y: 14 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo500, horizontalAlignmentMode: .Left)
@@ -51,9 +51,6 @@ class BuySpaceshipAlert: Box {
         self.addChild(minnerSpaceship)
         
         let minnerSpaceshipTinySpaceship = Spaceship(type: spaceship.type.index, level: spaceship.level)
-        if let weapon = spaceship.weapon {
-            minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1, loadSoundEffects: false))
-        }
         minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
         minnerSpaceshipTinySpaceship.position = CGPoint(x: minnerSpaceship.size.width/2, y: -minnerSpaceship.size.height/2)
         minnerSpaceship.addChild(minnerSpaceshipTinySpaceship)
@@ -65,9 +62,6 @@ class BuySpaceshipAlert: Box {
             self.addChild(minnerSpaceship)
             
             let minnerSpaceshipTinySpaceship = Spaceship(type: spaceship.type.index, level: spaceship.level)
-            if let weapon = spaceship.weapon {
-                minnerSpaceshipTinySpaceship.addWeapon(Weapon(type: weapon.type.index, level: 1, loadSoundEffects: false))
-            }
             minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
             minnerSpaceshipTinySpaceship.position = CGPoint(x: minnerSpaceship.size.width/2, y: -minnerSpaceship.size.height/2)
             minnerSpaceship.addChild(minnerSpaceshipTinySpaceship)
@@ -78,7 +72,7 @@ class BuySpaceshipAlert: Box {
             let minnerSpaceship = Control(textureName: "minnerSpaceshipUnlocked", x: x, y: 30, alpha: 0)
             self.addChild(minnerSpaceship)
             
-            let minnerSpaceshipTinySpaceship = SKSpriteNode(imageNamed: spaceship.type.skin + "Mask")
+            let minnerSpaceshipTinySpaceship = SKSpriteNode(imageNamed: spaceship.type.bodyType.skin + "Mask")
             minnerSpaceshipTinySpaceship.texture?.filteringMode = Display.filteringMode
             minnerSpaceshipTinySpaceship.setScale(min(minnerSpaceship.size.width/minnerSpaceshipTinySpaceship.size.width, minnerSpaceship.size.height/minnerSpaceshipTinySpaceship.size.height))
             minnerSpaceshipTinySpaceship.color = SKColor(red: 0, green: 0, blue: 0, alpha: 0.75)
@@ -101,14 +95,9 @@ class BuySpaceshipAlert: Box {
     func buySpaceship() {
         let playerData = MemoryCard.sharedInstance.playerData
         
-        var weaponTypeIndex = Int.random(Weapon.types.count)
-        if let weapon = self.spaceship.weapon {
-            weaponTypeIndex = weapon.type.index
-        }
         let spaceshipData = MemoryCard.sharedInstance.newSpaceshipData(type: self.spaceship.type.index)
-        let weaponData = MemoryCard.sharedInstance.newWeaponData(type: weaponTypeIndex)
-        spaceshipData.addWeaponData(weaponData)
         playerData.addSpaceshipData(spaceshipData)
+        
         playerData.points = playerData.points.integerValue - GameMath.spaceshipPrice(self.spaceship.type)
     }
 }

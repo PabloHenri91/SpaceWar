@@ -67,47 +67,6 @@ import CoreData
             self.playerData.startDate = NSDate()
         }
         
-        //nova estrutura de pesquisas
-        
-        if self.playerData.weapons.count > 0 {
-            let weapons = self.playerData.weapons
-            let spaceships = self.playerData.unlockedSpaceships
-
-            
-            self.playerData.weapons = NSSet()
-            self.playerData.unlockedSpaceships = NSSet()
-            self.playerData.researches = NSSet()
-            
-            for research in Research.types {
-                let newResearch = self.newResearchData()
-                newResearch.type = research.index
-                self.playerData.addResearchData(newResearch)
-            }
-            
-            let researches = self.playerData.researches
-            
-            for weapon in weapons {
-                for spaceship in spaceships {
-                    
-                    let weaponData = self.newWeaponData(type: Int((weapon as! WeaponData).type))
-                    
-                    let spaceshipData = self.newSpaceshipData(type: Int((spaceship as! SpaceshipData).type))
-                    spaceshipData.addWeaponData(weaponData)
-                    
-                    self.playerData.unlockSpaceshipData(spaceshipData)
-                    
-                    for research in researches {
-                        let researchData = research as! ResearchData
-                        let researchType = Research.types[Int(researchData.type.integerValue)]
-                        
-                        if researchType.weaponUnlocked == weaponData.type.integerValue && researchType.spaceshipUnlocked == spaceshipData.type.integerValue {
-                            researchData.done = 1
-                        }
-                    }
-                }
-            }
-        }
-        
         // ALTERACAO DE PESQUISAS PARA VERSAO 6 DO DATA MODEL
         
         if self.playerData.datamodelVersion.integerValue < 6 {
@@ -135,15 +94,11 @@ import CoreData
                     
                     let researchType = Research.types[researchData.type.integerValue]
                     
-                    for item in researchType.researchesNeeded {
-                        for subItem in researches {
-                            if let researchData = subItem as? ResearchData {
-                                if researchData.type == item {
-                                    if researchData.done == 0 {
-                                        unlocked = false
-                                        print(researchType.researchDescription)
-                                    }
-                                }
+                    for item in researches {
+                        if let researchData = item as? ResearchData {
+                            if researchData.done == 0 {
+                                unlocked = false
+                                print(researchType.researchDescription)
                             }
                         }
                     }
@@ -189,18 +144,10 @@ import CoreData
         
         if self.playerData.datamodelVersion.integerValue < 9 {
             self.playerData.datamodelVersion = 9
-            
-            for item in self.playerData.spaceships {
-                if let spaceshipData = item as? SpaceshipData {
-                    if let _ = spaceshipData.weapons.anyObject() as? WeaponData {
-                        
-                    } else {
-                        let weaponData = self.newWeaponData()
-                        weaponData.level = spaceshipData.level.integerValue
-                        spaceshipData.addWeaponData(weaponData)
-                    }
-                }
-            }
+        }
+        
+        if self.playerData.datamodelVersion.integerValue < 10 {
+            self.playerData.datamodelVersion = 10
         }
     }
     

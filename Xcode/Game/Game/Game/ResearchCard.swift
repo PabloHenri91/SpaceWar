@@ -28,9 +28,9 @@ class ResearchCard: Control {
         
         var textureName = ""
         
-        if let spaceshipUnlocked = research.researchType.spaceshipUnlocked {
+        if let spaceshipUnlockedIndex = research.researchType.spaceshipUnlockedIndex {
             
-            let spaceshipType = Spaceship.types[spaceshipUnlocked]
+            let spaceshipType = Spaceship.types[spaceshipUnlockedIndex]
             
             switch spaceshipType.rarity {
             case .common:
@@ -47,12 +47,8 @@ class ResearchCard: Control {
                 break
             }
             
-            if let weaponUnlocked = research.researchType.weaponUnlocked {
-                self.spaceship = Spaceship(type: spaceshipUnlocked, level: 1)
-                let weapon = Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false)
-                self.spaceship?.addWeapon(weapon)
-                self.spaceship?.position = CGPoint(x:33, y: -33)
-            }
+            self.spaceship = Spaceship(type: spaceshipType.index, level: 1)
+            self.spaceship?.position = CGPoint(x:33, y: -33)
         }
         
         super.init(textureName: textureName)

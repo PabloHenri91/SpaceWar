@@ -196,13 +196,10 @@ class EventCard: Control {
         case .researchEvent:
             timerType = TimeBar.types.researchTimer
             if let researchData = self.researchData {
-                if let spaceshipUnlocked = Research.types[researchData.type.integerValue].spaceshipUnlocked {
-                    if let weaponUnlocked = Research.types[researchData.type.integerValue].weaponUnlocked {
-                        let spaceship = Spaceship(type: spaceshipUnlocked, level: 0)
-                        spaceship.addWeapon(Weapon(type: weaponUnlocked, level: 1, loadSoundEffects: false))
-                        spaceship.position = CGPoint(x: Int(self.size.width/2), y: -Int(self.size.height/2))
-                        self.addChild(spaceship)
-                    }
+                if let spaceshipUnlockedIndex = Research.types[researchData.type.integerValue].spaceshipUnlockedIndex {
+                    let spaceship = Spaceship(type: spaceshipUnlockedIndex, level: 0)
+                    spaceship.position = CGPoint(x: Int(self.size.width/2), y: -Int(self.size.height/2))
+                    self.addChild(spaceship)
                 }
             }
             break
