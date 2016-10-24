@@ -78,7 +78,7 @@ class BattleTrainingScene: GameScene {
         self.gameCamera.update()
         
         // Mothership
-        self.mothership = Mothership(level: 10, blueTeam: true)
+        self.mothership = Mothership(level: 10, isAlly: true)
         self.mothership.health = 500
         self.mothership.maxHealth = 500
         
@@ -357,7 +357,7 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
-                meteor.loadHealthBar(self.gameWorld, blueTeam: false)
+                meteor.loadHealthBar(self.gameWorld)
                 meteor.position = CGPoint(x: 0, y: 200)
                 meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
@@ -392,7 +392,7 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
                 meteor.setBitMasksToSpaceship()
-                meteor.loadHealthBar(self.gameWorld, blueTeam: false)
+                meteor.loadHealthBar(self.gameWorld)
                 meteor.position = CGPoint(x: -100, y: -116)
                 meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
@@ -403,7 +403,7 @@ class BattleTrainingScene: GameScene {
                 
                 let meteor2 = Spaceship(extraType: 1, level: 1, loadPhysics: true)
                 meteor2.setBitMasksToSpaceship()
-                meteor2.loadHealthBar(self.gameWorld, blueTeam: false)
+                meteor2.loadHealthBar(self.gameWorld)
                 meteor2.position = CGPoint(x: 100, y: -116)
                 meteor2.updateHealthBarPosition()
                 meteor2.physicsBody?.dynamic = true
@@ -463,14 +463,14 @@ class BattleTrainingScene: GameScene {
                 self.mothership.loadSpaceship(spaceship, gameWorld: self.gameWorld, i: 3)
                 
                 
-                self.botMothership = Mothership(level: 1)
+                self.botMothership = Mothership(level: 1, isAlly: false)
                 self.botMothership!.health = 150
                 self.botMothership!.maxHealth = 150
                 if let botMothership = self.botMothership {
                     botMothership.zRotation = CGFloat(M_PI)
                     botMothership.position = CGPoint(x: 0, y: 243)
                     
-                    botMothership.loadHealthBar(blueTeam: false)
+                    botMothership.loadHealthBar()
                     
                     for _ in 0 ..< 4 {
                         let spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
@@ -500,7 +500,7 @@ class BattleTrainingScene: GameScene {
                         i += 1
                     }
                     
-                    botMothership.loadSpaceships(self.gameWorld, isAlly: false)
+                    botMothership.loadSpaceships(self.gameWorld)
                 }
                 
                 

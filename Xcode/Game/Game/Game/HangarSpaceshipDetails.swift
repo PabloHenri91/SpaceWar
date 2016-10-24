@@ -95,7 +95,6 @@ class HangarSpaceshipDetails: Box {
         self.addChild(hangarSpaceshipBackground)
         
         if showUpgrade {
-            print(self.researchData)
             if self.spaceship.level < self.researchData.spaceshipLevel.integerValue {
                 let lifeUpgradeBackground = Control(textureName: "betterAttribute", x: 11, y: 192)
                 self.addChild(lifeUpgradeBackground)

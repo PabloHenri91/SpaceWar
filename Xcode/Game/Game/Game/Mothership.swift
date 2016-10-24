@@ -54,7 +54,7 @@ class Mothership: Control {
         
         self.isAlly = false
         
-        self.load(level: 1, blueTeam: false)
+        self.load(level: 1)
         
         if let items = socketAnyEvent.items?.firstObject as? [AnyObject] {
             
@@ -70,7 +70,7 @@ class Mothership: Control {
                 case 2, 3, 4, 5:
                     let spaceshipData = item as! [Int]
                     let spaceship = Spaceship(type: spaceshipData[1], level: spaceshipData[0], loadPhysics: true)
-                    spaceship.isAlly = false
+                    spaceship.isAlly = self.isAlly
                     self.spaceships.append(spaceship)
                     break
                     
@@ -83,15 +83,17 @@ class Mothership: Control {
         }
     }
     
-    init(level:Int, blueTeam:Bool = false) {
+    init(level:Int, isAlly: Bool) {
+        self.isAlly = isAlly
         super.init()
-        self.load(level: level, blueTeam: blueTeam)
+        self.load(level: level)
     }
     
     init(mothershipData:MothershipData) {
         super.init()
+        self.isAlly = true
         self.mothershipData = mothershipData
-        self.load(level: mothershipData.level.integerValue, blueTeam: true)
+        self.load(level: mothershipData.level.integerValue)
         
         for item in mothershipData.spaceships {
             if let spaceshipData  = item as? SpaceshipData {
@@ -100,7 +102,7 @@ class Mothership: Control {
         }
     }
     
-    private func load(level level:Int, blueTeam: Bool) {
+    private func load(level level:Int) {
         self.zPosition = GameWorld.zPositions.mothership.rawValue
         
         self.level = level
@@ -112,7 +114,7 @@ class Mothership: Control {
         var spriteNode: SKSpriteNode!
         
         //Gráfico
-        if blueTeam {
+        if self.isAlly {
             spriteNode = SKSpriteNode(imageNamed: "mothershipBlue")
         } else {
             spriteNode = SKSpriteNode(imageNamed: "mothershipRed")
@@ -125,7 +127,7 @@ class Mothership: Control {
         
         let mothershipHealthBarMask = SKSpriteNode(imageNamed: "mothershipHealthBarMask")
         mothershipHealthBarMask.texture?.filteringMode = Display.filteringMode
-        if blueTeam {
+        if self.isAlly {
             mothershipHealthBarMask.color = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
         } else {
             mothershipHealthBarMask.color = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
@@ -162,18 +164,18 @@ class Mothership: Control {
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
     
-    func loadHealthBar(blueTeam blueTeam:Bool = true) {
+    func loadHealthBar() {
         
         var fillColor = SKColor.greenColor()
         
-        if blueTeam {
+        if self.isAlly {
             fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
         } else {
             fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
         }
         
         self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, fillColor: fillColor)
-        if !blueTeam {
+        if !self.isAlly {
             self.healthBar.zRotation = self.zRotation
         }
         self.cropNode.addChild(self.healthBar)
@@ -191,7 +193,9 @@ class Mothership: Control {
         
     }
     
-    func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, isAlly:Bool = true, i:Int) {
+    func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, i:Int) {
+        
+        spaceship.isAlly = self.isAlly
         
         let mothershipSpaceshipSlot = SKSpriteNode(imageNamed: "mothershipSpaceshipSlot")
         mothershipSpaceshipSlot.texture?.filteringMode = Display.filteringMode
@@ -236,20 +240,16 @@ class Mothership: Control {
         
         gameWorld.addChild(spaceship)
         
-        if isAlly {
-            spaceship.loadHealthBar(gameWorld, blueTeam: true)
-        } else {
-            spaceship.loadHealthBar(gameWorld, blueTeam: false)
-        }
+        spaceship.loadHealthBar(gameWorld)
         spaceship.loadWeaponRangeSprite(gameWorld)
         spaceship.loadWeaponDetail()
     }
 
-    func loadSpaceships(gameWorld:GameWorld, isAlly:Bool = true) {
+    func loadSpaceships(gameWorld:GameWorld) {
         
         var i = 0
         for spaceship in self.spaceships {
-            self.loadSpaceship(spaceship, gameWorld: gameWorld, isAlly: isAlly, i: i)
+            self.loadSpaceship(spaceship, gameWorld: gameWorld, i: i)
             i += 1
         }
     }

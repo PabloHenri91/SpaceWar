@@ -93,9 +93,9 @@ extension BattleScene {
                                 
                                 scene.botMothership.health = scene.mothership.health
                                 scene.botMothership.maxHealth = scene.mothership.health
-                                scene.botMothership.loadHealthBar(blueTeam: false)
+                                scene.botMothership.loadHealthBar()
                                 
-                                scene.botMothership.loadSpaceships(scene.gameWorld, isAlly: false)
+                                scene.botMothership.loadSpaceships(scene.gameWorld)
                                 
                                 scene.updateSpaceshipLevels()
                             }

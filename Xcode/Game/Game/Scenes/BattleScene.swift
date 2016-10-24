@@ -112,7 +112,7 @@ class BattleScene: GameScene {
         self.botUpdateInterval = self.playerData.botUpdateInterval.doubleValue
         
         // BotMothership
-        self.botMothership = Mothership(level: self.mothership.level)
+        self.botMothership = Mothership(level: self.mothership.level, isAlly: false)
         self.botMothership.zRotation = CGFloat(M_PI)
         self.botMothership.position = CGPoint(x: 0, y: 243)
         self.gameWorld.addChild(self.botMothership)
@@ -128,9 +128,9 @@ class BattleScene: GameScene {
             self.botMothership.spaceships.append(botSpaceship)
         }
         
-        self.botMothership.loadHealthBar(blueTeam: false)
+        self.botMothership.loadHealthBar()
         
-        self.botMothership.loadSpaceships(self.gameWorld, isAlly: false)
+        self.botMothership.loadSpaceships(self.gameWorld)
         
 //        self.updateSpaceshipLevels()
         
@@ -536,11 +536,18 @@ class BattleScene: GameScene {
                     
                 case .battle, .battleOnline:
                     
-                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
-                        nearestSpaceship.touchEnded()
+                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.botMothership.spaceships, touch: touch) {
+                        if nearestSpaceship.isAlly {
+                            nearestSpaceship.touchEnded()
+                        } else {
+                            if let spaceship = Spaceship.selectedSpaceship {
+                                spaceship.touchEnded()
+                                spaceship.targetNode = nearestSpaceship
+                                spaceship.setAttackArrowToTarget()
+                            }
+                        }
                         return
                     }
-                    
                     
                     if let parent = self.botMothership.parent {
                         if self.botMothership.containsPoint(touch.locationInNode(parent)) {
@@ -609,12 +616,21 @@ class BattleScene: GameScene {
                     
                 case .battle, .battleOnline:
                     
-                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
-                        if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
-                            nearestSpaceship.targetNode = nil
-                            nearestSpaceship.needToMove = false
-                            nearestSpaceship.setBitMasksToSpaceship()
+                    if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.botMothership.spaceships, touch: touch) {
+                        if nearestSpaceship.isAlly {
+                            if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
+                                nearestSpaceship.targetNode = nil
+                                nearestSpaceship.needToMove = false
+                                nearestSpaceship.setBitMasksToSpaceship()
+                            }
+                        } else {
+                            if let spaceship = Spaceship.selectedSpaceship {
+                                spaceship.touchEnded()
+                                spaceship.targetNode = nearestSpaceship
+                                spaceship.setAttackArrowToTarget()
+                            }
                         }
+                        return
                     }
                     
                     if let parent = self.mothership.parent {

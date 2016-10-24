@@ -182,13 +182,13 @@ class Spaceship: Control {
         }
     }
     
-    func loadHealthBar(gameWorld:GameWorld, blueTeam:Bool) {
+    func loadHealthBar(gameWorld:GameWorld) {
         
         var fillColor:SKColor!
         var backColor:SKColor!
         let background = SKSpriteNode(imageNamed: "spaceshipHealthBarBackground")
         
-        if blueTeam {
+        if self.isAlly {
             fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
             backColor = SKColor(red: 0/255, green: 84/255, blue: 143/255, alpha: 1)
             background.color = backColor
@@ -218,7 +218,7 @@ class Spaceship: Control {
         let spaceshipLevelBackground = SKSpriteNode(imageNamed: "spaceshipLevelBackground")
         spaceshipLevelBackground.texture?.filteringMode = Display.filteringMode
         
-        if blueTeam {
+        if self.isAlly {
             spaceshipLevelBackground.color = SKColor(red: 214/255, green: 247/255, blue: 255/255, alpha: 1)
         } else {
             spaceshipLevelBackground.color = SKColor(red: 255/255, green: 231/255, blue: 231/255, alpha: 1)
@@ -419,6 +419,23 @@ class Spaceship: Control {
         self.showWeaponRangeSprite()
     }
     
+    func setAttackArrowToTarget() {
+        if self.isAlly {
+            if let targetNode = self.targetNode {
+                let spriteNode = SKSpriteNode(imageNamed: "attackArrows")
+                spriteNode.texture?.filteringMode = Display.filteringMode
+                spriteNode.position = targetNode.position
+                self.parent?.addChild(spriteNode)
+                
+                spriteNode.runAction(SKAction.resizeToWidth(0, height: 1, duration: 0.5))
+                spriteNode.runAction(SKAction.fadeOutWithDuration(0.5), completion: { [weak spriteNode] in
+                    spriteNode?.removeFromParent()
+                    })
+                self.showWeaponRangeSprite()
+            }
+        }
+    }
+    
     func touchEnded() {
         
         if self == Spaceship.selectedSpaceship {
@@ -572,13 +589,9 @@ class Spaceship: Control {
         self.physicsBody?.dynamic = false
     }
     
-    func canBeTarget(spaceship:Spaceship) -> Bool {
+    func canBeTargetAndHitBy(spaceship:Spaceship) -> Bool {
         
-        if self.isInsideAMothership {
-            return false
-        }
-        
-        if self.health <= 0 {
+        if !self.canBeTarget() || !spaceship.canBeTarget() {
             return false
         }
         
@@ -594,6 +607,19 @@ class Spaceship: Control {
         return true
     }
     
+    func canBeTarget() -> Bool {
+        
+        if self.isInsideAMothership {
+            return false
+        }
+        
+        if self.health <= 0 {
+            return false
+        }
+        
+        return true
+    }
+    
     func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship]) -> SKNode? {
         
         var currentTarget:SKNode? = nil
@@ -603,7 +629,7 @@ class Spaceship: Control {
             case TargetType.spaceships:
                 for enemySpaceship in enemySpaceships {
                     
-                    if enemySpaceship.canBeTarget(self) {
+                    if enemySpaceship.canBeTargetAndHitBy(self) {
                         
                         if currentTarget != nil {
                             if CGPoint.distanceSquared(self.position, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
@@ -642,7 +668,7 @@ class Spaceship: Control {
         
         for allySpaceship in allySpaceships {
             
-            if allySpaceship != self && allySpaceship.canBeTarget(self) {
+            if allySpaceship != self && allySpaceship.canBeTargetAndHitBy(self) {
                 if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, self.targetNode!.position) {
                     let point = allySpaceship.position
                     let dx = Float(point.x - self.position.x)
@@ -883,6 +909,7 @@ class Spaceship: Control {
                     } else {
                         if !self.isInsideAMothership {
                             self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+                            self.setAttackArrowToTarget()
                         }
                     }
                     
@@ -918,14 +945,31 @@ class Spaceship: Control {
                         }
                     }
                     
-                    if let spaceship = targetNode as? Spaceship {
+                    if let targetNode = targetNode as? Spaceship {
                         
-                        if !spaceship.canBeTarget(self) {
+                        if !targetNode.canBeTarget() {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
-                            if abs(self.totalRotationToDestination) <= 0.05 {
-                                self.fire(allySpaceships: allySpaceships)
+                            
+                            if targetNode.canBeTargetAndHitBy(self) {
+                                if abs(self.totalRotationToDestination) <= 0.05 {
+                                    self.fire(allySpaceships: allySpaceships)
+                                }
+                            } else {
+                                self.rotateToPoint(targetNode.position)
+                                
+                                if let physicsBody = self.physicsBody {
+                                    
+                                    if abs(self.totalRotationToDestination) <= 1 {
+                                        let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                                        
+                                        if velocitySquared < self.maxVelocitySquared {
+                                            self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                                        }
+                                        self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
+                                    }
+                                }
                             }
                         }
                     }
@@ -933,6 +977,7 @@ class Spaceship: Control {
                 } else {
                     if !self.isInsideAMothership {
                         self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+                        self.setAttackArrowToTarget()
                     }
                 }
             }
