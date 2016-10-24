@@ -1313,7 +1313,7 @@ extension Spaceship {
                 return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 40, range: 50, fireRate: 2)
+                let weaponType = WeaponType(damage: 30, range: 50, fireRate: 2)
                 weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
                 weaponType.shotSkin = "shotAA"
                 
@@ -1332,7 +1332,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 15, range: 200, fireRate: 4)
+                let weaponType = WeaponType(damage: 20, range: 200, fireRate: 4)
                 weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
                 weaponType.shotSkin = "shotDA"
                 
@@ -1355,7 +1355,7 @@ extension Spaceship {
                 return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 10, range: 100, fireRate: 1)
+                let weaponType = WeaponType(damage: 7, range: 100, fireRate: 1)
                 weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
                 weaponType.shotSkin = "shotBA"
                 
@@ -1377,7 +1377,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.25)
+                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.4)
                 weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
                 weaponType.shotSkin = "shotCA"
                 
@@ -1387,7 +1387,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.tankerDestroyer.rawValue, name: "Tanker Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+                speed: 5, health: 15, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipBA"
             spaceshipType.glassSkin = "spaceshipBAGlass"
             spaceshipType.scale = 0.5
@@ -1398,7 +1398,7 @@ extension Spaceship {
             spaceshipType.jetBorderOffset = -5
             return spaceshipType
             }(), weaponType: {
-                let weaponType = WeaponType(damage: 40, range: 50, fireRate: 2)
+                let weaponType = WeaponType(damage: 5, range: 50, fireRate: 2)
                 weaponType.color = SKColor(red: 105/255, green: 85/255, blue: 172/255, alpha: 1)
                 weaponType.shotSkin = "shotAA"
                 
@@ -1440,7 +1440,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 10, range: 100, fireRate: 1)
+                let weaponType = WeaponType(damage: 15, range: 100, fireRate: 1)
                 weaponType.color = SKColor(red: 100/255, green: 210/255, blue: 63/255, alpha: 1)
                 weaponType.shotSkin = "shotBA"
                 
@@ -1460,7 +1460,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.25)
+                let weaponType = WeaponType(damage: 5, range: 150, fireRate: 0.25)
                 weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
                 weaponType.shotSkin = "shotCA"
                 
@@ -1500,7 +1500,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 15, range: 200, fireRate: 4)
+                let weaponType = WeaponType(damage: 10, range: 200, fireRate: 1)
                 weaponType.color = SKColor(red: 232/255, green: 161/255, blue: 0/255, alpha: 1)
                 weaponType.shotSkin = "shotDA"
                 
