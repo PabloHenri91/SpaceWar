@@ -356,6 +356,7 @@ class BattleTrainingScene: GameScene {
                 })
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
+                meteor.isAlly = false
                 meteor.setBitMasksToSpaceship()
                 meteor.loadHealthBar(self.gameWorld)
                 meteor.position = CGPoint(x: 0, y: 200)
@@ -391,6 +392,7 @@ class BattleTrainingScene: GameScene {
                 })
                 
                 let meteor = Spaceship(extraType: 0, level: 1, loadPhysics: true)
+                meteor.isAlly = false
                 meteor.setBitMasksToSpaceship()
                 meteor.loadHealthBar(self.gameWorld)
                 meteor.position = CGPoint(x: -100, y: -116)
@@ -402,6 +404,7 @@ class BattleTrainingScene: GameScene {
                 self.enemySpaceships.append(meteor)
                 
                 let meteor2 = Spaceship(extraType: 1, level: 1, loadPhysics: true)
+                meteor2.isAlly = false
                 meteor2.setBitMasksToSpaceship()
                 meteor2.loadHealthBar(self.gameWorld)
                 meteor2.position = CGPoint(x: 100, y: -116)

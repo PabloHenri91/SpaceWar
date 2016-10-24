@@ -74,6 +74,7 @@ class Spaceship: Control {
     
     private var healthBar:HealthBar!
     var weaponRangeSprite:SKShapeNode?
+    var moveWeaponRangeSprite:SKShapeNode?
     
     //Respawn
     var canRespawn = true
@@ -255,6 +256,24 @@ class Spaceship: Control {
             if let weaponRangeSprite = self.weaponRangeSprite {
                 gameWorld.addChild(weaponRangeSprite)
             }
+            
+            
+            self.moveWeaponRangeSprite = SKShapeNode(circleOfRadius: weapon.rangeInPoints)
+            self.moveWeaponRangeSprite?.strokeColor = SKColor.whiteColor()
+            self.moveWeaponRangeSprite?.fillColor = SKColor.clearColor()
+            self.moveWeaponRangeSprite?.position = self.position
+            self.moveWeaponRangeSprite?.alpha = 0
+            
+            if let moveWeaponRangeSprite = self.moveWeaponRangeSprite {
+                gameWorld.addChild(moveWeaponRangeSprite)
+            }
+        }
+    }
+    
+    func showMoveWeaponRangeSprite() {
+        if let _ = self.weapon {
+            self.moveWeaponRangeSprite?.position = self.destination
+            self.moveWeaponRangeSprite?.alpha = 1
         }
     }
     
@@ -417,6 +436,7 @@ class Spaceship: Control {
             spriteNode?.removeFromParent()
         })
         self.showWeaponRangeSprite()
+        self.showMoveWeaponRangeSprite()
     }
     
     func setAttackArrowToTarget() {
@@ -472,6 +492,7 @@ class Spaceship: Control {
                     spaceship.physicsBody?.dynamic = true
                     spaceship.needToMove = true
                     spaceship.setMoveArrowToDestination()
+                    spaceship.showMoveWeaponRangeSprite()
                 }
             }
         }
@@ -553,12 +574,19 @@ class Spaceship: Control {
     }
     
     func updateWeaponRangeSprite() {
+        
         if let weaponRangeSprite = self.weaponRangeSprite {
             weaponRangeSprite.position = self.position
             
             if self.health <= 0 {
                 weaponRangeSprite.alpha = 0
+                moveWeaponRangeSprite?.alpha = 0
             } else {
+                
+                if moveWeaponRangeSprite?.alpha > 0 {
+                    moveWeaponRangeSprite?.alpha -= 0.06666666667
+                }
+                
                 if self != Spaceship.selectedSpaceship {
                     if weaponRangeSprite.alpha > 0 {
                         weaponRangeSprite.alpha -= 0.06666666667
@@ -620,7 +648,7 @@ class Spaceship: Control {
         return true
     }
     
-    func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship]) -> SKNode? {
+    func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) -> SKNode? {
         
         var currentTarget:SKNode? = nil
         
@@ -633,10 +661,15 @@ class Spaceship: Control {
                         
                         if currentTarget != nil {
                             if CGPoint.distanceSquared(self.position, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
-                                currentTarget = enemySpaceship
+                                
+                                if self.canFire(enemySpaceship.position, allySpaceships: allySpaceships)  {
+                                    currentTarget = enemySpaceship
+                                }
                             }
                         } else {
-                            currentTarget = enemySpaceship
+                            if self.canFire(enemySpaceship.position, allySpaceships: allySpaceships)  {
+                                currentTarget = enemySpaceship
+                            }
                         }
                         
                     }
@@ -663,13 +696,13 @@ class Spaceship: Control {
         return currentTarget
     }
     
-    func fire(allySpaceships allySpaceships:[Spaceship]) {
+    func canFire(targetNodePosition: CGPoint, allySpaceships:[Spaceship]) -> Bool {
         var canfire = true
         
         for allySpaceship in allySpaceships {
             
             if allySpaceship != self && allySpaceship.canBeTargetAndHitBy(self) {
-                if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, self.targetNode!.position) {
+                if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, targetNodePosition) {
                     let point = allySpaceship.position
                     let dx = Float(point.x - self.position.x)
                     let dy = Float(point.y - self.position.y)
@@ -689,13 +722,7 @@ class Spaceship: Control {
             }
         }
         
-        
-        if canfire {
-            self.weapon?.fire(self.weaponRangeBonus)
-        } else {
-            self.targetNode = nil
-        }
-        
+        return canfire
     }
     
     func getShot(shot:Shot?, contact: SKPhysicsContact?) {
@@ -908,7 +935,7 @@ class Spaceship: Control {
                         self.resetToStartingPosition()
                     } else {
                         if !self.isInsideAMothership {
-                            self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+                            self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
                             self.setAttackArrowToTarget()
                         }
                     }
@@ -938,9 +965,15 @@ class Spaceship: Control {
                         if mothership.health <= 0 {
                             self.targetNode = nil
                         } else {
-                            self.rotateToPoint(CGPoint(x: self.position.x, y: targetNode.position.y))
+                            let targetNodePosition = CGPoint(x: self.position.x, y: targetNode.position.y)
+                            self.rotateToPoint(targetNodePosition)
                             if abs(self.totalRotationToDestination) <= 0.05 {
-                                self.fire(allySpaceships: allySpaceships)
+                                
+                                if self.canFire(targetNodePosition, allySpaceships: allySpaceships) {
+                                    self.weapon?.fire(self.weaponRangeBonus)
+                                } else {
+                                    self.targetNode = nil
+                                }
                             }
                         }
                     }
@@ -954,7 +987,11 @@ class Spaceship: Control {
                             
                             if targetNode.canBeTargetAndHitBy(self) {
                                 if abs(self.totalRotationToDestination) <= 0.05 {
-                                    self.fire(allySpaceships: allySpaceships)
+                                    if self.canFire(targetNode.position, allySpaceships: allySpaceships) {
+                                        self.weapon?.fire(self.weaponRangeBonus)
+                                    } else {
+                                        self.targetNode = nil
+                                    }
                                 }
                             } else {
                                 self.rotateToPoint(targetNode.position)
@@ -976,7 +1013,7 @@ class Spaceship: Control {
                     
                 } else {
                     if !self.isInsideAMothership {
-                        self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships)
+                        self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
                         self.setAttackArrowToTarget()
                     }
                 }
@@ -1555,7 +1592,24 @@ extension Spaceship {
     ]
     
     static var extraTypes: [SpaceshipType] = [
-        SpaceshipType(index: 0, name: "Tutorial Meteor 2",
+        
+        SpaceshipType(index: 0, name: "Tutorial Meteor 1",
+            bodyType: {
+                let spaceshipType = BodyType(targetPriorityType: 0,
+                    speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)
+                spaceshipType.skin = "tutorialMeteor"
+                spaceshipType.scale = 1
+                
+                spaceshipType.centerJet = true
+                return spaceshipType
+            }(),
+            weaponType: {
+                let weaponType = WeaponType(damage: 0, range: 100, fireRate: 1)
+                return weaponType
+            }()
+        ),
+        
+        SpaceshipType(index: 1, name: "Tutorial Meteor 2",
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
                     speed: 0, health: 5, shieldPower: 0, shieldRecharge: 0)

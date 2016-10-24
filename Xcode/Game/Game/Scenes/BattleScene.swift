@@ -243,7 +243,7 @@ class BattleScene: GameScene {
                                     if botSpaceship.health <= botSpaceship.maxHealth/10 {
                                         botSpaceship.retreat()
                                     } else {
-                                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships)
+                                        botSpaceship.targetNode = botSpaceship.nearestTarget(enemyMothership: self.mothership, enemySpaceships: self.mothership.spaceships, allySpaceships: self.botMothership.spaceships)
                                         
                                         if let _ = botSpaceship.targetNode {
                                             botSpaceship.needToMove = false
