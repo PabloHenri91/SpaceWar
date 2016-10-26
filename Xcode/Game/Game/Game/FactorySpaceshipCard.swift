@@ -15,8 +15,11 @@ class FactorySpaceshipCard: Control {
     var buttonBuy: Button!
     var labelTypeCount:Label!
     var typeCount = 0
+    var isUnlocked:Bool
     
-    init(spaceship: Spaceship) {
+    init(spaceship: Spaceship, unlocked: Bool = true) {
+        
+        self.isUnlocked = unlocked
         
         let playerData = MemoryCard.sharedInstance.playerData
         
@@ -76,11 +79,12 @@ class FactorySpaceshipCard: Control {
         let fontName = GameFonts.fontName.museo1000
         let textOffset = CGPoint(x: 8, y: 0)
         
+        self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+        
+        
         self.buttonBuy = Button(textureName: "buttonOrange84x25", text: GameMath.spaceshipPrice(spaceship.type).description, fontSize: 13, x: 145, y: 106, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: CGPoint(x: 0, y: -2), fontName: fontName, textOffset: textOffset)
         self.addChild(self.buttonBuy)
         self.buttonBuy.addChild(Control(textureName: "fragIconForButton", x: 6, y: 5))
-        
-        self.addChild(Label(color: textColor, text: textRarity, fontSize: 8, x: 43, y: 21, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
         
         let textTypeCount = self.typeCount.description + "/4"
         fontColor = SKColor(red: 96/255, green: 96/255, blue: 96/255, alpha: 1)
@@ -88,6 +92,7 @@ class FactorySpaceshipCard: Control {
         self.labelTypeCount = Label(color: fontColor, text: textTypeCount, fontSize: 11, x: 265, y: 16, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.addChild(self.labelTypeCount)
         
+        if unlocked {
         
         let speedIcon = Control(textureName: "speedIcon", x: 97, y: 54 - 11)
         speedIcon.setScale(min(11/speedIcon.size.width, 11/speedIcon.size.height))
@@ -139,6 +144,29 @@ class FactorySpaceshipCard: Control {
         
         if self.typeCount >= 4 {
             self.buttonBuy.hidden = true
+        }
+        
+        } else {
+            self.buttonBuy.hidden = true
+            
+            self.addChild(Label(color: SKColor.whiteColor(), text: "???", fontSize: 11, x: 90, y: 21, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset))
+            
+            let spaceshipMask = SKSpriteNode(imageNamed: spaceship.type.bodyType.skin + "Mask")
+            spaceshipMask.texture?.filteringMode = Display.filteringMode
+            spaceshipMask.setScale(min(spaceship.size.width/spaceshipMask.size.width, spaceship.size.height/spaceshipMask.size.height))
+            spaceshipMask.color = SKColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
+            spaceshipMask.colorBlendFactor = 1
+            //spaceshipMask.position = CGPoint(x: spaceship.size.width/2, y: -spaceship.size.height/2)
+            spaceshipMask.zPosition = spaceship.zPosition + 3
+            spaceship.addChild(spaceshipMask)
+            
+            let lockedIcon = Control(textureName: "lockedIcon", x: 170, y: 61)
+            self.addChild(lockedIcon)
+            
+            self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "LOCKED", fontSize: 12, x: 159, y: 110, fontName: GameFonts.fontName.museo1000, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+            
+            
+
         }
         
     }

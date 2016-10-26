@@ -11,6 +11,7 @@ import SpriteKit
 class FactoryScene: GameScene {
     
     let playerData = MemoryCard.sharedInstance.playerData
+    var types = Spaceship.types
     
     var scrollNode:ScrollNode!
     
@@ -72,12 +73,23 @@ class FactoryScene: GameScene {
         for item in self.playerData.unlockedSpaceships {
             if let spaceshipData = item as? SpaceshipData {
                 let spaceship = Spaceship(type: spaceshipData.type.integerValue, level: 1)
+                for i in 0..<types.count {
+                    if types[i].index == spaceshipData.type.integerValue {
+                        types.removeAtIndex(i)
+                        break;
+                    }
+                }
                 cells.append(FactorySpaceshipCard(spaceship: spaceship))
             }
         }
         
         cells.sortInPlace { (factorySpaceshipCard0, factorySpaceshipCard1) -> Bool in
             return factorySpaceshipCard0.typeCount < factorySpaceshipCard1.typeCount
+        }
+        
+        for type in types {
+            let spaceship = Spaceship(type: type.index, level: 1)
+            cells.append(FactorySpaceshipCard(spaceship: spaceship, unlocked: false))
         }
     
         self.scrollNode = ScrollNode(cells: cells, x: 17, y: 143, xAlign: .center, yAlign: .up, spacing: 10 , scrollDirection: .vertical)
@@ -335,25 +347,50 @@ class FactoryScene: GameScene {
                                 
                                 if let factorySpaceshipCard = cell as? FactorySpaceshipCard {
                                     
-                                    if factorySpaceshipCard.buttonBuy.containsPoint(touch.locationInNode(factorySpaceshipCard)) {
+                                    if factorySpaceshipCard.isUnlocked {
                                         
-                                        if self.playerData.points.integerValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type) {
+                                        if factorySpaceshipCard.buttonBuy.containsPoint(touch.locationInNode(factorySpaceshipCard)) {
                                             
-                                            self.buySpaceshipAlert = BuySpaceshipAlert(spaceship: factorySpaceshipCard.spaceship, count: factorySpaceshipCard.typeCount)
-                                            self.buySpaceshipAlert?.buttonBuy.addHandler({
-                                                factorySpaceshipCard.updateLabelTypeCount()
-                                            })
-                                            self.nextState = .buySpaceship
-                                            
-                                        } else {
-                                            
-                                            let alertBox = AlertBox(title: "Alert!", text: "Insuficient funds.", type: .OK)
-                                            self.addChild(alertBox)
-                                            alertBox.buttonOK.addHandler {
-                                                self.nextState = .factory
+                                            if self.playerData.points.integerValue > GameMath.spaceshipPrice(factorySpaceshipCard.spaceship.type) {
+                                                
+                                                self.buySpaceshipAlert = BuySpaceshipAlert(spaceship: factorySpaceshipCard.spaceship, count: factorySpaceshipCard.typeCount)
+                                                self.buySpaceshipAlert?.buttonBuy.addHandler({
+                                                    factorySpaceshipCard.updateLabelTypeCount()
+                                                })
+                                                self.nextState = .buySpaceship
+                                                
+                                            } else {
+                                                
+                                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+                                                
+                                                alertBox.buttonCancel!.addHandler({ self.nextState = .factory
+                                                })
+                                                
+                                                alertBox.buttonOK.addHandler({ self.nextState = .factory
+                                                    self.gameStore = GameStore()
+                                                    self.addChild(self.gameStore!)
+                                                })
+                                                
+                                                self.addChild(alertBox)
+                                                self.nextState = .alert
                                             }
-                                            self.nextState = .alert
                                         }
+                                        
+                                    } else {
+                                        
+                                        //Alerta
+                                        
+                                        let alertBox = AlertBox(title: "Locked", text: "To unlock this spaceship you need do a research on research lab.", buttonText: "GO TO RESEARCHS", needCancelButton: true)
+                                        
+                                        alertBox.buttonCancel!.addHandler({ self.nextState = .factory
+                                        })
+                                        
+                                        alertBox.buttonOK.addHandler({ self.nextState = .research
+                                        })
+                                        
+                                        self.addChild(alertBox)
+                                        self.nextState = .alert
+                                        
                                     }
                                 }
                             }

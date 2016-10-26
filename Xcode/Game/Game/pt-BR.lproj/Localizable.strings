@@ -109,6 +109,8 @@
 "FACTORY" = "";
 "Factory" = "";
 "BUY SPACESHIP" = "";
+"LOCKED" = ""; 
+"To unlock this spaceship you need do a research on research lab.";
 
 
 
@@ -121,6 +123,7 @@
 "Hangar" = "";
 "This is a battleship. Do upgrades to makes it stronger and defeat your enemies." = "";
 "CHOOSE" = ""; // CHOOSE Battleship
+"Buy more" = ""; 
 
 
 //BattleScene

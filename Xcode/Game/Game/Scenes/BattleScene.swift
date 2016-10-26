@@ -367,7 +367,7 @@ class BattleScene: GameScene {
                 
                 if self.botMothership.health <= 0 && self.mothership.health <= 0 {
                     //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.draw, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
-                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + xp.description, type: AlertBox.messageType.OK)
+                    let alertBox = AlertBox(title: "The Battle Ended", text: "Draw.".translation() + " 😏 xp += " + xp.description)
                     
                     alertBox.buttonOK.addHandler({ [weak self, weak alertBox] in
                         self?.nextState = states.mothership
@@ -381,7 +381,7 @@ class BattleScene: GameScene {
                         
                         //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.win, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + xp.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Win! ".translation() + String.winEmoji() + " xp += " + xp.description)
                         
                         if self.battleEndTime - self.battleBeginTime < 60 * 3 {
                             self.updateBotOnWin()
@@ -406,7 +406,7 @@ class BattleScene: GameScene {
                         
                         //let alertBox = AlertBoxBattleEnd(type: AlertBoxBattleEnd.types.lose, xp: xp, xpMax: xpMax, points: points, pointsMax: pointsMax)
                         
-                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + xp.description, type: AlertBox.messageType.OK)
+                        let alertBox = AlertBox(title: "The Battle Ended", text: "You Lose. ".translation() + String.loseEmoji() + " xp += " + xp.description)
                         
                         if self.battleEndTime - self.battleBeginTime < 60 * 3 {
                             self.updateBotOnLose()

@@ -429,10 +429,16 @@ class ResearchScene: GameScene {
                         
                         if speedUpAlert.buttonFinish.containsPoint(point) {
                             if speedUpAlert.finishWithPremiumPoints() == false {
-                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
-                                alertBox.buttonOK.addHandler({ [weak self] in
-                                    self?.setDefaultState()
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+                                
+                                alertBox.buttonCancel!.addHandler({ self.setDefaultState()
                                 })
+                                
+                                alertBox.buttonOK.addHandler({ self.setDefaultState()
+                                    self.gameStore = GameStore()
+                                    self.addChild(self.gameStore!)
+                                })
+                            
                                 self.addChild(alertBox)
                             } else {
                                 self.playerDataCard.updatePremiumPoints()
@@ -570,7 +576,7 @@ class ResearchScene: GameScene {
                                                     researchCard.research.forceStart()
                                                     self.updateResearches()
                                                 } else {
-                                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish", type: AlertBox.messageType.OK)
+                                                    let alertBox = AlertBox(title: "Alert!", text: "You have a research doing, wait it finish")
                                                     self.addChild(alertBox)
                                                 }
                                                 return

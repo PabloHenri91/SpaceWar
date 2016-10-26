@@ -184,7 +184,7 @@ extension Research {
         for researchType in Research.types {
             let newResearch = MemoryCard.sharedInstance.newResearchData()
             newResearch.type = researchType.index
-            newResearch.spaceshipLevel = 10
+            newResearch.spaceshipLevel = 0
             newResearch.spaceshipMaxLevel = 1000
             MemoryCard.sharedInstance.playerData.addResearchData(newResearch)
         }

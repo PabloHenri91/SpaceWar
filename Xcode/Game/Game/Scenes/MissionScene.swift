@@ -462,12 +462,19 @@ class MissionScene: GameScene {
                                                 
                                                 let price = Int(4000 * pow(4, Double(card.missionSpaceship.level - 1)))
                                                 
-                                                let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", type: AlertBox.messageType.OKCancel)
+                                                let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", buttonText: "BUY", needCancelButton: true)
                                                 
                                                 alertBox.buttonOK.addHandler(
                                                     {
                                                         if card.upgrade() == false {
-                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
+                                                            let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+
+                                                            
+                                                            alertBox2.buttonOK.addHandler({ self.nextState = .hangar
+                                                                self.gameStore = GameStore()
+                                                                self.addChild(self.gameStore!)
+                                                            })
+                                                            
                                                             self.addChild(alertBox2)
                                                         } else {
                                                             self.playerDataCard.updatePoints()
@@ -514,9 +521,15 @@ class MissionScene: GameScene {
                         if buyAlert.buttonBuy.containsPoint(touch.locationInNode(buyAlert)){
                             if buyAlert.buyMiningSpaceship() == false {
                                 
-                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
-                                alertBox.buttonOK.addHandler({ [weak self] in
-                                    self?.nextState = .mission
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+                                
+                                alertBox.buttonCancel!.addHandler({ self.nextState = .mission
+                                })
+                                
+                                alertBox.buttonOK.addHandler({
+                                    self.nextState = .mission
+                                    self.gameStore = GameStore()
+                                    self.addChild(self.gameStore!)
                                 })
                                 self.addChild(alertBox)
                                 
@@ -537,9 +550,14 @@ class MissionScene: GameScene {
                         
                         if speedUpAlert.buttonFinish.containsPoint(point) {
                             if speedUpAlert.finishWithPremiumPoints() == false {
-                                let alertBox = AlertBox(title: "Price", text: "No enough diamonds bro. 😢😢", type: AlertBox.messageType.OK)
-                                alertBox.buttonOK.addHandler({ [weak self] in
-                                    self?.nextState = .mission
+                                let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+                                
+                                alertBox.buttonCancel!.addHandler({ self.nextState = .mission
+                                })
+                                
+                                alertBox.buttonOK.addHandler({ self.nextState = .mission
+                                    self.gameStore = GameStore()
+                                    self.addChild(self.gameStore!)
                                 })
                                 self.addChild(alertBox)
                             } else {

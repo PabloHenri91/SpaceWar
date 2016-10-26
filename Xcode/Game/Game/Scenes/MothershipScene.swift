@@ -382,15 +382,6 @@ class MothershipScene: GameScene {
                     
                     if self.buttonBattle.containsPoint(point) {
                         
-                        if self.playerData.motherShip.spaceships.count != 4 {
-                            let alertBox = AlertBox(title: "Alert!", text: "Missing spaceships, go to the hangar.", type: .OK)
-                            self.addChild(alertBox)
-                            alertBox.buttonOK.addHandler {
-                                self.nextState = .hangar
-                            }
-                            self.nextState = .alert
-                            return
-                        }
                         
                         if !self.batteryControl.useCharge() {
                             let alertBox = AlertBoxLowBattery()

@@ -386,9 +386,16 @@ class HangarScene: GameScene {
                                     
                                 } else {
                                     
-                                    let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", type: AlertBox.messageType.OK)
-                                    alertBox.buttonOK.addHandler({ self.nextState = .hangar
+                                    let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
+                                    
+                                    alertBox.buttonCancel!.addHandler({ self.nextState = .hangar
                                     })
+                                    
+                                    alertBox.buttonOK.addHandler({ self.nextState = .hangar
+                                        self.gameStore = GameStore()
+                                        self.addChild(self.gameStore!)
+                                    })
+                                    
                                     self.addChild(alertBox)
                                     
                                 }

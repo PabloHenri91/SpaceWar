@@ -10,16 +10,12 @@ import SpriteKit
 
 class AlertBox: Box {
     
-    var buttonCancel:Button!
+    var buttonCancel:Button?
     var buttonOK:Button!
     
-    enum messageType {
-        case OKCancel
-        case OK
-    }
     
-    init(title:String, text:String, type:AlertBox.messageType) {
-        super.init(textureName: "alertBox")
+    init(title:String, text:String, buttonText: String = "OK", needCancelButton: Bool = false) {
+        super.init(textureName: "darkBlueBox281x192")
         
         let scene = Control.gameScene
         scene.blackSpriteNode.hidden = false
@@ -27,35 +23,36 @@ class AlertBox: Box {
         
         self.zPosition = 1000000
         
-        self.addChild(Label(text:title, x:141, y:24))
-        self.addChild(Label(text:text, x:141, y:71))
+        let labelTitle = Label(color:SKColor.whiteColor() ,text: "TUTORIAL" , fontSize: 14, x: 141, y: 26, shadowColor: SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
+        self.addChild(labelTitle)
         
-        switch (type) {
-        case messageType.OK:
-            self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:93, y:102)
-            self.addChild(self.buttonOK)
-            self.buttonOK.addHandler({ [weak self] in
-                scene.blackSpriteNode.hidden = true
-                self?.removeFromParent()
-            })
-            break
-        case messageType.OKCancel:
-            
-            self.buttonOK = Button(textureName: "buttonSmall", text: "Ok", x:43, y:102)
-            self.addChild(self.buttonOK)
-            self.buttonOK.addHandler({ [weak self] in
-                scene.blackSpriteNode.hidden = true
-                self?.removeFromParent()
-                })
-            
-            self.buttonCancel = Button(textureName: "buttonSmall", text: "Cancel", x:163, y:102)
-            self.addChild(self.buttonCancel)
-            self.buttonCancel.addHandler({ [weak self] in
-                scene.blackSpriteNode.hidden = true
-                self?.removeFromParent()
-                })
-            break
+        self.addChild(MultiLineLabel(text: text, maxWidth: 240, color: SKColor.blackColor(), fontSize: 12, x: 141, y: 87, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500))
+        
+        
+        let fontShadowColor = SKColor(red: 33/255, green: 41/255, blue: 48/255, alpha: 1)
+        let fontShadowOffset = CGPoint(x: 0, y: -2)
+        let fontName = GameFonts.fontName.museo1000
+        
+        self.buttonOK = Button(textureName: "buttonDarkBlue131x30", text: buttonText, fontSize: 11, x: 77, y: 150, fontColor: SKColor.whiteColor(), fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
+        self.addChild(self.buttonOK)
+        
+        self.buttonOK.addHandler {
+            scene.blackSpriteNode.hidden = true
+            self.removeFromParent()
         }
+
+        
+        if needCancelButton {
+            
+            self.buttonCancel = Button(textureName: "cancelButtonGray", x: 246, y: 10,  top: 10, bottom: 10, left: 10, right: 10)
+            self.addChild(self.buttonCancel!)
+            
+            self.buttonCancel!.addHandler({ [weak self] in
+                scene.blackSpriteNode.hidden = true
+                self?.removeFromParent()
+                })
+        }
+  
     }
     
     required init?(coder aDecoder: NSCoder) {

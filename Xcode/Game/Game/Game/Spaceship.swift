@@ -1459,7 +1459,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 2, range: 150, fireRate: 0.4)
+                let weaponType = WeaponType(damage: 1, range: 150, fireRate: 0.4)
                 weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
                 weaponType.shotSkin = "shotCA"
                 
@@ -1542,7 +1542,7 @@ extension Spaceship {
             return spaceshipType
             }(),
             weaponType: {
-                let weaponType = WeaponType(damage: 5, range: 150, fireRate: 0.25)
+                let weaponType = WeaponType(damage: 3, range: 150, fireRate: 0.25)
                 weaponType.color = SKColor(red: 0/255, green: 226/255, blue: 240/255, alpha: 1)
                 weaponType.shotSkin = "shotCA"
                 
