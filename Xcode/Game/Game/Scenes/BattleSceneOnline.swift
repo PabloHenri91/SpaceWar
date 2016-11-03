@@ -108,8 +108,8 @@ extension BattleScene {
                         break
                         
                     default:
-                        print(BattleScene.state)
-                        print(socketAnyEvent.description)
+                        //print(BattleScene.state)
+                        //print(socketAnyEvent.description)
                         break
                     }
                     
@@ -136,8 +136,8 @@ extension BattleScene {
                 break
                 
             default:
-                print(BattleScene.state)
-                print(socketAnyEvent.description)
+                //print(BattleScene.state)
+                //print(socketAnyEvent.description)
                 break
             }
         })

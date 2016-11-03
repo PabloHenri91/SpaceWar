@@ -86,11 +86,11 @@ class Sector {
             if sectorMission < sector.missions.count {
                 return sector.missions[sectorMission]
             } else {
-                print("SectorMission unavailable sector: \(sector) sectorMission: \(sectorMission)")
+                //print("SectorMission unavailable sector: \(sector) sectorMission: \(sectorMission)")
                 return sector.missions[Int.random(sector.missions.count)]
             }
         } else {
-            print("SectorMission unavailable sector: \(sector) sectorMission: \(sectorMission)")
+            //print("SectorMission unavailable sector: \(sector) sectorMission: \(sectorMission)")
             let sector = Sector.types[Int.random(Sector.types.count)]
             return sector.missions[Int.random(sector.missions.count)]
         }

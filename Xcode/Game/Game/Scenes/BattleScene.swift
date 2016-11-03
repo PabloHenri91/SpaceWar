@@ -136,8 +136,8 @@ class BattleScene: GameScene {
         
         self.updateMothershipsHealth()
         
-        print("botUpdateInterval " + self.botUpdateInterval.description)
-        print("botLevel " + self.playerData.botLevel.integerValue.description)
+        //print("botUpdateInterval " + self.botUpdateInterval.description)
+        //print("botLevel " + self.playerData.botLevel.integerValue.description)
     }
     
     func updateMothershipsHealth() {
@@ -307,7 +307,7 @@ class BattleScene: GameScene {
                 break
                 
             default:
-                print(BattleScene.state)
+                //print(BattleScene.state)
                 #if DEBUG
                     //fatalError()
                 #endif
@@ -479,7 +479,7 @@ class BattleScene: GameScene {
                 break
                 
             default:
-                print(BattleScene.state)
+                //print(BattleScene.state)
                 #if DEBUG
                     fatalError()
                 #endif

@@ -61,7 +61,7 @@ class ServerManager {
                 break
                 
             default:
-                print(socketAnyEvent.description)
+                //print(socketAnyEvent.description)
                 break
             }
         })
@@ -104,24 +104,24 @@ class ServerManager {
                     socket.on("connect", callback: { (data:[AnyObject], socketAckEmitter:SocketAckEmitter) in
                         
                         if let _ = serverManager.socket {
-                            print("disconnecting from: " + url.description)
+                            //print("disconnecting from: " + url.description)
                             socket.disconnect()
                         } else {
                             
                             serverManager.socket = socket
-                            print("connected to " + url.description)
+                            //print("connected to " + url.description)
                             socket.emit(serverManager.userDisplayInfo)
                             serverManager.leaveAllRooms()
                             serverManager.setHandlers()
                             
                             block()
                         }
-                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
+                        //print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                     })
                     
                     socket.connect(timeoutAfter: 10, withTimeoutHandler: {
-//                        print("connection timed out for: " + url.description)
-//                        print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
+//                        //print("connection timed out for: " + url.description)
+//                        //print(Int((GameScene.currentTime - startTime) * 1000).description + "ms")
                         socket.disconnect()
                     })
                 }

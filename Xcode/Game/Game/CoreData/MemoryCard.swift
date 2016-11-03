@@ -98,7 +98,7 @@ import CoreData
                         if let researchData = item as? ResearchData {
                             if researchData.done == 0 {
                                 unlocked = false
-                                print(researchType.researchDescription)
+                                //print(researchType.researchDescription)
                             }
                         }
                     }

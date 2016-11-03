@@ -32,7 +32,7 @@ class HangarSpaceshipDetails: Box {
     
     init(spaceship: Spaceship, showUpgrade: Bool = true) {
         
-        print(spaceship.type.index)
+        //print(spaceship.type.index)
         
         self.showUpgrade = showUpgrade
         
@@ -46,7 +46,7 @@ class HangarSpaceshipDetails: Box {
                 let researchType = Research.types[researchData.type.integerValue]
 
                 if let spaceshipUnlockedIndex = researchType.spaceshipUnlockedIndex {
-                    print(spaceshipUnlockedIndex)
+                    //print(spaceshipUnlockedIndex)
                     if (spaceshipUnlockedIndex == spaceship.type.index) {
                         self.researchData = researchData
                     }

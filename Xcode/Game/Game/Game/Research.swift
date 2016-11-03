@@ -139,11 +139,11 @@ class Research: Control {
             }
             
             //            } else if (diceRoll <= 95) {
-            //                print("rare")
+            //                //print("rare")
             //            } else if (diceRoll <= 99) {
-            //                print("epic")
+            //                //print("epic")
             //            } else {
-            //                print("legendary")
+            //                //print("legendary")
             //            }
         }
         

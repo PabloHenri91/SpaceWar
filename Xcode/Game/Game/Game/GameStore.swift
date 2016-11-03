@@ -199,7 +199,7 @@ class GameStore: Box {
                         self.feedback(storeItem)
                     } else {
                         //TODO: não tem diamantes para comprar
-                        print("não tem diamantes para comprar")
+                        //print("não tem diamantes para comprar")
                     }
                     
                     break
@@ -248,12 +248,12 @@ class GameStore: Box {
                                     self.feedback(storeItem)
                                 }
                             } else {
-                                print("ja estava com o boost ativo")
+                                //print("ja estava com o boost ativo")
                             }
                         }
                     } else {
                         //TODO: não tem diamantes para comprar
-                        print("não tem diamantes para comprar")
+                        //print("não tem diamantes para comprar")
                     }
                     break
                 }
