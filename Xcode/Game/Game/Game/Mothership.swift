@@ -22,12 +22,9 @@ class Mothership: Control {
     
     var spaceships = [Spaceship]()
     
-    private var healthBar:HealthBar!
     var labelHealth:Label!
     
     var explosionSoundEffect:SoundEffect!
-    
-    var cropNode:SKCropNode!
 
     var isAlly = true
     
@@ -125,25 +122,6 @@ class Mothership: Control {
         
         self.addChild(spriteNode)
         
-        let mothershipHealthBarMask = SKSpriteNode(imageNamed: "mothershipHealthBarMask")
-        mothershipHealthBarMask.texture?.filteringMode = Display.filteringMode
-        if self.isAlly {
-            mothershipHealthBarMask.color = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
-        } else {
-            mothershipHealthBarMask.color = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
-        }
-        mothershipHealthBarMask.colorBlendFactor = 1
-        
-        self.cropNode = SKCropNode()
-        self.cropNode.maskNode = mothershipHealthBarMask
-        self.addChild(self.cropNode)
-        
-        
-        let mothershipWhiteShape = SKSpriteNode(imageNamed: "mothershipWhiteShape")
-        mothershipWhiteShape.position = CGPoint(x: 0, y: -6)
-        mothershipWhiteShape.texture?.filteringMode = Display.filteringMode
-        self.addChild(mothershipWhiteShape)
-        
         self.loadPhysics(rectangleOfSize: spriteNode.size)
         
         Mothership.mothershipList.insert(self)
@@ -174,12 +152,6 @@ class Mothership: Control {
             fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
         }
         
-        self.healthBar = HealthBar(size: self.calculateAccumulatedFrame().size, fillColor: fillColor)
-        if !self.isAlly {
-            self.healthBar.zRotation = self.zRotation
-        }
-        self.cropNode.addChild(self.healthBar)
-        
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
@@ -198,6 +170,7 @@ class Mothership: Control {
         spaceship.isAlly = self.isAlly
         
         let mothershipSpaceshipSlot = SKSpriteNode(imageNamed: "mothershipSpaceshipSlot")
+        mothershipSpaceshipSlot.hidden = true
         mothershipSpaceshipSlot.texture?.filteringMode = Display.filteringMode
         self.addChild(mothershipSpaceshipSlot)
         
@@ -255,20 +228,29 @@ class Mothership: Control {
     }
     
     func updateHealthBarValue() {
-        self.healthBar.update(self.health, maxHealth: self.maxHealth)
         self.labelHealth.setText(self.health.description + "/" + self.maxHealth.description)
     }
     
-    func canBeTarget(spaceship:Spaceship) -> Bool {
+    
+    func canBeTargetAndHitBy(spaceship:Spaceship) -> Bool {
+        
+        if !self.canBeTarget() || !spaceship.canBeTarget() {
+            return false
+        }
         
         if let spaceshipWeapon = spaceship.weapon {
             let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.size.height/2
-            if CGPoint.distance(CGPoint(x: spaceship.position.x, y:self.position.y), spaceship.position) > range {
+            if (self.position - spaceship.position).length() > range {
                 return false
             }
         } else {
             return false
         }
+        
+        return true
+    }
+    
+    func canBeTarget() -> Bool {
         
         if self.health <= 0 {
             return false
@@ -325,6 +307,8 @@ class Mothership: Control {
     
     func die() {
         
+        Control.gameScene.shake(15)
+        
         for spaceship in self.spaceships {
             if spaceship.isInsideAMothership {
                 spaceship.die()
@@ -346,6 +330,9 @@ class Mothership: Control {
         particles.particlePositionRange = CGVector(dx: self.size.width, dy: self.size.height)
         
         if let parent = self.parent {
+            
+            parent.runAction(SKAction.screenShakeWithNode(self.parent!, amount: CGPoint(x: 50, y: 50), oscillations: 10, duration: 1))
+            
             parent.addChild(particles)
             
             let action = SKAction()
@@ -357,7 +344,6 @@ class Mothership: Control {
         
         self.hidden = true
         self.physicsBody = nil
-        self.healthBar.hidden = true
         self.health = 0
     }
     

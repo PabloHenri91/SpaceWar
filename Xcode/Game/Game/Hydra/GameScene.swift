@@ -9,8 +9,8 @@
 import SpriteKit
 
 #if os(OSX)
-public typealias UITouch = NSEvent
-import Foundation
+    public typealias UITouch = NSEvent
+    import Foundation
 #endif
 
 class GameScene: SKScene {
@@ -99,6 +99,10 @@ class GameScene: SKScene {
     
     func setDefaultState() {
         fatalError()
+    }
+    
+    func shake(amount: CGFloat) {
+        fatalError("func shake(amount: CGFloat) has not been implemented")
     }
     
     func updatePremiumPoints() {

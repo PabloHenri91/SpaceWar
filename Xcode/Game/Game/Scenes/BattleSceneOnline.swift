@@ -192,7 +192,7 @@ extension BattleScene {
                     
                     let position = CGPoint(x: CGFloat(i.next() as! Int) / 1000000, y: CGFloat(i.next() as! Int) / 1000000)
                     
-                    if CGPoint.distanceSquared(spaceship.position, position) > 256 {
+                    if (spaceship.position - position).lengthSquared() > 256 {
                         spaceship.position = position
                     } else {
                         spaceship.position.x = (spaceship.position.x + position.x)/2
