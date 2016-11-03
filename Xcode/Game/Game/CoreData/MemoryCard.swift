@@ -273,7 +273,7 @@ class MemoryCard {
             (NSMigratePersistentStoresAutomaticallyOption, true),
                                  (NSInferMappingModelAutomaticallyOption , true))
         
-        try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+        try! coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
         
         return coordinator
     }()
