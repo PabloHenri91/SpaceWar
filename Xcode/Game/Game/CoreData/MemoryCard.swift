@@ -271,43 +271,9 @@ class MemoryCard {
         
         let options = Dictionary(dictionaryLiteral:
             (NSMigratePersistentStoresAutomaticallyOption, true),
-            (NSInferMappingModelAutomaticallyOption , true))
+                                 (NSInferMappingModelAutomaticallyOption , true))
         
-        do {
-            if fileManager.fileExists(atPath: self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite").path) {
-                
-                let cachesUrl = self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite")
-                
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cachesUrl, options: options)
-                
-                for persistentStore in coordinator.persistentStores {
-                    try! coordinator.migratePersistentStore(persistentStore, to: url, options: options, withType: NSSQLiteStoreType)
-                }
-                try! fileManager.removeItem(at: cachesUrl)
-            } else {
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-            }
-            
-            if fileManager.fileExists(atPath: self.applicationDocumentDirectory.appendingPathComponent("SpaceWar.sqlite").path) {
-                
-                let cachesUrl = self.applicationCachesDirectory.appendingPathComponent("SpaceWar.sqlite")
-                
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cachesUrl, options: options)
-                
-                for persistentStore in coordinator.persistentStores {
-                    try! coordinator.migratePersistentStore(persistentStore, to: url, options: options, withType: NSSQLiteStoreType)
-                }
-                try! fileManager.removeItem(at: cachesUrl)
-            } else {
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-            }
-            
-        } catch {
-            #if DEBUG
-                //try! NSFileManager.defaultManager().removeItemAtURL(url)
-            #endif
-            fatalError()
-        }
+        try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
         
         return coordinator
     }()
