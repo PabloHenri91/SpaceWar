@@ -64,12 +64,6 @@ class SpaceWarTests: XCTestCase {
         scene.update(GameScene.currentTime)
     }
     
-    func testChooseMissionScene() {
-        let scene = ChooseMissionScene(missionSpaceship: MissionSpaceship(type: Int.random(MissionSpaceship.types.count), level: 1))
-        Control.gameScene.view?.presentScene(scene)
-        scene.update(GameScene.currentTime)
-    }
-    
     func testInviteFriendsScene() {
         let scene = InviteFriendsScene()
         Control.gameScene.view?.presentScene(scene)
