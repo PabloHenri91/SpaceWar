@@ -11,7 +11,7 @@ import SpriteKit
 class Spaceship: Control {
     
     var emitterNode:SKEmitterNode?
-    var emitterNodeParticleBirthRate:CGFloat = 0
+    var emitterNodeParticleBirthRate: CGFloat = 0
     var defaultEmitterNodeParticleBirthRate:CGFloat = 0
     
     var emitterNodeLeft:SKEmitterNode?
@@ -569,8 +569,6 @@ class Spaceship: Control {
             
             emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
         }
-        
-        
     }
     
     func updateWeaponRangeSprite() {

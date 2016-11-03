@@ -78,6 +78,10 @@ class Weapon: Control {
                             
                             let shot = Shot(shooter: parentSpaceship, damage: self.damage, range: self.rangeInPoints + bonusRange, fireRate: self.fireInterval , texture: self.weaponShotTexture, position: parentSpaceship.position, zRotation: parentSpaceship.zRotation, shooterPhysicsBody: parentSpaceshipPhysicsBody, color: self.type.color)
                             parentSpaceshipParent.addChild(shot)
+                            if let emitterNode = shot.emitterNode {
+                                emitterNode.targetNode = parentSpaceshipParent
+                                parentSpaceshipParent.addChild(emitterNode)
+                            }
                             self.initShotSoundEffect.play()
                         }
                     }

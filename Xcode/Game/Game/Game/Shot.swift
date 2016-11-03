@@ -20,6 +20,10 @@ class Shot: Control {
     
     var shooter:SKNode!
     
+    var emitterNode:SKEmitterNode?
+    var emitterNodeParticleBirthRate: CGFloat = 0
+    var defaultEmitterNodeParticleBirthRate:CGFloat = 0
+    
     init(shooter:SKNode, damage:Int, range:CGFloat, fireRate:Double, texture:SKTexture, position: CGPoint, zRotation: CGFloat, shooterPhysicsBody:SKPhysicsBody, color: SKColor) {
         super.init()
         
@@ -38,11 +42,12 @@ class Shot: Control {
         }
         
         let spriteNode = SKSpriteNode(texture: texture)
+        spriteNode.blendMode = .Add
         spriteNode.setScale(1.5)
         
         spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.color = color
-        spriteNode.colorBlendFactor = 1
+        spriteNode.colorBlendFactor = 4
         
         self.addChild(spriteNode)
         
@@ -56,15 +61,23 @@ class Shot: Control {
         
         self.position = position
         self.zRotation = zRotation
+        
+        let speed: CGFloat = 380
        
-        self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 380 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 380 + shooterPhysicsBody.velocity.dy)
+        self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * speed + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * speed + shooterPhysicsBody.velocity.dy)
+        
+        self.defaultEmitterNodeParticleBirthRate = speed/2
         
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
             self?.removeFromParent()
         }
         
-         Shot.shotSet.insert(self)
+        self.loadJetEffect(nil, color: color)
+        self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
+        self.updateEmitters()
+        
+        Shot.shotSet.insert(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,6 +101,38 @@ class Shot: Control {
         if distanceSquared >= self.rangeSquared {
             self.removeFromParent()
             //print(sqrt(self.rangeSquared).description + " " + sqrt(distanceSquared).description)
+        } else {
+            self.updateEmitters()
+        }
+    }
+    
+    func loadJetEffect(targetNode: SKNode?, color: SKColor) {
+        
+        self.emitterNode = SKEmitterNode(fileNamed: "Jet.sks")
+        if let emitterNode = self.emitterNode {
+            emitterNode.particleColorSequence = nil
+            emitterNode.particleColorBlendFactor = 1
+            emitterNode.particleColor = color
+            emitterNode.particleBirthRate = 0
+            emitterNode.zPosition = self.zPosition - 1
+            emitterNode.particleSize = CGSize(width: 15, height: 15)
+            if let targetNode = targetNode {
+                emitterNode.targetNode = targetNode
+            } else {
+                emitterNode.targetNode = self.parent
+            }
+        }
+    }
+    
+    func updateEmitters() {
+        
+        if let emitterNode = self.emitterNode {
+            emitterNode.particleScaleSpeed = -8
+            emitterNode.particleBirthRate = self.emitterNodeParticleBirthRate
+            emitterNode.particleSpeed = self.emitterNodeParticleBirthRate/2
+            emitterNode.particleSpeedRange = self.emitterNodeParticleBirthRate/4
+            emitterNode.position = self.position
+            emitterNode.emissionAngle = self.zRotation - CGFloat(M_PI/2)
         }
     }
     
@@ -107,6 +152,10 @@ class Shot: Control {
                 }
             }
         }
+        
+        self.emitterNodeParticleBirthRate = 0
+        self.updateEmitters()
+        self.emitterNode?.runAction(SKAction.removeFromParentAfterDelay(1))
         
         super.removeFromParent()
     }
