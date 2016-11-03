@@ -69,11 +69,11 @@ class BattleScene: GameScene {
         
         Metrics.battlesPlayed += 1
         
-        self.backgroundColor = SKColor(red: 50/255, green: 61/255, blue: 74/255, alpha: 1)
+        self.backgroundColor = SKColor(red: 32/255, green: 36/255, blue: 43/255, alpha: 1)
         
         // GameWorld
         self.gameWorld = GameWorld(physicsWorld: self.physicsWorld)
-        self.gameWorld.setScreenBox(Display.defaultSceneSize)
+        self.gameWorld.setScreenBox(Display.currentSceneSize)
         self.addChild(self.gameWorld)
         self.physicsWorld.contactDelegate = self.gameWorld
         
@@ -526,6 +526,20 @@ class BattleScene: GameScene {
         self.updateOnline()
     }
     
+    override func shake(amount: CGFloat) {
+        
+        let oldPosition = CGPoint.zero
+        let d = CGFloat.random(min: -π, max: π)
+        let newPosition = CGPoint(x: cos(d) * amount, y: sin(d) * amount)
+        
+        let effect = SKTMoveEffect(node: self.gameCamera.node, duration: 1, startPosition: newPosition, endPosition: oldPosition)
+        effect.timingFunction = SKTCreateShakeFunction(10)
+        
+        let action = SKAction.actionWithEffect(effect)
+        
+        self.gameCamera.node.runAction(action)
+    }
+    
     override func touchesBegan(touches: Set<UITouch>) {
         super.touchesBegan(touches)
         
@@ -618,7 +632,8 @@ class BattleScene: GameScene {
                     
                     if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + self.botMothership.spaceships, touch: touch) {
                         if nearestSpaceship.isAlly {
-                            if CGPoint.distanceSquared(nearestSpaceship.position, nearestSpaceship.startingPosition) >= 4 {
+                            
+                            if (nearestSpaceship.position - nearestSpaceship.startingPosition).lengthSquared() >= 4 {
                                 nearestSpaceship.targetNode = nil
                                 nearestSpaceship.needToMove = false
                                 nearestSpaceship.setBitMasksToSpaceship()
@@ -636,7 +651,7 @@ class BattleScene: GameScene {
                     if let parent = self.mothership.parent {
                         if self.mothership.containsPoint(touch.locationInNode(parent)) {
                             if let spaceship = Spaceship.selectedSpaceship {
-                                if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                                if (spaceship.position - spaceship.startingPosition).lengthSquared() >= 4 {
                                     Spaceship.retreatSelectedSpaceship()
                                     return
                                 }
@@ -646,12 +661,17 @@ class BattleScene: GameScene {
                     
                     if let parent = self.botMothership.parent {
                         if self.botMothership.containsPoint(touch.locationInNode(parent)) {
+                            if let spaceship = Spaceship.selectedSpaceship {
+                                spaceship.touchEnded()
+                                spaceship.targetNode = self.botMothership
+                                spaceship.setAttackArrowToTarget()
+                            }
                             return
                         }
                     }
                     
                     if let spaceship = Spaceship.selectedSpaceship {
-                        if CGPoint.distanceSquared(spaceship.position, spaceship.startingPosition) >= 4 {
+                        if (spaceship.position - spaceship.startingPosition).lengthSquared() >= 4 {
                             Spaceship.touchEnded(touch)
                         }
                     }
@@ -694,7 +714,7 @@ class BattleScene: GameScene {
                 
                 if nearestSpaceship != nil {
                     
-                    if CGPoint.distanceSquared(touchPosition, spaceship.position) < CGPoint.distanceSquared(touchPosition, nearestSpaceship!.position) {
+                    if (touchPosition - spaceship.position).lengthSquared() < (touchPosition - nearestSpaceship!.position).lengthSquared() {
                         nearestSpaceship = spaceship
                     }
                 } else {

@@ -625,7 +625,7 @@ class Spaceship: Control {
         
         if let spaceshipWeapon = spaceship.weapon {
             let range = spaceshipWeapon.rangeInPoints + spaceship.weaponRangeBonus + self.weaponRangeBonus
-            if CGPoint.distance(self.position, spaceship.position) > range {
+            if (self.position - spaceship.position).length() > range {
                 return false
             }
         } else {
@@ -650,7 +650,7 @@ class Spaceship: Control {
     
     func nearestTarget(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) -> SKNode? {
         
-        var currentTarget:SKNode? = nil
+        var currentTarget: SKNode? = nil
         
         for targetPriorityType in self.type.bodyType.targetPriority {
             switch targetPriorityType {
@@ -660,7 +660,7 @@ class Spaceship: Control {
                     if enemySpaceship.canBeTargetAndHitBy(self) {
                         
                         if currentTarget != nil {
-                            if CGPoint.distanceSquared(self.position, enemySpaceship.position) < CGPoint.distanceSquared(self.position, currentTarget!.position) {
+                            if (self.position - enemySpaceship.position).lengthSquared() < (self.position - currentTarget!.position).lengthSquared() {
                                 
                                 if self.canFire(enemySpaceship.position, allySpaceships: allySpaceships)  {
                                     currentTarget = enemySpaceship
@@ -678,7 +678,7 @@ class Spaceship: Control {
                 
             case TargetType.mothership:
                 if let enemyMothership = enemyMothership {
-                    if enemyMothership.canBeTarget(self) {
+                    if enemyMothership.canBeTargetAndHitBy(self) {
                         currentTarget = enemyMothership
                     }
                 }
@@ -702,7 +702,7 @@ class Spaceship: Control {
         for allySpaceship in allySpaceships {
             
             if allySpaceship != self && allySpaceship.canBeTargetAndHitBy(self) {
-                if CGPoint.distanceSquared(self.position, allySpaceship.position) < CGPoint.distanceSquared(self.position, targetNodePosition) {
+                if (self.position - allySpaceship.position).lengthSquared() < (self.position - targetNodePosition).lengthSquared() {
                     let point = allySpaceship.position
                     let dx = Float(point.x - self.position.x)
                     let dy = Float(point.y - self.position.y)
@@ -731,6 +731,12 @@ class Spaceship: Control {
             
             if shot.shooter == self {
                 return
+            }
+            
+            if let shooter = shot.shooter as? Spaceship {
+                if shooter.isAlly == self.isAlly {
+                    return
+                }
             }
             
             let dx = Float(shot.position.x - self.position.x)
@@ -819,6 +825,9 @@ class Spaceship: Control {
     }
     
     func die() {
+        
+        Control.gameScene.shake(7.5)
+        
         self.deathTime = GameScene.currentTime
         self.lastSecond = GameScene.currentTime
         self.deathCount += 1
@@ -832,6 +841,7 @@ class Spaceship: Control {
         particles.particlePositionRange = CGVector(dx: self.weaponRangeBonus, dy: self.weaponRangeBonus)
         
         if let parent = self.parent {
+            
             particles.zPosition = GameWorld.zPositions.explosion.rawValue
             parent.addChild(particles)
             
@@ -903,15 +913,15 @@ class Spaceship: Control {
             
             if self.isInsideAMothership {
                 
-                if CGPoint.distanceSquared(self.position, self.startingPosition) < 256 {
+                if (self.position - self.startingPosition).lengthSquared() < 256 {
                     self.heal()
                 }
                 
-                if CGPoint.distanceSquared(CGPoint(x: self.startingPosition.x, y: self.position.y), self.startingPosition) > 4545 {
+                if (CGPoint(x: self.startingPosition.x, y: self.position.y) - self.startingPosition).lengthSquared() > 4545 {
                     self.isInsideAMothership = false
                 }
                 
-                if CGPoint.distanceSquared(self.destination, self.startingPosition) > 16 {
+                if (self.destination - self.startingPosition).lengthSquared() > 16 {
                     if let physicsBody = self.physicsBody {
                         let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
                         
@@ -927,11 +937,11 @@ class Spaceship: Control {
             
             if self.needToMove {
 
-                if CGPoint.distanceSquared(self.position, self.destination) < 1024 {
+                if (self.position - self.destination).lengthSquared() < 1024 {
                
                     self.needToMove = false
                     
-                    if CGPoint.distanceSquared(self.destination, self.startingPosition) < 16 {
+                    if (self.destination - self.startingPosition).lengthSquared() < 16 {
                         self.resetToStartingPosition()
                     } else {
                         if !self.isInsideAMothership {
@@ -961,26 +971,8 @@ class Spaceship: Control {
                 
                 if let targetNode = self.targetNode {
                     
-                    if let mothership = targetNode as? Mothership {
-                        if mothership.health <= 0 {
-                            self.targetNode = nil
-                        } else {
-                            let targetNodePosition = CGPoint(x: self.position.x, y: targetNode.position.y)
-                            self.rotateToPoint(targetNodePosition)
-                            if abs(self.totalRotationToDestination) <= 0.05 {
-                                
-                                if self.canFire(targetNodePosition, allySpaceships: allySpaceships) {
-                                    self.weapon?.fire(self.weaponRangeBonus)
-                                } else {
-                                    self.targetNode = nil
-                                }
-                            }
-                        }
-                    }
-                    
-                    if let targetNode = targetNode as? Spaceship {
-                        
-                        if !targetNode.canBeTarget() {
+                    if let targetNode = targetNode as? Mothership {
+                        if targetNode.health <= 0 {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
@@ -994,7 +986,39 @@ class Spaceship: Control {
                                     }
                                 }
                             } else {
-                                self.rotateToPoint(targetNode.position)
+                                
+                                if let physicsBody = self.physicsBody {
+                                    
+                                    if abs(self.totalRotationToDestination) <= 1 {
+                                        let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                                        
+                                        if velocitySquared < self.maxVelocitySquared {
+                                            self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
+                                        }
+                                        self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if let targetNode = targetNode as? Spaceship {
+                        
+                        if !targetNode.canBeTarget() {
+                            self.targetNode = nil
+                        } else {
+                            
+                            self.rotateToPoint(targetNode.position)
+                            
+                            if targetNode.canBeTargetAndHitBy(self) {
+                                if abs(self.totalRotationToDestination) <= 0.05 {
+                                    if self.canFire(targetNode.position, allySpaceships: allySpaceships) {
+                                        self.weapon?.fire(self.weaponRangeBonus)
+                                    } else {
+                                        self.targetNode = nil
+                                    }
+                                }
+                            } else {
                                 
                                 if let physicsBody = self.physicsBody {
                                     
@@ -1012,7 +1036,7 @@ class Spaceship: Control {
                     }
                     
                 } else {
-                    if !self.isInsideAMothership {
+                    if self.canBeTarget() {
                         self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
                         self.setAttackArrowToTarget()
                     }
@@ -1145,7 +1169,7 @@ class Spaceship: Control {
                         
                     case GameWorld.categoryBitMask.mothership.rawValue:
                         self.isInsideAMothership = false
-                        if CGPoint.distanceSquared(self.destination, self.startingPosition) > 16 {
+                        if (self.destination - self.startingPosition).lengthSquared() > 16 {
                             self.setBitMasksToSpaceship()
                         }
                         break

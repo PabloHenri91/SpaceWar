@@ -38,6 +38,8 @@ class Shot: Control {
         }
         
         let spriteNode = SKSpriteNode(texture: texture)
+        spriteNode.setScale(1.5)
+        
         spriteNode.texture?.filteringMode = Display.filteringMode
         spriteNode.color = color
         spriteNode.colorBlendFactor = 1
@@ -55,7 +57,7 @@ class Shot: Control {
         self.position = position
         self.zRotation = zRotation
        
-        self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 500 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 500  + shooterPhysicsBody.velocity.dy)
+        self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * 380 + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * 380 + shooterPhysicsBody.velocity.dy)
         
         
         self.runAction({ let a = SKAction(); a.duration = 3; return a }()) { [weak self] in
@@ -82,7 +84,7 @@ class Shot: Control {
     }
     
     func update() {
-        let distanceSquared = CGPoint.distanceSquared(self.startingPosition, self.position)
+        let distanceSquared = (self.startingPosition - self.position).lengthSquared()
         if distanceSquared >= self.rangeSquared {
             self.removeFromParent()
             //print(sqrt(self.rangeSquared).description + " " + sqrt(distanceSquared).description)

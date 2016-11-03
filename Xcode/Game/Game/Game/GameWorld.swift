@@ -29,13 +29,13 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
-        var spriteNode = SKSpriteNode(imageNamed: "battleBackground")
+        let spriteNode = SKSpriteNode(imageNamed: "battleBackground")
         spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue
         self.addChild(spriteNode)
         
-        spriteNode = SKSpriteNode(imageNamed: "battleArea")
-        spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
-        self.addChild(spriteNode)
+        //spriteNode = SKSpriteNode(imageNamed: "battleArea")
+        //spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
+        //self.addChild(spriteNode)
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
@@ -46,7 +46,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     }
     
     func setScreenBox(size:CGSize) {
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRect(origin: CGPoint(x: -size.width/2, y: -size.height/2), size: size))
+        
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRect(origin: CGPoint(x: -Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2), size: size))
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.world.rawValue
         self.physicsBody?.dynamic = false
     }
