@@ -299,6 +299,7 @@ class Mothership: Control {
     
     func endBattle() {
         for spaceship in self.spaceships {
+            spaceship.destination = spaceship.position
             spaceship.canRespawn = false
             spaceship.needToMove = false
             spaceship.targetNode = nil

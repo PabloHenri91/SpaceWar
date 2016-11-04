@@ -451,17 +451,19 @@ class Spaceship: Control {
                 spriteNode.runAction(SKAction.fadeOutWithDuration(0.5), completion: { [weak spriteNode] in
                     spriteNode?.removeFromParent()
                     })
-                self.showWeaponRangeSprite()
             }
         }
     }
     
-    func touchEnded() {
+    func touchEnded(touch: UITouch) {
         
         if self == Spaceship.selectedSpaceship {
             if !self.isInsideAMothership {
                 self.targetNode = nil
                 self.needToMove = false
+                if let parent = self.parent {
+                    self.destination = touch.locationInNode(parent)
+                }
                 self.setBitMasksToSpaceship()
             }
             self.showWeaponRangeSprite()
@@ -974,6 +976,7 @@ class Spaceship: Control {
                             self.targetNode = nil
                         } else {
                             self.rotateToPoint(targetNode.position)
+                            self.destination = self.position
                             
                             if targetNode.canBeTargetAndHitBy(self) {
                                 if abs(self.totalRotationToDestination) <= 0.05 {
@@ -1007,6 +1010,7 @@ class Spaceship: Control {
                         } else {
                             
                             self.rotateToPoint(targetNode.position)
+                            self.destination = self.position
                             
                             if targetNode.canBeTargetAndHitBy(self) {
                                 if abs(self.totalRotationToDestination) <= 0.05 {
@@ -1037,6 +1041,22 @@ class Spaceship: Control {
                     if self.canBeTarget() {
                         self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
                         self.setAttackArrowToTarget()
+                        
+                        if let physicsBody = self.physicsBody {
+                            
+                            let dx = Float(self.destination.x - self.position.x)
+                            let dy = Float(self.destination.y - self.position.y)
+                            
+                            let rotationToDestination = CGFloat(-atan2f(dx, dy))
+                            
+                            let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
+                            
+                            let force = (self.position - self.destination).length()
+                            
+                            if velocitySquared < self.maxVelocitySquared {
+                                physicsBody.applyForce(CGVector(dx: -sin(rotationToDestination) * force/10, dy: cos(rotationToDestination) * force/10))
+                            }
+                        }
                     }
                 }
             }

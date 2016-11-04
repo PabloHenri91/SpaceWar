@@ -60,11 +60,11 @@ class Shot: Control {
         self.physicsBody?.angularDamping = 0
         
         self.position = position
-        self.zRotation = zRotation
+        self.zRotation = zRotation + CGFloat.random(min: -0.1, max: 0.1)
         
         let speed: CGFloat = 380
        
-        self.physicsBody?.velocity = CGVector(dx: -sin(zRotation) * speed + shooterPhysicsBody.velocity.dx, dy: cos(zRotation) * speed + shooterPhysicsBody.velocity.dy)
+        self.physicsBody?.velocity = CGVector(dx: -sin(self.zRotation) * speed + shooterPhysicsBody.velocity.dx, dy: cos(self.zRotation) * speed + shooterPhysicsBody.velocity.dy)
         
         self.defaultEmitterNodeParticleBirthRate = speed/2
         

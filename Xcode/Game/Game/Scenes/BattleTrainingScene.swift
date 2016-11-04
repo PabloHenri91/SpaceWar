@@ -604,7 +604,7 @@ class BattleTrainingScene: GameScene {
                 case .askToSelect:
                     
                     if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
-                        nearestSpaceship.touchEnded()
+                        nearestSpaceship.touchEnded(touch)
                         
                         self.tutorialControl?.removeFromParent()
                         self.touchImage?.removeFromParent()
@@ -816,7 +816,7 @@ class BattleTrainingScene: GameScene {
                     if let spaceship = self.mothership.spaceships.last {
                         if let parent = spaceship.parent {
                             if spaceship.containsPoint(touch.locationInNode(parent)) {
-                                spaceship.touchEnded()
+                                spaceship.touchEnded(touch)
                                 self.tutorialControl!.removeFromParent()
                                 self.touchImage?.removeFromParent()
                                 self.nextState = .askWeaponRange
@@ -889,12 +889,18 @@ class BattleTrainingScene: GameScene {
         
         if let botMothership = self.botMothership {
             
+            if let parent = botMothership.parent {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
+                    return
+                }
+            }
+            
             if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + botMothership.spaceships, touch: touch) {
                 if nearestSpaceship.isAlly {
-                    nearestSpaceship.touchEnded()
+                    nearestSpaceship.touchEnded(touch)
                 } else {
                     if let spaceship = Spaceship.selectedSpaceship {
-                        spaceship.touchEnded()
+                        spaceship.touchEnded(touch)
                         spaceship.targetNode = nearestSpaceship
                         spaceship.setAttackArrowToTarget()
                     }
@@ -904,23 +910,15 @@ class BattleTrainingScene: GameScene {
         } else {
             if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships, touch: touch) {
                 if nearestSpaceship.isAlly {
-                    nearestSpaceship.touchEnded()
+                    nearestSpaceship.touchEnded(touch)
                 } else {
                     if let spaceship = Spaceship.selectedSpaceship {
-                        spaceship.touchEnded()
+                        spaceship.touchEnded(touch)
                         spaceship.targetNode = nearestSpaceship
                         spaceship.setAttackArrowToTarget()
                     }
                 }
                 return
-            }
-        }
-        
-        if let botMothership = self.botMothership {
-            if let parent = botMothership.parent {
-                if botMothership.containsPoint(touch.locationInNode(parent)) {
-                    return
-                }
             }
         }
         
@@ -956,6 +954,18 @@ class BattleTrainingScene: GameScene {
     func battleTouchesEnded(touch:UITouch) {
         
         if let botMothership = self.botMothership {
+            
+            if let parent = botMothership.parent {
+                if botMothership.containsPoint(touch.locationInNode(parent)) {
+                    if let spaceship = Spaceship.selectedSpaceship {
+                        spaceship.touchEnded(touch)
+                        spaceship.targetNode = botMothership
+                        spaceship.setAttackArrowToTarget()
+                    }
+                    return
+                }
+            }
+            
             if let nearestSpaceship = self.nearestSpaceship(self.mothership.spaceships + botMothership.spaceships, touch: touch) {
                 if nearestSpaceship.isAlly {
                     
@@ -966,7 +976,7 @@ class BattleTrainingScene: GameScene {
                     }
                 } else {
                     if let spaceship = Spaceship.selectedSpaceship {
-                        spaceship.touchEnded()
+                        spaceship.touchEnded(touch)
                         spaceship.targetNode = nearestSpaceship
                         spaceship.setAttackArrowToTarget()
                     }
@@ -983,7 +993,7 @@ class BattleTrainingScene: GameScene {
                     }
                 } else {
                     if let spaceship = Spaceship.selectedSpaceship {
-                        spaceship.touchEnded()
+                        spaceship.touchEnded(touch)
                         spaceship.targetNode = nearestSpaceship
                         spaceship.setAttackArrowToTarget()
                     }
@@ -999,14 +1009,6 @@ class BattleTrainingScene: GameScene {
                         Spaceship.retreatSelectedSpaceship()
                         return
                     }
-                }
-            }
-        }
-        
-        if let botMothership = self.botMothership {
-            if let parent = botMothership.parent {
-                if botMothership.containsPoint(touch.locationInNode(parent)) {
-                    return
                 }
             }
         }
