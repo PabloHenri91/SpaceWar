@@ -42,6 +42,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         let size = spriteNode.size
         
         spriteNode = SKSpriteNode(imageNamed: self.planetNames[Int.random(self.planetNames.count)])
+        spriteNode.setScale(0.5)
         spriteNode.position = CGPoint(x: Int.random(min: -Int(size.width)/2, max: Int(size.width)/2), y: Int.random(min: -Int(size.height)/2, max: Int(size.height)/2))
         spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
         self.addChild(spriteNode)
