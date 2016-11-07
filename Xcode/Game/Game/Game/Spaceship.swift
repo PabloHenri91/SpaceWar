@@ -1388,7 +1388,7 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.intrepidBlaster.rawValue, name: "Intrepid Blaster",
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
-                    speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                    speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
                 spaceshipType.skin = "spaceshipAA"
                 spaceshipType.glassSkin = "spaceshipAAGlass"
                 spaceshipType.scale = 0.5
@@ -1408,7 +1408,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.intrepidStriker.rawValue, name: "Intrepid Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipAA"
             spaceshipType.glassSkin = "spaceshipAAGlass"
             spaceshipType.scale = 0.5
@@ -1427,7 +1427,7 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.intrepidDestroyer.rawValue, name: "Intrepid Destroyer",
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
-                    speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                    speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
                 spaceshipType.skin = "spaceshipAA"
                 spaceshipType.glassSkin = "spaceshipAAGlass"
                 spaceshipType.scale = 0.5
@@ -1446,7 +1446,7 @@ extension Spaceship {
             }()),
         SpaceshipType(index: SpaceshipIndex.intrepidSniper.rawValue, name: "Intrepid Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 7, health: 7, shieldPower: 5, shieldRecharge: 5)
+                speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipAA"
             spaceshipType.glassSkin = "spaceshipAAGlass"
             spaceshipType.scale = 0.5
@@ -1467,7 +1467,7 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.tankerBlaster.rawValue, name: "Tanker Blaster",
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
-                    speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+                    speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
                 spaceshipType.skin = "spaceshipBA"
                 spaceshipType.glassSkin = "spaceshipBAGlass"
                 spaceshipType.scale = 0.5
@@ -1489,7 +1489,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.tankerStriker.rawValue, name: "Tanker Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+                speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipBA"
             spaceshipType.glassSkin = "spaceshipBAGlass"
             spaceshipType.scale = 0.5
@@ -1511,7 +1511,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.tankerDestroyer.rawValue, name: "Tanker Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 5, health: 15, shieldPower: 5, shieldRecharge: 5)
+                speed: 10, health: 15, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipBA"
             spaceshipType.glassSkin = "spaceshipBAGlass"
             spaceshipType.scale = 0.5
@@ -1532,7 +1532,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.tankerSniper.rawValue, name: "Tanker Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 5, health: 10, shieldPower: 5, shieldRecharge: 5)
+                speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipBA"
             spaceshipType.glassSkin = "spaceshipBAGlass"
             spaceshipType.scale = 0.5
@@ -1554,7 +1554,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.speederBlaster.rawValue, name: "Speeder Blaster", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+                speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipCA"
             spaceshipType.glassSkin = "spaceshipCAGlass"
             spaceshipType.scale = 0.5
@@ -1574,7 +1574,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.speederStriker.rawValue, name: "Speeder Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+                speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipCA"
             spaceshipType.glassSkin = "spaceshipCAGlass"
             spaceshipType.scale = 0.5
@@ -1594,7 +1594,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.speederDestroyer.rawValue, name: "Speeder Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+                speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipCA"
             spaceshipType.glassSkin = "spaceshipCAGlass"
             spaceshipType.scale = 0.5
@@ -1614,7 +1614,7 @@ extension Spaceship {
         
         SpaceshipType(index: SpaceshipIndex.speederSniper.rawValue, name: "Speeder Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
-                speed: 10, health: 5, shieldPower: 10, shieldRecharge: 5)
+                speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
             spaceshipType.skin = "spaceshipCA"
             spaceshipType.glassSkin = "spaceshipCAGlass"
             spaceshipType.scale = 0.5
