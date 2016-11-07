@@ -27,15 +27,24 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     var bodyA: SKPhysicsBody!
     var bodyB: SKPhysicsBody!
     
+    var planetNames = [
+        "planet0",
+        "planet1",
+        "planet2"
+    ]
+    
     init(physicsWorld:SKPhysicsWorld) {
         super.init()
-        let spriteNode = SKSpriteNode(imageNamed: "battleBackground")
+        var spriteNode = SKSpriteNode(imageNamed: "battleBackground")
         spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue
         self.addChild(spriteNode)
         
-        //spriteNode = SKSpriteNode(imageNamed: "battleArea")
-        //spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
-        //self.addChild(spriteNode)
+        let size = spriteNode.size
+        
+        spriteNode = SKSpriteNode(imageNamed: self.planetNames[Int.random(self.planetNames.count)])
+        spriteNode.position = CGPoint(x: Int.random(min: -Int(size.width)/2, max: Int(size.width)/2), y: Int.random(min: -Int(size.height)/2, max: Int(size.height)/2))
+        spriteNode.zPosition = GameWorld.zPositions.battleArea.rawValue + 1
+        self.addChild(spriteNode)
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
