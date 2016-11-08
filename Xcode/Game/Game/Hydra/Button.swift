@@ -47,6 +47,8 @@ class Button: Control {
         let texture = SKTexture(imageNamed: textureName)
         texture.filteringMode = Display.filteringMode
         
+        self.size = texture.size()
+        
         if top != 0 || bottom != 0 || left != 0 || right != 0 {
             let spriteNode = SKSpriteNode(texture: nil, color: SKColor.clearColor(), size: CGSize(
                 width: Int(texture.size().width) + left + right,

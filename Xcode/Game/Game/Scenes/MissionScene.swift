@@ -55,7 +55,7 @@ class MissionScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
-        let actionDuration = 0.25
+        let actionDuration = 1.0
         
         switch GameTabBar.lastState {
         case .research:
@@ -114,7 +114,7 @@ class MissionScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x + Display.currentSceneSize.width, y: nodePosition.y)
-                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+                                node.runAction(SKAction.actionWithEffect(SKTMoveEffect(node: node, duration: actionDuration, startPosition: node.position, endPosition: nodePosition)))
             }
             break
         case .mission:
@@ -123,12 +123,12 @@ class MissionScene: GameScene {
             for node in self.children {
                 let nodePosition = node.position
                 node.position = CGPoint(x: nodePosition.x - Display.currentSceneSize.width, y: nodePosition.y)
-                node.runAction(SKAction.moveTo(nodePosition, duration: actionDuration))
+                node.runAction(SKAction.actionWithEffect(SKTMoveEffect(node: node, duration: actionDuration, startPosition: node.position, endPosition: nodePosition)))
             }
             break
         }
         
-        self.runAction({ let a = SKAction(); a.duration = actionDuration; return a }(), completion: {
+        self.runAction({ let a = SKAction(); a.duration = actionDuration/4; return a }(), completion: {
             for node in GameScene.lastChildren {
                 node.removeFromParent()
             }

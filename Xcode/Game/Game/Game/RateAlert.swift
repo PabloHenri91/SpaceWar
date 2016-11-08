@@ -61,7 +61,7 @@ class RateAlert: Box {
             gameScene?.setDefaultState()
         }
         
-        self.jump()
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {

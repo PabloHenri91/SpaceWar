@@ -95,26 +95,61 @@ class Control: SKNode {
         Control.controlList.insert(self)
     }
     
-    func jump() {
-        let x = self.position.x - (self.size.width/2) * 0.1
-        let y = self.position.y + (self.size.height/2) * 0.1
+    func pop() {
+        self.removeAllActions()
         
-        self.setScale(0)
-        self.position = CGPoint(x: Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2)
+        self.position = self.getPositionWithScreenPosition(self.screenPosition)
         
-        let duration:Double = 0.10
+        let x = self.position.x
+        let y = self.position.y
+        
+        self.setScale(1)
+        self.position = self.position + CGPoint(x: self.size.width/2, y: -self.size.height/2)
+        
+        let duration: Double = 1.0
         
         let action1 = SKAction.group([
-            SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
+            SKAction.actionWithEffect(SKTScaleEffect(node: self, duration: duration, startScale: CGPoint(x: 0.1, y: 0.1), endScale: CGPoint(x: 1, y: 1))),
+            SKAction.actionWithEffect(SKTMoveEffect(node: self, duration: duration, startPosition: self.position, endPosition: CGPoint(x: x, y: y)))
             ])
         
-        let action2 = SKAction.group([
-            SKAction.scaleTo(1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
+        self.runAction(action1)
+    }
+    
+    func popScale() {
+        self.removeAllActions()
+        
+        self.position = self.getPositionWithScreenPosition(self.screenPosition)
+        
+        self.setScale(1)
+        
+        let duration: Double = 1.0
+        
+        let action1 = SKAction.actionWithEffect(SKTScaleEffect(node: self, duration: duration, startScale: CGPoint(x: 0.1, y: 0.1), endScale: CGPoint(x: 1, y: 1)))
+        
+        self.runAction(action1)
+    }
+    
+    func jump() {
+        self.removeAllActions()
+        
+        self.position = self.getPositionWithScreenPosition(self.screenPosition)
+        
+        let x = self.position.x
+        let y = self.position.y
+        
+        self.setScale(1)
+        self.position = self.position + CGPoint(x: -self.size.width/2 * 0.5, y: self.size.height/2 * 0.5)
+        
+        
+        let duration: Double = 1.0
+        
+        let action1 = SKAction.group([
+            SKAction.actionWithEffect(SKTScaleEffect(node: self, duration: duration, startScale: CGPoint(x: 1.5, y: 1.5), endScale: CGPoint(x: 1, y: 1))),
+            SKAction.actionWithEffect(SKTMoveEffect(node: self, duration: duration, startPosition: self.position, endPosition: CGPoint(x: x, y: y)))
             ])
         
-        self.runAction(SKAction.sequence([action1, action2]))
+        self.runAction(action1)
     }
     
     class func resetControls() {
@@ -243,6 +278,7 @@ class Control: SKNode {
             var taps = Set<UITouch>()
             
             for touch in touches {
+                
                 if let value = Control.touchesArray.removeValueForKey(touch) {
                     if(GameScene.currentTime - value < 1) {
                         if(!((Control.totalDx * Control.totalDx) + (Control.totalDy * Control.totalDy) > 10 * 10)) {
@@ -265,6 +301,17 @@ class Control: SKNode {
         responder.touchesEnded(touches)
         
         Control.touchesEndedUpdate()
+        
+        for touch in touches {
+            for button in Button.buttonList {
+                if let parent = button.parent {
+                    let location = touch.locationInNode(parent)
+                    if button.containsPoint(location) {
+                        button.jump()
+                    }
+                }
+            }
+        }
     }
     
     static func touchesCancelled(responder:UIResponder) {

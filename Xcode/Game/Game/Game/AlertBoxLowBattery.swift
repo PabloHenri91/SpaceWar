@@ -62,10 +62,7 @@ class AlertBoxLowBattery: Box {
         self.buttonOK = Button(textureName: "rateButtonCancel", text: "GO TO SPACE SHOP", fontSize: 11, x: 76, y: 169, fontColor: fontColor0, fontShadowColor: fontShadowColor0, fontShadowOffset: fontShadowOffset, fontName: fontName)
         self.addChild(self.buttonOK)
         
-        
-        
-        
-        self.jump()
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -49,36 +49,24 @@ class ChooseAsteroidAlert:Box {
         self.cropBox = CropBox(textureName: "chooseAsteroidCropBox", x: -141, y: -61, xAlign: .left, yAlign: .up)
         self.addChild(self.cropBox.cropNode)
         
+        self.controlArray = Array<Control>()
         
-        
-        
-        
-        
-        self.runAction({
-            let action = SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)])
-            self.setScale(0)
-            return action
-        }())
-        {
-            self.controlArray = Array<Control>()
-            
-            for i in 0..<(self.minerSpaceship.level * 2){
-                self.controlArray.append(MissionTypeCard(missionSpaceship: minerSpaceship, index:i))
-            }
-            
-            self.scrollNode = ScrollNode(name: "scroll", cells: self.controlArray, x: 0 , y: 0, spacing: 0 , scrollDirection: .vertical)
-        
-            
-            if self.minerSpaceship.level < 4 {
-                self.scrollNode!.canScroll = false
-            }
-            
-            self.cropBox.addChild(self.scrollNode!)
-            self.scrollNode!.alpha = 0
-            self.scrollNode!.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
+        for i in 0..<(self.minerSpaceship.level * 2){
+            self.controlArray.append(MissionTypeCard(missionSpaceship: minerSpaceship, index:i))
         }
         
+        self.scrollNode = ScrollNode(name: "scroll", cells: self.controlArray, x: 0 , y: 0, spacing: 0 , scrollDirection: .vertical)
         
+        
+        if self.minerSpaceship.level < 4 {
+            self.scrollNode!.canScroll = false
+        }
+        
+        self.cropBox.addChild(self.scrollNode!)
+        self.scrollNode!.alpha = 0
+        self.scrollNode!.runAction(SKAction.fadeAlphaTo(1, duration: 0.25))
+        
+        self.popScale()
     }
     
     
