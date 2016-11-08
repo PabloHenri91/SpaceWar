@@ -152,7 +152,7 @@ public func SKTTimingFunctionElasticEaseIn(t: CGFloat) -> CGFloat {
 }
 
 public func SKTTimingFunctionElasticEaseOut(t: CGFloat) -> CGFloat {
-  return sin(-13.0 * π/2 * (t + 1.0)) * pow(2.0, -10.0 * t) + 1.0
+  return sin(-13.0 * π/2 * (t + 1.0)) * pow(2.5, -10.0 * t) + 1.0
 }
 
 public func SKTTimingFunctionElasticEaseInOut(t: CGFloat) -> CGFloat {

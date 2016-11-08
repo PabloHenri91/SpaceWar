@@ -103,81 +103,81 @@ class GameTabBar: Control {
         
         if state != GameTabBar.lastState {
             
-            let actionDuration = 0.25
+            let actionDuration = 1.0
             
             switch state {
                 
             case .research:
-                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:84 ,y: 18)), duration: actionDuration))
-                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission.getPositionWithScreenPosition(CGPoint(x:166 ,y: 18)), duration: actionDuration))
-                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:218 ,y: 18)), duration: actionDuration))
-                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:270 ,y: 18)), duration: actionDuration))
-                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:322 ,y: 18)), duration: actionDuration))
+                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch, location: self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:84 ,y: 18)), duration: actionDuration))
+                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission, location: self.buttonMission.getPositionWithScreenPosition(CGPoint(x:166 ,y: 18)), duration: actionDuration))
+                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership, location: self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:218 ,y: 18)), duration: actionDuration))
+                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory, location: self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:270 ,y: 18)), duration: actionDuration))
+                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar, location: self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:322 ,y: 18)), duration: actionDuration))
                 
                 let control = Button(textureName: "buttonResearch", text: "Researches", fontSize: hoverTextFontSize, x:0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
-                control.alpha = 0
-                control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
+                control.alpha = 0.1
+                control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
-                self.hover.runAction(SKAction.moveTo(self.hover.getPositionWithScreenPosition(CGPoint(x:54 ,y: 0)), duration: actionDuration))
+                self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:54 ,y: 0)), duration: actionDuration))
                 
                 break
                 
             case .mission:
-                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:68 ,y: 18)), duration: actionDuration))
-                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission.getPositionWithScreenPosition(CGPoint(x:142 ,y: 18)), duration: actionDuration))
-                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:222 ,y: 18)), duration: actionDuration))
-                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:273 ,y: 18)), duration: actionDuration))
-                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:323 ,y: 18)), duration: actionDuration))
+                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch, location: self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:68 ,y: 18)), duration: actionDuration))
+                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission, location: self.buttonMission.getPositionWithScreenPosition(CGPoint(x:142 ,y: 18)), duration: actionDuration))
+                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership, location: self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:222 ,y: 18)), duration: actionDuration))
+                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory, location: self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:273 ,y: 18)), duration: actionDuration))
+                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar, location: self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:323 ,y: 18)), duration: actionDuration))
                 
                 let control = Button(textureName: "buttonMission", text: "Miners", fontSize: hoverTextFontSize, x: 0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
-                control.alpha = 0
-                control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
+                control.alpha = 0.1
+                control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
-                self.hover.runAction(SKAction.moveTo(self.hover.getPositionWithScreenPosition(CGPoint(x:112 ,y: 0)), duration: actionDuration))
+                self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:112 ,y: 0)), duration: actionDuration))
                 
                 break
                 
             case .mothership:
-                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:73 ,y: 18)), duration: actionDuration))
-                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission.getPositionWithScreenPosition(CGPoint(x:121 ,y: 18)), duration: actionDuration))
-                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:199 ,y: 18)), duration: actionDuration))
-                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:277 ,y: 18)), duration: actionDuration))
-                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:326 ,y: 18)), duration: actionDuration))
+                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch, location: self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:73 ,y: 18)), duration: actionDuration))
+                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission, location: self.buttonMission.getPositionWithScreenPosition(CGPoint(x:121 ,y: 18)), duration: actionDuration))
+                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership, location: self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:199 ,y: 18)), duration: actionDuration))
+                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory, location: self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:277 ,y: 18)), duration: actionDuration))
+                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar, location: self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:326 ,y: 18)), duration: actionDuration))
                 
                 let control = Button(textureName: "tabBarButtonBattle", text: "Battle", fontSize: hoverTextFontSize, x: 0 ,y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
-                control.alpha = 0
-                control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
+                control.alpha = 0.1
+                control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
-                self.hover.runAction(SKAction.moveTo(self.hover.getPositionWithScreenPosition(CGPoint(x:169 ,y: 0)), duration: actionDuration))
+                self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:169 ,y: 0)), duration: actionDuration))
                 
                 break
                 
             case .factory:
-                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:75 ,y: 18)), duration: actionDuration))
-                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission.getPositionWithScreenPosition(CGPoint(x:126 ,y: 18)), duration: actionDuration))
-                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:176 ,y: 18)), duration: actionDuration))
-                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:257 ,y: 18)), duration: actionDuration))
-                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:330 ,y: 18)), duration: actionDuration))
+                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch, location: self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:75 ,y: 18)), duration: actionDuration))
+                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission, location: self.buttonMission.getPositionWithScreenPosition(CGPoint(x:126 ,y: 18)), duration: actionDuration))
+                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership, location: self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:176 ,y: 18)), duration: actionDuration))
+                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory, location: self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:257 ,y: 18)), duration: actionDuration))
+                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar, location: self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:330 ,y: 18)), duration: actionDuration))
                 
                 let control = Button(textureName: "buttonFactory", text: "Factory", fontSize: hoverTextFontSize, x: 0, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
-                control.alpha = 0
-                control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
+                control.alpha = 0.1
+                control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
-                self.hover.runAction(SKAction.moveTo(self.hover.getPositionWithScreenPosition(CGPoint(x:227 ,y: 0)), duration: actionDuration))
+                self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:227 ,y: 0)), duration: actionDuration))
                 break
                 
             case .hangar:
-                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:77 ,y: 18)), duration: actionDuration))
-                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission.getPositionWithScreenPosition(CGPoint(x:129 ,y: 18)), duration: actionDuration))
-                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:181 ,y: 18)), duration: actionDuration))
-                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:233 ,y: 18)), duration: actionDuration))
-                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:315 ,y: 18)), duration: actionDuration))
+                self.buttonResearch.runAction(SKAction.moveTo(self.buttonResearch, location: self.buttonResearch.getPositionWithScreenPosition(CGPoint(x:77 ,y: 18)), duration: actionDuration))
+                self.buttonMission.runAction(SKAction.moveTo(self.buttonMission, location: self.buttonMission.getPositionWithScreenPosition(CGPoint(x:129 ,y: 18)), duration: actionDuration))
+                self.buttonMothership.runAction(SKAction.moveTo(self.buttonMothership, location: self.buttonMothership.getPositionWithScreenPosition(CGPoint(x:181 ,y: 18)), duration: actionDuration))
+                self.buttonFactory.runAction(SKAction.moveTo(self.buttonFactory, location: self.buttonFactory.getPositionWithScreenPosition(CGPoint(x:233 ,y: 18)), duration: actionDuration))
+                self.buttonHangar.runAction(SKAction.moveTo(self.buttonHangar, location: self.buttonHangar.getPositionWithScreenPosition(CGPoint(x:315 ,y: 18)), duration: actionDuration))
                 
                 let control = Button(textureName: "buttonHangar", text: "Hangar", fontSize: hoverTextFontSize, x: 0, y: 0, fontColor: hoverTextColor, fontShadowColor: hoverTextShadowColor, fontShadowOffset: hoverTextShadowOffset, fontName: hoverTextFontName, textOffset: hoverTextOffset)
-                control.alpha = 0
-                control.runAction(SKAction.fadeAlphaTo(1, duration: actionDuration))
+                control.alpha = 0.1
+                control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
-                self.hover.runAction(SKAction.moveTo(self.hover.getPositionWithScreenPosition(CGPoint(x:285 ,y: 0)), duration: actionDuration))
+                self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:285 ,y: 0)), duration: actionDuration))
                 
                 break
                 

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class HangarSpaceshipChange:Box {
+class HangarSpaceshipChange: Box {
     
     var spaceship:Spaceship
     var cropBox:CropBox!
@@ -150,96 +150,69 @@ class HangarSpaceshipChange:Box {
         
         self.labelRangeValue = Label(text: self.spaceship.weapon!.type.range.description , fontSize: 11, x: 210, y: 120, horizontalAlignmentMode: .Left, verticalAlignmentMode: .Baseline, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo500)
         self.addChild(self.labelRangeValue)
-        
-        let x = self.position.x - (self.size.width/2) * 0.1
-        let y = self.position.y + (self.size.height/2) * 0.1
-        
-        self.setScale(0)
-        self.position = CGPoint(x: Display.currentSceneSize.width/2, y: -Display.currentSceneSize.height/2)
-        
-        let duration:Double = 0.10
-        
-        let action1 = SKAction.group([
-            SKAction.scaleTo(1.1, duration: duration),
-            SKAction.moveTo(CGPoint(x: x, y: y), duration: duration)
-            ])
-        
-        let action2 = SKAction.group([
-            SKAction.scaleTo(1, duration: duration),
-            SKAction.moveTo(self.getPositionWithScreenPosition(self.screenPosition), duration: duration)
-            ])
-        
-        self.runAction(SKAction.sequence([action1, action2])) {
             
-            let spaceships = playerData.spaceships.sort({ (item0, item1) -> Bool in
-                if let spaceshipData0 = item0 as? SpaceshipData {
-                    if let spaceshipData1 = item1 as? SpaceshipData {
-                        return spaceshipData0.level.integerValue > spaceshipData1.level.integerValue
-                    }
+        let spaceships = playerData.spaceships.sort({ (item0, item1) -> Bool in
+            if let spaceshipData0 = item0 as? SpaceshipData {
+                if let spaceshipData1 = item1 as? SpaceshipData {
+                    return spaceshipData0.level.integerValue > spaceshipData1.level.integerValue
                 }
-                return false
-            })
-
+            }
+            return false
+        })
+        
+        
+        if spaceships.count > 4 {
             
-            if spaceships.count > 4 {
+            self.cropBox = CropBox(textureName: "hangarChangeSpaceshipCropbox", x: 1, y: 146, xAlign: .left, yAlign: .up)
+            self.addChild(self.cropBox.cropNode)
+            
+            
+            var spaceshipList = Array<SpaceshipData>()
+            var controlArray = Array<Control>()
+            
+            for spaceshipData in spaceships {
                 
-                self.cropBox = CropBox(textureName: "hangarChangeSpaceshipCropbox", x: 1, y: 146, xAlign: .left, yAlign: .up)
-                self.addChild(self.cropBox.cropNode)
+                var canSelect = true
                 
-                
-                var spaceshipList = Array<SpaceshipData>()
-                var controlArray = Array<Control>()
-                
-                for spaceshipData in spaceships {
-                    
-                    var canSelect = true
-                    
-                    for selectedSpaceship in self.selectedSpaceships {
-                        if selectedSpaceship as! SpaceshipData == spaceshipData as! SpaceshipData {
-                            canSelect = false
-                        }
+                for selectedSpaceship in self.selectedSpaceships {
+                    if selectedSpaceship as! SpaceshipData == spaceshipData as! SpaceshipData {
+                        canSelect = false
                     }
-                    
-                    if canSelect {
-                        spaceshipList.append(spaceshipData as! SpaceshipData)
-                        if spaceshipList.count == 3 {
-                            let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
-                            controlArray.append(cell)
-                            spaceshipList.removeAll()
-                        }
-                    }
-                    
-                    
                 }
                 
-                if spaceshipList.count > 0 {
-                    let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
-                    controlArray.append(cell)
-                    spaceshipList.removeAll()
+                if canSelect {
+                    spaceshipList.append(spaceshipData as! SpaceshipData)
+                    if spaceshipList.count == 3 {
+                        let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
+                        controlArray.append(cell)
+                        spaceshipList.removeAll()
+                    }
                 }
                 
-                self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: -10, scrollDirection: .vertical)
-                self.cropBox.addChild(self.scrollNode!)
-                
-            } else {
-                
-                let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12)
-                
-                self.addChild(empityLabel)
-                
-                self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
-                self.addChild(self.buttonFactory!)
                 
             }
+            
+            if spaceshipList.count > 0 {
+                let cell = HangarSpaceshipsCell(spaceships: spaceshipList)
+                controlArray.append(cell)
+                spaceshipList.removeAll()
+            }
+            
+            self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: -10, scrollDirection: .vertical)
+            self.cropBox.addChild(self.scrollNode!)
+            
+        } else {
+            
+            let empityLabel = MultiLineLabel(text: "SPACESHIP LIST IS EMPTY, BUY NEW SPACESHIPS AT THE FACTORY", maxWidth: 216, x: 141, y: 251, color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), fontName: GameFonts.fontName.museo1000, fontSize: 12)
+            
+            self.addChild(empityLabel)
+            
+            self.buttonFactory = Button(textureName: "buttonGray131x30", text: "FACTORY", fontSize: 13 ,  x: 76, y: 424, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100), fontShadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
+            self.addChild(self.buttonFactory!)
+            
         }
-       
-        
-        
-        
-        
-        
 
-
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {

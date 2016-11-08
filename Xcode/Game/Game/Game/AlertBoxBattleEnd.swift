@@ -63,7 +63,7 @@ class AlertBoxBattleEnd: Box {
         self.buttonOK = Button(textureName: buttonTextureName, text: "FINISH", fontSize: 13, x: 77, y: 333, fontColor: fontColor, fontShadowColor: fontShadowColor, fontShadowOffset: fontShadowOffset, fontName: fontName)
         self.addChild(self.buttonOK)
         
-        self.jump()
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {

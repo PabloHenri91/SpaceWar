@@ -134,7 +134,8 @@ class SpeedUpAlert:Box {
         //            let facebookPlacehold = Control(textureName: "facebookFriendPlaceholder", x: x, y: 87)
         //            self.addChild(facebookPlacehold)
         //        }
-
+        
+        self.popScale()
     }
     
     init(missionSpaceshipData:MissionSpaceshipData) {
@@ -177,6 +178,8 @@ class SpeedUpAlert:Box {
         self.load(spaceshipImage: spaceshipImage, timeBarType: timeBarType, labelTitleText: labelTitleText, labelNameText: labelNameText, labelReward: labelReward, icon0TextureName: icon0TextureName, icon1TextureName: icon1TextureName, label0Text: label0Text, label1Text: label1Text, buttonFinishText: buttonFinishText)
         
         self.timeBar.update(missionSpaceshipData: missionSpaceshipData)
+        
+        self.popScale()
     }
     
     func load(spaceshipImage spaceshipImage: Control, timeBarType: TimeBar.types, labelTitleText: String, labelNameText: String, labelReward: String, icon0TextureName: String, icon1TextureName: String, label0Text: String, label1Text: String, buttonFinishText: String) {
@@ -238,9 +241,7 @@ class SpeedUpAlert:Box {
         self.buttonFinish = Button(textureName: "buttonDiamonds", text: buttonFinishText, fontSize: 13, x: 20, y: 40, fontColor: SKColor.whiteColor(), fontShadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 20/100), fontShadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000, textOffset: CGPoint(x: 8, y: 0))
         self.addChild(self.buttonFinish)
         
-        self.setScale(0)
-        
-        self.runAction(SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)]))
+        self.pop()
     }
     
     func timeLeft() -> Int {

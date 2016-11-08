@@ -96,9 +96,9 @@ class GameStore: Box {
         let playerData = MemoryCard.sharedInstance.playerData
         self.loadResourcesLabels(playerData.points.integerValue, premiumPoints: playerData.premiumPoints.integerValue)
         
-        self.jump()
-        
         GameStore.sharedInstance = self
+        
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {

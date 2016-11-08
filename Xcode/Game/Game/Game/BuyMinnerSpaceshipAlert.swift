@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class BuyMinnerSpaceshipAlert:Box {
+class BuyMinnerSpaceshipAlert: Box {
     
     var buttonCancel:Button!
     var buttonBuy:Button!
@@ -61,11 +61,7 @@ class BuyMinnerSpaceshipAlert:Box {
             self.addChild(minnerSpaceship)
         }
         
-        
-        self.setScale(0)
-        
-        self.runAction(SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)]))
-        
+        self.popScale()
     }
     
     func buyMiningSpaceship() -> Bool {

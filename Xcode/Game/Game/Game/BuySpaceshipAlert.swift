@@ -81,11 +81,7 @@ class BuySpaceshipAlert: Box {
             minnerSpaceship.addChild(minnerSpaceshipTinySpaceship)
         }
         
-        
-        self.setScale(0)
-        
-        self.runAction(SKAction.sequence([SKAction.scaleTo(1.1, duration: 0.10), SKAction.scaleTo(1, duration: 0.10)]))
-        
+        self.popScale()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -234,8 +234,7 @@ class HangarSpaceshipDetails: Box {
         }
         
         
-        self.jump()
-        
+        self.pop()
     }
     
     func loadButtonGoToFactory() {

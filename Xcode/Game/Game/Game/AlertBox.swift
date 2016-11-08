@@ -52,7 +52,9 @@ class AlertBox: Box {
                 self?.removeFromParent()
                 })
         }
-  
+        
+        
+        self.pop()
     }
     
     required init?(coder aDecoder: NSCoder) {
