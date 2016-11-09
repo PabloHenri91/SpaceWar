@@ -101,6 +101,8 @@ class GameTabBar: Control {
             break
         }
         
+        
+        
         if state != GameTabBar.lastState {
             
             let actionDuration = 1.0
@@ -119,7 +121,7 @@ class GameTabBar: Control {
                 control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
                 self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:54 ,y: 0)), duration: actionDuration))
-                
+                Button.buttonList.remove(control)
                 break
                 
             case .mission:
@@ -134,7 +136,7 @@ class GameTabBar: Control {
                 control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
                 self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:112 ,y: 0)), duration: actionDuration))
-                
+                Button.buttonList.remove(control)
                 break
                 
             case .mothership:
@@ -149,7 +151,7 @@ class GameTabBar: Control {
                 control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
                 self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:169 ,y: 0)), duration: actionDuration))
-                
+                Button.buttonList.remove(control)
                 break
                 
             case .factory:
@@ -164,6 +166,7 @@ class GameTabBar: Control {
                 control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
                 self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:227 ,y: 0)), duration: actionDuration))
+                Button.buttonList.remove(control)
                 break
                 
             case .hangar:
@@ -178,7 +181,7 @@ class GameTabBar: Control {
                 control.runAction(SKAction.fadeAlphaTo(control, alpha: 1, duration: actionDuration))
                 self.hover.addChild(control)
                 self.hover.runAction(SKAction.moveTo(self.hover, location: self.hover.getPositionWithScreenPosition(CGPoint(x:285 ,y: 0)), duration: actionDuration))
-                
+                Button.buttonList.remove(control)
                 break
                 
             }

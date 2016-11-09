@@ -51,6 +51,8 @@ class Control: SKNode {
     
     var screenPosition:CGPoint = CGPointZero
     
+    var autoResetPosition = true
+    
     override init() {
         super.init()
     }
@@ -163,11 +165,14 @@ class Control: SKNode {
         self.gameScene.blackSpriteNode.size = self.gameScene.size
     }
     
-    func resetPosition() {
+    func resetPosition(force force: Bool = false) {
         //TODO: quebrou aqui
-        self.position = CGPoint(
-            x: Int(screenPosition.x/Display.screenScale) + Int(Display.translate.x * CGFloat(xAlign.rawValue)),
-            y: -Int(screenPosition.y/Display.screenScale) - Int(Display.translate.y * CGFloat(yAlign.rawValue)))
+        
+        if force || self.autoResetPosition {
+            self.position = CGPoint(
+                x: Int(screenPosition.x/Display.screenScale) + Int(Display.translate.x * CGFloat(xAlign.rawValue)),
+                y: -Int(screenPosition.y/Display.screenScale) - Int(Display.translate.y * CGFloat(yAlign.rawValue)))
+        }
     }
     
     func getPositionWithScreenPosition(screenPosition:CGPoint) -> CGPoint {

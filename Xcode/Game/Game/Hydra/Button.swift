@@ -42,7 +42,7 @@ class Button: Control {
         self.yAlign = yAlign
         self.xAlign = xAlign
         
-        self.resetPosition()
+        self.resetPosition(force: true)
         
         let texture = SKTexture(imageNamed: textureName)
         texture.filteringMode = Display.filteringMode

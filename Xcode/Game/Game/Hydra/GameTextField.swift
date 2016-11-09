@@ -60,8 +60,8 @@ class GameTextField: Control, UITextFieldDelegate {
         }
     }
     
-    override func resetPosition() {
-        super.resetPosition()
+    override func resetPosition(force force: Bool = false) {
+        super.resetPosition(force: force)
         
         let size = self.calculateAccumulatedFrame()
         
