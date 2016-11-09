@@ -318,32 +318,72 @@ class Mothership: Control {
         
         self.endBattle()
         
-        self.explosionSoundEffect.play()
-        let particles = SKEmitterNode(fileNamed: "explosion.sks")!
-        
-        particles.position.x = self.position.x
-        particles.position.y = self.position.y
-        particles.zPosition = GameWorld.zPositions.explosion.rawValue
-        
-        particles.numParticlesToEmit = 1000
-        particles.particleSpeedRange = 1000
-        
-        particles.particlePositionRange = CGVector(dx: self.size.width, dy: self.size.height)
-        
-        if let parent = self.parent {
+        var action = SKAction.runBlock {
+            self.explosionSoundEffect.play()
+            let particles = SKEmitterNode(fileNamed: "explosion.sks")!
             
-            parent.runAction(SKAction.screenShakeWithNode(self.parent!, amount: CGPoint(x: 50, y: 50), oscillations: 10, duration: 1))
+            particles.position.x = self.position.x + CGFloat.random(min: -self.size.width/2, max: self.size.width/2)
+            particles.position.y = self.position.y + CGFloat.random(min: -self.size.height/2, max: self.size.height/2)
+            particles.zPosition = GameWorld.zPositions.explosion.rawValue
             
-            parent.addChild(particles)
+            particles.numParticlesToEmit = 500
+            particles.particleSpeedRange = 1000
             
-            let action = SKAction()
-            action.duration = 1
-            particles.runAction(action, completion: { [weak particles] in
-                particles?.removeFromParent()
-                })
+            particles.particlePositionRange = CGVector(dx: self.size.width/2, dy: self.size.height/2)
+            
+            if let parent = self.parent {
+                
+                Control.gameScene.shake(50)
+                
+                parent.addChild(particles)
+                
+                let action = SKAction()
+                action.duration = 1
+                particles.runAction(action, completion: { [weak particles] in
+                    particles?.removeFromParent()
+                    })
+            }
         }
         
-        self.hidden = true
+        var actions = [SKAction]()
+        
+        for _ in 0...6 {
+            actions.append(SKAction.afterDelay(Double(CGFloat.random(min: 0.1, max: 0.5)), performAction: action))
+        }
+        
+        action = SKAction.runBlock {
+            self.explosionSoundEffect.play()
+            let particles = SKEmitterNode(fileNamed: "explosion.sks")!
+            
+            particles.position.x = self.position.x + CGFloat.random(min: -self.size.width/2, max: self.size.width/2)
+            particles.position.y = self.position.y + CGFloat.random(min: -self.size.height/2, max: self.size.height/2)
+            particles.zPosition = GameWorld.zPositions.explosion.rawValue
+            
+            particles.numParticlesToEmit = 1000
+            particles.particleSpeedRange = 2000
+            
+            particles.particlePositionRange = CGVector(dx: self.size.width, dy: self.size.height)
+            
+            if let parent = self.parent {
+                
+                Control.gameScene.shake(100)
+                
+                parent.addChild(particles)
+                
+                let action = SKAction()
+                action.duration = 1
+                particles.runAction(action, completion: { [weak particles] in
+                    particles?.removeFromParent()
+                    })
+            }
+        }
+        
+        actions.append(action)
+        
+        actions.append(SKAction.runBlock { self.hidden = true })
+        
+        self.runAction(SKAction.sequence(actions))
+        
         self.physicsBody = nil
         self.health = 0
     }

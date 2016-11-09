@@ -30,7 +30,7 @@ public class SKTAudio {
   public var backgroundMusicPlayer: AVAudioPlayer?
   public var soundEffectPlayer: AVAudioPlayer?
 
-  public class func sharedInstance() -> SKTAudio {
+  static func sharedInstance() -> SKTAudio {
     return SKTAudioInstance
   }
 

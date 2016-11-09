@@ -140,7 +140,7 @@ public class SKTRotateEffect: SKTEffect {
  * Wrapper that allows you to use SKTEffect objects as regular SKActions.
  */
 public extension SKAction {
-    public class func actionWithEffect(effect: SKTEffect) -> SKAction {
+    static func actionWithEffect(effect: SKTEffect) -> SKAction {
         return SKAction.customActionWithDuration(effect.duration) { node, elapsedTime in
             var t = elapsedTime / CGFloat(effect.duration)
             
@@ -152,11 +152,11 @@ public extension SKAction {
         }
     }
     
-    public class func fadeAlphaTo(node: SKNode, alpha: CGFloat, duration sec: NSTimeInterval) -> SKAction {
+    static func fadeAlphaTo(node: SKNode, alpha: CGFloat, duration sec: NSTimeInterval) -> SKAction {
         return SKAction.actionWithEffect(SKTAlphaEffect(node: node, duration: sec, startAlpha: node.alpha, endAlpha: alpha))
     }
     
-    public class func moveTo(node: SKNode, location: CGPoint, duration sec: NSTimeInterval) -> SKAction {
+    static func moveTo(node: SKNode, location: CGPoint, duration sec: NSTimeInterval) -> SKAction {
         return SKAction.actionWithEffect(SKTMoveEffect(node: node, duration: sec, startPosition: node.position, endPosition: location))
     }
 }
