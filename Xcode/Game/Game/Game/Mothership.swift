@@ -18,6 +18,8 @@ class Mothership: Control {
     var health:Int!
     var maxHealth:Int!
     
+    private var healthBar:HealthBar!
+    
     var mothershipData:MothershipData?
     
     var spaceships = [Spaceship]()
@@ -144,25 +146,44 @@ class Mothership: Control {
     
     func loadHealthBar() {
         
-        var fillColor = SKColor.greenColor()
+        var fillColor = SKColor.clearColor()
+        var backColor = SKColor.clearColor()
         
         if self.isAlly {
             fillColor = SKColor(red: 0/255, green: 126/255, blue: 255/255, alpha: 1)
+            backColor = SKColor(red: 0/255, green: 84/255, blue: 143/255, alpha: 1)
         } else {
             fillColor = SKColor(red: 196/255, green: 67/255, blue: 43/255, alpha: 1)
+            backColor = SKColor(red: 105/255, green: 31/255, blue: 17/255, alpha: 1)
         }
         
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 40/100)
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
         
-        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: -39, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: 30, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.labelHealth.zRotation = self.zRotation
         
-        self.addChild(self.labelHealth)
+        let background = SKSpriteNode(imageNamed: "mothershipHealthBackground")
+        
+        let cropNode = SKCropNode()
+        cropNode.position.y = -50
+        cropNode.maskNode = background
+        
+        self.healthBar = HealthBar(background: background, size: background.size, backColor: backColor, fillColor: fillColor)
+        let border = SKSpriteNode(imageNamed: "mothershipHealthBorder")
+        self.healthBar.zRotation = self.zRotation
+        border.color = backColor
+        border.colorBlendFactor = 1
+        self.healthBar.addChild(border)
+        
+        self.addChild(cropNode)
+        
+        cropNode.addChild(self.healthBar)
         
         self.updateHealthBarValue()
         
+        self.addChild(self.labelHealth)
     }
     
     func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, i:Int) {
@@ -179,10 +200,10 @@ class Mothership: Control {
             spaceship.position = self.convertPoint(CGPoint(x: -103, y: -5), toNode: gameWorld)
             break
         case 1:
-            spaceship.position = self.convertPoint(CGPoint(x: -34, y: -5), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -34, y: 50), toNode: gameWorld)
             break
         case 2:
-            spaceship.position = self.convertPoint(CGPoint(x: 34, y: -5), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 34, y: 50), toNode: gameWorld)
             break
         case 3:
             spaceship.position = self.convertPoint(CGPoint(x: 103, y: -5), toNode: gameWorld)
@@ -228,6 +249,7 @@ class Mothership: Control {
     }
     
     func updateHealthBarValue() {
+        self.healthBar.update(self.health, maxHealth: self.maxHealth)
         self.labelHealth.setText(self.health.description + "/" + self.maxHealth.description)
     }
     

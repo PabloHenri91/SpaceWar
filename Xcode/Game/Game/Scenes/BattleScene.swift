@@ -246,7 +246,7 @@ class BattleScene: GameScene {
                                     } else {
                                         
                                         if botSpaceship.health <= botSpaceship.maxHealth/2 {
-                                            botSpaceship.retreat()
+                                            //botSpaceship.retreat() 😢
                                         } else {
                                             botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
                                                                                y: botSpaceship.position.y - 100)
@@ -569,13 +569,6 @@ class BattleScene: GameScene {
                         return
                     }
                     
-                    if let parent = self.mothership.parent {
-                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
-                            Spaceship.retreatSelectedSpaceship()
-                            return
-                        }
-                    }
-                    
                     Spaceship.touchEnded(touch)
                     
                     break
@@ -657,17 +650,6 @@ class BattleScene: GameScene {
                             }
                         }
                         return
-                    }
-                    
-                    if let parent = self.mothership.parent {
-                        if self.mothership.containsPoint(touch.locationInNode(parent)) {
-                            if let spaceship = Spaceship.selectedSpaceship {
-                                if (spaceship.position - spaceship.startingPosition).lengthSquared() >= 4 {
-                                    Spaceship.retreatSelectedSpaceship()
-                                    return
-                                }
-                            }
-                        }
                     }
                     
                     if let spaceship = Spaceship.selectedSpaceship {
