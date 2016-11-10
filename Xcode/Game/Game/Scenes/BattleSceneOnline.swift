@@ -85,7 +85,7 @@ extension BattleScene {
                                 }
                                 
                                 scene.botMothership.zRotation = CGFloat(M_PI)
-                                scene.botMothership.position = CGPoint(x: 0, y: 243)
+                                scene.botMothership.position = CGPoint(x: 0, y: 225)
                                 scene.gameWorld.addChild(scene.botMothership)
                                 
                                 scene.mothership.health = GameMath.mothershipMaxHealth(scene.mothership, enemyMothership: scene.botMothership)

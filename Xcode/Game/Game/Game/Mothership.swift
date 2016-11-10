@@ -161,13 +161,13 @@ class Mothership: Control {
         let fontShadowOffset = CGPoint(x: 0, y: -1)
         let fontName = GameFonts.fontName.museo1000
         
-        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: 30, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
+        self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: 50, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
         self.labelHealth.zRotation = self.zRotation
         
         let background = SKSpriteNode(imageNamed: "mothershipHealthBackground")
         
         let cropNode = SKCropNode()
-        cropNode.position.y = -50
+        cropNode.position.y = -70
         cropNode.maskNode = background
         
         self.healthBar = HealthBar(background: background, size: background.size, backColor: backColor, fillColor: fillColor)

@@ -83,7 +83,7 @@ class BattleTrainingScene: GameScene {
         
         
         self.gameWorld.addChild(self.mothership)
-        self.mothership.position = CGPoint(x: 0, y: -243)
+        self.mothership.position = CGPoint(x: 0, y: -225)
         
         self.mothership.loadHealthBar()
         
@@ -470,7 +470,7 @@ class BattleTrainingScene: GameScene {
                 self.botMothership!.maxHealth = 150
                 if let botMothership = self.botMothership {
                     botMothership.zRotation = CGFloat(M_PI)
-                    botMothership.position = CGPoint(x: 0, y: 243)
+                    botMothership.position = CGPoint(x: 0, y: 225)
                     
                     botMothership.loadHealthBar()
                     
