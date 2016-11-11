@@ -77,9 +77,12 @@ class Music {
     }
     
     func play() {
-        #if !DEBUG
-            self.audioPlayer.play()
-        #endif
+            if MemoryCard.sharedInstance.playerData.musicEnabled.boolValue {
+                self.audioPlayer.play()
+            } else {
+                self.audioPlayer.pause()
+            }
+       
     }
     
     func pause() {

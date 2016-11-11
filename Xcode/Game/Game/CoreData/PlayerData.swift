@@ -16,6 +16,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var battery: BatteryData?
     @NSManaged var botUpdateInterval: NSNumber
     @NSManaged var botLevel: NSNumber
+    @NSManaged var musicEnabled: NSNumber
     @NSManaged var name: String
     @NSManaged var needBattleTraining: NSNumber
     @NSManaged var points: NSNumber
@@ -27,6 +28,7 @@ class PlayerData: NSManagedObject {
     @NSManaged var missionSpaceships: NSOrderedSet
     @NSManaged var invitedFriends: NSSet
     @NSManaged var unlockedSpaceships: NSSet
+    @NSManaged var soundEnabled: NSNumber
     @NSManaged var startDate: NSDate?
     @NSManaged var winCount: NSNumber
     @NSManaged var winningStreakBest: NSNumber
@@ -128,6 +130,11 @@ extension MemoryCard {
         playerData.datamodelVersion = 8
         
         playerData.botLevel = 1
+        
+        playerData.soundEnabled = true
+        playerData.musicEnabled = true
+        
+        print(playerData.soundEnabled)
         
         return playerData
     }

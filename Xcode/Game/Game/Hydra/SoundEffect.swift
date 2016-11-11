@@ -65,11 +65,13 @@ class SoundEffect {
     }
     
     func play() {
-        if self.actions.count > 1 {
-            self.node.runAction(self.actions[Int.random(self.actions.count)])
-        } else {
-            for action in self.actions {
-                self.node.runAction(action)
+        if(MemoryCard.sharedInstance.playerData.soundEnabled.boolValue) {
+            if self.actions.count > 1 {
+                self.node.runAction(self.actions[Int.random(self.actions.count)])
+            } else {
+                for action in self.actions {
+                    self.node.runAction(action)
+                }
             }
         }
     }
