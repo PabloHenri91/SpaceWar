@@ -273,7 +273,7 @@ class BattleTrainingScene: GameScene {
                 let labelDescription = Label(text: "Touch a ship to select it" , fontSize: 12, x: 141, y: 68 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                 self.tutorialControl!.addChild(labelDescription)
                 
-                self.touchImage = Control(textureName: "touchImage", x:18, y:442, xAlign: .center, yAlign: .center)
+                self.touchImage = Control(textureName: "touchImage", x:18, y:427, xAlign: .center, yAlign: .center)
                 self.addChild(self.touchImage!)
                 
                 
@@ -337,7 +337,7 @@ class BattleTrainingScene: GameScene {
                     let labelDescription = Label(text: "Touch a battleship to select it" , fontSize: 12, x: 141, y: 68 , shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 11/100), shadowOffset:CGPoint(x: 0, y: -2), fontName: GameFonts.fontName.museo1000)
                     scene.tutorialControl!.addChild(labelDescription)
                     
-                    scene.touchImage = Control(textureName: "touchImage", x:85, y:442, xAlign: .center, yAlign: .center)
+                    scene.touchImage = Control(textureName: "touchImage", x:88, y:370, xAlign: .center, yAlign: .center)
                     scene.addChild(scene.touchImage!)
                 })
                 

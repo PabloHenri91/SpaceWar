@@ -872,14 +872,14 @@ class Spaceship: Control {
             
             if BattleScene.state == .battleOnline {
                 if self.isAlly {
-                    self.onlineHeal = self.onlineHeal + self.healPerFrame
-                    self.health = self.health + self.healPerFrame
+                    //self.onlineHeal = self.onlineHeal + self.healPerFrame
+                    //self.health = self.health + self.healPerFrame
                 } else {
                     return
                    // o outro jogador me avisa quando ele estiver recupesando vida
                 }
             } else {
-                self.health = self.health + self.healPerFrame
+                //self.health = self.health + self.healPerFrame
             }
             
             if self.health > self.maxHealth {

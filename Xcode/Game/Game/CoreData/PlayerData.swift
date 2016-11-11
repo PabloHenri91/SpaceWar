@@ -65,6 +65,7 @@ extension MemoryCard {
         
         //adicionei a nave 0 a nave mae
         var spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
+        spaceshipData.level = 3
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
 
