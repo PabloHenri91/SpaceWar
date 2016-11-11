@@ -189,8 +189,11 @@ class MothershipScene: GameScene {
             case .mothership:
                 self.batteryControl.update()
                 self.playerDataCard.update()
-                self.gameStore?.update()
                 self.nextEvents.update()
+                break
+            case .alert:
+                self.gameStore?.update()
+                break
             default:
                 break
             }
