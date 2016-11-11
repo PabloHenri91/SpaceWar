@@ -317,8 +317,11 @@ class PlayerDataCardStatistics: Control {
         self.addChild(control)
         
         self.buttonConfig = Button(textureName: "buttonConfig", x: 341, y: 75, touchArea:CGSize(width: 32,height: 32))
-        self.buttonConfig.hidden = true//TODO: buttonConfig
         self.addChild(self.buttonConfig)
+        self.buttonConfig.addHandler {
+            Control.gameScene.setAlertState()
+            Control.gameScene.addChild(ConfigAlert())
+        }
         
         let fontColor = SKColor(red: 48/255, green: 60/255, blue: 70/255, alpha: 1)
         let fontShadowColor = SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 10/100)

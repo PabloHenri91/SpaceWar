@@ -49,7 +49,7 @@ class Control: SKNode {
     
     var size = CGSize.zero
     
-    var screenPosition:CGPoint = CGPointZero
+    var screenPosition:CGPoint = CGPointZero 
     
     override init() {
         super.init()
@@ -253,6 +253,8 @@ class Control: SKNode {
             }
             
             Button.update(taps)
+            Switch.update(touches)
+
             
             #if os(iOS)
                 if taps.count > 0 {
