@@ -45,6 +45,9 @@ class LoadScene: GameScene {
         rateMyApp.appID = "1111665762"
         
         rateMyApp.trackAppUsage()
+        
+        self.backgroundColor = SKColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1)
+        self.addChild(Control(textureName: "splash", xAlign: .center, yAlign: .center))
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -54,7 +57,6 @@ class LoadScene: GameScene {
             //Estado atual
             switch (self.state) {
             case .load:
-                self.nextState = .mothership
                 break
             default:
                 break
@@ -66,24 +68,24 @@ class LoadScene: GameScene {
             switch (self.nextState) {
             case .mothership:
                 if MemoryCard.sharedInstance.playerData.needBattleTraining.boolValue {
-                    self.view?.presentScene(BattleTrainingScene())
+                    self.view?.presentScene(BattleTrainingScene(), transition: SKTransition.crossFadeWithDuration(1))
                 } else {
                     if let nextScene = LoadScene.nextScene {
                         switch nextScene {
                         case EventCard.types.researchEvent.rawValue:
                             GameTabBar.lastState = .research
-                            self.view?.presentScene(ResearchScene())
+                            self.view?.presentScene(ResearchScene(), transition: SKTransition.crossFadeWithDuration(1))
                             break
                         case EventCard.types.missionSpaceshipEvent.rawValue:
                             GameTabBar.lastState = .mission
-                            self.view?.presentScene(MissionScene())
+                            self.view?.presentScene(MissionScene(), transition: SKTransition.crossFadeWithDuration(1))
                             break
                         default:
-                            self.view?.presentScene(MothershipScene())
+                            self.view?.presentScene(MothershipScene(), transition: SKTransition.crossFadeWithDuration(1))
                             break
                         }
                     } else {
-                        self.view?.presentScene(MothershipScene())
+                        self.view?.presentScene(MothershipScene(), transition: SKTransition.crossFadeWithDuration(1))
                     }
                 }
                 
@@ -95,7 +97,9 @@ class LoadScene: GameScene {
                 
                 serverManager.connect()
                 
-                self.nextState = .mothership
+                self.runAction(SKAction.afterDelay(1, runBlock: { [weak self] in
+                    self?.nextState = .mothership
+                    }))
                 
                 break
                 
