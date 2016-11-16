@@ -10,19 +10,19 @@ import SpriteKit
 
 class Spaceship: Control {
     
-    var emitterNode:SKEmitterNode?
+    var emitterNode: SKEmitterNode?
     var emitterNodeParticleBirthRate: CGFloat = 0
-    var defaultEmitterNodeParticleBirthRate:CGFloat = 0
+    var defaultEmitterNodeParticleBirthRate: CGFloat = 0
     
-    var emitterNodeLeft:SKEmitterNode?
-    var emitterNodeLeftParticleBirthRate:CGFloat = 0
+    var emitterNodeLeft: SKEmitterNode?
+    var emitterNodeLeftParticleBirthRate: CGFloat = 0
     
-    var emitterNodeRight:SKEmitterNode?
-    var emitterNodeRightParticleBirthRate:CGFloat = 0
+    var emitterNodeRight: SKEmitterNode?
+    var emitterNodeRightParticleBirthRate: CGFloat = 0
     
     static var spaceshipList = Set<Spaceship>()
     
-    static var selectedSpaceship:Spaceship?
+    static var selectedSpaceship: Spaceship?
     
     enum zPositions: CGFloat {
         case skin
@@ -31,50 +31,51 @@ class Spaceship: Control {
         case touchAreaEffect
     }
     
-    var level:Int!
+    var level: Int!
     var type: SpaceshipType!
     
-    var weapon:Weapon!
+    var weapon: Weapon!
     
-    var battleMaxLevel:Int!
+    var battleMaxLevel: Int!
     
     //Vida e Escudo de Energia
-    var health:Int!
-    var maxHealth:Int!
-    var energyShield:Int!
-    var maxEnergyShield:Int!
+    var health: Int!
+    var maxHealth: Int!
+    var energyShield: Int!
+    var maxEnergyShield: Int!
 
     
-    var speedAtribute:Int!
-    var shieldPower:Int!
-    var shieldRecharge:Int!
+    var speedAtribute: Int!
+    var shieldPower: Int!
+    var shieldRecharge: Int!
     
-    var weaponRangeBonus:CGFloat = 0
+    var weaponRangeBonus: CGFloat = 0
     
-    var spaceshipData:SpaceshipData?
+    var spaceshipData: SpaceshipData?
     
-    var selectedSpriteNode:SKSpriteNode!
+    var selectedSpriteNode: SKSpriteNode!
     
-    var targetNode:SKNode?
+    var targetNode: SKNode?
     
     //Movement
     var destination = CGPoint.zero
     var needToMove = false
-    var rotationToDestination:CGFloat = 0
-    var totalRotationToDestination:CGFloat = 0
+    var rotationToDestination: CGFloat = 0
+    var totalRotationToDestination: CGFloat = 0
     var startingPosition = CGPoint.zero
     var startingZPosition = CGFloat(0)
     
-    var maxAngularVelocity:CGFloat = 3
-    var force:CGFloat = 20
-    var angularImpulse:CGFloat = 0.0005
-    var maxVelocitySquared:CGFloat = 0
+    var maxAngularVelocity: CGFloat = 3
+    var force: CGFloat = 20
+    var angularImpulse: CGFloat = 0.0005
+    var maxVelocitySquared: CGFloat = 0
     
     var isInsideAMothership = true
     
-    private var healthBar:HealthBar!
-    var weaponRangeSprite:SKShapeNode?
-    var moveWeaponRangeSprite:SKShapeNode?
+    private var healthBar: HealthBar!
+    var respawnTimeBar: SKShapeNode!
+    var weaponRangeSprite: SKShapeNode?
+    var moveWeaponRangeSprite: SKShapeNode?
     
     //Respawn
     var canRespawn = true
@@ -87,12 +88,12 @@ class Spaceship: Control {
     //statistics
     var isAlly = true
 
-    var explosionSoundEffect:SoundEffect!
+    var explosionSoundEffect: SoundEffect!
     
     var onlineDamage = 0
     var onlineHeal = 0
     
-    private var spriteNode:SKSpriteNode!
+    private var spriteNode: SKSpriteNode!
     
     override var description: String {
         return "\nSpaceship\n" +
@@ -183,7 +184,7 @@ class Spaceship: Control {
         }
     }
     
-    func loadHealthBar(gameWorld:GameWorld) {
+    func loadHealthBar(gameWorld: GameWorld) {
         
         var fillColor:SKColor!
         var backColor:SKColor!
@@ -243,6 +244,42 @@ class Spaceship: Control {
         self.updateHealthBarValue()
         
         self.loadJetEffect(gameWorld, color: backColor)
+        
+        self.loadRespawnTimeBar(gameWorld)
+    }
+    
+    func loadRespawnTimeBar(gameWorld: GameWorld) {
+        
+        let path = UIBezierPath(arcCenter: CGPoint(x: 0, y: 0), radius: 22.0, startAngle: CGFloat(0), endAngle: CGFloat(-π * 2), clockwise: false).CGPath
+        
+        let shapeNode = SKShapeNode(path: path)
+        shapeNode.zPosition = GameWorld.zPositions.spaceshipHealthBar.rawValue
+        shapeNode.position = self.position
+        shapeNode.strokeColor = SKColor(red: 81/255, green: 81/255, blue: 81/255, alpha: 1)
+        shapeNode.fillColor = SKColor.clearColor()
+        shapeNode.lineWidth = 6
+        gameWorld.addChild(shapeNode)
+        
+        self.respawnTimeBar = SKShapeNode(path: path)
+        self.respawnTimeBar.zRotation = π/2
+        self.respawnTimeBar.strokeColor = SKColor(red: 96/255, green: 209/255, blue: 91/255, alpha: 1)
+        self.respawnTimeBar.fillColor = SKColor.clearColor()
+        self.respawnTimeBar.lineWidth = 6
+        self.respawnTimeBar.lineCap = .Round
+        
+        shapeNode.addChild(self.respawnTimeBar)
+        
+        shapeNode.hidden = true
+    }
+    
+    func updateRespawnTimeBar(progress: CGFloat) {
+        
+        if progress >= 1{
+            self.respawnTimeBar.parent?.hidden = true
+        } else {
+            let path = UIBezierPath(arcCenter: CGPoint(x: 0, y: 0), radius: 22.0, startAngle: CGFloat(0), endAngle: CGFloat(-π * progress * 2), clockwise: false).CGPath
+            self.respawnTimeBar.path = path
+        }
     }
     
     func loadWeaponRangeSprite(gameWorld:GameWorld) {
@@ -807,6 +844,7 @@ class Spaceship: Control {
     }
     
     func respawn() {
+        self.respawnTimeBar.parent?.hidden = true
         
         if BattleScene.state == .battleOnline {
             if self.isAlly {
@@ -825,6 +863,9 @@ class Spaceship: Control {
     }
     
     func die() {
+        
+        self.updateRespawnTimeBar(0)
+        self.respawnTimeBar.parent?.hidden = false
         
         Control.gameScene.shake(7.5)
         
@@ -1062,12 +1103,17 @@ class Spaceship: Control {
             }
         } else {
             if self.canRespawn {
+                
+                self.updateRespawnTimeBar(CGFloat((GameScene.currentTime - self.deathTime) / Double(self.deathCount * 5)))
+                
                 if GameScene.currentTime - self.lastSecond > 1 {
                     self.lastSecond = GameScene.currentTime
+                    
+                    
                     if GameScene.currentTime - self.deathTime > Double(self.deathCount * 5) {//TODO self.deathCount * 5
                         self.respawn()
                     } else {
-                        let label = Label(text: Int((self.deathCount * 5) - Int(GameScene.currentTime - self.deathTime)).description)
+                        let label = Label(color: SKColor.whiteColor(), text: Int((self.deathCount * 5) - Int(GameScene.currentTime - self.deathTime)).description, fontSize: 14, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 36/100), shadowOffset: CGPoint(x: 0, y: -2))
                         label.position = self.startingPosition
                         self.parent?.addChild(label)
                         

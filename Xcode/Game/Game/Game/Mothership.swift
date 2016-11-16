@@ -335,6 +335,7 @@ class Mothership: Control {
         for spaceship in self.spaceships {
             if spaceship.isInsideAMothership {
                 spaceship.die()
+                spaceship.respawnTimeBar.parent?.hidden = true
             }
         }
         

@@ -97,7 +97,13 @@ class LoadScene: GameScene {
                 
                 serverManager.connect()
                 
-                self.runAction(SKAction.afterDelay(1, runBlock: { [weak self] in
+                #if DEBUG
+                    let delay: NSTimeInterval = 0
+                #else
+                    let delay: NSTimeInterval = 1
+                #endif
+                
+                self.runAction(SKAction.afterDelay(delay, runBlock: { [weak self] in
                     self?.nextState = .mothership
                     }))
                 
