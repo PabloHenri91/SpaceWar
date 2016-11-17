@@ -93,7 +93,7 @@ extension BattleScene {
                                 
                                 scene.botMothership.health = scene.mothership.health
                                 scene.botMothership.maxHealth = scene.mothership.health
-                                scene.botMothership.loadHealthBar()
+                                scene.botMothership.loadHealthBar(scene.gameWorld)
                                 
                                 scene.botMothership.loadSpaceships(scene.gameWorld)
                                 
@@ -185,8 +185,6 @@ extension BattleScene {
                     }
                     
                     spaceship.needToMove = i.next() as! Bool
-                    
-                    spaceship.isInsideAMothership = i.next() as! Bool
                         
                     spaceship.destination = CGPoint(x: CGFloat(i.next() as! Int) / 1000000, y: CGFloat(i.next() as! Int) / 1000000)
                     
@@ -267,7 +265,6 @@ extension BattleScene {
                 spaceship.onlineHeal = 0
                 
                 items.append(spaceship.needToMove)
-                items.append(spaceship.isInsideAMothership)
                 
                 items.append(Int(-spaceship.destination.x * 1000000))
                 items.append(Int(-spaceship.destination.y * 1000000))

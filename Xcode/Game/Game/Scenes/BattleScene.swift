@@ -93,7 +93,7 @@ class BattleScene: GameScene {
         
         self.mothership.health = 100
         self.mothership.maxHealth = self.mothership.health
-        self.mothership.loadHealthBar()
+        self.mothership.loadHealthBar(self.gameWorld)
         self.mothership.loadSpaceships(self.gameWorld)
         
         if connected {
@@ -128,7 +128,7 @@ class BattleScene: GameScene {
             self.botMothership.spaceships.append(botSpaceship)
         }
         
-        self.botMothership.loadHealthBar()
+        self.botMothership.loadHealthBar(self.gameWorld)
         
         self.botMothership.loadSpaceships(self.gameWorld)
         
@@ -229,32 +229,25 @@ class BattleScene: GameScene {
                             
                             let botSpaceship = aliveBotSpaceships[Int.random(aliveBotSpaceships.count)]
                             
-                            if botSpaceship.isInsideAMothership {
+                            
+                            if currentTime - self.lastBotUpdate > self.botUpdateInterval {
                                 self.lastBotUpdate = currentTime
-                                if botSpaceship.health == botSpaceship.maxHealth {
-                                    botSpaceship.destination = CGPoint(x: botSpaceship.startingPosition.x,
-                                                                       y: botSpaceship.startingPosition.y - 150)
-                                    botSpaceship.needToMove = true
-                                    botSpaceship.physicsBody?.dynamic = true
-                                }
-                            } else {
-                                if currentTime - self.lastBotUpdate > self.botUpdateInterval {
-                                    self.lastBotUpdate = currentTime
+                                
+                                if let _ = botSpaceship.targetNode {
+                                    botSpaceship.needToMove = false
+                                    botSpaceship.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: botSpaceship.speedAtribute)
+                                } else {
                                     
-                                    if let _ = botSpaceship.targetNode {
-                                        botSpaceship.needToMove = false
+                                    if botSpaceship.health <= botSpaceship.maxHealth/2 {
+                                        //botSpaceship.retreat() 😢
                                     } else {
-                                        
-                                        if botSpaceship.health <= botSpaceship.maxHealth/2 {
-                                            //botSpaceship.retreat() 😢
-                                        } else {
-                                            botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
-                                                                               y: botSpaceship.position.y - 100)
-                                            botSpaceship.needToMove = true
-                                        }
+                                        botSpaceship.destination = CGPoint(x: botSpaceship.position.x,
+                                                                           y: botSpaceship.position.y - 100)
+                                        botSpaceship.needToMove = true
                                     }
                                 }
                             }
+                            
                         }
                     }
                 }
@@ -640,7 +633,7 @@ class BattleScene: GameScene {
                             if (nearestSpaceship.position - nearestSpaceship.startingPosition).lengthSquared() >= 4 {
                                 nearestSpaceship.targetNode = nil
                                 nearestSpaceship.needToMove = false
-                                nearestSpaceship.setBitMasksToSpaceship()
+                                nearestSpaceship.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: nearestSpaceship.speedAtribute)
                             }
                         } else {
                             if let spaceship = Spaceship.selectedSpaceship {

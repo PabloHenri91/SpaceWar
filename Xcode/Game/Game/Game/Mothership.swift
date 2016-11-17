@@ -144,7 +144,7 @@ class Mothership: Control {
         self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothership
     }
     
-    func loadHealthBar() {
+    func loadHealthBar(gameWorld: GameWorld) {
         
         var fillColor = SKColor.clearColor()
         var backColor = SKColor.clearColor()
@@ -162,61 +162,55 @@ class Mothership: Control {
         let fontName = GameFonts.fontName.museo1000
         
         self.labelHealth = Label(color: SKColor.whiteColor(), text: "100/100", fontSize: 11, x: 0, y: 50, fontName: fontName, shadowColor: fontShadowColor, shadowOffset: fontShadowOffset)
-        self.labelHealth.zRotation = self.zRotation
+        self.labelHealth.position = self.convertPoint(self.labelHealth.position, toNode: gameWorld)
         
         let background = SKSpriteNode(imageNamed: "mothershipHealthBackground")
+        background.zRotation = self.zRotation
         
         let cropNode = SKCropNode()
-        cropNode.position.y = -70
+        cropNode.position = self.convertPoint(CGPoint(x: 0, y: -70), toNode: gameWorld)
         cropNode.maskNode = background
         
-        self.healthBar = HealthBar(background: background, size: background.size, backColor: backColor, fillColor: fillColor)
+        
         let border = SKSpriteNode(imageNamed: "mothershipHealthBorder")
-        self.healthBar.zRotation = self.zRotation
         border.color = backColor
         border.colorBlendFactor = 1
+        border.zRotation = self.zRotation
+        
+        self.healthBar = HealthBar(background: background, size: background.size, backColor: backColor, fillColor: fillColor)
+        
+        gameWorld.addChild(cropNode)
+        cropNode.addChild(self.healthBar)
         self.healthBar.addChild(border)
         
-        self.addChild(cropNode)
         
-        cropNode.addChild(self.healthBar)
+        gameWorld.addChild(self.labelHealth)
         
         self.updateHealthBarValue()
-        
-        self.addChild(self.labelHealth)
     }
     
     func loadSpaceship(spaceship:Spaceship, gameWorld:GameWorld, i:Int) {
         
         spaceship.isAlly = self.isAlly
         
-        let mothershipSpaceshipSlot = SKSpriteNode(imageNamed: "mothershipSpaceshipSlot")
-        mothershipSpaceshipSlot.hidden = true
-        mothershipSpaceshipSlot.texture?.filteringMode = Display.filteringMode
-        self.addChild(mothershipSpaceshipSlot)
-        
         switch i {
         case 0:
-            spaceship.position = self.convertPoint(CGPoint(x: -103, y: -5), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -130, y: -5), toNode: gameWorld)
             break
         case 1:
-            spaceship.position = self.convertPoint(CGPoint(x: -34, y: 50), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: -90, y: 50), toNode: gameWorld)
             break
         case 2:
-            spaceship.position = self.convertPoint(CGPoint(x: 34, y: 50), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 90, y: 50), toNode: gameWorld)
             break
         case 3:
-            spaceship.position = self.convertPoint(CGPoint(x: 103, y: -5), toNode: gameWorld)
+            spaceship.position = self.convertPoint(CGPoint(x: 130, y: -5), toNode: gameWorld)
             break
         default:
             break
         }
-        mothershipSpaceshipSlot.position = gameWorld.convertPoint(spaceship.position, toNode: self)
         
-        if let weapon = spaceship.weapon {
-            mothershipSpaceshipSlot.color = weapon.type.color
-            mothershipSpaceshipSlot.colorBlendFactor = 1
-        }
+        spaceship.destination = spaceship.position
         
         let spaceshipShadow = SKSpriteNode(imageNamed: spaceship.type.bodyType.skin + "Mask")
         spaceshipShadow.texture?.filteringMode = Display.filteringMode
@@ -224,10 +218,11 @@ class Mothership: Control {
         spaceshipShadow.color = SKColor(red: 0, green: 0, blue: 0, alpha: 12/100)
         spaceshipShadow.colorBlendFactor = 1
         spaceshipShadow.position = gameWorld.convertPoint(CGPoint(x: spaceship.position.x, y: spaceship.position.y - (5 * cos(self.zRotation))), toNode: self)
-        self.addChild(spaceshipShadow)
+        
+        spaceshipShadow.position = self.convertPoint(spaceshipShadow.position, toNode: gameWorld)
+        gameWorld.addChild(spaceshipShadow)
         
         spaceship.startingPosition = spaceship.position
-        spaceship.destination = spaceship.position
         
         spaceship.zRotation = self.zRotation
         spaceship.startingZPosition = spaceship.zRotation
@@ -324,6 +319,7 @@ class Mothership: Control {
             spaceship.destination = spaceship.position
             spaceship.canRespawn = false
             spaceship.needToMove = false
+            spaceship.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: spaceship.speedAtribute)
             spaceship.targetNode = nil
         }
     }
@@ -333,10 +329,7 @@ class Mothership: Control {
         Control.gameScene.shake(15)
         
         for spaceship in self.spaceships {
-            if spaceship.isInsideAMothership {
-                spaceship.die()
-                spaceship.respawnTimeBar.parent?.hidden = true
-            }
+            spaceship.respawnTimeBar.parent?.hidden = true
         }
         
         self.endBattle()

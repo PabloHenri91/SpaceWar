@@ -70,8 +70,6 @@ class Spaceship: Control {
     var angularImpulse: CGFloat = 0.0005
     var maxVelocitySquared: CGFloat = 0
     
-    var isInsideAMothership = true
-    
     private var healthBar: HealthBar!
     var respawnTimeBar: SKShapeNode!
     var weaponRangeSprite: SKShapeNode?
@@ -445,9 +443,9 @@ class Spaceship: Control {
         
         self.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         self.physicsBody?.mass = 0.0455111116170883
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.dynamic = true
         
-        self.setBitMasksToMothershipSpaceship()
+        self.setBitMasksToSpaceship()
         
         self.physicsBody?.linearDamping = 2
         self.physicsBody?.angularDamping = 4
@@ -495,13 +493,11 @@ class Spaceship: Control {
     func touchEnded(touch: UITouch) {
         
         if self == Spaceship.selectedSpaceship {
-            if !self.isInsideAMothership {
-                self.targetNode = nil
-                self.needToMove = false
-                if let parent = self.parent {
-                    self.destination = touch.locationInNode(parent)
-                }
-                self.setBitMasksToSpaceship()
+            self.targetNode = nil
+            self.needToMove = false
+            self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
+            if let parent = self.parent {
+                self.destination = touch.locationInNode(parent)
             }
             self.showWeaponRangeSprite()
             
@@ -513,7 +509,6 @@ class Spaceship: Control {
                 Spaceship.selectedSpaceship = self
                 self.showWeaponRangeSprite()
                 
-                self.physicsBody?.dynamic = true
                 self.selectedSpriteNode.hidden = false
             }
         }
@@ -528,7 +523,6 @@ class Spaceship: Control {
                     spaceship.targetNode = nil
                     
                     spaceship.destination = touch.locationInNode(parent)
-                    spaceship.physicsBody?.dynamic = true
                     spaceship.needToMove = true
                     spaceship.setMoveArrowToDestination()
                     spaceship.showMoveWeaponRangeSprite()
@@ -553,7 +547,6 @@ class Spaceship: Control {
         self.needToMove = true
         
         self.selectedSpriteNode.hidden = true
-        self.setBitMasksToMothershipSpaceship()
     }
     
     func update(enemyMothership enemyMothership:Mothership?, enemySpaceships:[Spaceship], allySpaceships:[Spaceship]) {
@@ -633,12 +626,6 @@ class Spaceship: Control {
         }
     }
     
-    func setBitMasksToMothershipSpaceship() {
-        self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.mothershipSpaceship.rawValue
-        self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.mothershipSpaceship
-        self.physicsBody?.contactTestBitMask = GameWorld.contactTestBitMask.mothershipSpaceship
-    }
-    
     func setBitMasksToSpaceship() {
         self.physicsBody?.categoryBitMask = GameWorld.categoryBitMask.spaceship.rawValue
         self.physicsBody?.collisionBitMask = GameWorld.collisionBitMask.spaceship
@@ -646,12 +633,10 @@ class Spaceship: Control {
     }
     
     func resetToStartingPosition() {
-        self.isInsideAMothership = true
         self.position = self.startingPosition
         self.zRotation = self.startingZPosition
         self.physicsBody?.velocity = CGVector.zero
         self.physicsBody?.angularVelocity = 0
-        self.physicsBody?.dynamic = false
     }
     
     func canBeTargetAndHitBy(spaceship:Spaceship) -> Bool {
@@ -673,10 +658,6 @@ class Spaceship: Control {
     }
     
     func canBeTarget() -> Bool {
-        
-        if self.isInsideAMothership {
-            return false
-        }
         
         if self.health <= 0 {
             return false
@@ -860,6 +841,32 @@ class Spaceship: Control {
         
         self.updateHealthBarValue()
         self.updateHealthBarPosition()
+        
+        self.destination = self.position
+        self.needToMove = true
+        
+        
+        let particles = SKEmitterNode(fileNamed: "spawn.sks")!
+        particles.particleColorSequence = nil
+        particles.particleColorBlendFactor = 1
+        
+        if self.isAlly {
+            particles.particleColor = SKColor(red: 0/255, green: 84/255, blue: 143/255, alpha: 1)
+        } else {
+            particles.particleColor = SKColor(red: 105/255, green: 31/255, blue: 17/255, alpha: 1)
+        }
+        
+        particles.position = self.position
+        
+        if let parent = self.parent {
+            particles.zPosition = GameWorld.zPositions.explosion.rawValue
+            parent.addChild(particles)
+            particles.runAction(SKAction.removeFromParentAfterDelay(1))
+            particles.targetNode = parent
+        }
+        
+        self.alpha = 0
+        self.runAction(SKAction.fadeAlphaTo(1, duration: 0.5))
     }
     
     func die() {
@@ -952,44 +959,15 @@ class Spaceship: Control {
        
         if self.health > 0 {
             
-            if self.isInsideAMothership {
-                
-                if (self.position - self.startingPosition).lengthSquared() < 256 {
-                    self.heal()
-                }
-                
-                if (CGPoint(x: self.startingPosition.x, y: self.position.y) - self.startingPosition).lengthSquared() > 4545 {
-                    self.isInsideAMothership = false
-                }
-                
-                if (self.destination - self.startingPosition).lengthSquared() > 16 {
-                    if let physicsBody = self.physicsBody {
-                        let velocitySquared = (physicsBody.velocity.dx * physicsBody.velocity.dx) + (physicsBody.velocity.dy * physicsBody.velocity.dy)
-                        
-                        self.rotateToPoint(CGPoint(x: self.position.x, y: -self.position.y * 2))
-                        
-                        if velocitySquared < self.maxVelocitySquared {
-                            self.physicsBody?.applyForce(CGVector(dx: -sin(self.zRotation) * self.force, dy: cos(self.zRotation) * self.force))
-                        }
-                        self.emitterNodeParticleBirthRate = self.defaultEmitterNodeParticleBirthRate
-                    }
-                }
-            }
-            
             if self.needToMove {
 
                 if (self.position - self.destination).lengthSquared() < 1024 {
                
                     self.needToMove = false
+                    self.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: self.speedAtribute)
                     
-                    if (self.destination - self.startingPosition).lengthSquared() < 16 {
-                        self.resetToStartingPosition()
-                    } else {
-                        if !self.isInsideAMothership {
-                            self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
-                            self.setAttackArrowToTarget()
-                        }
-                    }
+                    self.targetNode = self.nearestTarget(enemyMothership: enemyMothership, enemySpaceships: enemySpaceships, allySpaceships: allySpaceships)
+                    self.setAttackArrowToTarget()
                     
                 } else {
     
@@ -1175,23 +1153,6 @@ class Spaceship: Control {
                 }()
                 break
                 
-            case GameWorld.categoryBitMask.mothershipSpaceship.rawValue:
-                {
-                    switch otherPhysicsBody.categoryBitMask {
-                        
-                    case GameWorld.categoryBitMask.mothership.rawValue:
-                        self.isInsideAMothership = true
-                        break
-                        
-                    default:
-                        #if DEBUG
-                            fatalError()
-                        #endif
-                        break
-                    }
-                }()
-                break
-                
             default:
                 #if DEBUG
                     fatalError()
@@ -1212,30 +1173,6 @@ class Spaceship: Control {
                     switch otherPhysicsBody.categoryBitMask {
                     case GameWorld.categoryBitMask.spaceshipShot.rawValue:
                         (otherPhysicsBody.node as? Shot)?.resetBitMasks()
-                        break
-                        
-                    default:
-                        #if DEBUG
-                            fatalError()
-                        #endif
-                        break
-                    }
-                }()
-                break
-                
-            case GameWorld.categoryBitMask.mothershipSpaceship.rawValue:
-                {
-                    switch otherPhysicsBody.categoryBitMask {
-                        
-                    case GameWorld.categoryBitMask.spaceshipShot.rawValue:
-                        (otherPhysicsBody.node as? Shot)?.resetBitMasks()
-                        break
-                        
-                    case GameWorld.categoryBitMask.mothership.rawValue:
-                        self.isInsideAMothership = false
-                        if (self.destination - self.startingPosition).lengthSquared() > 16 {
-                            self.setBitMasksToSpaceship()
-                        }
                         break
                         
                     default:

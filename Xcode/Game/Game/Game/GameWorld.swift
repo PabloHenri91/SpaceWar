@@ -86,9 +86,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.spaceship.rawValue:
             bodyAcategoryBitMask = "spaceship"
             break
-        case categoryBitMask.mothershipSpaceship.rawValue:
-            bodyAcategoryBitMask = "mothershipSpaceship"
-            break
         case categoryBitMask.shot.rawValue:
             bodyAcategoryBitMask = "shot"
             break
@@ -110,9 +107,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             break
         case categoryBitMask.spaceship.rawValue:
             bodyBcategoryBitMask = "spaceship"
-            break
-        case categoryBitMask.mothershipSpaceship.rawValue:
-            bodyBcategoryBitMask = "mothershipSpaceship"
             break
         case categoryBitMask.shot.rawValue:
             bodyBcategoryBitMask = "shot"
@@ -141,24 +135,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             }
             break
             
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
-            //spaceship criou um shot
-            if let shot = self.bodyB.node as? Shot {
-                if let spaceship = self.bodyA.node as? Spaceship {
-                    spaceship.getShot(shot, contact: contact)
-                }
-            }
-            break
-            
         case categoryBitMask.spaceship.rawValue + categoryBitMask.shot.rawValue:
-            if let shot = self.bodyB.node as? Shot {
-                if let spaceship = self.bodyA.node as? Spaceship {
-                    spaceship.getShot(shot, contact: contact)
-                }
-            }
-            break
-            
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
             if let shot = self.bodyB.node as? Shot {
                 if let spaceship = self.bodyA.node as? Spaceship {
                     spaceship.getShot(shot, contact: contact)
@@ -169,12 +146,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
                 (self.bodyB.node as? Mothership)?.getShot(shot, contact: contact)
-            }
-            break
-            
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.mothership.rawValue:
-            if let spaceship = self.bodyA.node as? Spaceship {
-                spaceship.didBeginContact(self.bodyB, contact: contact)
             }
             break
             
@@ -210,9 +181,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             case categoryBitMask.spaceship.rawValue:
                 bodyAcategoryBitMask = "spaceship"
                 break
-            case categoryBitMask.mothershipSpaceship.rawValue:
-                bodyAcategoryBitMask = "mothershipSpaceship"
-                break
             case categoryBitMask.shot.rawValue:
                 bodyAcategoryBitMask = "shot"
                 break
@@ -234,9 +202,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
                 break
             case categoryBitMask.spaceship.rawValue:
                 bodyBcategoryBitMask = "spaceship"
-                break
-            case categoryBitMask.mothershipSpaceship.rawValue:
-                bodyBcategoryBitMask = "mothershipSpaceship"
                 break
             case categoryBitMask.shot.rawValue:
                 bodyBcategoryBitMask = "shot"
@@ -270,27 +235,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             }
             break
             
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.spaceshipShot.rawValue:
-            //não deve cair aqui
-            if let spaceship = self.bodyA.node as? Spaceship {
-                spaceship.didEndContact(self.bodyB, contact: contact)
-            }
-            break
-            
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.shot.rawValue:
-            if let shot = self.bodyB.node as? Shot {
-                if let spaceship = self.bodyA.node as? Spaceship {
-                    spaceship.getShot(shot, contact: contact)
-                }
-            }
-            break
-            
-        case categoryBitMask.mothershipSpaceship.rawValue + categoryBitMask.mothership.rawValue:
-            if let spaceship = self.bodyA.node as? Spaceship {
-                spaceship.didEndContact(self.bodyB, contact: contact)
-            }
-            break
-            
         case categoryBitMask.shot.rawValue + categoryBitMask.mothership.rawValue:
             if let shot = self.bodyA.node as? Shot {
                 (self.bodyB.node as? Mothership)?.getShot(shot, contact: contact)
@@ -319,7 +263,6 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var world: categoryBitMask { return categoryBitMask(1 << 0) }
         static var spaceship: categoryBitMask { return categoryBitMask(1 << 1) }
-        static var mothershipSpaceship: categoryBitMask { return categoryBitMask(1 << 2) }
         static var shot: categoryBitMask { return categoryBitMask(1 << 3) }
         static var spaceshipShot: categoryBitMask { return categoryBitMask(1 << 4) }
         static var mothership: categoryBitMask { return categoryBitMask(1 << 5) }
@@ -333,13 +276,11 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         static var spaceship:UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue |
                 categoryBitMask.mothership.rawValue
         
         static var mothershipSpaceship:UInt32 =
             categoryBitMask.world.rawValue |
-                categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue 
+                categoryBitMask.spaceship.rawValue
         
         static var shot:UInt32 = 0
         
@@ -363,12 +304,10 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var shot:UInt32 =
             categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue |
                 categoryBitMask.mothership.rawValue
         
         static var spaceshipShot:UInt32 =
-            categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothershipSpaceship.rawValue
+            categoryBitMask.spaceship.rawValue
         
         static var mothership:UInt32 = categoryBitMask.shot.rawValue
     }

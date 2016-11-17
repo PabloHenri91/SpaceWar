@@ -85,7 +85,7 @@ class BattleTrainingScene: GameScene {
         self.gameWorld.addChild(self.mothership)
         self.mothership.position = CGPoint(x: 0, y: -225)
         
-        self.mothership.loadHealthBar()
+        self.mothership.loadHealthBar(self.gameWorld)
         
         // Spaceships
         let spaceship = Spaceship(type: 0, level: 1, loadPhysics: true)
@@ -361,7 +361,6 @@ class BattleTrainingScene: GameScene {
                 meteor.position = CGPoint(x: 0, y: 200)
                 meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
-                meteor.isInsideAMothership = false
                 
                 self.gameWorld.addChild(meteor)
                 meteor.isAlly = false
@@ -397,7 +396,6 @@ class BattleTrainingScene: GameScene {
                 meteor.position = CGPoint(x: -100, y: -116)
                 meteor.updateHealthBarPosition()
                 meteor.physicsBody?.dynamic = true
-                meteor.isInsideAMothership = false
                 self.gameWorld.addChild(meteor)
                 meteor.isAlly = false
                 self.enemySpaceships.append(meteor)
@@ -409,7 +407,6 @@ class BattleTrainingScene: GameScene {
                 meteor2.position = CGPoint(x: 100, y: -116)
                 meteor2.updateHealthBarPosition()
                 meteor2.physicsBody?.dynamic = true
-                meteor2.isInsideAMothership = false
                 self.gameWorld.addChild(meteor2)
                 meteor2.isAlly = false
                 self.enemySpaceships.append(meteor2)
@@ -472,7 +469,7 @@ class BattleTrainingScene: GameScene {
                     botMothership.zRotation = CGFloat(M_PI)
                     botMothership.position = CGPoint(x: 0, y: 225)
                     
-                    botMothership.loadHealthBar()
+                    botMothership.loadHealthBar(self.gameWorld)
                     
                     for _ in 0 ..< 4 {
                         let spaceship = Spaceship(type: Int.random(Spaceship.types.count), level: 1, loadPhysics: true)
@@ -972,6 +969,7 @@ class BattleTrainingScene: GameScene {
                     if (nearestSpaceship.position - nearestSpaceship.startingPosition).lengthSquared() >= 4 {
                         nearestSpaceship.targetNode = nil
                         nearestSpaceship.needToMove = false
+                        nearestSpaceship.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: nearestSpaceship.speedAtribute)
                         nearestSpaceship.setBitMasksToSpaceship()
                     }
                 } else {
@@ -989,6 +987,7 @@ class BattleTrainingScene: GameScene {
                     if (nearestSpaceship.position - nearestSpaceship.startingPosition).lengthSquared() >= 4 {
                         nearestSpaceship.targetNode = nil
                         nearestSpaceship.needToMove = false
+                        nearestSpaceship.maxVelocitySquared = GameMath.spaceshipMaxVelocitySquared(speed: nearestSpaceship.speedAtribute)
                         nearestSpaceship.setBitMasksToSpaceship()
                     }
                 } else {

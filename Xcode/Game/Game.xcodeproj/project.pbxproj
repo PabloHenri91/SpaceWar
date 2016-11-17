@@ -343,6 +343,7 @@
 		84C0117B1D46442B00EC7080 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C011791D46442B00EC7080 /* SoundEffect.swift */; };
 		84C14B201D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
 		84C14B211D412DA600D20D4D /* BatteryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C14B1F1D412DA600D20D4D /* BatteryControl.swift */; };
+		84C334061DDE00790054E5F2 /* spawn.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84C334051DDE00790054E5F2 /* spawn.sks */; };
 		84C8C26A1D99815E006481EC /* RateMyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8C2691D99815E006481EC /* RateMyApp.swift */; };
 		84C8D5571CF4C233007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
 		84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8D5561CF4C233007C1ED6 /* GameWorld.swift */; };
@@ -642,6 +643,7 @@
 		84C011511D46433400EC7080 /* explosion7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion7.wav; sourceTree = "<group>"; };
 		84C011791D46442B00EC7080 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		84C14B1F1D412DA600D20D4D /* BatteryControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryControl.swift; sourceTree = "<group>"; };
+		84C334051DDE00790054E5F2 /* spawn.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spawn.sks; sourceTree = "<group>"; };
 		84C8C2691D99815E006481EC /* RateMyApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateMyApp.swift; sourceTree = "<group>"; };
 		84C8D5561CF4C233007C1ED6 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
 		84D621211D258EC4005D550C /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
@@ -1154,6 +1156,7 @@
 				8495A35C1D4684F400A4205F /* Spark */,
 				848742351D25925500A8082D /* Explosion */,
 				842311421D9D8FF200A2D43E /* battleWin.sks */,
+				84C334051DDE00790054E5F2 /* spawn.sks */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1327,6 +1330,7 @@
 				84D6212B1D259021005D550C /* explosion.png in Resources */,
 				848FD6C91D42A4BA0002D4F5 /* bus-blanchie_bright-stars.mp3 in Resources */,
 				3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */,
+				84C334061DDE00790054E5F2 /* spawn.sks in Resources */,
 				84C0115A1D46433400EC7080 /* explosion1.wav in Resources */,
 				3A696E771D2EA49B00414EB0 /* museosansrounded-500-webfont.ttf in Resources */,
 				84C011621D46433400EC7080 /* explosion5.wav in Resources */,
