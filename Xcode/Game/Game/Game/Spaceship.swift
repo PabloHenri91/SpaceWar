@@ -743,6 +743,31 @@ class Spaceship: Control {
         return canfire
     }
     
+    func getHealthPack(healthPack: HealthPack?, contact: SKPhysicsContact?) {
+        
+        if let healthPack = healthPack {
+            
+            if healthPack.health > 0 {
+                healthPack.health = 0
+                if BattleScene.state == .battleOnline {
+                    if self.isAlly {
+                        self.onlineHeal = self.onlineHeal + self.maxHealth - self.health
+                        self.health = self.maxHealth
+                    } else {
+                        return
+                        // o outro jogador me avisa quando ele estiver recupesando vida
+                    }
+                } else {
+                    self.health = self.maxHealth
+                }
+            }
+            
+            self.updateHealthBarValue()
+            
+            healthPack.removeFromParent()
+        }
+    }
+    
     func getShot(shot:Shot?, contact: SKPhysicsContact?) {
         
         if let shot = shot {

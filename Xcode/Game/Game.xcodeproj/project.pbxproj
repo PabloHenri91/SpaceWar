@@ -167,6 +167,7 @@
 		843803D21CEF3A54007152BC /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D01CEF3A54007152BC /* Weapon.swift */; };
 		843803D41CEF45D1007152BC /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D31CEF45D1007152BC /* GameMath.swift */; };
 		843803D51CEF45D1007152BC /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843803D31CEF45D1007152BC /* GameMath.swift */; };
+		843890001DDE13A8004BA188 /* HealthPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84388FFF1DDE13A8004BA188 /* HealthPack.swift */; };
 		84399E2D1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
 		84399E2E1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */; };
 		844CF26F1CE77B400032F6AA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844CF26E1CE77B400032F6AA /* GameViewController.swift */; };
@@ -487,6 +488,7 @@
 		8437BCE01D95952C00525DD2 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		843803D01CEF3A54007152BC /* Weapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		843803D31CEF45D1007152BC /* GameMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMath.swift; sourceTree = "<group>"; };
+		84388FFF1DDE13A8004BA188 /* HealthPack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthPack.swift; sourceTree = "<group>"; };
 		84399E2C1D1030AC00C05670 /* museosansrounded-1000-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "museosansrounded-1000-webfont.ttf"; sourceTree = "<group>"; };
 		843FD0A91D5B886F009D6504 /* SpaceWar 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 4.xcdatamodel"; sourceTree = "<group>"; };
 		844CF2661CE77B3F0032F6AA /* SpaceWar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceWar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -980,6 +982,7 @@
 				84BF0FC51D4A758F00145F5B /* GameTabBar.swift */,
 				84C8D5561CF4C233007C1ED6 /* GameWorld.swift */,
 				848021051D0ADB220078320A /* HealthBar.swift */,
+				84388FFF1DDE13A8004BA188 /* HealthPack.swift */,
 				84629EE51D79EB4400888F44 /* IAPHelper.swift */,
 				3A0F31441D410C2900FDFBFE /* Metrics.swift */,
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
@@ -1534,6 +1537,7 @@
 				84B4E6A71CEE4F76007CFC2B /* Spaceship.swift in Sources */,
 				3AAA933C1D22BDE400DD4757 /* ResearchScene.swift in Sources */,
 				84656DDC1D7F48E200930157 /* SocketIOClientSpec.swift in Sources */,
+				843890001DDE13A8004BA188 /* HealthPack.swift in Sources */,
 				3AA0CA281CFDBCB5008EE628 /* InviteFriendsScene.swift in Sources */,
 				84656DC81D7F48E200930157 /* SocketEngineClient.swift in Sources */,
 				847FBAB61DC8DF2500FB1803 /* SKNode+Extensions.swift in Sources */,

@@ -49,6 +49,15 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         self.physicsWorld = physicsWorld
         physicsWorld.gravity = self.defaultGravity
+        
+        
+        
+        self.runAction(SKAction.repeatActionForever(SKAction.sequence([
+            SKAction.waitForDuration(5),
+            SKAction.runBlock { [weak self] in
+                self?.addChild(HealthPack())
+            }
+            ])))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -95,6 +104,9 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         case categoryBitMask.mothership.rawValue:
             bodyAcategoryBitMask = "mothership"
             break
+        case categoryBitMask.healthPack.rawValue:
+            bodyAcategoryBitMask = "healthPack"
+            break
         default:
             bodyAcategoryBitMask = "unknown"
             break
@@ -116,6 +128,9 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             break
         case categoryBitMask.mothership.rawValue:
             bodyBcategoryBitMask = "mothership"
+            break
+        case categoryBitMask.healthPack.rawValue:
+            bodyBcategoryBitMask = "healthPack"
             break
         default:
             bodyBcategoryBitMask = "unknown"
@@ -149,9 +164,15 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             }
             break
             
+        case categoryBitMask.spaceship.rawValue + categoryBitMask.healthPack.rawValue:
+            if let healthPack = self.bodyB.node as? HealthPack {
+                (self.bodyA.node as? Spaceship)?.getHealthPack(healthPack, contact: contact)
+            }
+            break
+            
         default:
             #if DEBUG
-                //print("didBeginContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
+                print("didBeginContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
             #endif
             break
         }
@@ -241,9 +262,15 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             }
             break
             
+        case categoryBitMask.spaceship.rawValue + categoryBitMask.healthPack.rawValue:
+            if let healthPack = self.bodyB.node as? HealthPack {
+                (self.bodyA.node as? Spaceship)?.getHealthPack(healthPack, contact: contact)
+            }
+            break
+            
         default:
             #if DEBUG
-                //print("didEndContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
+                print("didEndContact: " + bodyAcategoryBitMask + " -> " + bodyBcategoryBitMask)
             #endif
             break
         }
@@ -263,6 +290,7 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var world: categoryBitMask { return categoryBitMask(1 << 0) }
         static var spaceship: categoryBitMask { return categoryBitMask(1 << 1) }
+        static var healthPack: categoryBitMask { return categoryBitMask(1 << 2) }
         static var shot: categoryBitMask { return categoryBitMask(1 << 3) }
         static var spaceshipShot: categoryBitMask { return categoryBitMask(1 << 4) }
         static var mothership: categoryBitMask { return categoryBitMask(1 << 5) }
@@ -271,22 +299,28 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
     
     struct collisionBitMask {
         
-        static var world:UInt32 = 0
+        static var world: UInt32 = 0
         
-        static var spaceship:UInt32 =
+        static var spaceship: UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue |
-                categoryBitMask.mothership.rawValue
+                categoryBitMask.mothership.rawValue |
+                categoryBitMask.healthPack.rawValue
+        
         
         static var mothershipSpaceship:UInt32 =
             categoryBitMask.world.rawValue |
                 categoryBitMask.spaceship.rawValue
         
-        static var shot:UInt32 = 0
+        static var shot: UInt32 = 0
         
-        static var spaceshipShot:UInt32 = 0
+        static var spaceshipShot: UInt32 = 0
         
-        static var mothership:UInt32 = 0
+        static var mothership: UInt32 = 0
+        
+        static var healthPack: UInt32 =
+            categoryBitMask.spaceship.rawValue |
+                categoryBitMask.healthPack.rawValue
     }
     
     struct contactTestBitMask {
@@ -295,7 +329,8 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
         
         static var spaceship:UInt32 =
             categoryBitMask.shot.rawValue |
-                categoryBitMask.spaceshipShot.rawValue
+                categoryBitMask.spaceshipShot.rawValue |
+                categoryBitMask.healthPack.rawValue
         
         static var mothershipSpaceship =
             categoryBitMask.shot.rawValue |
@@ -310,5 +345,9 @@ class GameWorld: SKNode, SKPhysicsContactDelegate {
             categoryBitMask.spaceship.rawValue
         
         static var mothership:UInt32 = categoryBitMask.shot.rawValue
+        
+        static var healthPack: UInt32 =
+            categoryBitMask.spaceship.rawValue
+        
     }
 }
