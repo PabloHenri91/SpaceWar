@@ -36,9 +36,14 @@ class ChooseAsteroidAlert:Box {
         self.addChild(labelTitle)
         
         self.minerSpaceship = minerSpaceship
+        
+       
        
         let spaceshipImage = Control(textureName: "minerSpaceshipSmall", x: -127, y: -190)
         self.addChild(spaceshipImage)
+        
+        let minnerSpacehsipImage = Control(textureName: "minnerSpaceship", x: -120, y: -175)
+        self.addChild(minnerSpacehsipImage)
         
         let labelDescription = MultiLineLabel(text: "Mining spaceships are designed to extract precious metals from asteroids. Increase your level to be able to mine bigger asteroids!", maxWidth: 168, x: -43, y: -174, fontSize: 11, horizontalAlignmentMode: .Left)
         self.addChild(labelDescription)

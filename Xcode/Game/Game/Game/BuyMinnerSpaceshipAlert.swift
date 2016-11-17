@@ -49,16 +49,28 @@ class BuyMinnerSpaceshipAlert: Box {
         let minnerSpaceship = Control(textureName: "minnerSpaceshipTiny", x: -128, y: 9)
         self.addChild(minnerSpaceship)
         
+        let minnerSpacehsipImage = Control(textureName: "minnerSpaceship", x: -124, y: 18)
+        minnerSpacehsipImage.setScale(0.60)
+        self.addChild(minnerSpacehsipImage)
+        
         for i in 0..<playerData.missionSpaceships.count {
             let x = -78 + 27 * i
-            let minnerSpaceship = Control(textureName: "minnerSpaceshipSmallBuyed", x: x, y: 30)
-            self.addChild(minnerSpaceship)
+       
+            
+            let minnerSpacehsipImage = Control(textureName: "minnerSpaceship", x: x+2, y: 35)
+            minnerSpacehsipImage.setScale(0.30)
+
+            self.addChild(minnerSpacehsipImage)
         }
         
         for i in playerData.missionSpaceships.count..<4 {
             let x = -78 + 27 * i
-            let minnerSpaceship = Control(textureName: "minnerSpaceshipUnlocked", x: x, y: 30)
-            self.addChild(minnerSpaceship)
+           
+            
+            let minnerSpacehsipImage = Control(textureName: "minnerSpaceshipBlack", x: x+2, y: 35)
+            minnerSpacehsipImage.setScale(0.30)
+            
+            self.addChild(minnerSpacehsipImage)
         }
         
         self.popScale()

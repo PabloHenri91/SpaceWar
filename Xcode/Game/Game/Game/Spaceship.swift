@@ -781,6 +781,10 @@ class Spaceship: Control {
                 }
             }
             
+            if shot.damage > 0 {
+                self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
+            }
+            
             if BattleScene.state == .battleOnline {
                 
                 if self.isAlly {
@@ -803,6 +807,7 @@ class Spaceship: Control {
                 
             } else {
                 
+                
                 if self.health > 0 && self.health - shot.damage <= 0 {
                     self.die()
                     if let spaceship = shot.shooter as? Spaceship {
@@ -816,9 +821,7 @@ class Spaceship: Control {
             if self.health < 0 { self.health = 0 }
             self.updateHealthBarValue()
             
-            if shot.damage > 0 {
-                self.damageEffect(shot.damage, contactPoint: shot.position, contact: contact)
-            }
+            
             shot.damage = 0
             shot.removeFromParent()
         }
@@ -1230,16 +1233,29 @@ class Spaceship: Control {
             vector = CGVector(dx: contact.contactNormal.dx * distance, dy: contact.contactNormal.dy * distance)
         }
         
-        let label = SKLabelNode(text: points.description)
+        //let label = SKLabelNode(text: points.description)
+        let label = Label(color: SKColor.redColor(), text: "-" + points.description, fontSize: 12)
+        SKColor.redColor()
         label.zPosition = GameWorld.zPositions.damageEffect.rawValue
-        label.position = contactPoint
-        label.fontColor = SKColor.whiteColor()
+        label.position = CGPoint(x: Int(self.position.x) + Int.random(min:-20, max:20), y: Int(self.position.y) + Int.random(min:-20, max:20))
         self.parent?.addChild(label)
-        label.runAction(SKAction.moveBy(vector, duration: duration))
+        
+        
+        
+        label.runAction(SKAction.scaleTo(2, duration: 0))
+        
+        label.runAction(SKAction.scaleTo(1, duration: duration))
+        
+  
+        label.runAction(SKAction.sequence([
+            SKAction.waitForDuration(duration/2),
+            SKAction.fadeAlphaTo(0, duration: duration/2)
+            ]
+            ))
         
         
         let particles = SKEmitterNode(fileNamed: "spark.sks")!
-        particles.position = contactPoint
+        particles.position = self.position
         particles.zPosition = GameWorld.zPositions.sparks.rawValue
         particles.emissionAngle = CGFloat(-atan2(vector.dx, vector.dy)) + CGFloat(M_PI/2)
         self.parent?.addChild(particles)
@@ -1302,17 +1318,19 @@ enum SpaceshipIndex: Int {
 class SpaceshipType {
     
     var name:String = ""
+    var spaceshipTypeDescription:String = ""
     var index: Int
     var bodyType: BodyType
     var weaponType: WeaponType
     
     var rarity: rarityType = .common
     
-    init(index: Int, name: String, bodyType: BodyType, weaponType: WeaponType) {
+    init(index: Int, name: String, bodyType: BodyType, weaponType: WeaponType, spaceshipTypeDescription:String) {
         self.index = index
         self.name = name
         self.bodyType = bodyType
         self.weaponType = weaponType
+        self.spaceshipTypeDescription = spaceshipTypeDescription
     }
     
 }
@@ -1387,7 +1405,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser5.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "The first spaceship discovered, its niobium material provides reasonable armor, and its proton pistol can do good damage at medium range"
+        ),
         
         SpaceshipType(index: SpaceshipIndex.intrepidStriker.rawValue, name: "Intrepid Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1406,7 +1426,11 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser3.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "A ship with a niobium armor and a space machine gun, this machine gun concentrates small amounts of energy casting them at a high frequency and light years away but their projectiles do low damage."
+        ),
+        
+        
         SpaceshipType(index: SpaceshipIndex.intrepidDestroyer.rawValue, name: "Intrepid Destroyer",
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1426,7 +1450,10 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser1.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "A ship with a niobium shield and a very strong weapon, its cannon takes 2 seconds to accumulate energy and reaches enemies only a short distance, but its shots are fatal."
+        ),
+        
         SpaceshipType(index: SpaceshipIndex.intrepidSniper.rawValue, name: "Intrepid Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
@@ -1445,7 +1472,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser9.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "A ship with a niobium armor, its shots can reach the other side of the universe, no one is able to escape from its aim, so it has a high recharge time."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.tankerBlaster.rawValue, name: "Tanker Blaster",
             bodyType: {
@@ -1468,7 +1497,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser5.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "This ship was the first to use ultra high tech mega metal technology super tough and waterproof, because it is a heavier metal that ship has a low speed."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.tankerStriker.rawValue, name: "Tanker Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1490,7 +1521,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser3.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "A spacecraft with a tough armor, due to the weight of its armor itself can only be equipped with a light machine gun, does little damage but it is difficult to shoot down this space turtle."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.tankerDestroyer.rawValue, name: "Tanker Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1511,7 +1544,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser1.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: ""
+        ),
         
         SpaceshipType(index: SpaceshipIndex.tankerSniper.rawValue, name: "Tanker Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1533,7 +1568,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser9.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "Tanker and Sniper? Are you kidding me? This ship is incredible, in addition to his very tough armor his gun shoots at a long distance, is there anything better?"
+        ),
         
         SpaceshipType(index: SpaceshipIndex.speederBlaster.rawValue, name: "Speeder Blaster", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1553,7 +1590,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser5.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "The first ship of this type built, this type of ship is super economical, they take everything that could be weighed in her and equip them with the best weapons (the driver drives it on foot)."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.speederStriker.rawValue, name: "Speeder Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1573,7 +1612,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser3.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "The fastest machine gun in the space wild west, it's amazing the combination of speed of that weapon and the bursts of energy that it can fire."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.speederDestroyer.rawValue, name: "Speeder Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1593,7 +1634,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser1.mp3"
                 return weaponType
-            }()),
+            }(),
+            spaceshipTypeDescription: "A cannon with wings, this ship has the most powerful weapon in the whole universe, however its shots have a short range and its armor is weak but if it hits you ..."
+        ),
         
         SpaceshipType(index: SpaceshipIndex.speederSniper.rawValue, name: "Speeder Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
@@ -1613,7 +1656,9 @@ extension Spaceship {
                 
                 weaponType.initSoundFileName = "laser9.mp3"
                 return weaponType
-            }())
+            }(),
+            spaceshipTypeDescription: "This ship has a sniper that in addition to shooting on the other side of the universe still recharges quickly, the problem is if the enemy approaches, its armor leaves to be desired in the next combat."
+        )
     ]
     
     static var extraTypes: [SpaceshipType] = [
@@ -1631,7 +1676,9 @@ extension Spaceship {
             weaponType: {
                 let weaponType = WeaponType(damage: 0, range: 100, fireRate: 1)
                 return weaponType
-            }()
+            }(),
+            spaceshipTypeDescription: ""
+            
         ),
         
         SpaceshipType(index: 1, name: "Tutorial Meteor 2",
@@ -1647,7 +1694,9 @@ extension Spaceship {
             weaponType: {
                 let weaponType = WeaponType(damage: 0, range: 100, fireRate: 1)
                 return weaponType
-            }()
+            }(),
+            spaceshipTypeDescription: ""
+            
         )
         
     ]

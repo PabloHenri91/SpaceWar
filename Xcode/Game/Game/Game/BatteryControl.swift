@@ -12,6 +12,7 @@ class BatteryControl: Control {
     
     var maxCharge = GameMath.batteryMaxCharge
     var charge = 0
+    var lastChargeValue = 0
     var lastCharge:NSDate!
     
     var labelTimerLabel:Label!
@@ -94,6 +95,7 @@ class BatteryControl: Control {
         if let battery = MemoryCard.sharedInstance.playerData.battery {
             
             self.charge = battery.charge.integerValue
+            self.lastChargeValue = battery.lastChargeValue.integerValue
             self.lastCharge = battery.lastCharge
             
             while self.charge < self.maxCharge {
@@ -116,6 +118,7 @@ class BatteryControl: Control {
                         
                         self.charge += 1
                         battery.charge = self.charge
+                        battery.lastChargeValue = self.charge
                     } else {
                         break
                     }
@@ -143,9 +146,24 @@ class BatteryControl: Control {
                 
                 var i = 0
                 for control in chargeIndicator {
-                    control.hidden = charge <= i
+                    // Os controls com indice maior que a carga ficam escondidos
+                    control.hidden = self.charge <= i
                     i += 1
+                    
+//                    if (i >= self.lastChargeValue){
+//                        control.alpha = 0
+//                        control.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+//                       
+//                    }
                 }
+                
+                //battery.lastChargeValue = self.charge
+                
+                
+               
+                
+                
+                
             }
             
             self.labelTimerValue.setText(text)

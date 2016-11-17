@@ -34,6 +34,8 @@
 		3A7E60D31D14878F00D00590 /* HangarSpaceshipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D11D14878F00D00590 /* HangarSpaceshipCard.swift */; };
 		3A7E60D51D1869FA00D00590 /* AlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D41D1869FA00D00590 /* AlertBox.swift */; };
 		3A7E60D61D1869FA00D00590 /* AlertBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E60D41D1869FA00D00590 /* AlertBox.swift */; };
+		3A8BB6A11DDDE62B0008090F /* RandomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8BB6A01DDDE62B0008090F /* RandomObject.swift */; };
+		3A8BB6A21DDDE62B0008090F /* RandomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8BB6A01DDDE62B0008090F /* RandomObject.swift */; };
 		3AA0C97A1CFDB3B5008EE628 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */; };
 		3AA0C97B1CFDB3B5008EE628 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */; };
 		3AA0C97C1CFDB3B5008EE628 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */; };
@@ -397,6 +399,8 @@
 		3A7E60CB1D14239F00D00590 /* HangarScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarScene.swift; sourceTree = "<group>"; };
 		3A7E60D11D14878F00D00590 /* HangarSpaceshipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangarSpaceshipCard.swift; sourceTree = "<group>"; };
 		3A7E60D41D1869FA00D00590 /* AlertBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBox.swift; sourceTree = "<group>"; };
+		3A8BB6A01DDDE62B0008090F /* RandomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomObject.swift; sourceTree = "<group>"; };
+		3A8BB6A31DDE2F230008090F /* SpaceWar 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SpaceWar 12.xcdatamodel"; sourceTree = "<group>"; };
 		3AA0C87B1CFDB3B4008EE628 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		3AA0C87C1CFDB3B4008EE628 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
 		3AA0C87D1CFDB3B4008EE628 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -981,6 +985,7 @@
 				846F65CF1CF4777B00A2E69F /* Mothership.swift */,
 				849162A21D5DF9CF0064958C /* NextEvents.swift */,
 				84B22F041D47D7D30034C03F /* PlayerDataCard.swift */,
+				3A8BB6A01DDDE62B0008090F /* RandomObject.swift */,
 				84B7A8C71D99A940000A392F /* RateAlert.swift */,
 				3A4065F01D2C54E600B886DB /* Research.swift */,
 				8437BCE01D95952C00525DD2 /* Room.swift */,
@@ -1479,6 +1484,7 @@
 				84F855D91CECCE1100FB63D2 /* MemoryCard.swift in Sources */,
 				84656DEA1D7F48E200930157 /* SSLSecurity.swift in Sources */,
 				3A5CAF511D05E52200D6EFC0 /* FriendData.swift in Sources */,
+				3A8BB6A11DDDE62B0008090F /* RandomObject.swift in Sources */,
 				84EE51021D638A9500943D84 /* ABNScheduler.swift in Sources */,
 				3AF9D2051D7A0CA40068E737 /* TutorialAlertBox.swift in Sources */,
 				3A4065F41D2C616500B886DB /* ResearchCard.swift in Sources */,
@@ -1664,6 +1670,7 @@
 				3A5984531D4B6CB6009FDA6D /* TimeBar.swift in Sources */,
 				84656DD71D7F48E200930157 /* SocketIOClient.swift in Sources */,
 				843620651CEB77400082A9D7 /* CharacterGenerator.swift in Sources */,
+				3A8BB6A21DDDE62B0008090F /* RandomObject.swift in Sources */,
 				842311461D9DA6AC00A2D43E /* AlertBoxBattleEnd.swift in Sources */,
 				849BD98B1DB8FF3C0091C7D3 /* SectorMissionData.swift in Sources */,
 				84C8D5581CF4C261007C1ED6 /* GameWorld.swift in Sources */,
@@ -2032,6 +2039,7 @@
 		842BAA161CEC986E00524619 /* SpaceWar.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3A8BB6A31DDE2F230008090F /* SpaceWar 12.xcdatamodel */,
 				3AC9AFF31DD38B6400C820CE /* SpaceWar 11.xcdatamodel */,
 				849BD9851DB8F29B0091C7D3 /* SpaceWar 10.xcdatamodel */,
 				84A5AA9E1D884567008F959E /* SpaceWar 9.xcdatamodel */,
@@ -2044,7 +2052,7 @@
 				84F5463D1D3FC63E00473C8F /* SpaceWar 2.xcdatamodel */,
 				842BAA171CEC986E00524619 /* SpaceWar.xcdatamodel */,
 			);
-			currentVersion = 3AC9AFF31DD38B6400C820CE /* SpaceWar 11.xcdatamodel */;
+			currentVersion = 3A8BB6A31DDE2F230008090F /* SpaceWar 12.xcdatamodel */;
 			path = SpaceWar.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -14,6 +14,7 @@ class BatteryData: NSManagedObject {
     
     @NSManaged var lastCharge: NSDate?
     @NSManaged var charge: NSNumber
+    @NSManaged var lastChargeValue: NSNumber
 
 }
 
@@ -25,6 +26,7 @@ extension MemoryCard {
         let batteryData = NSEntityDescription.insertNewObjectForEntityForName("BatteryData", inManagedObjectContext: self.managedObjectContext) as! BatteryData
         
         batteryData.charge = 4
+        batteryData.lastChargeValue = 4
         batteryData.lastCharge = NSDate()
         
         return batteryData
