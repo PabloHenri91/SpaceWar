@@ -429,11 +429,21 @@ class Mothership: Control {
             vector = CGVector(dx: contact.contactNormal.dx * distance, dy: contact.contactNormal.dy * distance)
         }
         
-        let label = SKLabelNode(text: points.description)
+        let label = Label(color: SKColor.redColor(), text: "-" + points.description, fontSize: 12)
+        SKColor.redColor()
         label.position = contactPoint
-        label.fontColor = SKColor.whiteColor()
         self.parent?.addChild(label)
-        label.runAction(SKAction.moveBy(vector, duration: duration))
+        
+        label.runAction(SKAction.scaleTo(2, duration: 0))
+        
+        label.runAction(SKAction.scaleTo(1, duration: duration))
+        
+        
+        label.runAction(SKAction.sequence([
+            SKAction.waitForDuration(duration/2),
+            SKAction.fadeAlphaTo(0, duration: duration/2)
+            ]
+            ))
         
         let particles = SKEmitterNode(fileNamed: "spark.sks")!
         particles.position = contactPoint

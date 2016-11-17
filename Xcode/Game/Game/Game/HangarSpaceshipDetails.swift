@@ -124,7 +124,7 @@ class HangarSpaceshipDetails: Box {
         self.addChild(self.labelLevel)
         
         if showUpgrade {
-            let labelDescription = MultiLineLabel(text: "This is a battleship. Do upgrades to makes it stronger and defeat your enemies.", maxWidth: 168, x: 180, y: 73, fontSize: 11)
+            let labelDescription = MultiLineLabel(text: self.spaceship.type.spaceshipTypeDescription, maxWidth: 168, x: 180, y: 60, fontSize: 11)
             self.addChild(labelDescription)
         } else {
             let labelDescription = MultiLineLabel(text: "Now this Battleship is available for construction at the Factory.", maxWidth: 168, x: 180, y: 73, fontSize: 11)

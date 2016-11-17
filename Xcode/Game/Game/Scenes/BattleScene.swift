@@ -50,6 +50,8 @@ class BattleScene: GameScene {
     var battleEndTime: Double = 0
     var battleBeginTime: Double = 0
     
+    var lastBackgroundObject:Double = 0
+    
     //MultiplayerOnline
     let serverManager = ServerManager.sharedInstance
     var lastOnlineUpdate:Double = 0
@@ -213,6 +215,16 @@ class BattleScene: GameScene {
                     
                     if self.mothership.health <= 0 || self.botMothership.health <= 0 {
                         self.nextState = .battleEnd
+                    }
+                    
+                    //faz aqui
+                    
+                    
+                    if currentTime - self.lastBackgroundObject > 10 {
+                        self.lastBackgroundObject = currentTime
+                        let randomObject = RandomObject()
+                        self.addChild(randomObject)
+                        
                     }
                     
                     if currentTime - self.lastBotUpdate > self.botUpdateInterval/2 {

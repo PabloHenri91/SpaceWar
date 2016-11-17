@@ -37,6 +37,9 @@ class MissionSpaceshipCard: Control {
         self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
         self.addChild(self.spaceshipImage)
         
+        let minnerSpacehsip = Control(textureName: "minnerSpaceship", x: 18, y: 59)
+        self.addChild(minnerSpacehsip)
+        
         
         self.labelLevel = Label(text: String(self.missionSpaceship.level) , fontSize: 11, x: 259, y: 16, shadowColor: SKColor(red: 229/255, green: 228/255, blue: 229/255, alpha: 100/100), shadowOffset:CGPoint(x: 0, y: -1), fontName: GameFonts.fontName.museo1000)
         self.addChild(self.labelLevel)
