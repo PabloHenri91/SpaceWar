@@ -1402,8 +1402,9 @@ extension Spaceship {
                     speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
                 spaceshipType.skin = "intrepidBlaster"
                 spaceshipType.scale = 0.5
-                
+               
                 spaceshipType.centerJet = true
+                
                 return spaceshipType
             }(),
             weaponType: {
@@ -1465,6 +1466,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             
             spaceshipType.centerJet = true
+            
             return spaceshipType
             }(),
             weaponType: {
@@ -1509,6 +1511,7 @@ extension Spaceship {
             
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
+            
             spaceshipType.jetBorderOffset = -5
             return spaceshipType
             }(),
@@ -1530,7 +1533,9 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             
             spaceshipType.leftJet = true
+            spaceshipType.centerJet = true
             spaceshipType.rightJet = true
+            
             spaceshipType.jetBorderOffset = -5
             return spaceshipType
             }(), weaponType: {
@@ -1550,8 +1555,8 @@ extension Spaceship {
             spaceshipType.skin = "tankerSniper"
             spaceshipType.scale = 0.5
             
-            spaceshipType.leftJet = true
-            spaceshipType.rightJet = true
+            spaceshipType.centerJet = true
+            
             spaceshipType.jetBorderOffset = -5
             return spaceshipType
             }(),
@@ -1573,6 +1578,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             
             spaceshipType.centerJet = true
+            
             return spaceshipType
             }(),
             weaponType: {
@@ -1593,6 +1599,7 @@ extension Spaceship {
             spaceshipType.scale = 0.5
             
             spaceshipType.centerJet = true
+            
             return spaceshipType
             }(),
             weaponType: {
@@ -1612,7 +1619,9 @@ extension Spaceship {
             spaceshipType.skin = "speederDestroyer"
             spaceshipType.scale = 0.5
             
-            spaceshipType.centerJet = true
+            spaceshipType.leftJet = true
+            spaceshipType.rightJet = true
+            
             return spaceshipType
             }(),
             weaponType: {
@@ -1632,7 +1641,9 @@ extension Spaceship {
             spaceshipType.skin = "speederSniper"
             spaceshipType.scale = 0.5
             
-            spaceshipType.centerJet = true
+            spaceshipType.leftJet = true
+            spaceshipType.rightJet = true
+            
             return spaceshipType
             }(),
             weaponType: {

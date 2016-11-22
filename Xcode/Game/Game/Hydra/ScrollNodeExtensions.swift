@@ -12,7 +12,7 @@ extension ScrollNode {
 
     func append(control:Control) {
         
-        let size = control.calculateAccumulatedFrame().size
+        let size = control.size
         self.width = Int(size.width)
         self.height = Int(size.height)
         

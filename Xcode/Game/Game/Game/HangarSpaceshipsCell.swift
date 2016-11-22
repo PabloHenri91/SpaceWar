@@ -26,6 +26,8 @@ class HangarSpaceshipsCell: Control {
             self.addChild(subCell)
             i += 1
         }
+        
+        self.size.height = 90
     }
     
     required init?(coder aDecoder: NSCoder) {

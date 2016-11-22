@@ -352,7 +352,7 @@ class ResearchScene: GameScene {
                 y = 143
             }
 
-            self.scrollNode = ScrollNode(cells: researchCards, x: x, y: y, xAlign: .center, yAlign: .center, spacing: -25, scrollDirection: .vertical)
+            self.scrollNode = ScrollNode(cells: researchCards, x: x, y: y, xAlign: .center, yAlign: .center, spacing: 10, scrollDirection: .vertical)
             self.addChild(self.scrollNode!)
             self.scrollNode?.zPosition = -20
             

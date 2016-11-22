@@ -198,7 +198,7 @@ class HangarSpaceshipChange: Box {
                 spaceshipList.removeAll()
             }
             
-            self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: -10, scrollDirection: .vertical)
+            self.scrollNode = ScrollNode(cells: controlArray, x: 0, y: 50,  spacing: 10, scrollDirection: .vertical)
             self.cropBox.addChild(self.scrollNode!)
             
         } else {

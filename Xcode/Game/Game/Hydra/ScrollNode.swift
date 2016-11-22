@@ -52,7 +52,7 @@ class ScrollNode: Control {
             var i = 0
             for control in self.cells {
                 
-                let size = control.calculateAccumulatedFrame().size
+                let size = control.size
                 
                 control.xAlign = .left
                 control.yAlign = .up
