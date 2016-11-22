@@ -29,10 +29,7 @@ class MissionSpaceshipCard: Control {
         
         self.missionSpaceship = MissionSpaceship(missionSpaceshipData: missionSpaceshipData)
         
-        super.init()
-        
-        self.addChild(Control(textureName: "MissionSpaceshipCard"))
-        
+        super.init(textureName: "MissionSpaceshipCard")
         
         self.spaceshipImage = Control(textureName: "missionSpaceship", x: 7, y: 39)
         self.addChild(self.spaceshipImage)
