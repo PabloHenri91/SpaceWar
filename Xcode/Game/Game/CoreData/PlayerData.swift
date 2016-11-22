@@ -75,6 +75,7 @@ extension MemoryCard {
         
         //adicionei a nave 1 a nave mae
         spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
+        spaceshipData.level = 3
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         
@@ -82,6 +83,7 @@ extension MemoryCard {
         
         //adicionei a nave 2 na nave mae 2 vezes
         spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
+        spaceshipData.level = 3
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         
@@ -89,6 +91,7 @@ extension MemoryCard {
         
         // adicionei a nave 3 na nave mae
         spaceshipData = self.newSpaceshipData(type: SpaceshipIndex.intrepidBlaster.rawValue)
+        spaceshipData.level = 3
         playerData.motherShip.addSpaceshipData(spaceshipData, index: 0)
         playerData.addSpaceshipData(spaceshipData)
         

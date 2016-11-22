@@ -319,10 +319,10 @@ class Spaceship: Control {
     }
     
     func loadWeaponDetail() {
-        if let weapon = self.weapon {
-            self.spriteNode.color = weapon.type.color
-            self.spriteNode.colorBlendFactor = 1
-        }
+//        if let weapon = self.weapon {
+//            self.spriteNode.color = weapon.type.color
+//            self.spriteNode.colorBlendFactor = 1
+//        }
     }
     
     func increaseTouchArea() {
@@ -402,23 +402,11 @@ class Spaceship: Control {
         self.spriteNode.zPosition = zPositions.skin.rawValue
         self.addChild(self.spriteNode)
         
-        if self.type.bodyType.glassSkin != "" {
-            let spriteNode = SKSpriteNode(imageNamed: self.type.bodyType.glassSkin)
-            spriteNode.texture?.filteringMode = Display.filteringMode
-            spriteNode.setScale(self.type.bodyType.scale)
-            spriteNode.texture?.filteringMode = Display.filteringMode
-            spriteNode.zPosition = zPositions.glassSkin.rawValue
-            spriteNode.color = self.type.bodyType.glassColor
-            spriteNode.colorBlendFactor = 1
-            spriteNode.position = self.type.bodyType.glassPosition
-            self.addChild(spriteNode)
-        }
-        
         self.selectedSpriteNode = SKSpriteNode(imageNamed: self.type.bodyType.skin + "Mask")
         self.selectedSpriteNode.texture?.filteringMode = Display.filteringMode
         self.selectedSpriteNode.setScale(self.type.bodyType.scale)
         self.selectedSpriteNode.color = SKColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-        self.selectedSpriteNode.colorBlendFactor = 1
+        self.selectedSpriteNode.colorBlendFactor = 10
         self.selectedSpriteNode.hidden = true
         self.selectedSpriteNode.zPosition = zPositions.selectedDetail.rawValue
         self.addChild(self.selectedSpriteNode)
@@ -1363,9 +1351,6 @@ class SpaceshipType {
 class BodyType {
     
     var skin = ""
-    var glassSkin = ""
-    var glassColor = SKColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-    var glassPosition = CGPoint.zero
     var scale:CGFloat = 1.0
     
     var targetPriority:[TargetType]
@@ -1415,10 +1400,8 @@ extension Spaceship {
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
                     speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
-                spaceshipType.skin = "spaceshipAA"
-                spaceshipType.glassSkin = "spaceshipAAGlass"
+                spaceshipType.skin = "intrepidBlaster"
                 spaceshipType.scale = 0.5
-                spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
                 
                 spaceshipType.centerJet = true
                 return spaceshipType
@@ -1437,10 +1420,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.intrepidStriker.rawValue, name: "Intrepid Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipAA"
-            spaceshipType.glassSkin = "spaceshipAAGlass"
+            spaceshipType.skin = "intrepidStriker"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
@@ -1460,10 +1441,8 @@ extension Spaceship {
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
                     speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
-                spaceshipType.skin = "spaceshipAA"
-                spaceshipType.glassSkin = "spaceshipAAGlass"
+                spaceshipType.skin = "intrepidDestroyer"
                 spaceshipType.scale = 0.5
-                spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
                 
                 spaceshipType.centerJet = true
                 return spaceshipType
@@ -1482,10 +1461,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.intrepidSniper.rawValue, name: "Intrepid Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 15, health: 7, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipAA"
-            spaceshipType.glassSkin = "spaceshipAAGlass"
+            spaceshipType.skin = "intrepidSniper"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 12 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
@@ -1505,10 +1482,8 @@ extension Spaceship {
             bodyType: {
                 let spaceshipType = BodyType(targetPriorityType: 0,
                     speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
-                spaceshipType.skin = "spaceshipBA"
-                spaceshipType.glassSkin = "spaceshipBAGlass"
+                spaceshipType.skin = "tankerBlaster"
                 spaceshipType.scale = 0.5
-                spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
                 
                 spaceshipType.leftJet = true
                 spaceshipType.rightJet = true
@@ -1529,10 +1504,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.tankerStriker.rawValue, name: "Tanker Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipBA"
-            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.skin = "tankerStriker"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
             
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
@@ -1553,10 +1526,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.tankerDestroyer.rawValue, name: "Tanker Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 10, health: 15, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipBA"
-            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.skin = "tankerDestroyer"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
             
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
@@ -1576,10 +1547,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.tankerSniper.rawValue, name: "Tanker Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 10, health: 10, shieldPower: 5, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipBA"
-            spaceshipType.glassSkin = "spaceshipBAGlass"
+            spaceshipType.skin = "tankerSniper"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 5 * spaceshipType.scale)
             
             spaceshipType.leftJet = true
             spaceshipType.rightJet = true
@@ -1600,10 +1569,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.speederBlaster.rawValue, name: "Speeder Blaster", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipCA"
-            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.skin = "speederBlaster"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
@@ -1622,10 +1589,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.speederStriker.rawValue, name: "Speeder Striker", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipCA"
-            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.skin = "speederStriker"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
@@ -1644,10 +1609,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.speederDestroyer.rawValue, name: "Speeder Destroyer", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipCA"
-            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.skin = "speederDestroyer"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
@@ -1666,10 +1629,8 @@ extension Spaceship {
         SpaceshipType(index: SpaceshipIndex.speederSniper.rawValue, name: "Speeder Sniper", bodyType: {
             let spaceshipType = BodyType(targetPriorityType: 0,
                 speed: 20, health: 5, shieldPower: 10, shieldRecharge: 5)
-            spaceshipType.skin = "spaceshipCA"
-            spaceshipType.glassSkin = "spaceshipCAGlass"
+            spaceshipType.skin = "speederSniper"
             spaceshipType.scale = 0.5
-            spaceshipType.glassPosition = CGPoint(x: 0, y: 6 * spaceshipType.scale)
             
             spaceshipType.centerJet = true
             return spaceshipType
