@@ -232,6 +232,7 @@ class Mothership: Control {
         spaceship.loadHealthBar(gameWorld)
         spaceship.loadWeaponRangeSprite(gameWorld)
         spaceship.loadWeaponDetail()
+        spaceship.loadRespawnTimeBar(gameWorld)
     }
 
     func loadSpaceships(gameWorld:GameWorld) {

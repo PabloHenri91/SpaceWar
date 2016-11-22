@@ -242,8 +242,6 @@ class Spaceship: Control {
         self.updateHealthBarValue()
         
         self.loadJetEffect(gameWorld, color: backColor)
-        
-        self.loadRespawnTimeBar(gameWorld)
     }
     
     func loadRespawnTimeBar(gameWorld: GameWorld) {
@@ -276,7 +274,7 @@ class Spaceship: Control {
             self.respawnTimeBar.parent?.hidden = true
         } else {
             let path = UIBezierPath(arcCenter: CGPoint(x: 0, y: 0), radius: 22.0, startAngle: CGFloat(0), endAngle: CGFloat(-π * progress * 2), clockwise: false).CGPath
-            self.respawnTimeBar.path = path
+            self.respawnTimeBar?.path = path
         }
     }
     
@@ -888,7 +886,7 @@ class Spaceship: Control {
     func die() {
         
         self.updateRespawnTimeBar(0)
-        self.respawnTimeBar.parent?.hidden = false
+        self.respawnTimeBar?.parent?.hidden = false
         
         Control.gameScene.shake(7.5)
         
