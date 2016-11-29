@@ -49,7 +49,7 @@ class ConfigAlert: Box {
         self.addChild(self.musicSwitch)
         
         
-        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MUSIC", fontSize: 12, x: 92, y: 118, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "MUSIC", fontSize: 12, x: 92, y: 118, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         
         self.soundFxSwitch = Switch(textureName: "soundFx", on: self.playerData.soundEnabled.boolValue, x: 178, y: 66)
@@ -58,7 +58,7 @@ class ConfigAlert: Box {
         }
         self.addChild(self.soundFxSwitch)
         
-        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "SOUND FX", fontSize: 12, x: 195, y: 118, xAlign: .center, yAlign: .up, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
+        self.addChild(Label(color: SKColor(red: 47/255, green: 60/255, blue: 73/255, alpha: 1), text: "SOUND FX", fontSize: 12, x: 195, y: 118, fontName: GameFonts.fontName.museo1000, shadowColor: SKColor(red: 213/255, green: 218/255, blue: 221/255, alpha: 1), shadowOffset: CGPoint(x: 0, y: -2)))
         
         
         

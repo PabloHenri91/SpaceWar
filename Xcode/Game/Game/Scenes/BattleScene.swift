@@ -115,6 +115,7 @@ class BattleScene: GameScene {
         
         // BotMothership
         self.botMothership = Mothership(level: self.mothership.level, isAlly: false)
+        self.botMothership.displayName = CharacterGenerator.sharedInstance.getName(CharacterGenerator.indexOfNames.random, gender: CharacterGenerator.genders.random)
         self.botMothership.zRotation = CGFloat(M_PI)
         self.botMothership.position = CGPoint(x: 0, y: 225)
         self.gameWorld.addChild(self.botMothership)
@@ -333,6 +334,19 @@ class BattleScene: GameScene {
                 
                 break
             case .battle:
+                //self.showPlayerNames(false)
+                
+                
+                //Many player =}
+                
+//                self.runAction(SKAction.sequence([
+//                    SKAction.waitForDuration(1),
+//                    SKAction.runBlock({[weak self] in
+//                        BattleScene.state = states.loading
+//                        self?.view?.presentScene(BattleScene())
+//                    })
+//                    ]))
+                
                 if battleBeginTime == 0 {
                     self.battleBeginTime = currentTime
                 }

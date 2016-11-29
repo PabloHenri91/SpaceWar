@@ -464,15 +464,22 @@ class MissionScene: GameScene {
                                                 
                                                 let alertBox = AlertBox(title: "Price", text: "It will cost " + price.description + " frags.", buttonText: "BUY", needCancelButton: true)
                                                 
+                                                self.setAlertState()
+                                                
                                                 alertBox.buttonOK.addHandler(
                                                     {
                                                         if card.upgrade() == false {
                                                             let alertBox2 = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
-
                                                             
-                                                            alertBox2.buttonOK.addHandler({ self.nextState = .hangar
+                                                            Control.gameScene.setAlertState()
+                                                            
+                                                            alertBox2.buttonOK.addHandler({ 
                                                                 self.gameStore = GameStore()
                                                                 self.addChild(self.gameStore!)
+                                                            })
+                                                            
+                                                            alertBox2.buttonCancel?.addHandler({ () in
+                                                                Control.gameScene.setDefaultState()
                                                             })
                                                             
                                                             self.addChild(alertBox2)
@@ -481,6 +488,10 @@ class MissionScene: GameScene {
                                                         }
                                                     }
                                                 )
+                                                
+                                                alertBox.buttonCancel?.addHandler({ () in
+                                                    Control.gameScene.setDefaultState()
+                                                })
                                                 
                                                 self.addChild(alertBox)
                                                 return

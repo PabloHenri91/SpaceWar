@@ -30,11 +30,11 @@ class LoadScene: GameScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         #if DEBUG
-//            MemoryCard.sharedInstance.reset()
-            MemoryCard.sharedInstance.playerData!.points = 1000000
+            MemoryCard.sharedInstance.reset()
+//            MemoryCard.sharedInstance.playerData!.points = 1000000
 //            MemoryCard.sharedInstance.playerData!.premiumPoints = 1000000
 //            Research.cheatDuration()
-//            Research.cheatUnlockAll()
+            Research.cheatUnlockAll()
 //            Spaceship.cheatUnlockAll()
 //            MemoryCard.sharedInstance.playerData!.needBattleTraining = true
 
@@ -103,6 +103,8 @@ class LoadScene: GameScene {
                 #else
                     let delay: NSTimeInterval = 1
                 #endif
+                
+                CharacterGenerator.sharedInstance.getName(CharacterGenerator.indexOfNames.random, gender: CharacterGenerator.genders.random)
                 
                 self.runAction(SKAction.afterDelay(delay, runBlock: { [weak self] in
                     self?.nextState = .mothership

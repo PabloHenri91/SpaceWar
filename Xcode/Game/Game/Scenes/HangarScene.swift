@@ -388,6 +388,8 @@ class HangarScene: GameScene {
                                     
                                     let alertBox = AlertBox(title: "Price", text: "No enough bucks bro.".translation() + " 😢😢", buttonText: "BUY MORE", needCancelButton: true)
                                     
+                                    Control.gameScene.setAlertState()
+                                    
                                     alertBox.buttonCancel!.addHandler({ self.nextState = .hangar
                                     })
                                     
