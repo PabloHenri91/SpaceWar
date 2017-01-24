@@ -278,7 +278,14 @@ class Mothership: Control {
     }
     
     func getShot(shot:Shot?, contact: SKPhysicsContact?) {
+        
         if let shot = shot {
+            
+            if let spaceship = shot.shooter as? Spaceship {
+                if spaceship.isAlly == self.isAlly {
+                    return
+                }
+            }
             
             if BattleScene.state == .battleOnline {
                 
