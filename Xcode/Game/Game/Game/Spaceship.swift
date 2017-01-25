@@ -1118,7 +1118,7 @@ class Spaceship: Control {
         }
     }
     
-    func rotateToPoint(point:CGPoint) {
+    func rotateToPoint(point: CGPoint) {
         
         if let physicsBody = self.physicsBody {
             
